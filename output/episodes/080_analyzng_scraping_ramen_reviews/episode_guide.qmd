@@ -19,7 +19,7 @@ execute:
 - `ker_status`: `extracted`
 - `reproduction_status`: `ready_with_external_steps`
 - `transcript_file`: `raw-data/inspiration/Analyzng scraping and analyzing ramen reviews in R.txt`
-- `code_file`: `data-screencasts/ramen-ratings.Rmd`
+- `code_file`: `data-screencasts-dgrtwo/ramen-ratings.Rmd`
 - `data_source`: TidyTuesday 2019-06-04 source files
 - `analysis_type`: `Modeling`
 - `pattern_signature`: `load_inspect_scrape_reshape_join_tokenize_model_evaluate_visualize`

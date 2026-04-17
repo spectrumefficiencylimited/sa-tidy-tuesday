@@ -19,7 +19,7 @@ execute:
 - `ker_status`: `extracted`
 - `reproduction_status`: `ready_local`
 - `transcript_file`: `raw-data/inspiration/Analyzing Super Bowl ads in R.txt`
-- `code_file`: `data-screencasts/2021_03_02_super_bowl_ads.Rmd`
+- `code_file`: `data-screencasts-dgrtwo/2021_03_02_super_bowl_ads.Rmd`
 - `data_source`: TidyTuesday 2021-03-02 dataset
 - `analysis_type`: `Modeling`
 - `pattern_signature`: `load_inspect_reshape_join_tokenize_trend_model_evaluate_visualize`

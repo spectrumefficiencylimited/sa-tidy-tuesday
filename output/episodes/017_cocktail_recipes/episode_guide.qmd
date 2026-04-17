@@ -19,7 +19,7 @@ execute:
 - `ker_status`: `extracted`
 - `reproduction_status`: `ready_local`
 - `transcript_file`: `raw-data/inspiration/Analyzing cocktail recipes in R.txt`
-- `code_file`: `data-screencasts/cocktails.Rmd`
+- `code_file`: `data-screencasts-dgrtwo/cocktails.Rmd`
 - `data_source`: TidyTuesday 2020-05-26 dataset
 - `analysis_type`: `EDA`
 - `pattern_signature`: `load_inspect_tokenize_compare_visualize`

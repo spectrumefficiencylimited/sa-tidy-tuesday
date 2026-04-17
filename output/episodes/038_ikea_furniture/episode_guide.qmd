@@ -19,7 +19,7 @@ execute:
 - `ker_status`: `extracted`
 - `reproduction_status`: `ready_local`
 - `transcript_file`: `raw-data/inspiration/Analyzing IKEA furniture in R.txt`
-- `code_file`: `data-screencasts/2020_11_03_ikea.Rmd`
+- `code_file`: `data-screencasts-dgrtwo/2020_11_03_ikea.Rmd`
 - `data_source`: TidyTuesday 2020-11-03 dataset
 - `analysis_type`: `Modeling`
 - `pattern_signature`: `load_inspect_trend_model_evaluate_visualize`

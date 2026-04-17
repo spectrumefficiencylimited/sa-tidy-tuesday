@@ -19,7 +19,7 @@ execute:
 - `ker_status`: `extracted`
 - `reproduction_status`: `ready_local`
 - `transcript_file`: `raw-data/inspiration/Analyzing art collections in R.txt`
-- `code_file`: `data-screencasts/2021_01_12_tate_art.Rmd`
+- `code_file`: `data-screencasts-dgrtwo/2021_01_12_tate_art.Rmd`
 - `data_source`: TidyTuesday 2021-01-12 dataset
 - `analysis_type`: `EDA`
 - `pattern_signature`: `load_inspect_trend_compare_visualize`

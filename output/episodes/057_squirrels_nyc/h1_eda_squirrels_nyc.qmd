@@ -1,0 +1,161 @@
+---
+title: "Hour 1 — EDA: Analyzing squirrels in NYC in R"
+subtitle: "David Robinson's analysis, extended | TheDataShrink™"
+author: "TheDataShrink™"
+date: today
+format:
+  html:
+    theme: flatly
+    toc: true
+    toc-depth: 3
+    code-fold: show
+    code-summary: "Show code"
+    number-sections: true
+    embed-resources: true
+execute:
+  echo: true
+  warning: false
+  message: false
+  error: true
+editor: visual
+---
+
+
+::: {.callout-tip}
+## TheDataShrink™ — Data stories worth sharing.
+Episode 057 · Hour 1
+:::
+
+
+::: {.callout-note collapse="true"}
+## Atomic Concepts in this episode
+`add_count_inline` · `choropleth_sf` · `geom_smooth_loess` · `grouped_summary_ggplot` · `logistic_regression` · `skim_inspect` · `spline_regression` · `theme_set_global` · `time_series_trend`
+:::
+
+::: {.callout-warning collapse="true"}
+## FAILS WHEN
+- outcome column is missing or near-zero variance
+- training set is too small for the number of predictors
+- region name spelling differs between data and shapefile — silent dropped rows
+:::
+
+::: {.callout-important collapse="true"}
+## WORKS WHEN
+- outcome column is clearly defined and has sufficient variance
+- features can be engineered from existing columns without external joins
+- geographic column can be matched to a standard ISO/FIPS shapefile without fuzzy joins
+:::
+
+```{r setup}
+library(here)
+library(scales)
+library(tidyverse)
+library(sf)
+
+# TheDataShrink™ brand colours
+TDS_BLUE  <- "#1b6ca8"
+TDS_GOLD  <- "#c8a415"
+TDS_DARK  <- "#1a1a2e"
+TDS_LIGHT <- "#f8f9fa"
+theme_set(theme_light(base_size = 13))
+
+```
+
+## Explore
+```{r chunk_01}
+library(tidyverse)
+theme_set(theme_light())
+
+nyc_squirrels <- readr::read_csv("https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2019/2019-10-29/nyc_squirrels.csv")
+```
+```{r chunk_02}
+nyc_squirrels |>
+  count(zip_codes, sort = TRUE)
+```
+```{r chunk_03}
+nyc_squirrels |>
+  ggplot(aes(long, lat)) +
+  geom_point()
+
+by_hectare <- nyc_squirrels |>
+  filter(!is.na(primary_fur_color)) |>
+  group_by(hectare) |>
+  summarize(long = mean(long),
+            lat = mean(lat),
+            pct_gray = mean(primary_fur_color == "Gray", na.rm = TRUE),
+            n = n())
+
+by_hectare |>
+  filter(n >= 10) |>
+  ggplot(aes(long, lat, size = n, color = pct_gray)) +
+  geom_point() +
+  theme_void()
+
+by_hectare |>
+  filter(n >= 10) |>
+  ggplot(aes(lat, pct_gray)) +
+  geom_point() +
+  geom_smooth()
+
+by_hectare |>
+  mutate(n_gray = round(pct_gray * n)) |>
+  glm(cbind(n_gray, n - n_gray) ~ lat, data = ., family = "binomial") |>
+  summary()
+```
+```{r chunk_04}
+nyc_squirrels |>
+  count(highlight_fur_color, sort = TRUE)
+
+nyc_squirrels |>
+  count(approaches, indifferent, runs_from, sort = TRUE)
+```
+```{r chunk_05}
+glm(runs_from ~ lat, data = nyc_squirrels, family = "binomial") |>
+  summary()
+```
+```{r chunk_06}
+library(sf)
+
+central_park_sf <- read_sf("~/Downloads/CentralAndProspectParks/")
+
+by_hectare <- nyc_squirrels |>
+  add_count(hectare) |>
+  mutate(above_ground = !is.na(location) & location == "Above Ground") |>
+  group_by(hectare, n) |>
+  summarize_at(vars(long, lat, approaches:runs_from,  ends_with("ing"), above_ground), mean) |>
+  ungroup()
+
+by_hectare |>
+  filter(n >= 10) |>
+  ggplot() +
+  geom_sf(data = central_park_sf) +  
+  geom_point(aes(long, lat, size = n, color = runs_from)) +
+  theme_void() +
+  scale_color_gradient2(low = "blue", high = "red", mid = "pink",
+                        midpoint = .3, labels = scales::percent) +
+  labs(color = "% of squirrels run",
+       size = "# of squirrels",
+       title = "Squirrels in the northwest corner of Central Park are more likely to run away") +
+  coord_sf(datum = NA)
+```
+```{r chunk_07}
+central_park_sf |>
+  count(lanes, sort = TRUE)
+
+ggplot(central_park_sf) +
+  geom_sf() +
+  geom_point(aes(long, lat, color = runs_from), data = by_hectare) +
+  coord_sf(datum = NA)
+```
+```{r chunk_08}
+central_park_sf |>
+  ggplot() +
+  geom_sf(aes(color = bicycle)) +
+  coord_sf(datum = NA)
+```
+
+---
+
+**→ [Hour 2: Modeling](h2_modeling_squirrels_nyc.qmd)**
+
+*TheDataShrink™ — thedatashrink.com.au — Weekly data stories in R*

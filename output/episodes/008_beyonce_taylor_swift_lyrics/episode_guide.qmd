@@ -19,7 +19,7 @@ execute:
 - `ker_status`: `reviewed`
 - `reproduction_status`: `ready_local`
 - `transcript_file`: `raw-data/inspiration/Analyzing Beyonce and Taylor Swift lyrics in R.txt`
-- `code_file`: `data-screencasts/2020_09_29_taylor_swift_beyonce.Rmd`
+- `code_file`: `data-screencasts-dgrtwo/2020_09_29_taylor_swift_beyonce.Rmd`
 - `data_source`: TidyTuesday 2020-09-29 lyrics, sales, and chart data for Beyonce and Taylor Swift
 - `analysis_type`: `EDA`
 - `pattern_signature`: `text_tokenize_compare_tf_idf_log_odds_visualize`

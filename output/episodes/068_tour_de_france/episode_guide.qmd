@@ -19,7 +19,7 @@ execute:
 - `ker_status`: `extracted`
 - `reproduction_status`: `ready_local`
 - `transcript_file`: `raw-data/inspiration/Analyzing Tour de France data in R.txt`
-- `code_file`: `data-screencasts/tour-de-france.Rmd`
+- `code_file`: `data-screencasts-dgrtwo/tour-de-france.Rmd`
 - `data_source`: TidyTuesday 2020-04-07 dataset
 - `analysis_type`: `Modeling`
 - `pattern_signature`: `load_inspect_join_tokenize_trend_model_evaluate_visualize`

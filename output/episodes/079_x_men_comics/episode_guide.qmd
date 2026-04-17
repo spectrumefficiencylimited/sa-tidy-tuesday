@@ -19,7 +19,7 @@ execute:
 - `ker_status`: `extracted`
 - `reproduction_status`: `ready_local`
 - `transcript_file`: `raw-data/inspiration/Analyzing X-Men comics in R.txt`
-- `code_file`: `data-screencasts/uncanny-xmen.Rmd`
+- `code_file`: `data-screencasts-dgrtwo/uncanny-xmen.Rmd`
 - `data_source`: TidyTuesday 2020-06-30 dataset
 - `analysis_type`: `EDA`
 - `pattern_signature`: `load_inspect_join_compare_visualize`

@@ -1,0 +1,240 @@
+---
+title: "Hour 3 — Communicate: Analyzing coffee ratings in R"
+subtitle: "From analysis to TheDataShrink™ publication | TheDataShrink™"
+author: "TheDataShrink™"
+date: today
+format:
+  html:
+    theme: litera
+    toc: true
+    toc-depth: 3
+    code-fold: show
+    code-summary: "Show code"
+    number-sections: true
+    embed-resources: true
+execute:
+  echo: true
+  warning: false
+  message: false
+  error: true
+editor: visual
+---
+
+
+::: {.callout-tip}
+## TheDataShrink™ — Data stories worth sharing.
+Episode 019 · Hour 3 · [← Hour 1 EDA](h1_eda_coffee_ratings.qmd) · [← Hour 2 Modeling](h2_modeling_coffee_ratings.qmd)
+:::
+
+
+## Setup
+
+```{r setup}
+library(here)
+library(scales)
+library(tidyverse)
+library(ggridges)
+library(widyr)
+library(ggraph)
+library(igraph)
+library(tidytext)
+# Brand colours
+TDS_BLUE  <- "#1b6ca8"
+TDS_GOLD  <- "#c8a415"
+TDS_DARK  <- "#1a1a2e"
+TDS_LIGHT <- "#f8f9fa"
+theme_set(theme_light(base_size = 14))
+```
+
+```{r reload-data}
+coffee_ratings <- read_csv("/Users/stoiana/sa-tidy-tuesday/tidytuesday/data/2020/2020-07-07/coffee_ratings.csv", show_col_types = FALSE)
+```
+
+---
+
+## Hero chart (1200 × 628 — social media ratio)
+
+::: {.callout-note}
+The single best chart from the analysis. Sized for YouTube thumbnail, Facebook header,
+and Twitter/X card. Saved as `hero_coffee_ratings.png`.
+:::
+
+```{r hero-chart}
+#| fig-width: 12.5
+#| fig-height: 6.54
+
+# Hero chart for: Analyzing coffee ratings in R
+# Reproduce the best chart from Hour 1 at 1200×628 px
+# hero <- ggplot(...) + ...
+# hero
+#
+# ggsave(
+#   here::here("output/episodes/coffee_ratings/hero_coffee_ratings.png"),
+#   hero, width = 12.5, height = 6.54, dpi = 150, bg = "white"
+# )
+cat("Hero chart: copy best ggplot from h1 here and uncomment ggsave\n")
+```
+
+---
+
+## Instagram carousel (5 slides)
+
+```{r carousel-slide1}
+#| fig-width: 5.4
+#| fig-height: 5.4
+
+# Slide 1 — Hook
+ggplot() +
+  annotate("rect", xmin = 0, xmax = 1, ymin = 0, ymax = 1, fill = TDS_DARK) +
+  annotate("text", x = 0.5, y = 0.72,
+           label = "Analyzing coffee ratings in R",
+           size = 8, fontface = "bold", color = "white", hjust = 0.5) +
+  annotate("text", x = 0.5, y = 0.50,
+           label = "Explore and compare language patterns in coffee ratings using tokenization, grouped counts, and discriminative text analysis",
+           size = 4.5, color = "#cccccc", hjust = 0.5) +
+  annotate("text", x = 0.5, y = 0.28,
+           label = "Swipe → to find out",
+           size = 4, color = TDS_GOLD, hjust = 0.5) +
+  annotate("text", x = 0.5, y = 0.10,
+           label = "TheDataShrink™",
+           size = 3.5, color = "#888888", hjust = 0.5) +
+  theme_void() + coord_fixed()
+```
+
+```{r carousel-slide2}
+#| fig-width: 5.4
+#| fig-height: 5.4
+# Slide 2 — Key finding chart (compact version of hero)
+# Copy and resize the hero chart here
+cat("Slide 2: copy hero chart, adjust size to 5.4×5.4\n")
+```
+
+```{r carousel-slide3}
+#| fig-width: 5.4
+#| fig-height: 5.4
+# Slide 3 — Second insight
+cat("Slide 3: second key chart from h1\n")
+```
+
+```{r carousel-slide4}
+#| fig-width: 5.4
+#| fig-height: 5.4
+# Slide 4 — Third insight or model result from h2
+cat("Slide 4: model result or third chart\n")
+```
+
+```{r carousel-slide5}
+#| fig-width: 5.4
+#| fig-height: 5.4
+# Slide 5 — CTA
+ggplot() +
+  annotate("rect", xmin = 0, xmax = 1, ymin = 0, ymax = 1, fill = TDS_DARK) +
+  annotate("text", x = 0.5, y = 0.78, label = "Full analysis:",
+           size = 5, color = "#aaaaaa", hjust = 0.5) +
+  annotate("text", x = 0.5, y = 0.62,
+           label = "thedatashrink.com.au\n/tidytuesday/019",
+           size = 6, fontface = "bold", color = "white", hjust = 0.5) +
+  annotate("text", x = 0.5, y = 0.42,
+           label = "Code · Data · 3-hour walkthrough",
+           size = 4.5, color = "#cccccc", hjust = 0.5) +
+  annotate("text", x = 0.5, y = 0.24,
+           label = "Follow @thedatashrink",
+           size = 5, color = TDS_GOLD, fontface = "bold", hjust = 0.5) +
+  annotate("text", x = 0.5, y = 0.10,
+           label = "#RStats #TidyTuesday #DataScience",
+           size = 3.5, color = "#888888", hjust = 0.5) +
+  theme_void() + coord_fixed()
+```
+
+---
+
+## YouTube chapter timestamps
+
+```
+0:00   Intro — Analyzing coffee ratings in R
+1:30   Load the data
+4:00   First look — key distributions
+8:00   Hour 1 — EDA: exploring the patterns
+18:00  Extension: going beyond David's analysis
+28:00  Hour 2 — Modeling: statistical models
+38:00  Key findings and interpretation
+47:00  Hour 3 — Hero chart + social media pack
+52:00  What to try next on your own dataset
+55:00  Next week on TheDataShrink™
+```
+
+---
+
+## Social media copy
+
+### Facebook / LinkedIn post
+
+```
+Analyzing coffee ratings in R — what does the data show?
+
+We explored this week's #TidyTuesday dataset in R.
+
+Here's what the data reveals:
+
+→ [Key finding 1 — fill in after running h1]
+→ [Key finding 2]
+→ [Key finding 3]
+→ [Surprising extension finding]
+
+Full walkthrough (3 hours of R code, charts, and commentary):
+👉 thedatashrink.com.au/tidytuesday/019
+
+#DataScience #RStats #TidyTuesday #TheDataShrink
+```
+
+### Instagram caption
+
+```
+Explore and compare language patterns in coffee ratings using tokenization, grouped counts, and discriminative text analysis
+
+Swipe to see how data science reveals the patterns 📊
+
+Full analysis + R code → link in bio
+
+#RStats #TidyTuesday #DataScience #DataViz #TheDataShrink
+#DataStorytelling
+```
+
+### YouTube description
+
+```
+In this episode of TheDataShrink™, we explore:
+Analyzing coffee ratings in R
+
+What we cover:
+✅ EDA: first look at the data structure and distributions
+✅ Key visualisations using ggplot2 and the tidyverse
+✅ Extensions beyond David Robinson's original screencast
+✅ Statistical modeling and interpretation
+✅ Social media pack: hero chart + Instagram carousel
+
+Code and data: github.com/thedatashrink/tidytuesday
+Website: thedatashrink.com.au
+
+Chapters: [see timestamps in description]
+
+#RStats #TidyTuesday #DataScience
+```
+
+---
+
+## Render all three hours
+
+```{r render-info}
+#| echo: false
+cat("This episode lives at:\n")
+cat("  output/episodes/coffee_ratings/\n\n")
+cat("To render all three hours:\n")
+cat("  quarto render h1_eda_coffee_ratings.qmd\n")
+cat("  quarto render h2_modeling_coffee_ratings.qmd\n")
+cat("  quarto render h3_communicate_coffee_ratings.qmd\n")
+```
+
+---
+
+*TheDataShrink™ — thedatashrink.com.au — Weekly data stories in R*

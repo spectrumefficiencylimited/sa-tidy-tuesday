@@ -19,7 +19,7 @@ execute:
 - `ker_status`: `extracted`
 - `reproduction_status`: `ready_local`
 - `transcript_file`: `raw-data/inspiration/Analyzing volcano eruptions in R.txt`
-- `code_file`: `data-screencasts/volcano-eruptions.Rmd`
+- `code_file`: `data-screencasts-dgrtwo/volcano-eruptions.Rmd`
 - `data_source`: TidyTuesday 2020-05-12 dataset
 - `analysis_type`: `EDA`
 - `pattern_signature`: `load_inspect_reshape_trend_compare_visualize`

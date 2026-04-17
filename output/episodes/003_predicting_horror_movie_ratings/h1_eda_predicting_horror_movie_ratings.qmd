@@ -1,0 +1,235 @@
+---
+title: "Hour 1 — EDA: Analyzing and predicting horror movie ratings in R"
+subtitle: "David Robinson's analysis, extended | TheDataShrink™"
+author: "TheDataShrink™"
+date: today
+format:
+  html:
+    theme: flatly
+    toc: true
+    toc-depth: 3
+    code-fold: show
+    code-summary: "Show code"
+    number-sections: true
+    embed-resources: true
+execute:
+  echo: true
+  warning: false
+  message: false
+  error: true
+editor: visual
+---
+
+
+::: {.callout-tip}
+## TheDataShrink™ — Data stories worth sharing.
+Episode 003 · Hour 1
+:::
+
+
+::: {.callout-note collapse="true"}
+## Atomic Concepts in this episode
+`add_count_inline` · `boxplot_jitter` · `broom_model_output` · `coord_flip_horizontal` · `fct_lump_infrequent` · `fct_reorder_stat` · `geom_histogram_density` · `geom_smooth_loess` · `grouped_summary_ggplot` · `lasso_glmnet` · `linear_model_broom` · `log_scale`
+:::
+
+::: {.callout-warning collapse="true"}
+## FAILS WHEN
+- outcome column is missing or near-zero variance
+- training set is too small for the number of predictors
+- text is multilingual without language detection
+- join key has trailing whitespace or case inconsistency — produces unexpected NAs
+- irregular time intervals inflate or deflate apparent trends
+:::
+
+::: {.callout-important collapse="true"}
+## WORKS WHEN
+- outcome column is clearly defined and has sufficient variance
+- features can be engineered from existing columns without external joins
+- text is long-form English and benefits from word-level decomposition
+- time dimension is regular and spans multiple periods with meaningful change
+:::
+
+```{r setup}
+library(here)
+library(scales)
+library(tidyverse)
+library(tidytext)
+library(glmnet)
+library(Matrix)
+library(broom)
+
+# TheDataShrink™ brand colours
+TDS_BLUE  <- "#1b6ca8"
+TDS_GOLD  <- "#c8a415"
+TDS_DARK  <- "#1a1a2e"
+TDS_LIGHT <- "#f8f9fa"
+theme_set(theme_light(base_size = 13))
+
+```
+
+## Explore
+```{r chunk_01}
+library(tidyverse)
+theme_set(theme_light())
+
+horror_movies_raw <- readr::read_csv("https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2019/2019-10-22/horror_movies.csv")
+```
+```{r chunk_02}
+horror_movies <- horror_movies_raw |>
+  arrange(desc(review_rating)) |>
+  extract(title, "year", "\\((\\d\\d\\d\\d)\\)$", remove = FALSE, convert = TRUE) |>
+  mutate(budget = parse_number(budget)) |>
+  separate(plot, c("director", "cast_sentence", "plot"), extra = "merge", sep = "\\. ", fill = "right") |>
+  distinct(title, .keep_all = TRUE)
+```
+```{r chunk_03}
+horror_movies |>
+  count(genres, sort = TRUE)
+
+horror_movies |>
+  count(language, sort = TRUE)
+
+horror_movies |>
+  ggplot(aes(budget)) +
+  geom_histogram() +
+  scale_x_log10(labels = scales::dollar)
+```
+```{r chunk_04}
+horror_movies |>
+  ggplot(aes(budget, review_rating)) +
+  geom_point() +
+  scale_x_log10(labels = scales::dollar) +
+  geom_smooth(method = "lm")
+```
+```{r chunk_05}
+horror_movies |>
+  mutate(movie_rating = fct_lump(movie_rating, 5),
+         movie_rating = fct_reorder(movie_rating, review_rating, na.rm = TRUE)) |>
+  ggplot(aes(movie_rating, review_rating)) +
+  geom_boxplot() +
+  coord_flip()
+
+horror_movies |>
+  filter(!is.na(movie_rating)) |>
+  mutate(movie_rating = fct_lump(movie_rating, 5)) |>
+  lm(review_rating ~ movie_rating, data = .) |>
+  anova()
+```
+```{r chunk_06}
+horror_movies |>
+  separate_rows(genres, sep = "\\| ") |>
+  mutate(genre = fct_lump(genres, 5)) |>
+  ggplot(aes(genre, review_rating)) +
+  geom_boxplot()
+```
+```{r chunk_07}
+library(tidytext)
+
+horror_movies_unnested <- horror_movies |>
+  unnest_tokens(word, plot) |>
+  anti_join(stop_words, by = "word") |>
+  filter(!is.na(word))
+
+horror_movies_unnested |>
+  filter(!is.na(review_rating)) |>
+  group_by(word) |>
+  summarize(movies = n(),
+            avg_rating = mean(review_rating)) |>
+  arrange(desc(movies)) |>
+  filter(movies >= 100) |>
+  mutate(word = fct_reorder(word, avg_rating)) |>
+  ggplot(aes(avg_rating, word)) +
+  geom_point()
+```
+
+## Lasso regression for predicing review rating based on words in plot
+```{r chunk_08}
+library(glmnet)
+library(Matrix)
+
+movie_word_matrix <- horror_movies_unnested |>
+  filter(!is.na(review_rating)) |>
+  add_count(word) |>
+  filter(n >= 20) |>
+  count(title, word) |>
+  cast_sparse(title, word, n)
+
+rating <- horror_movies$review_rating[match(rownames(movie_word_matrix), horror_movies$title)]
+
+lasso_model <- cv.glmnet(movie_word_matrix, rating)
+```
+```{r chunk_09}
+library(broom)
+
+tidy(lasso_model$glmnet.fit) |>
+  filter(term %in% c("quickly", "seek", "army", "teacher", "unexpected", "friends", "evil")) |>
+  ggplot(aes(lambda, estimate, color = term)) +
+  geom_line() +
+  scale_x_log10() +
+  geom_vline(xintercept = lasso_model$lambda.min) +
+  geom_hline(yintercept = 0, lty = 2)
+```
+```{r chunk_10}
+plot(lasso_model)
+
+tidy(lasso_model$glmnet.fit) |>
+  filter(lambda == lasso_model$lambda.min,
+         term != "(Intercept)") |>
+  mutate(term = fct_reorder(term, estimate)) |>
+  ggplot(aes(term, estimate)) +
+  geom_col() +
+  coord_flip()
+```
+```{r chunk_11}
+features <- horror_movies |>
+  filter(!is.na(review_rating)) |>
+  select(title, genres, director, cast, movie_rating, language, release_country) |>
+  mutate(director = str_remove(director, "Directed by ")) |>
+  gather(type, value, -title) |>
+  filter(!is.na(value)) |>
+  separate_rows(value, sep = "\\| ?") |>
+  unite(feature, type, value, sep = ": ") |>
+  mutate(n = 1)
+
+movie_feature_matrix <- horror_movies_unnested |>
+  filter(!is.na(review_rating)) |>
+  count(title, feature = paste0("word: ", word)) |>
+  bind_rows(features) |>
+  add_count(feature) |>
+  filter(n >= 10) |>
+  cast_sparse(title, feature)
+
+rating <- horror_movies$review_rating[match(rownames(movie_feature_matrix), horror_movies$title)]
+
+feature_lasso_model <- cv.glmnet(movie_feature_matrix, rating)
+```
+```{r chunk_12}
+plot(feature_lasso_model)
+
+tidy(feature_lasso_model$glmnet.fit) |>
+  filter(lambda == feature_lasso_model$lambda.1se,
+         term != "(Intercept)") |>
+  mutate(term = fct_reorder(term, estimate)) |>
+  ggplot(aes(term, estimate)) +
+  geom_col() +
+  coord_flip() +
+  labs(x = "",
+       y = "Coefficient for predicting movie rating",
+       title = "What affects a horror movie rating?",
+       subtitle = "Based on a lasso regression to predict IMDb ratings of ~3000 movies")
+```
+```{r chunk_13}
+horror_movies |>
+  filter(str_detect(genres, "Comedy"),
+         !is.na(movie_rating),
+         !is.na(budget),
+         movie_rating != "PG") |>
+  arrange(desc(review_rating)) |>
+  select(title, review_rating, movie_rating, plot, director, budget, language) |>
+```
+
+---
+
+**→ [Hour 2: Modeling](h2_modeling_predicting_horror_movie_ratings.qmd)**
+
+*TheDataShrink™ — thedatashrink.com.au — Weekly data stories in R*

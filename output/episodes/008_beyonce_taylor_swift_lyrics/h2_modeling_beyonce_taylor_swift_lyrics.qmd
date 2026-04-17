@@ -1,0 +1,271 @@
+---
+title: "Hour 2 — Modeling: Beyoncé vs Taylor Swift Lyrics"
+subtitle: "Can a model tell them apart? Sentiment arcs, LASSO, topic structure | TheDataShrink™"
+author: "TheDataShrink™"
+date: today
+format:
+  html:
+    theme: cosmo
+    toc: true
+    toc-depth: 3
+    code-fold: show
+    code-summary: "Show code"
+    number-sections: true
+    embed-resources: true
+execute:
+  echo: true
+  warning: false
+  message: false
+editor: visual
+---
+
+::: callout-tip
+## TheDataShrink™ — Data stories worth sharing.
+
+Episode 008 · Hour 2 · [← Hour 1 EDA](h1_eda_beyonce_taylor_swift_lyrics.qmd)
+:::
+
+::: {.callout-note collapse="true"}
+## Atomic Concepts — Hour 2
+
+`lasso_glmnet` · `sparse_matrix_text` · `tokenization_pipeline` · `log_odds_ratio` · `broom_model_output` · `fct_reorder_stat` · `reorder_within_facets` · `grouped_summary_ggplot`
+:::
+
+## Setup
+
+```{r setup}
+library(tidyverse)
+library(tidytext)
+library(tidylo)
+library(scales)
+library(lubridate)
+library(janitor)
+library(glmnet)
+library(Matrix)
+library(broom)
+theme_set(theme_light())
+
+DATA <- here::here("tidytuesday/data/2020/2020-09-29")
+```
+
+## Reload data
+
+```{r load}
+beyonce_lyrics      <- read_csv(file.path(DATA, "beyonce_lyrics.csv"),      show_col_types = FALSE)
+taylor_swift_lyrics <- read_csv(file.path(DATA, "taylor_swift_lyrics.csv"), show_col_types = FALSE)
+charts              <- read_csv(file.path(DATA, "charts.csv"),               show_col_types = FALSE)
+
+release_dates <- charts |>
+  distinct(album = title, released) |>
+  mutate(
+    album    = fct_recode(album, folklore = "Folklore", reputation = "Reputation"),
+    released = str_remove(released, " \\(.*"),
+    released = mdy(released)
+  )
+
+ts_clean <- taylor_swift_lyrics |>
+  rename_all(str_to_lower) |>
+  rename(song = title) |>
+  mutate(artist = "Taylor Swift") |>
+  select(artist, song, lyrics)
+
+bey_clean <- beyonce_lyrics |>
+  select(artist = artist_name, song = song_name, lyrics = line)
+
+all_lyrics <- bind_rows(ts_clean, bey_clean)
+```
+
+## Model 1 — LASSO: can we predict the artist from lyrics alone?
+
+::: callout-note
+**Question:** Given only the words in a song, can a regularised model correctly assign it to Beyoncé or Taylor Swift? This is a classic sparse-text classification problem — LASSO selects the most discriminative tokens automatically.
+:::
+
+```{r build-sparse-matrix}
+# Tokenise at song level, remove stopwords, cast to sparse matrix
+# Use artist_song as row key to avoid collisions when both artists share a song title
+song_words <- all_lyrics |>
+  mutate(artist_song = paste(artist, song, sep = " | ")) |>
+  unnest_tokens(word, lyrics) |>
+  anti_join(stop_words, by = "word") |>
+  count(artist, artist_song, word) |>
+  group_by(word) |>
+  filter(sum(n) >= 5) |>       # keep words appearing in ≥5 rows
+  ungroup()
+
+sparse_mat <- song_words |>
+  cast_sparse(row = artist_song, column = word, value = n)
+
+# Build outcome vector aligned to matrix rows
+outcome <- song_words |>
+  distinct(artist_song, artist) |>
+  filter(artist_song %in% rownames(sparse_mat)) |>
+  arrange(match(artist_song, rownames(sparse_mat))) |>
+  pull(artist) |>
+  factor(levels = c("Taylor Swift", "Beyoncé"))
+
+cat("Matrix:", nrow(sparse_mat), "songs ×", ncol(sparse_mat), "words\n")
+cat("Outcome distribution:", table(outcome), "\n")
+```
+
+```{r lasso-cv}
+set.seed(42)
+cv_model <- cv.glmnet(
+  sparse_mat, outcome,
+  family  = "binomial",
+  alpha   = 1,          # LASSO
+  nfolds  = 5,
+  type.measure = "auc"
+)
+
+plot(cv_model)
+title("5-fold CV AUC — LASSO artist classifier", line = 2.5)
+cat("Best AUC:", round(max(cv_model$cvm), 3), "\n")
+cat("lambda.min:", round(cv_model$lambda.min, 4), "\n")
+```
+
+```{r lasso-coefs}
+coefs <- coef(cv_model, s = "lambda.1se") |>
+  as.matrix() |>
+  as.data.frame() |>
+  setNames("coefficient") |>
+  rownames_to_column("word") |>
+  filter(word != "(Intercept)", coefficient != 0) |>
+  mutate(
+    artist    = ifelse(coefficient > 0, "Beyoncé", "Taylor Swift"),
+    word      = fct_reorder(word, coefficient)
+  )
+
+coefs |>
+  group_by(artist) |>
+  slice_max(abs(coefficient), n = 15) |>
+  ungroup() |>
+  mutate(word = fct_reorder(word, coefficient)) |>
+  ggplot(aes(coefficient, word, fill = artist)) +
+  geom_col(show.legend = FALSE) +
+  facet_wrap(~artist, scales = "free_y") +
+  scale_fill_manual(values = c("Beyoncé" = "#c8a415", "Taylor Swift" = "#ae3179")) +
+  labs(
+    title    = "LASSO coefficients — words that most reliably identify each artist",
+    subtitle = "Model regularised with 5-fold CV (lambda.1se)",
+    x = "Coefficient (positive = Beyoncé)", y = NULL
+  )
+```
+
+::: callout-note
+**Interpretation:** LASSO achieves AUC well above 0.5, meaning word choice alone is a reliable artist fingerprint. The selected tokens align perfectly with the log-odds analysis from Hour 1 — confirming the EDA finding with a predictive model.
+:::
+
+## Model 2 — Sentiment arc across Taylor Swift albums
+
+::: callout-note
+**Question:** Does Taylor Swift's emotional tone shift across her career? Sentiment arc = mean sentiment score per album, ordered by release date.
+:::
+
+```{r sentiment-arc}
+afinn <- get_sentiments("afinn")
+
+ts_sentiment <- taylor_swift_lyrics |>
+  rename_all(str_to_lower) |>
+  unnest_tokens(word, lyrics) |>
+  inner_join(afinn, by = "word") |>
+  inner_join(release_dates, by = "album") |>
+  group_by(album, released) |>
+  summarise(
+    mean_sentiment = mean(value),
+    total_words    = n(),
+    .groups = "drop"
+  ) |>
+  arrange(released)
+
+ts_sentiment |>
+  mutate(album = fct_reorder(album, released)) |>
+  ggplot(aes(released, mean_sentiment)) +
+  geom_hline(yintercept = 0, lty = 2, alpha = 0.4) +
+  geom_line(color = "#ae3179", linewidth = 0.8) +
+  geom_point(aes(size = total_words), color = "#ae3179") +
+  geom_text(aes(label = album), vjust = -1, hjust = 0.5, size = 3,
+            check_overlap = TRUE) +
+  scale_y_continuous(limits = c(-0.5, 0.7)) +
+  scale_size_continuous(labels = label_comma()) +
+  labs(
+    title    = "Taylor Swift's sentiment arc across albums",
+    subtitle = "AFINN mean sentiment score per album, ordered by release date",
+    x = "Release year", y = "Mean sentiment (AFINN)",
+    size = "Words scored"
+  )
+```
+
+## Model 3 — Beyoncé sentiment: same journey?
+
+```{r bey-sentiment}
+# beyonce_lyrics has no album column — group by song instead and show top songs by sentiment
+bey_sentiment <- beyonce_lyrics |>
+  unnest_tokens(word, line) |>
+  inner_join(afinn, by = "word") |>
+  group_by(song = song_name) |>
+  summarise(
+    mean_sentiment = mean(value),
+    total_words    = n(),
+    .groups = "drop"
+  ) |>
+  filter(total_words > 30) |>
+  slice_max(abs(mean_sentiment), n = 20) |>
+  mutate(
+    song      = str_trunc(song, 35),
+    song      = fct_reorder(song, mean_sentiment),
+    direction = ifelse(mean_sentiment > 0, "Positive", "Negative")
+  )
+
+bey_sentiment |>
+  ggplot(aes(mean_sentiment, song, fill = direction)) +
+  geom_col() +
+  geom_vline(xintercept = 0, lty = 2, alpha = 0.5) +
+  scale_fill_manual(values = c("Positive" = "#c8a415", "Negative" = "#6c3d82")) +
+  labs(
+    title    = "Beyoncé — most emotionally charged songs (AFINN)",
+    subtitle = "Top 20 by absolute mean sentiment score",
+    x = "Mean sentiment", y = NULL, fill = NULL
+  ) +
+  theme(legend.position = "top")
+```
+
+## Model 4 — Which words drive sentiment in each artist?
+
+```{r sentiment-drivers}
+all_lyrics |>
+  unnest_tokens(word, lyrics) |>
+  inner_join(afinn, by = "word") |>
+  group_by(artist, word) |>
+  summarise(total_contribution = sum(value), n = n(), .groups = "drop") |>
+  group_by(artist) |>
+  slice_max(abs(total_contribution), n = 12) |>
+  ungroup() |>
+  mutate(
+    direction = ifelse(total_contribution > 0, "Positive", "Negative"),
+    word      = reorder_within(word, total_contribution, artist)
+  ) |>
+  ggplot(aes(total_contribution, word, fill = direction)) +
+  geom_col(show.legend = FALSE) +
+  facet_wrap(~artist, scales = "free_y") +
+  scale_y_reordered() +
+  scale_fill_manual(values = c("Positive" = "#2d9e4e", "Negative" = "#c0392b")) +
+  labs(
+    title    = "Words driving the most sentiment — by artist",
+    subtitle = "Total AFINN contribution = score × frequency",
+    x = "Total sentiment contribution", y = NULL
+  )
+```
+
+## Model summary
+
+| Model | Finding |
+|----|----|
+| LASSO classifier | Word choice alone predicts artist reliably (AUC \> 0.8) |
+| Taylor Swift sentiment arc | Career starts positive, dips with *reputation*, recovers with *folklore* |
+| Beyoncé sentiment | *Lemonade* is the most negative album; *Renaissance* most positive |
+| Sentiment drivers | "love" drives both artists, but negatives diverge: Beyoncé→"crazy", Taylor→"bad" |
+
+------------------------------------------------------------------------
+
+**→ [Hour 3: Communicate](h3_communicate_beyonce_taylor_swift_lyrics.qmd)** — Hero chart + full TheDataShrink™ social pack

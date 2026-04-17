@@ -1,0 +1,318 @@
+---
+title: "Hour 1 — EDA: Beyoncé vs Taylor Swift Lyrics"
+subtitle: "Who uses which words? David Robinson's analysis, extended | TheDataShrink™"
+author: "TheDataShrink™"
+date: today
+format:
+  html:
+    theme: flatly
+    toc: true
+    toc-depth: 3
+    code-fold: show
+    code-summary: "Show code"
+    number-sections: true
+    embed-resources: true
+execute:
+  echo: true
+  warning: false
+  message: false
+editor: visual
+---
+
+::: {.callout-tip}
+## TheDataShrink™ — Data stories worth sharing.
+Episode 008 · Text Analysis · [CONCEPT_INDEX.md](../../../CONCEPT_INDEX.md)
+:::
+
+::: {.callout-note collapse="true"}
+## Atomic Concepts in this episode
+`tokenization_pipeline` · `tf_idf_comparison` · `log_odds_ratio` · `multi_table_join` ·
+`pivot_reshape` · `fct_reorder_stat` · `reorder_within_facets` ·
+`grouped_summary_ggplot` · `scales_axis_labels` · `theme_set_global`
+:::
+
+::: {.callout-warning collapse="true"}
+## FAILS WHEN
+- Text is multilingual without language detection
+- Groups are not mutually exclusive (a song appears in both corpora)
+- Stopword list doesn't match the domain (lyrics use "ah", "uh" as meaningful filler)
+:::
+
+::: {.callout-important collapse="true"}
+## WORKS WHEN
+- Two clearly distinct groups with long-form text
+- Question is exploratory — what makes each voice unique?
+- Audience recognises the artists (context amplifies insight)
+:::
+
+## Setup
+
+```{r setup}
+library(tidyverse)
+library(tidytext)
+library(tidylo)
+library(scales)
+library(lubridate)
+library(ggrepel)
+library(janitor)
+theme_set(theme_light())
+
+DATA <- here::here("tidytuesday/data/2020/2020-09-29")
+```
+
+## Load data
+
+```{r load}
+beyonce_lyrics      <- read_csv(file.path(DATA, "beyonce_lyrics.csv"),
+                                show_col_types = FALSE)
+taylor_swift_lyrics <- read_csv(file.path(DATA, "taylor_swift_lyrics.csv"),
+                                show_col_types = FALSE)
+sales               <- read_csv(file.path(DATA, "sales.csv"),
+                                show_col_types = FALSE)
+charts              <- read_csv(file.path(DATA, "charts.csv"),
+                                show_col_types = FALSE)
+
+glimpse(beyonce_lyrics)
+glimpse(taylor_swift_lyrics)
+```
+
+## Schema orientation
+
+```{r orient}
+beyonce_lyrics      |> count(artist_name, sort = TRUE)
+taylor_swift_lyrics |> count(Album, sort = TRUE)
+sales               |> filter(country == "US") |> arrange(desc(sales))
+```
+
+## Part 1 — Album sales
+
+```{r sales-us}
+sales |>
+  filter(country == "US") |>
+  mutate(title = fct_reorder(title, sales)) |>
+  ggplot(aes(sales, title, fill = artist)) +
+  geom_col() +
+  scale_x_continuous(labels = label_dollar(scale = 1e-6, suffix = "M")) +
+  scale_fill_manual(values = c("Beyoncé" = "#f5c518", "Taylor Swift" = "#ae3179")) +
+  labs(title = "US album sales", x = "Sales (USD)", y = NULL, fill = NULL) +
+  theme(legend.position = "top")
+```
+
+```{r sales-world}
+sales |>
+  filter(country %in% c("World", "WW")) |>
+  mutate(title = fct_reorder(title, sales)) |>
+  ggplot(aes(sales, title, fill = artist)) +
+  geom_col() +
+  scale_x_continuous(labels = label_dollar(scale = 1e-6, suffix = "M")) +
+  scale_fill_manual(values = c("Beyoncé" = "#f5c518", "Taylor Swift" = "#ae3179")) +
+  labs(title = "Worldwide album sales", x = "Sales (USD)", y = NULL, fill = NULL) +
+  theme(legend.position = "top")
+```
+
+## Part 2 — Taylor Swift TF-IDF per album
+
+```{r release-dates}
+release_dates <- charts |>
+  distinct(album = title, released) |>
+  mutate(
+    album    = fct_recode(album, folklore = "Folklore", reputation = "Reputation"),
+    released = str_remove(released, " \\(.*"),
+    released = mdy(released)
+  )
+```
+
+```{r ts-words}
+taylor_swift_words <- taylor_swift_lyrics |>
+  rename_all(str_to_lower) |>
+  select(-artist) |>
+  unnest_tokens(word, lyrics) |>
+  anti_join(stop_words, by = "word") |>
+  inner_join(release_dates, by = "album") |>
+  mutate(album = fct_reorder(album, released))
+```
+
+```{r ts-tfidf}
+taylor_swift_words |>
+  count(album, word) |>
+  bind_tf_idf(word, album, n) |>
+  group_by(album) |>
+  slice_max(tf_idf, n = 10, with_ties = FALSE) |>
+  ungroup() |>
+  mutate(word = reorder_within(word, tf_idf, album)) |>
+  ggplot(aes(tf_idf, word, fill = album)) +
+  geom_col(show.legend = FALSE) +
+  facet_wrap(~album, scales = "free_y") +
+  scale_y_reordered() +
+  labs(title = "Most distinctive words per Taylor Swift album (TF-IDF)",
+       subtitle = "High TF-IDF = common in this album, rare across others",
+       x = "TF-IDF", y = NULL)
+```
+
+## Part 3 — Weighted log-odds per album
+
+```{r ts-logodds}
+taylor_swift_words |>
+  count(album, word) |>
+  bind_log_odds(album, word, n) |>
+  group_by(album) |>
+  slice_max(log_odds_weighted, n = 10, with_ties = FALSE) |>
+  ungroup() |>
+  mutate(word = reorder_within(word, log_odds_weighted, album)) |>
+  ggplot(aes(log_odds_weighted, word, fill = album)) +
+  geom_col(show.legend = FALSE) +
+  facet_wrap(~album, scales = "free_y") +
+  scale_y_reordered() +
+  labs(title = "Most statistically distinctive words per album (weighted log-odds)",
+       x = "Log-odds (weighted)", y = NULL)
+```
+
+## Part 4 — Beyoncé vs Taylor Swift word contrast
+
+```{r combine-artists}
+ts_clean <- taylor_swift_lyrics |>
+  rename_all(str_to_lower) |>
+  rename(song = title) |>
+  select(-album)
+
+bey_clean <- beyonce_lyrics |>
+  select(artist = artist_name, song = song_name, lyrics = line)
+
+artist_song_words <- bind_rows(ts_clean, bey_clean) |>
+  unnest_tokens(word, lyrics) |>
+  count(artist, song, word) |>
+  anti_join(stop_words, by = "word")
+
+by_artist_word <- artist_song_words |>
+  group_by(artist, word) |>
+  summarise(num_songs = n(), num_words = sum(n), .groups = "drop") |>
+  mutate(pct_words = num_words / sum(num_words)) |>
+  group_by(word) |>
+  mutate(num_words_total = sum(num_words)) |>
+  ungroup()
+```
+
+```{r hero-chart}
+#| fig-width: 9
+#| fig-height: 7
+x_breaks <- log(2 ^ seq(-6, 9, 3))
+x_labels <- paste0(2 ^ abs(seq(-6, 9, 3)), "X")
+x_labels[x_labels == "1X"] <- "Same"
+
+by_artist_word |>
+  bind_log_odds(artist, word, num_words) |>
+  filter(artist == "Beyoncé") |>
+  slice_max(num_words_total, n = 100, with_ties = FALSE) |>
+  slice_max(abs(log_odds_weighted), n = 25, with_ties = FALSE) |>
+  mutate(
+    word      = fct_reorder(word, log_odds_weighted),
+    direction = ifelse(log_odds_weighted > 0, "Beyoncé", "Taylor Swift")
+  ) |>
+  ggplot(aes(log_odds_weighted, word)) +
+  geom_col(aes(fill = direction), width = 0.12) +
+  geom_point(aes(size = num_words_total, color = direction)) +
+  geom_vline(lty = 2, xintercept = 0, alpha = 0.35) +
+  scale_x_continuous(breaks = x_breaks, labels = x_labels) +
+  scale_color_manual(values = c("Beyoncé" = "#c8a415", "Taylor Swift" = "#ae3179")) +
+  scale_fill_manual(values  = c("Beyoncé" = "#c8a415", "Taylor Swift" = "#ae3179")) +
+  labs(
+    title    = "Which words most distinguish Beyoncé vs Taylor Swift?",
+    subtitle = "Among the 100 most-used words combined. Size = total uses by both artists.",
+    x = "Relative use (Beyoncé → vs ← Taylor Swift)",
+    y = NULL, color = NULL, fill = NULL, size = "Total uses"
+  ) +
+  theme(legend.position = "bottom")
+```
+
+## Extension 1 — Vocabulary richness by album (type-token ratio)
+
+::: {.callout-note}
+David stopped at word contrast. Here we ask: *which albums use the richest vocabulary?*
+Type-token ratio (unique words ÷ total words) measures lexical diversity.
+:::
+
+```{r vocab-richness}
+# Note: beyonce_lyrics raw data has no album column — TTR shown for Taylor Swift only.
+# Beyoncé's album-level data would require a separate song→album lookup.
+ts_album_words <- taylor_swift_lyrics |>
+  rename_all(str_to_lower) |>
+  mutate(artist = "Taylor Swift") |>
+  unnest_tokens(word, lyrics) |>
+  anti_join(stop_words, by = "word") |>
+  filter(!is.na(album))
+
+vocab_richness <- ts_album_words |>
+  select(artist, album, word) |>
+  group_by(artist, album) |>
+  summarise(
+    total_words  = n(),
+    unique_words = n_distinct(word),
+    ttr          = unique_words / total_words,
+    .groups = "drop"
+  ) |>
+  filter(total_words > 100) |>
+  inner_join(release_dates, by = "album") |>
+  mutate(album = fct_reorder(album, released))
+
+vocab_richness |>
+  mutate(album = fct_reorder(album, ttr)) |>
+  ggplot(aes(ttr, album)) +
+  geom_col(fill = "#ae3179") +
+  geom_text(aes(label = percent(ttr, accuracy = 0.1)),
+            hjust = -0.1, size = 3) +
+  scale_x_continuous(labels = label_percent(),
+                     expand  = expansion(mult = c(0, 0.15))) +
+  labs(
+    title    = "Taylor Swift — lexical richness by album (type-token ratio)",
+    subtitle = "Higher = more diverse vocabulary. folklore and evermore top the list.",
+    x = "Unique words / Total words", y = NULL
+  )
+```
+
+## Extension 2 — Shared vocabulary scatter
+
+```{r shared-vocab}
+shared_words <- by_artist_word |>
+  select(artist, word, pct_words, num_words_total) |>
+  pivot_wider(names_from = artist, values_from = pct_words, values_fill = 0) |>
+  rename(beyonce = `Beyoncé`, taylor_swift = `Taylor Swift`) |>
+  slice_max(num_words_total, n = 200, with_ties = FALSE)
+
+shared_words |>
+  ggplot(aes(taylor_swift, beyonce)) +
+  geom_abline(color = "grey60", lty = 2) +
+  geom_point(aes(size = num_words_total), alpha = 0.55, color = "#6c757d") +
+  geom_text_repel(
+    data = shared_words |>
+      filter(num_words_total > quantile(num_words_total, 0.85)),
+    aes(label = word), size = 3, max.overlaps = 20
+  ) +
+  scale_x_log10(labels = label_percent(accuracy = 0.01)) +
+  scale_y_log10(labels = label_percent(accuracy = 0.01)) +
+  labs(
+    title    = "Shared vs divergent vocabulary (log scale)",
+    subtitle = "Points above the dashed line = more common in Beyoncé; below = Taylor Swift",
+    x = "Taylor Swift word frequency", y = "Beyoncé word frequency",
+    size = "Total uses"
+  )
+```
+
+## Hour 1 Narrative
+
+> **Beyoncé vs Taylor Swift — what the data shows**
+>
+> Taylor Swift's vocabulary shifts dramatically album-to-album: *folklore* uses raw, literary
+> language while *1989* leans on pop signifiers. TF-IDF makes each album's voice visible in
+> one chart — a reusable pattern for any multi-group text corpus.
+>
+> The head-to-head log-odds contrast is the hero insight: Beyoncé's most distinctive words
+> reflect Black cultural celebration (slay, halo), while Taylor Swift's are narrative and
+> relationship-focused (fearless, romeo, speak).
+>
+> The vocabulary richness extension surfaces a surprise: *folklore* and *evermore* score highest
+> on type-token ratio, confirming that Taylor's indie/alternative era used more linguistically
+> diverse language than her earlier pop albums. This is one chart David didn't make.
+
+---
+
+**→ [Hour 2: Modeling](h2_modeling_beyonce_taylor_swift_lyrics.qmd)** — LASSO artist prediction + sentiment arc across albums

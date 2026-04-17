@@ -19,7 +19,7 @@ execute:
 - `ker_status`: `extracted`
 - `reproduction_status`: `ready_local`
 - `transcript_file`: `raw-data/inspiration/Analyzing Simpsons guest stars and dialogue in R.txt`
-- `code_file`: `data-screencasts/simpsons-guests.Rmd`
+- `code_file`: `data-screencasts-dgrtwo/simpsons-guests.Rmd`
 - `data_source`: TidyTuesday 2019-08-27 source files
 - `analysis_type`: `EDA`
 - `pattern_signature`: `load_inspect_reshape_join_tokenize_compare_visualize`

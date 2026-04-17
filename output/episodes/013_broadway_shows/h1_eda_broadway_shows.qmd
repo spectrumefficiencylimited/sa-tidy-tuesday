@@ -1,0 +1,135 @@
+---
+title: "Hour 1 — EDA: Analyzing Broadway shows in R"
+subtitle: "David Robinson's analysis, extended | TheDataShrink™"
+author: "TheDataShrink™"
+date: today
+format:
+  html:
+    theme: flatly
+    toc: true
+    toc-depth: 3
+    code-fold: show
+    code-summary: "Show code"
+    number-sections: true
+    embed-resources: true
+execute:
+  echo: true
+  warning: false
+  message: false
+  error: true
+editor: visual
+---
+
+
+::: {.callout-tip}
+## TheDataShrink™ — Data stories worth sharing.
+Episode 013 · Hour 1
+:::
+
+
+::: {.callout-note collapse="true"}
+## Atomic Concepts in this episode
+`rolling_window_metrics` · `shiny_app` · `spline_regression` · `str_detect_filter` · `theme_set_global` · `tidytuesdayr_load` · `time_series_trend`
+:::
+
+::: {.callout-warning collapse="true"}
+## FAILS WHEN
+- dataset has no natural grouping variable — comparisons become meaningless
+- column names are unstable across TidyTuesday editions (re-check schema each year)
+- irregular time intervals inflate or deflate apparent trends
+:::
+
+::: {.callout-important collapse="true"}
+## WORKS WHEN
+- dataset has clear categorical + numeric columns for grouped comparisons
+- question is exploratory — no strong prior hypothesis
+- time dimension is regular and spans multiple periods with meaningful change
+:::
+
+```{r setup}
+library(here)
+library(scales)
+library(tidyverse)
+library(tidymetrics)
+library(shinymetrics)
+
+# TheDataShrink™ brand colours
+TDS_BLUE  <- "#1b6ca8"
+TDS_GOLD  <- "#c8a415"
+TDS_DARK  <- "#1a1a2e"
+TDS_LIGHT <- "#f8f9fa"
+theme_set(theme_light(base_size = 13))
+
+```
+## Load data
+```{r load-data}
+cpi <- read_csv("/Users/stoiana/sa-tidy-tuesday/tidytuesday/data/2020/2020-04-28/cpi.csv", show_col_types = FALSE)
+grosses <- read_csv("/Users/stoiana/sa-tidy-tuesday/tidytuesday/data/2020/2020-04-28/grosses.csv", show_col_types = FALSE)
+pre-1985-starts <- read_csv("/Users/stoiana/sa-tidy-tuesday/tidytuesday/data/2020/2020-04-28/pre-1985-starts.csv", show_col_types = FALSE)
+synopses <- read_csv("/Users/stoiana/sa-tidy-tuesday/tidytuesday/data/2020/2020-04-28/synopses.csv", show_col_types = FALSE)
+glimpse(cpi)
+glimpse(grosses)
+```
+
+## Explore
+```{r chunk_02}
+grosses <- grosses
+
+grosses |>
+  filter(show %in% c("Hamilton", "The Lion King")) |>
+  ggplot(aes(week_ending, weekly_gross, color = show)) +
+  geom_line() +
+  scale_y_continuous(labels = scales::dollar) +
+  expand_limits(y = 0)
+```
+```{r chunk_03}
+# devtools::install_github("ramnathv/tidymetrics")
+library(tidymetrics)
+
+shows_summarized <- grosses |>
+  filter(show %in% c("Hamilton", "The Lion King",
+                     "Les Miserables", "Rent",
+                     "The Phantom of the Opera", "Wicked",
+                     "Harry Potter and the Cursed Child, Parts One and Two",
+                     "The Book of Mormon")) |>
+  mutate(show = str_remove(show, "\\, Parts.*")) |>
+  rename(date = week_ending) |>
+  cross_by_dimensions(show) |>
+  cross_by_periods(c("month", "quarter", "year"),
+                   windows = 28) |>
+  summarize(usd_gross = sum(weekly_gross),
+            avg_ticket_price = mean(avg_ticket_price),
+            pct_capacity = mean(pct_capacity)) |>
+  ungroup()
+
+show_metrics <- create_metrics(shows_summarized)
+```
+```{r chunk_04}
+# devtools::install_github("ramnathv/shinymetrics")
+library(shinymetrics)
+saveRDS(show_metrics, "broadway-shinybones/show_metrics.rds")
+
+preview_metric(show_metrics$broadway_revenue_usd_gross)
+preview_metric(show_metrics$broadway_revenue_avg_ticket_price)
+preview_metric(show_metrics$broadway_revenue_pct_capacity)
+```
+```{r chunk_05}
+shows_summarized |>
+  filter(period == "quarter",
+         show != "All") |>
+  ggplot(aes(date, usd_gross, fill = show)) +
+  geom_col()
+
+shows_summarized |>
+  filter(period == "quarter",
+         show != "All") |>
+  ggplot(aes(date, avg_ticket_price, col = show)) +
+  geom_line() +
+  expand_limits(y = 0)
+```
+
+---
+
+**→ [Hour 2: Modeling](h2_modeling_broadway_shows.qmd)**
+
+*TheDataShrink™ — thedatashrink.com.au — Weekly data stories in R*

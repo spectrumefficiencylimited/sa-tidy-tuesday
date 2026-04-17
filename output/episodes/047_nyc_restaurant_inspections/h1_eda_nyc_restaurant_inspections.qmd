@@ -1,0 +1,224 @@
+---
+title: "Hour 1 — EDA: Analyzing NYC restaurant inspections with R"
+subtitle: "David Robinson's analysis, extended | TheDataShrink™"
+author: "TheDataShrink™"
+date: today
+format:
+  html:
+    theme: flatly
+    toc: true
+    toc-depth: 3
+    code-fold: show
+    code-summary: "Show code"
+    number-sections: true
+    embed-resources: true
+execute:
+  echo: true
+  warning: false
+  message: false
+  error: true
+editor: visual
+---
+
+
+::: {.callout-tip}
+## TheDataShrink™ — Data stories worth sharing.
+Episode 047 · Hour 1
+:::
+
+
+::: {.callout-note collapse="true"}
+## Atomic Concepts in this episode
+`add_count_inline` · `boxplot_jitter` · `coord_flip_horizontal` · `error_bar_coef_plot` · `fct_reorder_stat` · `grouped_summary_ggplot` · `janitor_clean` · `linear_model_broom` · `log_scale` · `lubridate_dates` · `pairwise_token_correlation` · `purrr_map_iterate`
+:::
+
+::: {.callout-warning collapse="true"}
+## FAILS WHEN
+- dataset has no natural grouping variable — comparisons become meaningless
+- column names are unstable across TidyTuesday editions (re-check schema each year)
+- join key has trailing whitespace or case inconsistency — produces unexpected NAs
+- irregular time intervals inflate or deflate apparent trends
+:::
+
+::: {.callout-important collapse="true"}
+## WORKS WHEN
+- dataset has clear categorical + numeric columns for grouped comparisons
+- question is exploratory — no strong prior hypothesis
+- time dimension is regular and spans multiple periods with meaningful change
+:::
+
+```{r setup}
+library(here)
+library(scales)
+library(tidyverse)
+library(lubridate)
+library(broom)
+library(widyr)
+
+# TheDataShrink™ brand colours
+TDS_BLUE  <- "#1b6ca8"
+TDS_GOLD  <- "#c8a415"
+TDS_DARK  <- "#1a1a2e"
+TDS_LIGHT <- "#f8f9fa"
+theme_set(theme_light(base_size = 13))
+
+```
+
+## Explore
+```{r chunk_01}
+library(tidyverse)
+library(lubridate)
+
+theme_set(theme_light())
+
+# You can use this url to download the data directly into R (will take a few seconds)
+restaurant_inspections_raw <- read_csv("https://data.cityofnewyork.us/api/views/43nn-pn8j/rows.csv")
+
+restaurant_inspections <- restaurant_inspections_raw |> 
+  janitor::clean_names() |>
+  select(-phone, -grade_date, -record_date, -building, -street) |>
+  mutate(inspection_date = mdy(inspection_date)) |>
+  separate(inspection_type, c("inspection_program", "inspection_type"), sep = " / ")
+```
+```{r chunk_02}
+restaurant_inspections |>
+  count(dba, camis, sort = TRUE)
+
+restaurant_inspections |>
+  count(year = year(inspection_date))
+
+restaurant_inspections |>
+  count(grade, sort = TRUE)
+
+restaurant_inspections |>
+  count(violation_code, violation_description, sort = TRUE)
+
+restaurant_inspections |>
+  filter(camis == 41297769, inspection_date == "2018-09-25") |>
+  count(camis, dba, inspection_date, sort = TRUE)
+
+restaurant_inspections |>
+  count(cuisine_description, sort = TRUE)
+
+restaurant_inspections |>
+  filter(action == "No violations were recorded at the time of this inspection.") |>
+  count(critical_flag)
+
+inspections <- restaurant_inspections |>
+  group_by(camis,
+           dba,
+           boro,
+           zipcode,
+           cuisine_description,
+           inspection_date,
+           action,
+           score,
+           grade,
+           inspection_type,
+           inspection_program) |>
+  summarize(critical_violations = sum(critical_flag == "Critical", na.rm = TRUE),
+            non_critical_violations = sum(critical_flag == "Not Critical", na.rm = TRUE)) |>
+  ungroup()
+
+most_recent_cycle_inspection <- inspections |>
+  filter(inspection_program == "Cycle Inspection",
+         inspection_type == "Initial Inspection") |>
+  arrange(desc(inspection_date)) |>
+  distinct(camis, .keep_all = TRUE)
+```
+```{r chunk_03}
+by_dba <- most_recent_cycle_inspection |>
+  group_by(dba, cuisine = cuisine_description) |>
+  summarize(locations = n(),
+            avg_score = mean(score),
+            median_score = median(score)) |>
+  ungroup() |>
+  arrange(desc(locations))
+
+by_dba |>
+  mutate(locations_bin = cut(locations, c(0, 1, 3, 10, Inf), labels = c("1", "2-3", "3-10", ">10"))) |>
+  ggplot(aes(locations_bin, avg_score + 1)) +
+  geom_boxplot() +
+  scale_y_log10()
+```
+```{r chunk_04}
+by_cuisine <- by_dba |>
+  group_by(cuisine) |>
+  summarize(avg_score = mean(avg_score),
+            median_score = median(avg_score),
+            restaurants = n()) |>
+  arrange(desc(restaurants))
+
+library(broom)
+
+cuisine_conf_ints <- by_dba |>
+  add_count(cuisine) |>
+  filter(n > 100) |>
+  nest(-cuisine) |>
+  mutate(model = map(data, ~ t.test(.$avg_score))) |>
+  unnest(map(model, tidy))
+
+cuisine_conf_ints |>
+  mutate(cuisine = str_remove(cuisine, " \\(.*"),
+         cuisine = fct_reorder(cuisine, estimate)) |>
+  ggplot(aes(estimate, cuisine)) +
+  geom_point() +
+  geom_errorbarh(aes(xmin = conf.low,
+                     xmax = conf.high)) +
+  labs(x = "Average inspection score (higher means more violations)",
+       y = "Type of cuisine",
+       title = "Average inspection score by type of cuisine in NYC",
+       subtitle = "Each restaurant chain was counted once based on its average score")
+```
+```{r chunk_05}
+violation_cuisine_counts <- restaurant_inspections |>
+  semi_join(most_recent_cycle_inspection, by = c("camis", "inspection_date")) |>
+  count(critical_flag, violation_code, violation_description, cuisine = cuisine_description) |>
+  group_by(violation_code) |>
+  mutate(violation_total = sum(n)) |>
+  group_by(cuisine) |>
+  mutate(cuisine_total = sum(n)) |>
+  ungroup() |>
+  filter(violation_total >= 1000,
+         cuisine_total >= 2000) |>
+  group_by(violation_description) |>
+  mutate(fraction = n / cuisine_total,
+         avg_fraction = mean(fraction)) |>
+  ungroup()
+
+violation_cuisine_counts |>
+  mutate(relative_risk = fraction / avg_fraction) |>
+  arrange(desc(relative_risk)) |>
+  filter(str_detect(violation_description, "mice"))
+```
+
+## What violations tend to occur together?
+```{r chunk_06}
+library(widyr)
+
+violations <- restaurant_inspections |>
+  semi_join(most_recent_cycle_inspection, by = c("camis", "inspection_date")) |>
+  filter(!is.na(violation_description))
+
+violations |>
+  pairwise_cor(violation_description, camis, sort = TRUE)
+
+principal_components <- violations |>
+  mutate(value = 1) |>
+  widely_svd(violation_description, camis, value, nv = 6)
+
+principal_components |>
+  filter(dimension == 2) |>
+  top_n(10, abs(value)) |>
+  mutate(violation_description = str_sub(violation_description, 1, 60),
+         violation_description = fct_reorder(violation_description, value)) |>
+  ggplot(aes(violation_description, value)) +
+  geom_col() +
+  coord_flip()
+```
+
+---
+
+**→ [Hour 2: Modeling](h2_modeling_nyc_restaurant_inspections.qmd)**
+
+*TheDataShrink™ — thedatashrink.com.au — Weekly data stories in R*

@@ -19,7 +19,7 @@ execute:
 - `ker_status`: `reviewed`
 - `reproduction_status`: `ready_local`
 - `transcript_file`: `raw-data/inspiration/Analyzing Himalayan climbers in R.txt`
-- `code_file`: `data-screencasts/2020_09_22_himalayan_climbers.Rmd`
+- `code_file`: `data-screencasts-dgrtwo/2020_09_22_himalayan_climbers.Rmd`
 - `data_source`: TidyTuesday 2020-09-22 Himalayan climbers data: peaks, expeditions, and members tables
 - `analysis_type`: `EDA`
 - `pattern_signature`: `load_inspect_recode_summarize_compare_visualize`

@@ -19,7 +19,7 @@ execute:
 - `ker_status`: `extracted`
 - `reproduction_status`: `ready_local`
 - `transcript_file`: `raw-data/inspiration/Analyzing European energy in R.txt`
-- `code_file`: `data-screencasts/2020_08_04_europe_energy.Rmd`
+- `code_file`: `data-screencasts-dgrtwo/2020_08_04_europe_energy.Rmd`
 - `data_source`: TidyTuesday 2020-08-04 dataset
 - `analysis_type`: `EDA`
 - `pattern_signature`: `load_inspect_reshape_tokenize_trend_compare_visualize`

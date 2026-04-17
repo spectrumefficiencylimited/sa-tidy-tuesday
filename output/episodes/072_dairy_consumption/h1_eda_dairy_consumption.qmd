@@ -1,0 +1,192 @@
+---
+title: "Hour 1 — EDA: Analyzing US dairy consumption in R"
+subtitle: "David Robinson's analysis, extended | TheDataShrink™"
+author: "TheDataShrink™"
+date: today
+format:
+  html:
+    theme: flatly
+    toc: true
+    toc-depth: 3
+    code-fold: show
+    code-summary: "Show code"
+    number-sections: true
+    embed-resources: true
+execute:
+  echo: true
+  warning: false
+  message: false
+  error: true
+editor: visual
+---
+
+
+::: {.callout-tip}
+## TheDataShrink™ — Data stories worth sharing.
+Episode 072 · Hour 1
+:::
+
+
+::: {.callout-note collapse="true"}
+## Atomic Concepts in this episode
+`confidence_ribbon` · `coord_flip_horizontal` · `crossing_simulation_grid` · `faceted_comparison` · `fct_lump_infrequent` · `fct_reorder_stat` · `grouped_summary_ggplot` · `lubridate_dates` · `pivot_reshape` · `purrr_map_iterate` · `rolling_window_metrics` · `spline_regression`
+:::
+
+::: {.callout-warning collapse="true"}
+## FAILS WHEN
+- dataset has no natural grouping variable — comparisons become meaningless
+- column names are unstable across TidyTuesday editions (re-check schema each year)
+- irregular time intervals inflate or deflate apparent trends
+:::
+
+::: {.callout-important collapse="true"}
+## WORKS WHEN
+- dataset has clear categorical + numeric columns for grouped comparisons
+- question is exploratory — no strong prior hypothesis
+- time dimension is regular and spans multiple periods with meaningful change
+:::
+
+```{r setup}
+library(here)
+library(scales)
+library(tidyverse)
+library(sweep)
+library(timetk)
+library(lubridate)
+
+# TheDataShrink™ brand colours
+TDS_BLUE  <- "#1b6ca8"
+TDS_GOLD  <- "#c8a415"
+TDS_DARK  <- "#1a1a2e"
+TDS_LIGHT <- "#f8f9fa"
+theme_set(theme_light(base_size = 13))
+
+```
+
+## Explore
+```{r chunk_01}
+library(tidyverse)
+theme_set(theme_light())
+
+milk_products_facts <- read_csv("https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2019/2019-01-29/milk_products_facts.csv")
+```
+```{r chunk_02}
+milk_products_tidied <- milk_products_facts |>
+  gather(product, lbs_per_person, -year) |>
+  separate(product, c("category", "product"), sep = "_",
+           extra = "merge", fill = "right") |>
+  mutate(product = coalesce(product, category),
+         product = str_to_title(str_replace_all(product, "_", " ")),
+         category = str_to_title(category),
+         product = ifelse(product == "Other", paste(product, category), product))
+
+milk_products_tidied |>
+  group_by(category, year) |>
+  summarize(lbs_per_person = sum(lbs_per_person)) |>
+  ggplot(aes(year, lbs_per_person, color = category)) +
+  geom_line() +
+  labs(title = "Dairy consumption by category",
+       subtitle = "Based on US consumption (source: USDA)",
+       x = "Year",
+       y = "Lbs per person")
+
+milk_products_tidied |>
+  group_by(product = fct_lump(product, 6, w = lbs_per_person),
+           year) |>
+  summarize(lbs_per_person = sum(lbs_per_person)) |>
+  ggplot(aes(year, lbs_per_person, color = product)) +
+  geom_line()
+
+milk_products_tidied |>
+  ggplot(aes(year, lbs_per_person)) +
+  geom_line() +
+  facet_wrap(~ product, scales = "free") +
+  expand_limits(y = 0)
+
+milk_products_tidied |>
+  filter(year == max(year)) |>
+  mutate(product = fct_reorder(product, lbs_per_person, sum)) |>
+  ggplot(aes(product, lbs_per_person, fill = category)) +
+  geom_col() +
+  coord_flip() +
+  labs(x = "",
+       y = "Pounds consumed per US person in 2017")
+```
+```{r chunk_03}
+library(sweep)
+library(timetk)
+library(lubridate)
+
+milk_product_ts <- milk_products_tidied |>
+  mutate(year = as.Date("0001-01-01") + years(year - 1)) |>
+  nest(-category, -product) |>
+  mutate(ts = map(data, tk_ts, start = 1975, freq = 1))
+
+milk_product_ets <- milk_product_ts |>
+  mutate(model = map(ts, ets))
+
+milk_product_ets |>
+  unnest(map(model, sw_glance))
+
+milk_product_ts |>
+  crossing(model_name = c("auto.arima", "ets")) |>
+  mutate(model = map2(model_name, ts, ~ invoke(.x, list(.y))),
+         forecast = map(model, forecast, h = 10)) |>
+  unnest(map(forecast, sw_sweep)) |>
+  ggplot(aes(index, lbs_per_person, color = model_name, lty = key)) +
+  geom_line() +
+  geom_ribbon(aes(ymin = lo.80, ymax = hi.80), alpha = .5) +
+  facet_wrap(~ product, scales = "free_y") +
+  expand_limits(y = 0) +
+  scale_x_continuous(breaks = c(1980, 2000, 2020)) +
+  scale_linetype_discrete(guide = FALSE) +
+  labs(x = "Year",
+       y = "Average US consumption (lbs per person)",
+       title = "Forecasted consumption of dairy products",
+       subtitle = "Based on USDA data 1975-2017. Showing 80% prediction intervals.",
+       color = "Model")
+```
+```{r chunk_04}
+cheese <- read_csv("https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2019/2019-01-29/clean_cheese.csv")
+
+cheese_tidied <- cheese |>
+  gather(type, lbs_per_person, -Year) |>
+  rename(year = Year) |>
+  mutate(type = str_to_title(type),
+         type = fct_recode(type, "Total American Cheese" = "Total American Chese"))
+
+cheese_tidied |>
+  ggplot(aes(year, lbs_per_person)) +
+  geom_line() +
+  facet_wrap(~ type, scales = "free_y") +
+  expand_limits(y = 0)
+
+cheese_ts <- cheese_tidied |>
+  mutate(year = as.Date("0001-01-01") + years(year - 1)) |>
+  nest(-type) |>
+  mutate(ts = map(data, tk_ts, start = 1970, freq = 1))
+
+cheese_ts |>
+  crossing(model_name = c("auto.arima", "ets")) |>
+  mutate(model = map2(model_name, ts, ~ invoke(.x, list(.y))),
+         forecast = map(model, forecast, h = 10)) |>
+  unnest(map(forecast, sw_sweep)) |>
+  ggplot(aes(index, lbs_per_person, color = model_name, lty = key)) +
+  geom_line() +
+  geom_ribbon(aes(ymin = lo.80, ymax = hi.80), alpha = .5) +
+  facet_wrap(~ type, scales = "free_y") +
+  expand_limits(y = 0) +
+  scale_x_continuous(breaks = c(1980, 2000, 2020)) +
+  scale_linetype_discrete(guide = FALSE) +
+  labs(x = "Year",
+       y = "Average US consumption (lbs per person)",
+       title = "Forecasted consumption of dairy products",
+       subtitle = "Based on USDA data 1975-2017. Showing 80% prediction intervals.",
+       color = "Model")
+```
+
+---
+
+**→ [Hour 2: Modeling](h2_modeling_dairy_consumption.qmd)**
+
+*TheDataShrink™ — thedatashrink.com.au — Weekly data stories in R*

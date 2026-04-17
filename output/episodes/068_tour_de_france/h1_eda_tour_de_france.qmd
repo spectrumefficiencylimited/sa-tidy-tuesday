@@ -1,0 +1,203 @@
+---
+title: "Hour 1 — EDA: Analyzing Tour de France data in R"
+subtitle: "David Robinson's analysis, extended | TheDataShrink™"
+author: "TheDataShrink™"
+date: today
+format:
+  html:
+    theme: flatly
+    toc: true
+    toc-depth: 3
+    code-fold: show
+    code-summary: "Show code"
+    number-sections: true
+    embed-resources: true
+execute:
+  echo: true
+  warning: false
+  message: false
+  error: true
+editor: visual
+---
+
+
+::: {.callout-tip}
+## TheDataShrink™ — Data stories worth sharing.
+Episode 068 · Hour 1
+:::
+
+
+::: {.callout-note collapse="true"}
+## Atomic Concepts in this episode
+`animated_transitions` · `boxplot_jitter` · `broom_model_output` · `cumsum_running_total` · `fct_reorder_stat` · `grouped_summary_ggplot` · `janitor_clean` · `linear_model_broom` · `lubridate_dates` · `multi_table_join` · `reorder_within_facets` · `spline_regression`
+:::
+
+::: {.callout-warning collapse="true"}
+## FAILS WHEN
+- outcome column is missing or near-zero variance
+- training set is too small for the number of predictors
+- text is multilingual without language detection
+- join key has trailing whitespace or case inconsistency — produces unexpected NAs
+- irregular time intervals inflate or deflate apparent trends
+:::
+
+::: {.callout-important collapse="true"}
+## WORKS WHEN
+- outcome column is clearly defined and has sufficient variance
+- features can be engineered from existing columns without external joins
+- text is long-form English and benefits from word-level decomposition
+- time dimension is regular and spans multiple periods with meaningful change
+:::
+
+```{r setup}
+library(here)
+library(scales)
+library(tidyverse)
+library(survival)
+library(broom)
+library(gganimate)
+library(tidytext)
+
+# TheDataShrink™ brand colours
+TDS_BLUE  <- "#1b6ca8"
+TDS_GOLD  <- "#c8a415"
+TDS_DARK  <- "#1a1a2e"
+TDS_LIGHT <- "#f8f9fa"
+theme_set(theme_light(base_size = 13))
+
+```
+## Load data
+```{r load-data}
+stage_data <- read_csv("/Users/stoiana/sa-tidy-tuesday/tidytuesday/data/2020/2020-04-07/stage_data.csv", show_col_types = FALSE)
+tdf_stages <- read_csv("/Users/stoiana/sa-tidy-tuesday/tidytuesday/data/2020/2020-04-07/tdf_stages.csv", show_col_types = FALSE)
+tdf_winners <- read_csv("/Users/stoiana/sa-tidy-tuesday/tidytuesday/data/2020/2020-04-07/tdf_winners.csv", show_col_types = FALSE)
+glimpse(stage_data)
+glimpse(tdf_stages)
+```
+
+## Explore
+```{r chunk_04}
+tdf_winners |>
+  count(birth_country, sort = TRUE) |>
+  mutate(birth_country = fct_reorder(birth_country, n)) |>
+  ggplot(aes(n, birth_country)) +
+  geom_col() +
+  labs(y = "",
+       title = "What countries were the most Tour de France winners born in?")
+
+tdf_winners |>
+  count(winner_name, birth_country, sort = TRUE)
+```
+```{r chunk_05}
+by_decade <- tdf_winners |>
+  group_by(decade = 10 * (year %/% 10)) |>
+  summarize(winner_age = mean(age),
+            winner_height = mean(height, na.rm = TRUE),
+            winner_weight = mean(weight, na.rm = TRUE),
+            winner_margin = mean(time_margin, na.rm = TRUE),
+            winner_speed = mean(speed, na.rm = TRUE))
+
+by_decade |>
+  filter(decade >= 1910) |>
+  ggplot(aes(decade, winner_margin * 60)) +
+  geom_line() +
+  expand_limits(y = 0) +
+  labs(x = "Decade",
+       y = "Average margin of winner (minutes)",
+       title = "Tour de France races have been getting closer")
+
+by_decade |>
+  ggplot(aes(decade, winner_speed)) +
+  geom_line() +
+  expand_limits(y = 0) +
+  labs(x = "Decade",
+       y = "Average speed of winner (km/h)",
+       title = "Tour de France winners have been getting faster")
+```
+```{r chunk_06}
+library(survival)
+library(broom)
+
+surv_model <- tdf_winners |>
+  distinct(winner_name, .keep_all = TRUE) |>
+  transmute(winner_name,
+            birth_year = year(born),
+            death_year = year(died),
+            dead = as.integer(!is.na(death_year))) |>
+  mutate(age_at_death = coalesce(death_year, 2020) - birth_year) |>
+  survfit(Surv(age_at_death, dead) ~ 1, data = .)
+
+glance(surv_model)
+```
+```{r chunk_07}
+stages_joined <- stage_data |>
+  extract(stage_results_id, "stage", "stage-(.*)") |>
+  inner_join(tdf_stages, by = c("year", "stage")) |>
+  mutate(rank = as.integer(rank)) |>
+  group_by(year, stage) |>
+  mutate(finishers = sum(!is.na(rank))) |>
+  ungroup() |>
+  mutate(percentile = 1 - rank / finishers)
+
+total_points <- stages_joined |>
+  group_by(year, rider) |>
+  summarize(total_points = sum(points, na.rm = TRUE)) |>
+  mutate(points_rank = percent_rank(total_points)) |>
+  ungroup()
+
+stages_joined |>
+  filter(stage == "1") |>
+  group_by(winner_country) |>
+  summarize(stages = n(),
+            median_percentile = median(percentile, na.rm = TRUE)) |>
+  arrange(desc(stages))
+```
+```{r chunk_08}
+stages_joined |>
+  filter(stage == "1") |>
+  inner_join(total_points, by = c("year", "rider")) |>
+  select(year, rider,
+         percentile_first_stage = percentile,
+         points_rank) |>
+  mutate(first_stage_bin = cut(percentile_first_stage, seq(0, 1, .1),
+                               include.lowest = TRUE)) |>
+  filter(!is.na(first_stage_bin)) |>
+  ggplot(aes(first_stage_bin, points_rank)) +
+  geom_boxplot() +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1)) +
+  scale_y_continuous(labels = scales::percent) +
+  labs(x = "Decile performance in the first stage",
+       y = "Overall points percentile")
+```
+```{r chunk_09}
+library(gganimate)
+library(tidytext)
+
+top_10_2017 <- total_points |>
+  filter(year == max(year)) |>
+  top_n(10, total_points)
+
+stages_joined |>
+  filter(year == max(year)) |>
+  semi_join(top_10_2017, by = "rider") |>
+  mutate(stage = as.integer(stage),
+         points = coalesce(points, 0)) |>
+  arrange(stage) |>
+  group_by(rider) |>
+  mutate(cumulative_points = cumsum(points)) |>
+  ungroup() |>
+  # mutate(rider = reorder_within(rider, cumulative_points, stage)) |>
+  ggplot(aes(cumulative_points, rider, fill = cumulative_points)) +
+  geom_col() +
+  transition_time(stage) +
+  theme(legend.position = "none") +
+  labs(title = "The 2017 Tour de France. Stage: { frame_time }",
+       x = "Cumulative points at this stage",
+       y = "")
+```
+
+---
+
+**→ [Hour 2: Modeling](h2_modeling_tour_de_france.qmd)**
+
+*TheDataShrink™ — thedatashrink.com.au — Weekly data stories in R*

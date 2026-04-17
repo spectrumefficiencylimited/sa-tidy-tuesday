@@ -1,0 +1,119 @@
+---
+title: "Hour 2 — Modeling: Analyzing Thanksgiving dinners in R"
+subtitle: "Going deeper with statistical models | TheDataShrink™"
+author: "TheDataShrink™"
+date: today
+format:
+  html:
+    theme: cosmo
+    toc: true
+    toc-depth: 3
+    code-fold: show
+    code-summary: "Show code"
+    number-sections: true
+    embed-resources: true
+execute:
+  echo: true
+  warning: false
+  message: false
+  error: true
+editor: visual
+---
+
+
+::: {.callout-tip}
+## TheDataShrink™ — Data stories worth sharing.
+Episode 060 · Hour 2 · [← Hour 1 EDA](h1_eda_thanksgiving_dinners.qmd)
+:::
+
+
+::: {.callout-note collapse="true"}
+## Atomic Concepts — Hour 2
+`confidence_ribbon` · `coord_flip_horizontal` · `empirical_bayes` · `faceted_comparison` · `fct_reorder_stat` · `grouped_summary_ggplot` · `multi_table_join` · `network_graph_ggraph` · `pairwise_token_correlation` · `parse_number_dirty`
+:::
+
+## Setup
+
+```{r setup}
+library(tidyverse)
+library(scales)
+library(broom)
+library(here)
+theme_set(theme_light(base_size = 13))
+```
+
+## Reload data
+
+```{r load-data}
+# Re-load from Hour 1 — same local paths
+source_qmd <- here::here("output/episodes/thanksgiving_dinners/h1_eda_thanksgiving_dinners.qmd")
+# Data files are re-read directly below if needed
+```
+
+## Model 1 — Summary statistics
+
+```{r summary-setup}
+# df <- read_csv(...)
+glimpse(df)
+```
+
+```{r summary-stats}
+# Numeric columns summary
+df |>
+  select(where(is.numeric)) |>
+  pivot_longer(everything(), names_to = "variable", values_to = "value") |>
+  group_by(variable) |>
+  summarise(
+    n      = n(),
+    mean   = mean(value, na.rm = TRUE),
+    median = median(value, na.rm = TRUE),
+    sd     = sd(value, na.rm = TRUE),
+    .groups = "drop"
+  )
+```
+
+## Model 2 — Correlation matrix
+
+```{r correlations}
+numeric_df <- df |> select(where(is.numeric)) |> drop_na()
+if (ncol(numeric_df) >= 2) {
+  cor_mat <- cor(numeric_df)
+  cor_mat |>
+    as.data.frame() |>
+    rownames_to_column("var1") |>
+    pivot_longer(-var1, names_to = "var2", values_to = "correlation") |>
+    filter(var1 < var2) |>
+    slice_max(abs(correlation), n = 20) |>
+    mutate(pair = paste(var1, "↔", var2),
+           pair = fct_reorder(pair, correlation)) |>
+    ggplot(aes(correlation, pair, fill = correlation > 0)) +
+    geom_col(show.legend = FALSE) +
+    geom_vline(xintercept = 0, lty = 2) +
+    labs(title = "Top correlations", x = "Pearson r", y = NULL)
+} else {
+  cat("Not enough numeric columns for correlation matrix\n")
+}
+```
+
+## Model 3 — Top categories by frequency
+
+```{r top-categories}
+char_cols <- df |> select(where(is.character)) |> names()
+if (length(char_cols) > 0) {
+  col <- char_cols[1]
+  df |>
+    count(.data[[col]], sort = TRUE) |>
+    slice_max(n, n = 20) |>
+    mutate(!!col := fct_reorder(.data[[col]], n)) |>
+    ggplot(aes(n, .data[[col]])) +
+    geom_col(fill = "#1b6ca8") +
+    labs(title = paste("Top", col, "by frequency"), x = "Count", y = NULL)
+} else {
+  cat("No character columns found\n")
+}
+```
+
+
+---
+
+**→ [Hour 3: Communicate](h3_communicate_thanksgiving_dinners.qmd)**

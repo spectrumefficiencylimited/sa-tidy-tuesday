@@ -19,7 +19,7 @@ execute:
 - `ker_status`: `extracted`
 - `reproduction_status`: `needs_external_sources`
 - `transcript_file`: `raw-data/inspiration/Analyzing Thanksgiving dinners in R.txt`
-- `code_file`: `data-screencasts/thanksgiving.Rmd`
+- `code_file`: `data-screencasts-dgrtwo/thanksgiving.Rmd`
 - `data_source`: Local source files read in episode: https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2018-11-20/thanksgiving_meals.csv
 - `analysis_type`: `EDA`
 - `pattern_signature`: `load_inspect_reshape_join_compare_visualize`

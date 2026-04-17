@@ -7,7 +7,7 @@
   "reproduction_status": "ready_local",
   "source_files": {
     "transcript_file": "raw-data/inspiration/Analyzing Bob Ross paintings in R.txt",
-    "code_file": "data-screencasts/bob-ross.Rmd"
+    "code_file": "data-screencasts-dgrtwo/bob-ross.Rmd"
   },
   "source_exists": {
     "transcript": true,
@@ -48,5 +48,79 @@
   "external_dependencies": [],
   "execution_notes": [
     "local TidyTuesday files were matched, so you can use `load_tidyweek_data()` and avoid a GitHub PAT"
-  ]
+  ],
+  "atomic_concepts": [
+    "add_count_inline",
+    "broom_model_output",
+    "coord_flip_horizontal",
+    "faceted_comparison",
+    "fct_reorder_stat",
+    "grouped_summary_ggplot",
+    "janitor_clean",
+    "linear_model_broom",
+    "network_graph_ggraph",
+    "pairwise_token_correlation",
+    "pivot_reshape",
+    "reorder_within_facets",
+    "scales_axis_labels",
+    "spline_regression",
+    "theme_set_global",
+    "time_series_trend",
+    "tokenization_pipeline"
+  ],
+  "fails_when": [
+    "dataset has no natural grouping variable — comparisons become meaningless",
+    "column names are unstable across TidyTuesday editions (re-check schema each year)",
+    "text is multilingual without language detection"
+  ],
+  "works_when": [
+    "dataset has clear categorical + numeric columns for grouped comparisons",
+    "question is exploratory — no strong prior hypothesis",
+    "text is long-form English and benefits from word-level decomposition"
+  ],
+  "hour_architecture": {
+    "h1_eda": {
+      "status": "pending",
+      "qmd": "h1_eda_bob_ross_paintings.qmd",
+      "steps": [
+        "Load data with load_tidyweek_data()",
+        "Inspect schema and types",
+        "Identify main grouping + metric columns",
+        "Reshape from wide to long",
+        "Tokenize text, remove stopwords, compute frequencies",
+        "Build 3-4 core ggplot charts telling the main story",
+        "Write 150-word narrative summary"
+      ]
+    },
+    "h2_modeling": {
+      "status": "pending",
+      "qmd": "h2_modeling_bob_ross_paintings.qmd",
+      "steps": [
+        "TF-IDF or log-odds group comparison",
+        "LDA / STM topic model (if corpus large enough)",
+        "Bigram network graph with ggraph",
+        "Sentiment arc if temporal dimension present"
+      ]
+    },
+    "h3_communicate": {
+      "status": "pending",
+      "qmd": "h3_communicate_bob_ross_paintings.qmd",
+      "steps": [
+        "Quarto doc: bob_ross_paintings_report.qmd with params for data year",
+        "Hero chart: single best visualisation at 1200×628 (social media ratio)",
+        "Instagram carousel: 5 slides (hook → data → insight → method → CTA)",
+        "YouTube thumbnail text + chapter timestamps",
+        "Shiny widget or Observable/D3 for one interactive element",
+        "TheDataShrink™ post template: title, 3 bullets, hashtags, link to episode page"
+      ],
+      "channels": [
+        "youtube",
+        "instagram",
+        "facebook",
+        "website"
+      ],
+      "brand": "TheDataShrink™"
+    }
+  },
+  "brand": "TheDataShrink™"
 }

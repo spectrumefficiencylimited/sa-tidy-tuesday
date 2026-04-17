@@ -1,0 +1,203 @@
+---
+title: "Hour 1 — EDA: Analyzing data on R downloads"
+subtitle: "David Robinson's analysis, extended | TheDataShrink™"
+author: "TheDataShrink™"
+date: today
+format:
+  html:
+    theme: flatly
+    toc: true
+    toc-depth: 3
+    code-fold: show
+    code-summary: "Show code"
+    number-sections: true
+    embed-resources: true
+execute:
+  echo: true
+  warning: false
+  message: false
+  error: true
+editor: visual
+---
+
+
+::: {.callout-tip}
+## TheDataShrink™ — Data stories worth sharing.
+Episode 021 · Hour 1
+:::
+
+
+::: {.callout-note collapse="true"}
+## Atomic Concepts in this episode
+`coord_flip_horizontal` · `countrycode_standardize` · `faceted_comparison` · `fct_lump_infrequent` · `fct_reorder_stat` · `geom_histogram_density` · `grouped_summary_ggplot` · `log_scale` · `lubridate_dates` · `pivot_reshape` · `scales_axis_labels` · `spline_regression`
+:::
+
+::: {.callout-warning collapse="true"}
+## FAILS WHEN
+- dataset has no natural grouping variable — comparisons become meaningless
+- column names are unstable across TidyTuesday editions (re-check schema each year)
+- irregular time intervals inflate or deflate apparent trends
+:::
+
+::: {.callout-important collapse="true"}
+## WORKS WHEN
+- dataset has clear categorical + numeric columns for grouped comparisons
+- question is exploratory — no strong prior hypothesis
+- time dimension is regular and spans multiple periods with meaningful change
+:::
+
+```{r setup}
+library(here)
+library(tidyverse)
+library(scales)
+library(countrycode)
+library(lubridate)
+library(cranlogs)
+
+# TheDataShrink™ brand colours
+TDS_BLUE  <- "#1b6ca8"
+TDS_GOLD  <- "#c8a415"
+TDS_DARK  <- "#1a1a2e"
+TDS_LIGHT <- "#f8f9fa"
+theme_set(theme_light(base_size = 13))
+
+```
+
+## Explore
+```{r chunk_01}
+library(tidyverse)
+library(scales)
+library(countrycode)
+theme_set(theme_light())
+
+r_downloads_year_raw <- read_csv("https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2018-10-30/r_downloads_year.csv")
+
+r_downloads_year <- r_downloads_year_raw |>
+  select(-X1) |>
+  mutate(country_name = countrycode(country, "iso2c", "country.name"))
+```
+```{r chunk_02}
+r_downloads_year |>
+  count(date) |>
+  ggplot(aes(date, n)) +
+  geom_line() +
+  expand_limits(y = 0) +
+  labs(y = "# of R downloads per day")
+
+library(lubridate)
+
+r_downloads_year |>
+  count(date) |>
+  group_by(weekday = wday(date, label = TRUE)) |>
+  summarize(average = mean(n)) |>
+  ggplot(aes(weekday, average)) +
+  geom_line(group = 1) +
+  expand_limits(y = 0) +
+  labs(y = "Average downloads per weekday")
+```
+```{r chunk_03}
+r_downloads_year |>
+  group_by(week = floor_date(date, "week")) |>
+  summarize(n = n_distinct(ip_id)) |>
+  filter(week > min(week)) |>
+  ggplot(aes(week, n)) +
+  geom_line() +
+  expand_limits(y = 0) +
+  labs(y = "# of R downloads per week (distinct IPs)")
+```
+```{r chunk_04}
+r_downloads_year |>
+  mutate(country = countrycode(country, "iso2c", "country.name")) |>
+  filter(!is.na(country)) |>
+  count(hour = hour(time),
+        country = fct_lump(country, 8)) |>
+  ggplot(aes(hour, n)) +
+  geom_line() +
+  expand_limits(y = 0) +
+  facet_wrap(~ country, scales = "free_y")
+```
+```{r chunk_05}
+library(countrycode)
+
+r_downloads_year |>
+  count(country = countrycode(country, "iso2c", "country.name"), sort = TRUE) |>
+  mutate(percent = n / sum(n)) |>
+  filter(!is.na(country)) |>
+  head(16) |>
+  mutate(country = fct_reorder(country, percent)) |>
+  ggplot(aes(country, percent)) +
+  geom_col() +
+  coord_flip() +
+  scale_y_continuous(labels = percent_format()) +
+  labs(title = "What countries install the most R?")
+```
+```{r chunk_06}
+r_downloads_year |>
+  mutate(version = fct_lump(version, 8)) |>
+  count(date, version) |>
+  ggplot(aes(date, n, color = version)) +
+  geom_line()
+```
+```{r chunk_07}
+r_downloads_year |>
+  count(country = fct_lump(country, 8),
+        week = floor_date(date, "week")) |>
+  filter(week > min(week)) |>
+  ggplot(aes(week, n, color = country)) +
+  geom_line()
+```
+
+## R package downloads
+```{r chunk_08}
+package_downloads <- read_csv("http://cran-logs.rstudio.com/2018/2018-10-27.csv.gz")
+```
+```{r chunk_09}
+package_downloads |>
+  filter(country %in% c("US", "IN")) |>
+  group_by(country, package, sort = TRUE) |>
+  summarize(n = n_distinct(ip_id)) |>
+  spread(country, n, fill = 0) |>
+  ungroup() |>
+  mutate(total = US + IN,
+         IN = (IN + 1) / sum(IN + 1),
+         US = (US + 1) / sum(US + 1),
+         ratio = US / IN) |>
+  filter(total >= 1000) |>
+  arrange((ratio)) |>
+```
+```{r chunk_10}
+library(cranlogs)
+
+cranlogs::cran_downloads(packages = c("tidyverse", "broom"), when = "last-week")
+```
+
+## Appendix: Why count only distinct IPs?
+```{r chunk_11}
+r_download_gaps <- r_downloads_year |>
+  mutate(datetime = as.POSIXlt(date) + time) |>
+  arrange(datetime) |>
+  group_by(ip_id) |>
+  mutate(gap = as.numeric(datetime - lag(datetime))) |>
+  filter(!is.na(gap))
+```
+```{r chunk_12}
+ip_counts <- r_downloads_year |>
+  count(ip_id, sort = TRUE)
+```
+```{r chunk_13}
+r_download_gaps |>
+  ggplot(aes(gap)) +
+  geom_histogram() +
+  geom_vline(color = "red", lty = 2, xintercept = 86400) +
+  scale_x_log10(breaks = 60 ^ (0:4),
+                labels = c("Second", "Minute", "Hour", "2.5 Days", "120 Days"))
+```
+```{r chunk_14}
+r_download_gaps
+```
+
+---
+
+**→ [Hour 2: Modeling](h2_modeling_downloads.qmd)**
+
+*TheDataShrink™ — thedatashrink.com.au — Weekly data stories in R*

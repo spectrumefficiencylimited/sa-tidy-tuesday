@@ -1,0 +1,266 @@
+---
+title: "Hour 1 — EDA: Analyzing code in CRAN packages in R"
+subtitle: "David Robinson's analysis, extended | TheDataShrink™"
+author: "TheDataShrink™"
+date: today
+format:
+  html:
+    theme: flatly
+    toc: true
+    toc-depth: 3
+    code-fold: show
+    code-summary: "Show code"
+    number-sections: true
+    embed-resources: true
+execute:
+  echo: true
+  warning: false
+  message: false
+  error: true
+editor: visual
+---
+
+
+::: {.callout-tip}
+## TheDataShrink™ — Data stories worth sharing.
+Episode 018 · Hour 1
+:::
+
+
+::: {.callout-note collapse="true"}
+## Atomic Concepts in this episode
+`boxplot_jitter` · `coord_flip_horizontal` · `faceted_comparison` · `fct_lump_infrequent` · `fct_reorder_stat` · `geom_histogram_density` · `geom_smooth_loess` · `grouped_summary_ggplot` · `janitor_clean` · `log_scale` · `multi_table_join` · `pivot_reshape`
+:::
+
+::: {.callout-warning collapse="true"}
+## FAILS WHEN
+- dataset has no natural grouping variable — comparisons become meaningless
+- column names are unstable across TidyTuesday editions (re-check schema each year)
+- text is multilingual without language detection
+- join key has trailing whitespace or case inconsistency — produces unexpected NAs
+:::
+
+::: {.callout-important collapse="true"}
+## WORKS WHEN
+- dataset has clear categorical + numeric columns for grouped comparisons
+- question is exploratory — no strong prior hypothesis
+- text is long-form English and benefits from word-level decomposition
+:::
+
+```{r setup}
+library(here)
+library(scales)
+library(tidyverse)
+library(tidytext)
+
+# TheDataShrink™ brand colours
+TDS_BLUE  <- "#1b6ca8"
+TDS_GOLD  <- "#c8a415"
+TDS_DARK  <- "#1a1a2e"
+TDS_LIGHT <- "#f8f9fa"
+theme_set(theme_light(base_size = 13))
+
+```
+## Load data
+```{r load-data}
+loc_cran_packages <- read_csv("/Users/stoiana/sa-tidy-tuesday/tidytuesday/data/2019/2019-11-12/loc_cran_packages.csv", show_col_types = FALSE)
+glimpse(loc_cran_packages)
+```
+
+## Explore
+```{r chunk_03}
+cran_code |>
+  count(language, sort = TRUE)
+```
+```{r chunk_04}
+by_language <- cran_code |>
+  group_by(language) |>
+  summarize(packages = n(),
+            code = sum(code),
+            comments = sum(comment),
+            files = sum(file),
+            lines_per_package = code / packages,
+            files_per_package = files / packages,
+            comment_code_ratio = comments / code) |>
+  arrange(desc(packages))
+```
+```{r chunk_05}
+by_language |>
+  head(20) |>
+  mutate(language = fct_reorder(language, packages)) |>
+  ggplot(aes(language, packages)) +
+  geom_col() +
+  coord_flip() +
+  labs(x = "",
+       y = "# of packages that have code from this language")
+
+library(tidytext)
+
+by_language |>
+  gather(metric, value, packages, code, files) |>
+  group_by(metric) |>
+  top_n(8, value) |>
+  ungroup() |>
+  mutate(language = reorder_within(language, value, metric),
+         metric = str_to_title(metric)) |>
+  ggplot(aes(language, value)) +
+  geom_col() +
+  coord_flip() +
+  scale_x_reordered() +
+  scale_y_continuous(labels = scales::comma) +
+  facet_wrap(~ metric, scales = "free", ncol = 1) +
+  labs(x = "Value (# of lines of code, files, or packages)")
+```
+```{r chunk_06}
+by_language |>
+  filter(packages >= 20) |>
+  ggplot(aes(packages, comment_code_ratio)) +
+  geom_point() +
+  geom_text(aes(label = language), check_overlap = TRUE, vjust = 1, hjust = 1) +
+  scale_x_log10() +
+  expand_limits(x = 10) +
+  labs(x = "# of packages language is used in",
+       y = "Comment/Code ratio")
+```
+```{r chunk_07}
+by_language |>
+  filter(packages >= 20) |>
+  ggplot(aes(packages, lines_per_package)) +
+  geom_point() +
+  geom_text(aes(label = language), check_overlap = TRUE, vjust = 1, hjust = 1) +
+  scale_x_log10() +
+  expand_limits(x = 10) +
+  labs(x = "# of packages language is used in",
+       y = "Lines per package")
+```
+```{r chunk_08}
+cran_code |>
+  filter(language == "R") |>
+  ggplot(aes(code)) +
+  geom_histogram() +
+  scale_x_log10(labels = scales::comma)
+```
+```{r chunk_09}
+cran_code |>
+  filter(language == "R") |>
+  arrange(desc(code))
+```
+```{r chunk_10}
+packages <- tidyverse_packages() |>
+  str_extract("[a-z\\d]+")
+
+cran_code |>
+  filter(pkg_name %in% packages) |>
+  mutate(pkg_name = fct_reorder(pkg_name, code, sum),
+         language = fct_lump(language, 6),
+         language = fct_reorder(language, code, sum)) |>
+  ggplot(aes(pkg_name, code, fill = language)) +
+  geom_col() +
+  guides(fill = guide_legend(reverse = TRUE)) +
+  coord_flip() +
+  labs(title = "How much code does each tidyverse package have?",
+       x = "",
+       y = "# of lines of code",
+       fill = "Language")
+```
+```{r chunk_11}
+cran_code |>
+  filter(pkg_name %in% packages) |>
+  filter(language == "R") |>
+  mutate(comment_code_ratio = comment / code) |>
+  arrange(desc(comment_code_ratio)) |>
+```
+```{r chunk_12}
+cran_code |>
+  filter(language == "R", code >= 100) |>
+  mutate(tidyverse = ifelse(pkg_name %in% packages, "Tidyverse", "Other")) |>
+  ggplot(aes(code / comment)) +
+  geom_histogram() +
+  scale_x_log10(labels = scales::number_format(accuracy = .1)) +
+  facet_wrap(~ tidyverse, ncol = 1, scales = "free_y") +
+  labs(x = "Code to comment ratio")
+```
+```{r chunk_13}
+cran_code |>
+  filter(code >= 100, language == "R", comment > 0) |>
+  mutate(code_comment_ratio = code / comment) |>
+  arrange(desc(code_comment_ratio))
+```
+```{r chunk_14}
+pkgs <- available.packages()
+
+head(pkgs)
+
+# Take package downloads from yesterday
+package_downloads <- read_csv("http://cran-logs.rstudio.com/2019/2019-12-19.csv.gz")
+
+downloads_by_package <- package_downloads |>
+  distinct(package, ip_id) |>
+  count(pkg_name = package, sort = TRUE, name = "downloads")
+```
+```{r chunk_15}
+cran_code |>
+  filter(language == "R") |>
+  inner_join(downloads_by_package, by = "pkg_name") |>
+  arrange(desc(downloads)) |>
+  filter(downloads >= 10) |>
+  ggplot(aes(downloads, code)) +
+  geom_point() +
+  geom_smooth(method = "lm") +
+  scale_x_log10() +
+  scale_y_log10()
+
+cran_code |>
+  filter(language == "R") |>
+  inner_join(downloads_by_package, by = "pkg_name") |>
+  arrange(desc(downloads)) |>
+  filter(downloads >= 10, code >= 10) |>
+  ggplot(aes(downloads, code / comment)) +
+  geom_point() +
+  geom_smooth(method = "lm") +
+  scale_x_log10() +
+  scale_y_log10()
+```
+```{r chunk_16}
+package_metadata <- available.packages() |>
+  as_tibble() |>
+  janitor::clean_names() |>
+  select(-version, -file)
+  
+cran_code |>
+  filter(language == "R") |>
+  inner_join(package_metadata, by = c(pkg_name = "package")) |>
+  mutate(license = fct_lump(license, 10),
+         license = fct_reorder(license, code)) |>
+  ggplot(aes(license, code)) +
+  geom_boxplot() +
+  coord_flip() +
+  scale_y_log10()
+
+n_import <- package_metadata |>
+  select(package, imports) |>
+  separate_rows(imports, sep = ",") |>
+  extract(imports, "import", "([A-Za-z\\d\\.]+)") |>
+  filter(!is.na(import)) |>
+  count(import, sort = TRUE, name = "n_reverse_import")
+```
+```{r chunk_17}
+cran_code |>
+  filter(language == "R") |>
+  left_join(n_import, by = c(pkg_name = "import")) |>
+  replace_na(list(n_reverse_import = 0)) |>
+  filter(n_reverse_import >= 10) |>
+  ggplot(aes(n_reverse_import, code)) +
+  geom_point() +
+  geom_text(aes(label = pkg_name), vjust = 1, hjust = 1, check_overlap = TRUE) +
+  scale_x_log10() +
+  scale_y_log10() +
+  labs(x = "Number of packages that IMPORT this",
+       y = "Lines of R code in package")
+```
+
+---
+
+**→ [Hour 2: Modeling](h2_modeling_code_cran_packages.qmd)**
+
+*TheDataShrink™ — thedatashrink.com.au — Weekly data stories in R*

@@ -19,7 +19,7 @@ execute:
 - `ker_status`: `extracted`
 - `reproduction_status`: `ready_local`
 - `transcript_file`: `raw-data/inspiration/Analyzing bird collisions with bootstrapping in R.txt`
-- `code_file`: `data-screencasts/bird-collisions.Rmd`
+- `code_file`: `data-screencasts-dgrtwo/bird-collisions.Rmd`
 - `data_source`: TidyTuesday 2019-04-30 source files
 - `analysis_type`: `EDA`
 - `pattern_signature`: `load_inspect_reshape_join_trend_simulate_compare_visualize`

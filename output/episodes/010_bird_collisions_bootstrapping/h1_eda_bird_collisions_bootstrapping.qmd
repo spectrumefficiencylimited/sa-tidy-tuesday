@@ -1,0 +1,169 @@
+---
+title: "Hour 1 — EDA: Analyzing bird collisions with bootstrapping in R"
+subtitle: "David Robinson's analysis, extended | TheDataShrink™"
+author: "TheDataShrink™"
+date: today
+format:
+  html:
+    theme: flatly
+    toc: true
+    toc-depth: 3
+    code-fold: show
+    code-summary: "Show code"
+    number-sections: true
+    embed-resources: true
+execute:
+  echo: true
+  warning: false
+  message: false
+  error: true
+editor: visual
+---
+
+
+::: {.callout-tip}
+## TheDataShrink™ — Data stories worth sharing.
+Episode 010 · Hour 1
+:::
+
+
+::: {.callout-note collapse="true"}
+## Atomic Concepts in this episode
+`bootstrap_ci` · `confidence_ribbon` · `coord_flip_horizontal` · `crossing_simulation_grid` · `faceted_comparison` · `fct_reorder_stat` · `geom_histogram_density` · `grouped_summary_ggplot` · `log_scale` · `lubridate_dates` · `multi_table_join` · `pivot_reshape`
+:::
+
+::: {.callout-warning collapse="true"}
+## FAILS WHEN
+- dataset has no natural grouping variable — comparisons become meaningless
+- column names are unstable across TidyTuesday editions (re-check schema each year)
+- join key has trailing whitespace or case inconsistency — produces unexpected NAs
+- irregular time intervals inflate or deflate apparent trends
+:::
+
+::: {.callout-important collapse="true"}
+## WORKS WHEN
+- dataset has clear categorical + numeric columns for grouped comparisons
+- question is exploratory — no strong prior hypothesis
+- time dimension is regular and spans multiple periods with meaningful change
+:::
+
+```{r setup}
+library(here)
+library(scales)
+library(tidyverse)
+library(lubridate)
+
+# TheDataShrink™ brand colours
+TDS_BLUE  <- "#1b6ca8"
+TDS_GOLD  <- "#c8a415"
+TDS_DARK  <- "#1a1a2e"
+TDS_LIGHT <- "#f8f9fa"
+theme_set(theme_light(base_size = 13))
+
+```
+
+## R Markdown
+```{r chunk_01}
+library(tidyverse)
+theme_set(theme_light())
+
+mp_light <- readr::read_csv("https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2019/2019-04-30/mp_light.csv")
+
+bird_collisions <- readr::read_csv("https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2019/2019-04-30/bird_collisions.csv") |>
+  left_join(mp_light, by = "date")
+```
+```{r chunk_02}
+bird_collisions |>
+  ggplot(aes(date, fill = locality)) +
+  geom_histogram()
+```
+```{r chunk_03}
+bird_collisions |>
+  gather(category, value, -date, -light_score) |>
+  count(category, value, light_score_missing = is.na(light_score)) |>
+  group_by(category) |>
+  top_n(16, n) |>
+  ungroup() |>
+  mutate(value = fct_reorder(value, n, sum),
+         category = fct_reorder(category, n, length)) |>
+  ggplot(aes(value, n, fill = light_score_missing)) +
+  geom_col() +
+  facet_wrap(~ category, scales = "free_y") +
+  coord_flip() +
+  labs(x = "# of collisions",
+       y = "",
+       fill = "Light score missing",
+       title = "Category breakdowns of collisions")
+```
+```{r chunk_04}
+bird_collisions |>
+  filter(!is.na(light_score)) |>
+  count(date, locality) |>
+  ggplot(aes(n, color = locality)) +
+  geom_density() +
+  scale_x_log10() +
+  labs(x = "# of collisions per night")
+
+bird_collisions |>
+  filter(!is.na(light_score)) |>
+  distinct(date, light_score) |>
+  ggplot(aes(light_score)) +
+  geom_histogram()
+
+geom_mean <- function(x) {
+  exp(mean(log(x + 1)) - 1)
+}
+
+by_day_mp <- bird_collisions |>
+  filter(!is.na(light_score)) |>
+  group_by(date, locality) |>
+  summarize(collisions = n()) |>
+  ungroup() |>
+  complete(date, locality, fill = list(collisions = 0)) |>
+  right_join(mp_light |> crossing(locality = c("CHI", "MP")), by = c("date", "locality")) |>
+  filter(date <= "2016-11-13") |>
+  replace_na(list(collisions = 0)) |>
+  mutate(locality = ifelse(locality == "CHI", "Greater Chicago", "McCormick Place"))
+
+bootstrap_cis <- by_day_mp |>
+  bootstraps(times = 1000) |>
+  unnest(map(splits, as.data.frame)) |>
+  group_by(light_score, locality, id) |>
+  summarize(avg_collisions = geom_mean(collisions)) |>
+  summarize(bootstrap_low = quantile(avg_collisions, .025),
+            bootstrap_high = quantile(avg_collisions, .975))
+
+by_day_mp |>
+  group_by(light_score, locality) |>
+  summarize(avg_collisions = geom_mean(collisions),
+            nights = n()) |>
+  ggplot(aes(light_score, color = locality)) +
+  geom_line(aes(y = avg_collisions)) +
+  geom_ribbon(aes(ymin = bootstrap_low, ymax = bootstrap_high),
+              data = bootstrap_cis,
+              alpha = .25) +
+  expand_limits(y = 0) +
+  labs(x = "Light score at McCormick place (higher means more lights on)",
+       y = "Geometric mean of the number of collisions",
+       title = "Brighter lights at McCormick place correlate with more bird collisions there, and not with Chicago overall",
+       subtitle = "Ribbon shows 95% bootstrapped percentile confidence interval",
+       color = "")
+```
+
+## Look at confounders
+```{r chunk_05}
+library(lubridate)
+
+bird_collisions |>
+  filter(date >= "2005-01-01") |>
+  count(month = month(date, label = TRUE), #floor_date(date, "month"),
+        locality) |>
+  ggplot(aes(month, n, color = locality, group = locality)) +
+  geom_line()
+```
+
+---
+
+**→ [Hour 2: Modeling](h2_modeling_bird_collisions_bootstrapping.qmd)**
+
+*TheDataShrink™ — thedatashrink.com.au — Weekly data stories in R*

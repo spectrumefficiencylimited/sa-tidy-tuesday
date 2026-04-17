@@ -19,7 +19,7 @@ execute:
 - `ker_status`: `extracted`
 - `reproduction_status`: `ready_local`
 - `transcript_file`: `raw-data/inspiration/Analyzing UN votes in R.txt`
-- `code_file`: `data-screencasts/2021_03_23_un_votes.Rmd`
+- `code_file`: `data-screencasts-dgrtwo/2021_03_23_un_votes.Rmd`
 - `data_source`: TidyTuesday 2021-03-23 dataset
 - `analysis_type`: `EDA`
 - `pattern_signature`: `load_inspect_reshape_join_tokenize_map_trend_compare_visualize`

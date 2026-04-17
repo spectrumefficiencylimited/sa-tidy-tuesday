@@ -19,7 +19,7 @@ execute:
 - `ker_status`: `extracted`
 - `reproduction_status`: `ready_local`
 - `transcript_file`: `raw-data/inspiration/Analyzing Bob Ross paintings in R.txt`
-- `code_file`: `data-screencasts/bob-ross.Rmd`
+- `code_file`: `data-screencasts-dgrtwo/bob-ross.Rmd`
 - `data_source`: TidyTuesday 2019-08-06 source files
 - `analysis_type`: `EDA`
 - `pattern_signature`: `load_inspect_reshape_tokenize_compare_visualize`

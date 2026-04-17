@@ -1,0 +1,122 @@
+---
+title: "Hour 2 — Modeling: Analyzng scraping and analyzing ramen reviews in R"
+subtitle: "Going deeper with statistical models | TheDataShrink™"
+author: "TheDataShrink™"
+date: today
+format:
+  html:
+    theme: cosmo
+    toc: true
+    toc-depth: 3
+    code-fold: show
+    code-summary: "Show code"
+    number-sections: true
+    embed-resources: true
+execute:
+  echo: true
+  warning: false
+  message: false
+  error: true
+editor: visual
+---
+
+
+::: {.callout-tip}
+## TheDataShrink™ — Data stories worth sharing.
+Episode 080 · Hour 2 · [← Hour 1 EDA](h1_eda_analyzng_scraping_ramen_reviews.qmd)
+:::
+
+
+::: {.callout-note collapse="true"}
+## Atomic Concepts — Hour 2
+`coord_flip_horizontal` · `error_bar_coef_plot` · `faceted_comparison` · `fct_lump_infrequent` · `fct_relevel_manual` · `fct_reorder_stat` · `grouped_summary_ggplot` · `janitor_clean` · `linear_model_broom` · `multi_table_join`
+:::
+
+## Setup
+
+```{r setup}
+library(tidyverse)
+library(scales)
+library(broom)
+library(here)
+theme_set(theme_light(base_size = 13))
+```
+
+## Reload data
+
+```{r load-data}
+# Re-load from Hour 1 — same local paths
+source_qmd <- here::here("output/episodes/analyzng_scraping_ramen_reviews/h1_eda_analyzng_scraping_ramen_reviews.qmd")
+# Data files are re-read directly below if needed
+```
+
+## Model 1 — Sentiment analysis
+
+```{r text-setup}
+library(tidytext)
+df <- read_csv("/Users/stoiana/sa-tidy-tuesday/tidytuesday/data/2019/2019-06-04/ramen_ratings.csv", show_col_types = FALSE)
+```
+
+```{r sentiment}
+afinn <- get_sentiments("afinn")
+
+# Adjust column names to match your data
+# df |> unnest_tokens(word, text_column) |> inner_join(afinn, by = "word") |>
+#   group_by(group_col) |> summarise(mean_sentiment = mean(value), .groups = "drop") |>
+#   mutate(group_col = fct_reorder(group_col, mean_sentiment)) |>
+#   ggplot(aes(mean_sentiment, group_col)) + geom_col()
+cat("Sentiment analysis: customise the column names above to your dataset\n")
+```
+
+## Model 2 — TF-IDF: most distinctive terms by group
+
+```{r tfidf}
+# df |> unnest_tokens(word, text_column) |>
+#   anti_join(stop_words, by = "word") |>
+#   count(group_col, word) |>
+#   bind_tf_idf(word, group_col, n) |>
+#   group_by(group_col) |>
+#   slice_max(tf_idf, n = 8, with_ties = FALSE) |>
+#   mutate(word = reorder_within(word, tf_idf, group_col)) |>
+#   ggplot(aes(tf_idf, word, fill = group_col)) +
+#   geom_col(show.legend = FALSE) +
+#   facet_wrap(~group_col, scales = "free_y") +
+#   scale_y_reordered()
+cat("TF-IDF: customise column names above\n")
+```
+
+
+## Model 1 — Linear regression baseline
+
+```{r lm-setup}
+df <- read_csv("/Users/stoiana/sa-tidy-tuesday/tidytuesday/data/2019/2019-06-04/ramen_ratings.csv", show_col_types = FALSE)
+glimpse(df)
+```
+
+```{r lm-fit}
+# Identify your outcome and predictors first — adjust formula below
+# fit <- lm(outcome ~ predictor1 + predictor2, data = df)
+# tidy(fit) |> filter(term != "(Intercept)") |>
+#   mutate(term = fct_reorder(term, estimate)) |>
+#   ggplot(aes(estimate, term, xmin = estimate - 2*std.error,
+#              xmax = estimate + 2*std.error)) +
+#   geom_point() + geom_errorbarh(height = 0.2) +
+#   geom_vline(xintercept = 0, lty = 2)
+cat("Linear model: adjust formula to your outcome variable\n")
+```
+
+## Model 2 — Variable importance
+
+```{r importance}
+# augment(fit) |>
+#   ggplot(aes(.fitted, outcome)) +
+#   geom_point(alpha = 0.4) +
+#   geom_abline(color = "red", lty = 2) +
+#   labs(title = "Predicted vs actual", x = "Fitted", y = "Observed")
+cat("Residual diagnostics: wire up after lm fit above\n")
+```
+
+
+---
+
+**→ [Hour 3: Communicate](h3_communicate_analyzng_scraping_ramen_reviews.qmd)**

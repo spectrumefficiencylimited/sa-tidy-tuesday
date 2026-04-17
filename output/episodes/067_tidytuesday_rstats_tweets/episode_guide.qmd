@@ -19,7 +19,7 @@ execute:
 - `ker_status`: `extracted`
 - `reproduction_status`: `needs_external_sources`
 - `transcript_file`: `raw-data/inspiration/Analyzing tidytuesday and rstats tweets in R.txt`
-- `code_file`: `data-screencasts/tidytuesday-tweets.Rmd`
+- `code_file`: `data-screencasts-dgrtwo/tidytuesday-tweets.Rmd`
 - `data_source`: External sources used in episode: https://github.com/rfordatascience/tidytuesday/blob/master/data/2019/2019-01-01/rstats_tweets.rds?raw=true, https://github.com/rfordatascience/tidytuesday/blob/master/data/2019/2019-01-01/tidytuesday_tweets.rds?raw=true, ...
 - `analysis_type`: `EDA`
 - `pattern_signature`: `load_inspect_scrape_join_tokenize_trend_compare_visualize`

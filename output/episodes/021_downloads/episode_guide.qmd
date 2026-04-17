@@ -19,7 +19,7 @@ execute:
 - `ker_status`: `extracted`
 - `reproduction_status`: `needs_external_sources`
 - `transcript_file`: `raw-data/inspiration/Analyzing data on R downloads.txt`
-- `code_file`: `data-screencasts/r-downloads.Rmd`
+- `code_file`: `data-screencasts-dgrtwo/r-downloads.Rmd`
 - `data_source`: Local source files read in episode: http://cran-logs.rstudio.com/2018/2018-10-27.csv.gz, https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2018-10-30/r_downloads_year.csv
 - `analysis_type`: `EDA`
 - `pattern_signature`: `load_inspect_reshape_trend_compare_visualize`

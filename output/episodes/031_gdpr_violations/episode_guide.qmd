@@ -19,7 +19,7 @@ execute:
 - `ker_status`: `extracted`
 - `reproduction_status`: `ready_local`
 - `transcript_file`: `raw-data/inspiration/Analyzing GDPR violations in R.txt`
-- `code_file`: `data-screencasts/gdpr.Rmd`
+- `code_file`: `data-screencasts-dgrtwo/gdpr.Rmd`
 - `data_source`: TidyTuesday 2020-04-21 dataset
 - `analysis_type`: `EDA`
 - `pattern_signature`: `load_inspect_reshape_join_trend_compare_visualize`

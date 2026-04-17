@@ -1,0 +1,166 @@
+---
+title: "Hour 1 — EDA: Analyzing data on women in the workplace in R"
+subtitle: "David Robinson's analysis, extended | TheDataShrink™"
+author: "TheDataShrink™"
+date: today
+format:
+  html:
+    theme: flatly
+    toc: true
+    toc-depth: 3
+    code-fold: show
+    code-summary: "Show code"
+    number-sections: true
+    embed-resources: true
+execute:
+  echo: true
+  warning: false
+  message: false
+  error: true
+editor: visual
+---
+
+
+::: {.callout-tip}
+## TheDataShrink™ — Data stories worth sharing.
+Episode 022 · Hour 1
+:::
+
+
+::: {.callout-note collapse="true"}
+## Atomic Concepts in this episode
+`coord_flip_horizontal` · `fct_reorder_stat` · `grouped_summary_ggplot` · `interactive_plotly` · `scales_axis_labels` · `spline_regression` · `theme_set_global` · `time_series_trend`
+:::
+
+::: {.callout-warning collapse="true"}
+## FAILS WHEN
+- dataset has no natural grouping variable — comparisons become meaningless
+- column names are unstable across TidyTuesday editions (re-check schema each year)
+- irregular time intervals inflate or deflate apparent trends
+:::
+
+::: {.callout-important collapse="true"}
+## WORKS WHEN
+- dataset has clear categorical + numeric columns for grouped comparisons
+- question is exploratory — no strong prior hypothesis
+- time dimension is regular and spans multiple periods with meaningful change
+:::
+
+```{r setup}
+library(here)
+library(tidyverse)
+library(scales)
+library(plotly)
+
+# TheDataShrink™ brand colours
+TDS_BLUE  <- "#1b6ca8"
+TDS_GOLD  <- "#c8a415"
+TDS_DARK  <- "#1a1a2e"
+TDS_LIGHT <- "#f8f9fa"
+theme_set(theme_light(base_size = 13))
+
+```
+
+## Explore
+```{r chunk_01}
+library(tidyverse)
+library(scales)
+theme_set(theme_light())
+
+jobs_gender <- readr::read_csv("https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2019/2019-03-05/jobs_gender.csv")
+earnings_female <- readr::read_csv("https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2019/2019-03-05/earnings_female.csv") 
+employed_gender <- readr::read_csv("https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2019/2019-03-05/employed_gender.csv")
+```
+```{r chunk_02}
+summarize_jobs_gender <- function(tbl) {
+  tbl |>
+    summarize(total_earnings = sum(total_earnings * total_workers) / sum(total_workers),
+              total_earnings_male = sum(total_earnings_male * workers_male, na.rm = TRUE) /
+                sum(workers_male[!is.na(total_earnings_male)]),
+              total_earnings_female = sum(total_earnings_female * workers_female, na.rm = TRUE) /
+                sum(workers_female[!is.na(total_earnings_female)]),
+              total_workers = sum(total_workers),
+              workers_male = sum(workers_male),
+              workers_female = sum(workers_female)) |>
+    mutate(wage_percent_of_male = total_earnings_female / total_earnings_male)
+}
+
+by_year_major_category <- jobs_gender |>
+  filter(complete.cases(.)) |>
+  group_by(year, major_category) |>
+  summarize_jobs_gender()
+
+by_year_major_category |>
+  mutate(major_category = fct_reorder(major_category, -total_earnings)) |>
+  ggplot(aes(year, total_earnings, color = major_category)) +
+  geom_line() +
+  expand_limits(y = 0)
+
+by_year_major_category |>
+  mutate(major_category = fct_reorder(major_category, -wage_percent_of_male)) |>
+  ggplot(aes(year, wage_percent_of_male, color = major_category)) +
+  geom_line()
+```
+```{r chunk_03}
+by_minor_category_2016 <- jobs_gender |>
+  filter(year == 2016) |>
+  group_by(major_category, minor_category) |>
+  summarize_jobs_gender() |>
+  ungroup()
+```
+```{r chunk_04}
+by_minor_category_2016 |>
+  mutate(minor_category = fct_reorder(minor_category, wage_percent_of_male)) |>
+  ggplot(aes(minor_category, wage_percent_of_male, fill = major_category)) +
+  geom_col() +
+  coord_flip()
+```
+```{r chunk_05}
+library(plotly)
+
+p <- jobs_gender |>
+  filter(year == 2016) |>
+  filter(major_category == "Healthcare Practitioners and Technical") |>
+  arrange(desc(wage_percent_of_male)) |>
+  ggplot(aes(workers_female / total_workers,
+             total_earnings,
+             size = total_workers,
+             label = occupation)) +
+  geom_point() +
+  scale_size_continuous(range = c(1, 10)) +
+  labs(size = "Total # of workers",
+       x = "% of workforce reported as female",
+       y = "Median salary in the occupation") +
+  scale_x_continuous(labels = percent_format()) +
+  scale_y_continuous(labels = dollar_format()) +
+  expand_limits(y = 0)
+
+ggplotly(p)
+```
+```{r chunk_06}
+p <- jobs_gender |>
+  filter(year == 2016,
+         total_workers >= 20000) |>
+  filter(major_category == "Computer, Engineering, and Science") |>
+  arrange(desc(wage_percent_of_male)) |>
+  ggplot(aes(workers_female / total_workers,
+             total_earnings_female / total_earnings_male,
+             color = minor_category,
+             size = total_workers,
+             label = occupation)) +
+  geom_point() +
+  scale_size_continuous(range = c(1, 10)) +
+  labs(size = "Total # of workers",
+       x = "% of workforce reported as female",
+       y = "% of median female salary / median male") +
+  scale_x_continuous(labels = percent_format()) +
+  scale_y_continuous(labels = percent_format())
+
+ggplotly(p)
+```
+
+---
+
+**→ [Hour 2: Modeling](h2_modeling_women_workplace.qmd)**
+
+*TheDataShrink™ — thedatashrink.com.au — Weekly data stories in R*

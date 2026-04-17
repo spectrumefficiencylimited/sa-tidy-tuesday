@@ -1,0 +1,116 @@
+---
+title: "Hour 2 — Modeling: Analyzing wealth and income in R"
+subtitle: "Going deeper with statistical models | TheDataShrink™"
+author: "TheDataShrink™"
+date: today
+format:
+  html:
+    theme: cosmo
+    toc: true
+    toc-depth: 3
+    code-fold: show
+    code-summary: "Show code"
+    number-sections: true
+    embed-resources: true
+execute:
+  echo: true
+  warning: false
+  message: false
+  error: true
+editor: visual
+---
+
+
+::: {.callout-tip}
+## TheDataShrink™ — Data stories worth sharing.
+Episode 077 · Hour 2 · [← Hour 1 EDA](h1_eda_wealth_income.qmd)
+:::
+
+
+::: {.callout-note collapse="true"}
+## Atomic Concepts — Hour 2
+`boxplot_jitter` · `crossing_simulation_grid` · `fct_lump_infrequent` · `fct_relevel_manual` · `fct_reorder_stat` · `geom_histogram_density` · `grouped_summary_ggplot` · `linear_model_broom` · `log_scale` · `lubridate_dates`
+:::
+
+## Setup
+
+```{r setup}
+library(tidyverse)
+library(scales)
+library(broom)
+library(here)
+theme_set(theme_light(base_size = 13))
+```
+
+## Reload data
+
+```{r load-data}
+# Re-load from Hour 1 — same local paths
+source_qmd <- here::here("output/episodes/wealth_income/h1_eda_wealth_income.qmd")
+# Data files are re-read directly below if needed
+```
+
+## Model 1 — Linear regression baseline
+
+```{r lm-setup}
+# df <- read_csv(...)
+glimpse(df)
+```
+
+```{r lm-fit}
+# Identify your outcome and predictors first — adjust formula below
+# fit <- lm(outcome ~ predictor1 + predictor2, data = df)
+# tidy(fit) |> filter(term != "(Intercept)") |>
+#   mutate(term = fct_reorder(term, estimate)) |>
+#   ggplot(aes(estimate, term, xmin = estimate - 2*std.error,
+#              xmax = estimate + 2*std.error)) +
+#   geom_point() + geom_errorbarh(height = 0.2) +
+#   geom_vline(xintercept = 0, lty = 2)
+cat("Linear model: adjust formula to your outcome variable\n")
+```
+
+## Model 2 — Variable importance
+
+```{r importance}
+# augment(fit) |>
+#   ggplot(aes(.fitted, outcome)) +
+#   geom_point(alpha = 0.4) +
+#   geom_abline(color = "red", lty = 2) +
+#   labs(title = "Predicted vs actual", x = "Fitted", y = "Observed")
+cat("Residual diagnostics: wire up after lm fit above\n")
+```
+
+
+## Model 1 — Time trend
+
+```{r time-setup}
+library(lubridate)
+# df <- read_csv(...)
+```
+
+```{r trend}
+# df |>
+#   mutate(date_col = ymd(date_col)) |>
+#   group_by(floor_date(date_col, "month")) |>
+#   summarise(n = n(), .groups = "drop") |>
+#   ggplot(aes(`floor_date(date_col, "month")`, n)) +
+#   geom_line() + geom_smooth(method = "loess")
+cat("Time trend: adjust date_col to your date column\n")
+```
+
+## Model 2 — Seasonality / year-over-year
+
+```{r seasonality}
+# df |>
+#   mutate(year = year(date_col), month = month(date_col, label = TRUE)) |>
+#   group_by(year, month) |>
+#   summarise(n = n(), .groups = "drop") |>
+#   ggplot(aes(month, n, group = year, color = factor(year))) +
+#   geom_line()
+cat("Seasonality: adjust date_col above\n")
+```
+
+
+---
+
+**→ [Hour 3: Communicate](h3_communicate_wealth_income.qmd)**

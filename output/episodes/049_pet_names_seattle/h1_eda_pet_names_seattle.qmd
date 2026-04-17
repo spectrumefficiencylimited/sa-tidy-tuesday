@@ -1,0 +1,163 @@
+---
+title: "Hour 1 — EDA: Analyzing pet names in Seattle in R"
+subtitle: "David Robinson's analysis, extended | TheDataShrink™"
+author: "TheDataShrink™"
+date: today
+format:
+  html:
+    theme: flatly
+    toc: true
+    toc-depth: 3
+    code-fold: show
+    code-summary: "Show code"
+    number-sections: true
+    embed-resources: true
+execute:
+  echo: true
+  warning: false
+  message: false
+  error: true
+editor: visual
+---
+
+
+::: {.callout-tip}
+## TheDataShrink™ — Data stories worth sharing.
+Episode 049 · Hour 1
+:::
+
+
+::: {.callout-note collapse="true"}
+## Atomic Concepts in this episode
+`coord_flip_horizontal` · `crossing_simulation_grid` · `faceted_comparison` · `fct_reorder_stat` · `geom_histogram_density` · `grouped_summary_ggplot` · `lubridate_dates` · `multi_table_join` · `scales_axis_labels` · `spline_regression` · `theme_set_global` · `time_series_trend`
+:::
+
+::: {.callout-warning collapse="true"}
+## FAILS WHEN
+- dataset has no natural grouping variable — comparisons become meaningless
+- column names are unstable across TidyTuesday editions (re-check schema each year)
+- join key has trailing whitespace or case inconsistency — produces unexpected NAs
+- irregular time intervals inflate or deflate apparent trends
+:::
+
+::: {.callout-important collapse="true"}
+## WORKS WHEN
+- dataset has clear categorical + numeric columns for grouped comparisons
+- question is exploratory — no strong prior hypothesis
+- time dimension is regular and spans multiple periods with meaningful change
+:::
+
+```{r setup}
+library(here)
+library(tidyverse)
+library(lubridate)
+library(scales)
+
+# TheDataShrink™ brand colours
+TDS_BLUE  <- "#1b6ca8"
+TDS_GOLD  <- "#c8a415"
+TDS_DARK  <- "#1a1a2e"
+TDS_LIGHT <- "#f8f9fa"
+theme_set(theme_light(base_size = 13))
+
+```
+
+## Explore
+```{r chunk_01}
+library(tidyverse)
+library(lubridate)
+theme_set(theme_light())
+
+seattle_pets <- readr::read_csv("https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2019/2019-03-26/seattle_pets.csv") |>
+  mutate(license_issue_date = mdy(license_issue_date)) |>
+  rename(animal_name = animals_name)
+```
+```{r chunk_02}
+seattle_pets |>
+  filter(license_issue_date >= "2017-01-01") |>
+  count(species, primary_breed, sort = TRUE) |>
+  filter(species %in% c("Cat", "Dog")) |>
+  mutate(percent = n / sum(n)) |>
+  group_by(species) |>
+  top_n(10, percent) |>
+  ungroup() |>
+  mutate(primary_breed = fct_reorder(primary_breed, percent)) |>
+  ggplot(aes(primary_breed, percent, fill = species)) +
+  geom_col(show.legend = FALSE) +
+  scale_y_continuous(labels = scales::percent_format()) +
+  facet_wrap(~ species, scales = "free_y", ncol = 1) +
+  coord_flip() +
+  labs(x = "Primary breed",
+       y = "% of this species",
+       title = "Most common cat and dog breeds",
+       subtitle = "Of licensed pets in Seattle 2017-2018")
+```
+```{r chunk_03}
+dogs <- seattle_pets |>
+  filter(species == "Dog")
+
+name_counts <- dogs |>
+  group_by(animal_name) |>
+  summarize(name_total = n()) |>
+  filter(name_total >= 100)
+
+breed_counts <- dogs |>
+  group_by(primary_breed) |>
+  summarize(breed_total = n()) |>
+  filter(breed_total >= 200)
+
+total_dogs <- nrow(dogs)
+
+name_breed_counts <- dogs |>
+  count(primary_breed, animal_name) |>
+  complete(primary_breed, animal_name, fill = list(n = 0)) |>
+  inner_join(name_counts, by = "animal_name") |>
+  inner_join(breed_counts, by = "primary_breed")
+
+# One-sided hypergeometric p-value
+hypergeom_test <- name_breed_counts |>
+  mutate(percent_of_breed = n / breed_total,
+         percent_overall = name_total / total_dogs) |>
+  mutate(overrepresented_ratio = percent_of_breed / percent_overall) |>
+  arrange(desc(overrepresented_ratio)) |>
+  mutate(hypergeom_p_value = 1 - phyper(n, name_total, total_dogs - name_total, breed_total),
+         holm_p_value = p.adjust(hypergeom_p_value),
+         fdr = p.adjust(hypergeom_p_value, method = "fdr"))
+
+hypergeom_test |>
+  filter(fdr < .05)
+
+ggplot(hypergeom_test, aes(hypergeom_p_value)) +
+  geom_histogram(binwidth = .1) +
+  labs(x = "One-sided hypergeometric p-values for overrepresented name")
+```
+```{r chunk_04}
+crossing(name_total = c(100, 200, 300),
+         breed_total = seq(200, 1000, 25)) |>
+  mutate(max_p_value = 1 - phyper(0, name_total, total_dogs - name_total, breed_total)) |>
+  ggplot(aes(breed_total, max_p_value, color = factor(name_total))) +
+  geom_line() +
+  labs(x = "Total # of dogs in breed",
+       y = "Maximum one-sided p-value",
+       color = "# of dogs with name")
+```
+```{r chunk_05}
+library(scales)
+
+hypergeom_test |>
+  filter(fdr <= .05) |>
+  arrange(fdr) |>
+  transmute(`Breed` = primary_breed,
+            `Name` = animal_name,
+            `# of dogs with name` = n,
+            `% of breed` = percent(percent_of_breed),
+            `% overall` = percent(percent_overall),
+            `FDR-adjusted one-sided p-value` = fdr) |>
+  knitr::kable()
+```
+
+---
+
+**→ [Hour 2: Modeling](h2_modeling_pet_names_seattle.qmd)**
+
+*TheDataShrink™ — thedatashrink.com.au — Weekly data stories in R*

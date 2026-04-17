@@ -19,7 +19,7 @@ execute:
 - `ker_status`: `extracted`
 - `reproduction_status`: `needs_data_review`
 - `transcript_file`: `raw-data/inspiration/Analyzing tidying and analyzing US PhDs in R.txt`
-- `code_file`: `data-screencasts/us_phds.Rmd`
+- `code_file`: `data-screencasts-dgrtwo/us_phds.Rmd`
 - `data_source`: Dataset inferred from us_phds.Rmd
 - `analysis_type`: `EDA`
 - `pattern_signature`: `load_inspect_reshape_trend_compare_visualize`

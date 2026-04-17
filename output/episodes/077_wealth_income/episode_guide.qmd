@@ -19,7 +19,7 @@ execute:
 - `ker_status`: `extracted`
 - `reproduction_status`: `needs_external_sources`
 - `transcript_file`: `raw-data/inspiration/Analyzing wealth and income in R.txt`
-- `code_file`: `data-screencasts/2021_05_18_salary_survey.Rmd`
+- `code_file`: `data-screencasts-dgrtwo/2021_05_18_salary_survey.Rmd`
 - `data_source`: TidyTuesday 2021-05-18 dataset
 - `analysis_type`: `Predictive`
 - `pattern_signature`: `load_inspect_trend_simulate_model_evaluate_visualize`

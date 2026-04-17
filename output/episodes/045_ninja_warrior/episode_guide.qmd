@@ -19,7 +19,7 @@ execute:
 - `ker_status`: `extracted`
 - `reproduction_status`: `ready_local`
 - `transcript_file`: `raw-data/inspiration/Analyzing Ninja Warrior in R.txt`
-- `code_file`: `data-screencasts/2020_12_15_ninja_warrior.Rmd`
+- `code_file`: `data-screencasts-dgrtwo/2020_12_15_ninja_warrior.Rmd`
 - `data_source`: TidyTuesday 2020-12-15 dataset
 - `analysis_type`: `EDA`
 - `pattern_signature`: `load_inspect_tokenize_trend_compare_visualize`

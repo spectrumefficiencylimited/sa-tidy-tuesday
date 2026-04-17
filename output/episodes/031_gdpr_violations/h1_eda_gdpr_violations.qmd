@@ -1,0 +1,192 @@
+---
+title: "Hour 1 — EDA: Analyzing GDPR violations in R"
+subtitle: "David Robinson's analysis, extended | TheDataShrink™"
+author: "TheDataShrink™"
+date: today
+format:
+  html:
+    theme: flatly
+    toc: true
+    toc-depth: 3
+    code-fold: show
+    code-summary: "Show code"
+    number-sections: true
+    embed-resources: true
+execute:
+  echo: true
+  warning: false
+  message: false
+  error: true
+editor: visual
+---
+
+
+::: {.callout-tip}
+## TheDataShrink™ — Data stories worth sharing.
+Episode 031 · Hour 1
+:::
+
+
+::: {.callout-note collapse="true"}
+## Atomic Concepts in this episode
+`add_count_inline` · `boxplot_jitter` · `fct_lump_infrequent` · `fct_reorder_stat` · `grouped_summary_ggplot` · `log_scale` · `lubridate_dates` · `multi_table_join` · `rolling_window_metrics` · `shiny_app` · `spline_regression` · `str_detect_filter`
+:::
+
+::: {.callout-warning collapse="true"}
+## FAILS WHEN
+- dataset has no natural grouping variable — comparisons become meaningless
+- column names are unstable across TidyTuesday editions (re-check schema each year)
+- join key has trailing whitespace or case inconsistency — produces unexpected NAs
+- irregular time intervals inflate or deflate apparent trends
+:::
+
+::: {.callout-important collapse="true"}
+## WORKS WHEN
+- dataset has clear categorical + numeric columns for grouped comparisons
+- question is exploratory — no strong prior hypothesis
+- time dimension is regular and spans multiple periods with meaningful change
+:::
+
+```{r setup}
+library(here)
+library(scales)
+library(tidyverse)
+library(tidymetrics)
+library(shinymetrics)
+
+# TheDataShrink™ brand colours
+TDS_BLUE  <- "#1b6ca8"
+TDS_GOLD  <- "#c8a415"
+TDS_DARK  <- "#1a1a2e"
+TDS_LIGHT <- "#f8f9fa"
+theme_set(theme_light(base_size = 13))
+
+```
+## Load data
+```{r load-data}
+gdpr_text <- read_tsv("/Users/stoiana/sa-tidy-tuesday/tidytuesday/data/2020/2020-04-21/gdpr_text.tsv", show_col_types = FALSE)
+gdpr_violations <- read_tsv("/Users/stoiana/sa-tidy-tuesday/tidytuesday/data/2020/2020-04-21/gdpr_violations.tsv", show_col_types = FALSE)
+glimpse(gdpr_text)
+glimpse(gdpr_violations)
+```
+
+## Explore
+```{r chunk_02}
+gdpr_violations |>
+  summarize(total = sum(price))
+
+gdpr_violations |>
+  count(country = fct_lump(country, 8, w = price),
+        sort = TRUE, wt = price, name = "total_price") |>
+  mutate(country = fct_reorder(country, total_price)) |>
+  ggplot(aes(total_price, country)) +
+  geom_col() +
+  scale_x_continuous(labels = dollar_format())
+```
+```{r chunk_03}
+gdpr_violations |>
+  count(month = floor_date(date, "month"),
+        country = fct_lump(country, 6, w = price),
+        sort = TRUE, wt = price, name = "total_price") |>
+  mutate(country = fct_reorder(country, -total_price, sum)) |>
+  ggplot(aes(month, total_price, fill = country)) +
+  geom_col() +
+  scale_y_continuous(labels = dollar_format()) +
+  labs(x = "Time",
+       y = "Total fines",
+       fill = "Country")
+```
+```{r chunk_04}
+gdpr_violations |>
+  count(source, country, sort = TRUE)
+
+gdpr_violations |>
+  select(controller, date, article_violated, type, summary, price) |>
+  mutate(summary = str_trunc(summary, 140)) |>
+  arrange(desc(price)) |>
+  mutate(price = dollar(price)) |>
+  head(10)
+```
+```{r chunk_05}
+gdpr_violations |>
+  mutate(type = fct_lump(type, 8, w = price),
+         type = fct_reorder(type, price),
+         country = fct_lump(country, 5)) |>
+  ggplot(aes(price, type)) +
+  geom_boxplot() +
+  geom_jitter(aes(color = country), width = 0, height = .25) +
+  scale_x_log10(labels = dollar_format())
+```
+
+## Which article was violated?
+```{r chunk_06}
+article_titles <- gdpr_text |>
+  distinct(article, article_title)
+
+separated_articles <- gdpr_violations |>
+  separate_rows(article_violated, sep = "\\|") |>
+  extract(article_violated, "article", "Art\\. ?(\\d+)", convert = TRUE, remove = FALSE) |>
+  left_join(article_titles, by = "article") |>
+  mutate(article_title = paste0(article, ". ", str_trunc(article_title, 50)),
+         article_title = ifelse(is.na(article), "Unknown", article_title)) |>
+  add_count(id) |>
+  mutate(price_per_article = price / n)
+
+separated_articles |>
+  group_by(article = fct_lump(article_title, 8, w = price)) |>
+  summarize(total_fine = sum(price_per_article),
+            violations = n()) |>
+  arrange(desc(total_fine)) |>
+  mutate(article = fct_reorder(article, total_fine)) |>
+  ggplot(aes(total_fine, article)) +
+  geom_col() +
+  scale_x_continuous(labels = dollar_format()) +
+  labs(title = "What articles got the most fines?",
+       y = "",
+       x = "Total fine")
+```
+```{r chunk_07}
+gdpr_text <- gdpr_text
+```
+```{r chunk_08}
+gdpr_violations |>
+  filter(str_detect(controller, "Vodafone")) |>
+  group_by(date, country) |>
+  summarize(violations = n(),
+            total_fine = sum(price)) |>
+  ggplot(aes(date, total_fine, size = violations, color = country)) +
+  geom_point() +
+  scale_y_continuous(labels = dollar_format()) +
+  scale_size_continuous(guide = FALSE) +
+  labs(title = "Vodafone's GDPR violations",
+       color = "",
+       x = "Time",
+       y = "Total fine on this day")
+```
+```{r chunk_09}
+library(tidymetrics)
+
+summarized <- separated_articles |>
+  filter(!is.na(date)) |>
+  mutate(country = fct_lump(country, 6, w = price_per_article),
+         article_title = fct_lump(article_title, 6, w = price_per_article),
+         type = fct_lump(type, 6, w = price_per_article)) |>
+  cross_by_dimensions(country, article_title, type) |>
+  cross_by_periods(c("month", "quarter")) |>
+  summarize(nb_violations = n_distinct(id),
+            nb_total_fine = sum(price_per_article)) |>
+  ungroup()
+
+gdpr_metrics <- create_metrics(summarized)
+```
+```{r chunk_10}
+library(shinymetrics)
+
+preview_metric(gdpr_metrics$gdpr_violations_nb_violations)
+```
+
+---
+
+**→ [Hour 2: Modeling](h2_modeling_gdpr_violations.qmd)**
+
+*TheDataShrink™ — thedatashrink.com.au — Weekly data stories in R*

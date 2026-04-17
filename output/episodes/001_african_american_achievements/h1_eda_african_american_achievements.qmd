@@ -1,0 +1,179 @@
+---
+title: "Hour 1 — EDA: Analyzing African-American achievements in R"
+subtitle: "David Robinson's analysis, extended | TheDataShrink™"
+author: "TheDataShrink™"
+date: today
+format:
+  html:
+    theme: flatly
+    toc: true
+    toc-depth: 3
+    code-fold: show
+    code-summary: "Show code"
+    number-sections: true
+    embed-resources: true
+execute:
+  echo: true
+  warning: false
+  message: false
+  error: true
+editor: visual
+---
+
+
+::: {.callout-tip}
+## TheDataShrink™ — Data stories worth sharing.
+Episode 001 · Hour 1
+:::
+
+
+::: {.callout-note collapse="true"}
+## Atomic Concepts in this episode
+`fct_reorder_stat` · `geom_histogram_density` · `glue_strings` · `grouped_summary_ggplot` · `interactive_plotly` · `janitor_clean` · `pivot_reshape` · `purrr_map_iterate` · `spline_regression` · `str_detect_filter` · `theme_set_global` · `tidytuesdayr_load`
+:::
+
+::: {.callout-warning collapse="true"}
+## FAILS WHEN
+- dataset has no natural grouping variable — comparisons become meaningless
+- column names are unstable across TidyTuesday editions (re-check schema each year)
+- source HTML structure changes — selector-based scraping breaks silently
+- irregular time intervals inflate or deflate apparent trends
+:::
+
+::: {.callout-important collapse="true"}
+## WORKS WHEN
+- dataset has clear categorical + numeric columns for grouped comparisons
+- question is exploratory — no strong prior hypothesis
+- supplemental context is unavailable in the flat file and worth the scraping overhead
+- time dimension is regular and spans multiple periods with meaningful change
+:::
+
+```{r setup}
+library(here)
+library(scales)
+library(tidyverse)
+library(plotly)
+library(glue)
+library(rvest)
+
+# TheDataShrink™ brand colours
+TDS_BLUE  <- "#1b6ca8"
+TDS_GOLD  <- "#c8a415"
+TDS_DARK  <- "#1a1a2e"
+TDS_LIGHT <- "#f8f9fa"
+theme_set(theme_light(base_size = 13))
+
+```
+## Load data
+```{r load-data}
+firsts <- read_csv("/Users/stoiana/sa-tidy-tuesday/tidytuesday/data/2020/2020-06-09/firsts.csv", show_col_types = FALSE)
+science <- read_csv("/Users/stoiana/sa-tidy-tuesday/tidytuesday/data/2020/2020-06-09/science.csv", show_col_types = FALSE)
+glimpse(firsts)
+glimpse(science)
+```
+
+## Explore
+```{r chunk_02}
+firsts |>
+
+science |>
+```
+```{r chunk_03}
+firsts <- firsts
+
+firsts |>
+  ggplot(aes(year)) +
+  geom_histogram()
+
+firsts |>
+  count(category, sort = TRUE) |>
+  mutate(category = fct_reorder(category, n)) |>
+  ggplot(aes(n, category)) +
+  geom_col()
+```
+```{r chunk_04}
+firsts <- firsts |>
+  mutate(person = str_remove(person, "[\\[\\(].*"),
+         person = str_trim(person))
+```
+```{r chunk_05}
+library(plotly)
+library(glue)
+
+g <- firsts |>
+  ggplot(aes(year,
+             category,
+             color = category,
+             text = glue("{ year }: { accomplishment }\n{ person }"))) +
+  geom_point() +
+  theme(axis.text.y = element_blank(),
+        axis.ticks.y = element_blank(),
+        panel.grid.major.y = element_blank(),
+        panel.grid.minor.y = element_blank(),
+        legend.position = "none") +
+  labs(title = "Timeline of some notable African-American achievements",
+       subtitle = "Source: https://en.wikipedia.org/wiki/List_of_African-American_firsts",
+       y = "Category",
+       x = "Year")
+
+ggplotly(g, tooltip = "text")
+```
+
+## Science
+```{r chunk_06}
+science |>
+  ggplot(aes(birth)) +
+  geom_histogram()
+
+science |>
+  separate_rows(occupation_s, sep = "; ") |>
+  mutate(occupation = str_to_title(occupation_s)) |>
+  count(occupation, sort = TRUE)
+
+science |>
+  filter(str_detect(occupation_s, regex("istician", ignore_case = TRUE))) |>
+  pull(name)
+
+science |>
+  filter(str_detect(occupation_s, "statistician")) |>
+```
+```{r chunk_07}
+library(rvest)
+
+science_html <- science |>
+  mutate(html = map(links, possibly(read_html, NULL, quiet = FALSE)))
+```
+```{r chunk_08}
+extract_infobox <- . |>
+  html_node(".vcard") |>
+  html_table(header = FALSE) |>
+  as_tibble()
+
+infoboxes <- science_html |>
+  filter(!map_lgl(html, is.null)) |>
+  mutate(infobox = map(html, possibly(extract_infobox, NULL))) |>
+  select(link = links, infobox) |>
+  unnest(infobox) |>
+  filter(X1 != "" | X2 != "", X1 != "Scientific career") |>
+  rename(key = X1, value = X2)
+
+science_infoboxes <- infoboxes |>
+  group_by(link) |>
+  mutate(name = first(key)) |>
+  group_by(key) |>
+  filter(n() >= 10) |>
+  ungroup() |>
+  distinct(name, key, .keep_all = TRUE) |>
+  spread(key, value) |>
+  janitor::clean_names()
+```
+```{r chunk_09}
+science_infoboxes |>
+  count(nationality, sort = TRUE)
+```
+
+---
+
+**→ [Hour 2: Modeling](h2_modeling_african_american_achievements.qmd)**
+
+*TheDataShrink™ — thedatashrink.com.au — Weekly data stories in R*

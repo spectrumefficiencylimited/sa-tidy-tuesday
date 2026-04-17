@@ -1,0 +1,211 @@
+---
+title: "Hour 1 — EDA: Analyzing HBCU enrollment in R"
+subtitle: "David Robinson's analysis, extended | TheDataShrink™"
+author: "TheDataShrink™"
+date: today
+format:
+  html:
+    theme: flatly
+    toc: true
+    toc-depth: 3
+    code-fold: show
+    code-summary: "Show code"
+    number-sections: true
+    embed-resources: true
+execute:
+  echo: true
+  warning: false
+  message: false
+  error: true
+editor: visual
+---
+
+
+::: {.callout-tip}
+## TheDataShrink™ — Data stories worth sharing.
+Episode 034 · Hour 1
+:::
+
+
+::: {.callout-note collapse="true"}
+## Atomic Concepts in this episode
+`cumsum_running_total` · `faceted_comparison` · `fct_relevel_manual` · `fct_reorder_stat` · `grouped_summary_ggplot` · `multi_table_join` · `pivot_reshape` · `spline_regression` · `str_detect_filter` · `theme_set_global` · `tidytuesdayr_load` · `time_series_trend`
+:::
+
+::: {.callout-warning collapse="true"}
+## FAILS WHEN
+- dataset has no natural grouping variable — comparisons become meaningless
+- column names are unstable across TidyTuesday editions (re-check schema each year)
+- join key has trailing whitespace or case inconsistency — produces unexpected NAs
+- irregular time intervals inflate or deflate apparent trends
+:::
+
+::: {.callout-important collapse="true"}
+## WORKS WHEN
+- dataset has clear categorical + numeric columns for grouped comparisons
+- question is exploratory — no strong prior hypothesis
+- time dimension is regular and spans multiple periods with meaningful change
+:::
+
+```{r setup}
+library(here)
+library(scales)
+library(tidyverse)
+
+# TheDataShrink™ brand colours
+TDS_BLUE  <- "#1b6ca8"
+TDS_GOLD  <- "#c8a415"
+TDS_DARK  <- "#1a1a2e"
+TDS_LIGHT <- "#f8f9fa"
+theme_set(theme_light(base_size = 13))
+
+```
+## Load data
+```{r load-data}
+104.10 <- read_csv("/Users/stoiana/sa-tidy-tuesday/tidytuesday/data/2021/2021-02-02/104.10.xlsx", show_col_types = FALSE)
+bach_students <- read_csv("/Users/stoiana/sa-tidy-tuesday/tidytuesday/data/2021/2021-02-02/bach_students.csv", show_col_types = FALSE)
+female_bach_students <- read_csv("/Users/stoiana/sa-tidy-tuesday/tidytuesday/data/2021/2021-02-02/female_bach_students.csv", show_col_types = FALSE)
+female_hs_students <- read_csv("/Users/stoiana/sa-tidy-tuesday/tidytuesday/data/2021/2021-02-02/female_hs_students.csv", show_col_types = FALSE)
+hbcu_all <- read_csv("/Users/stoiana/sa-tidy-tuesday/tidytuesday/data/2021/2021-02-02/hbcu_all.csv", show_col_types = FALSE)
+hbcu_black <- read_csv("/Users/stoiana/sa-tidy-tuesday/tidytuesday/data/2021/2021-02-02/hbcu_black.csv", show_col_types = FALSE)
+hs_students <- read_csv("/Users/stoiana/sa-tidy-tuesday/tidytuesday/data/2021/2021-02-02/hs_students.csv", show_col_types = FALSE)
+male_bach_students <- read_csv("/Users/stoiana/sa-tidy-tuesday/tidytuesday/data/2021/2021-02-02/male_bach_students.csv", show_col_types = FALSE)
+male_hs_students <- read_csv("/Users/stoiana/sa-tidy-tuesday/tidytuesday/data/2021/2021-02-02/male_hs_students.csv", show_col_types = FALSE)
+tabn313.20 <- read_csv("/Users/stoiana/sa-tidy-tuesday/tidytuesday/data/2021/2021-02-02/tabn313.20.xls", show_col_types = FALSE)
+glimpse(104.10)
+glimpse(bach_students)
+```
+
+## Load the weekly Data
+```{r chunk_01}
+hbcu_black_long <- tt$hbcu_black |>
+  gather(metric, black_enrollment, -Year) |>
+  rename(year = Year)
+
+hbcu_compare_long <- hbcu_all_long |>
+  full_join(hbcu_black_long, by = c("year", "metric")) |>
+  mutate(pct_black = black_enrollment / enrollment)
+
+hbcu_compare_long |>
+  filter(metric == "Total enrollment") |>
+  ggplot(aes(year, pct_black)) +
+  geom_line() +
+  scale_y_continuous(labels = percent) +
+  expand_limits(y = 0) +
+  labs(y = "% of HBCU enrollment that is Black")
+
+hbcu_compare_long |>
+  filter(metric %in% c("Males", "Females")) |>
+  ggplot(aes(year, pct_black, color = metric)) +
+  geom_line() +
+  scale_y_continuous(labels = percent) +
+  expand_limits(y = 0) +
+  labs(y = "% of HBCU enrollment that is Black")
+
+hbcu_compare_long |>
+  filter(str_detect(metric, "Total -")) |>
+  mutate(metric = str_remove(metric, "Total - ")) |>
+  ggplot(aes(year, pct_black, color = metric)) +
+  geom_line() +
+  scale_y_continuous(labels = percent) +
+  expand_limits(y = 0) +
+  labs(y = "% of HBCU enrollment that is Black",
+       color = "")
+```
+```{r chunk_02}
+gather_race_ethnicity <- function(tbl) {
+  tbl |>
+    mutate_if(is.character, parse_number) |>
+    rename(year = Total) |>
+    filter(!is.na(year)) |>
+    gather(race_ethnicity, value, -year) |>
+    mutate(column = ifelse(str_detect(race_ethnicity, "Standard Errors - "), "standard_error", "percent"),
+           race_ethnicity = str_remove(race_ethnicity, "Standard Errors - ")) |>
+    spread(column, value) |>
+    mutate(standard_error = abs(standard_error)) |>
+    filter(!is.na(percent)) |>
+    mutate(race_ethnicity = str_remove(race_ethnicity, "1$"),
+           percent = percent / 100,
+           standard_error = standard_error / 100)
+}
+
+hs_over_time <- tt$hs_students |>
+  slice(-(1:3)) |>
+  gather_race_ethnicity()
+
+bach_over_time <- tt$bach_students |>
+  gather_race_ethnicity()
+
+education_over_time <- bind_rows(hs_over_time |> mutate(degree = "High School"),
+                                 bach_over_time |> mutate(degree = "Bachelor's"))
+
+hs_over_time |>
+  mutate(race_ethnicity = fct_reorder(race_ethnicity, -percent)) |>
+  ggplot(aes(year, percent, color = race_ethnicity)) +
+  geom_line() +
+  scale_y_continuous(labels = percent) +
+  labs(color = "Race/ethnicity",
+       y = "% of people aged >=25 who graduated HS") +
+  expand_limits(y = 0)
+
+bach_over_time |>
+  mutate(race_ethnicity = fct_reorder(race_ethnicity, -percent)) |>
+  ggplot(aes(year, percent, color = race_ethnicity)) +
+  geom_line() +
+  scale_y_continuous(labels = percent) +
+  labs(color = "Race/ethnicity",
+       y = "% of people aged >=25 who graduated a bachelor's program") +
+  expand_limits(y = 0)
+
+education_over_time |>
+  filter(year >= 1940,
+         !str_detect(race_ethnicity, "Islander -")) |>
+  mutate(degree = fct_relevel(degree, "High School"),
+         race_ethnicity = str_remove(race_ethnicity, "Total - ")) |>
+  mutate(race_ethnicity = fct_reorder(race_ethnicity, percent, last, .desc = TRUE)) |>
+  ggplot(aes(year, percent, color = race_ethnicity)) +
+  geom_line() +
+  facet_wrap(~ degree) +
+  scale_y_continuous(labels = percent) +
+  labs(x = "Year",
+       color = "Race/ethnicity",
+       y = "% of people aged >=25 who have this degree") +
+  expand_limits(y = 0)
+```
+```{r chunk_03}
+a25 <- readxl::read_excel("~/Downloads/A-25.xls")
+
+a25_cleaned <- a25 |>
+  select(-starts_with("...")) |>
+  rename(field_gender = 1) |>
+  mutate(group = cumsum(is.na(field_gender))) |>
+  filter(!is.na(field_gender)) |>
+  select(group, everything()) |>
+  mutate(field_gender = str_remove(field_gender, " \\.\\.\\..*")) |>
+  group_by(group) |>
+  mutate(field = first(field_gender),
+         gender = ifelse(field_gender %in% c("Men", "Women"), field_gender, "Total")) |>
+  ungroup() |>
+  select(field, gender, everything()) |>
+  select(-field_gender, -group)
+
+a25_cleaned |>
+  select(field, gender, contains("HBCU")) |>
+  rename(pct_hbcu_total = 3,
+         pct_hbcu_black = 4) |>
+  filter(gender != "Total") |>
+  mutate(field = fct_reorder(field, pct_hbcu_black, na.rm = TRUE),
+         pct_hbcu_black = pct_hbcu_black / 100) |>
+  ggplot(aes(pct_hbcu_black, field, fill = gender)) +
+  geom_col(position = "dodge") +
+  scale_x_continuous(labels = percent) +
+  labs(x = "% of first degrees from an HBCU, among Black students",
+       y = "Field",
+       fill = "")
+```
+
+---
+
+**→ [Hour 2: Modeling](h2_modeling_hbcu_enrollment.qmd)**
+
+*TheDataShrink™ — thedatashrink.com.au — Weekly data stories in R*

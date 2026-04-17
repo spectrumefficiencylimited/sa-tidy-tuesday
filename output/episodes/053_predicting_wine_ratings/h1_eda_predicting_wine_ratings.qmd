@@ -1,0 +1,285 @@
+---
+title: "Hour 1 — EDA: Analyzing predicting wine ratings in R"
+subtitle: "David Robinson's analysis, extended | TheDataShrink™"
+author: "TheDataShrink™"
+date: today
+format:
+  html:
+    theme: flatly
+    toc: true
+    toc-depth: 3
+    code-fold: show
+    code-summary: "Show code"
+    number-sections: true
+    embed-resources: true
+execute:
+  echo: true
+  warning: false
+  message: false
+  error: true
+editor: visual
+---
+
+
+::: {.callout-tip}
+## TheDataShrink™ — Data stories worth sharing.
+Episode 053 · Hour 1
+:::
+
+
+::: {.callout-note collapse="true"}
+## Atomic Concepts in this episode
+`add_count_inline` · `boxplot_jitter` · `broom_model_output` · `coord_flip_horizontal` · `error_bar_coef_plot` · `faceted_comparison` · `fct_lump_infrequent` · `fct_relevel_manual` · `fct_reorder_stat` · `geom_histogram_density` · `geom_smooth_loess` · `grouped_summary_ggplot`
+:::
+
+::: {.callout-warning collapse="true"}
+## FAILS WHEN
+- outcome column is missing or near-zero variance
+- training set is too small for the number of predictors
+- text is multilingual without language detection
+- join key has trailing whitespace or case inconsistency — produces unexpected NAs
+- irregular time intervals inflate or deflate apparent trends
+:::
+
+::: {.callout-important collapse="true"}
+## WORKS WHEN
+- outcome column is clearly defined and has sufficient variance
+- features can be engineered from existing columns without external joins
+- text is long-form English and benefits from word-level decomposition
+- time dimension is regular and spans multiple periods with meaningful change
+:::
+
+```{r setup}
+library(here)
+library(scales)
+library(tidyverse)
+library(broom)
+library(tidytext)
+library(widyr)
+library(Matrix)
+library(glmnet)
+library(doMC)
+
+# TheDataShrink™ brand colours
+TDS_BLUE  <- "#1b6ca8"
+TDS_GOLD  <- "#c8a415"
+TDS_DARK  <- "#1a1a2e"
+TDS_LIGHT <- "#f8f9fa"
+theme_set(theme_light(base_size = 13))
+
+```
+
+## Explore
+```{r chunk_01}
+library(tidyverse)
+theme_set(theme_light())
+
+wine_ratings <- readr::read_csv("https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2019/2019-05-28/winemag-data-130k-v2.csv") |>
+  select(-X1) |>
+  extract(title, "year", "(20\\d\\d)", convert = TRUE, remove = FALSE) |>
+  mutate(year = ifelse(year < 1900, NA, year)) |>
+  filter(!is.na(price))
+```
+```{r chunk_02}
+wine_ratings |>
+  count(country, sort = T)
+
+wine_ratings |>
+  count(designation, sort = T)
+
+wine_ratings |>
+  count(country, region_1, sort = TRUE)
+
+wine_ratings |>
+  count(taster_name, sort = TRUE)
+
+wine_ratings |>
+  filter(!is.na(designation)) |>
+  count(variety, designation, sort = TRUE)
+
+wine_ratings |>
+  ggplot(aes(year)) +
+  geom_histogram()
+
+wine_ratings |>
+  ggplot(aes(points)) +
+  geom_histogram(binwidth = 1)
+
+wine_ratings |>
+  ggplot(aes(price)) +
+  geom_histogram() +
+  scale_x_log10()
+```
+```{r chunk_03}
+ggplot(wine_ratings, aes(price, points)) +
+  geom_point(alpha = .1) +
+  geom_smooth(method = "lm") +
+  scale_x_log10()
+
+summary(lm(points ~ log2(price), wine_ratings))
+```
+```{r chunk_04}
+library(broom)
+
+model <- wine_ratings |>
+  replace_na(list(taster_name = "Missing", country = "Missing")) |>
+  mutate(country = fct_relevel(fct_lump(country, 7), "US"),
+         taster_name = fct_relevel(fct_lump(taster_name, 6), "Missing")) |>
+  lm(points ~ log2(price) + country + year + taster_name, data = .)
+
+model |>
+  tidy(conf.int = TRUE) |>
+  filter(term != "(Intercept)") |>
+  mutate(term = str_replace(term, "country", "Country: "),
+         term = str_replace(term, "taster_name", "Taster: "),
+         term = fct_reorder(term, estimate)) |>
+  ggplot(aes(estimate, term)) +
+  geom_point() +
+  geom_errorbarh(aes(xmin = conf.low, xmax = conf.high))
+```
+```{r chunk_05}
+model |>
+  augment(data = wine_ratings) |>
+  ggplot(aes(.fitted, points)) +
+  geom_point(alpha = .1)
+
+tidy(anova(model)) |>
+  mutate(sumsq / sum(sumsq))
+```
+
+## Lasso regression on words in description
+```{r chunk_06}
+library(tidytext)
+
+wine_rating_words <- wine_ratings |>
+  mutate(wine_id = row_number()) |>
+  unnest_tokens(word, description) |>
+  anti_join(stop_words, by = "word") |>
+  filter(!word %in% c("wine", "drink"),
+         str_detect(word, "[a-z]"))
+
+wine_rating_words |>
+  count(word, sort = TRUE) |>
+  head(20) |>
+  mutate(word = fct_reorder(word, n)) |>
+  ggplot(aes(word, n)) +
+  geom_col() +
+  coord_flip()
+```
+```{r chunk_07}
+library(widyr)
+
+wine_words_filtered <- wine_rating_words |>
+  distinct(wine_id, word) |>
+  add_count(word) |>
+  filter(n >= 100)
+
+wine_words_filtered |>
+  pairwise_cor(word, wine_id, sort = TRUE)
+```
+```{r chunk_08}
+library(Matrix)
+
+wine_word_matrix <- wine_words_filtered |>
+  cast_sparse(wine_id, word)
+
+wine_ids <- as.integer(rownames(wine_word_matrix))
+scores <- wine_ratings$points[wine_ids]
+
+library(glmnet)
+
+wine_word_matrix_extra <- cbind(wine_word_matrix, log_price = log2(wine_ratings$price[wine_ids]))
+
+library(doMC)
+registerDoMC(cores = 4)
+
+cv_glmnet_model <- cv.glmnet(wine_word_matrix_extra, scores, parallel = TRUE)
+
+plot(cv_glmnet_model)
+```
+```{r chunk_09}
+lexicon <- cv_glmnet_model$glmnet.fit |>
+  tidy() |>
+  filter(lambda == cv_glmnet_model$lambda.1se,
+         term != "(Intercept)",
+         term != "log_price") |>
+  select(word = term, coefficient = estimate)
+
+lexicon |>
+  arrange(coefficient) |>
+  group_by(direction = ifelse(coefficient < 0, "Negative", "Positive")) |>
+  top_n(16, abs(coefficient)) |>
+  ungroup() |>
+  mutate(word = fct_reorder(word, coefficient)) |>
+  ggplot(aes(word, coefficient, fill = direction)) +
+  geom_col() +
+  coord_flip() +
+  labs(x = "",
+       y = "Estimated effect of the word on the score",
+       title = "What words are predictive of a wine's score?")
+```
+```{r chunk_10}
+wine_ratings |>
+  mutate(wine_id = row_number()) |>
+  arrange(points) |>
+  head(1) |>
+  select(wine_id, description) |>
+  pull(description)
+
+wine_rating_words |>
+  filter(wine_id %in% sample(unique(wine_id), 6)) |>
+  distinct(word, title, points) |>
+  mutate(wine = paste0(str_trunc(title, 40), " (", points, ")")) |>
+  inner_join(lexicon, by = "word") |>
+  mutate(word = fct_reorder(word, coefficient)) |>
+  ggplot(aes(word, coefficient, fill = coefficient > 0)) +
+  geom_col(show.legend = FALSE) +
+  coord_flip() +
+  facet_wrap(~ wine, scales = "free_y") +
+  labs(title = "How a lasso regression would predict each wine's score",
+       subtitle = "Using a lasso regression with an extra term for price",
+       x = "",
+       y = "Effect on score")
+```
+
+## What is glmnet?
+```{r chunk_11}
+cv_glmnet_model$glmnet.fit |>
+  tidy() |>
+  filter(term %in% c("rich", "black", "simple", "complex", "vineyard", "concentrated")) |>
+  ggplot(aes(lambda, estimate, color = term)) +
+  geom_line() +
+  scale_x_log10() +
+  geom_hline(lty = 2, yintercept = 0)
+
+cv_glmnet_model$glmnet.fit |>
+  tidy() |>
+  count(lambda) |>
+  ggplot(aes(lambda, n)) +
+  geom_line() +
+  scale_x_log10()
+```
+```{r chunk_12}
+wine_ratings |>
+  mutate(country = fct_relevel(fct_lump(country, 7), "US")) |>
+  mutate(country = fct_reorder(country, points)) |>
+  ggplot(aes(country, points)) +
+  geom_boxplot() +
+  coord_flip()
+
+wine_ratings |>
+  group_by(year) |>
+  summarize(average_points = mean(points), n())
+  
+wine_ratings |>
+  mutate(reviewer = fct_reorder(fct_lump(taster_name, 10), points)) |>
+  ggplot(aes(reviewer, points)) +
+  geom_boxplot() +
+  coord_flip()
+```
+
+---
+
+**→ [Hour 2: Modeling](h2_modeling_predicting_wine_ratings.qmd)**
+
+*TheDataShrink™ — thedatashrink.com.au — Weekly data stories in R*

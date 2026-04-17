@@ -19,7 +19,7 @@ execute:
 - `ker_status`: `extracted`
 - `reproduction_status`: `ready_local`
 - `transcript_file`: `raw-data/inspiration/Analyzing Animal Crossing in R.txt`
-- `code_file`: `data-screencasts/animal-crossing.Rmd`
+- `code_file`: `data-screencasts-dgrtwo/animal-crossing.Rmd`
 - `data_source`: TidyTuesday 2020-05-05 source files
 - `analysis_type`: `EDA`
 - `pattern_signature`: `load_inspect_reshape_join_tokenize_trend_compare_visualize`

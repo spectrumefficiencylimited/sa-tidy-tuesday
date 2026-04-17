@@ -1,0 +1,181 @@
+---
+title: "Hour 1 — EDA: Analyzing franchise revenue in R"
+subtitle: "David Robinson's analysis, extended | TheDataShrink™"
+author: "TheDataShrink™"
+date: today
+format:
+  html:
+    theme: flatly
+    toc: true
+    toc-depth: 3
+    code-fold: show
+    code-summary: "Show code"
+    number-sections: true
+    embed-resources: true
+execute:
+  echo: true
+  warning: false
+  message: false
+  error: true
+editor: visual
+---
+
+
+::: {.callout-tip}
+## TheDataShrink™ — Data stories worth sharing.
+Episode 029 · Hour 1
+:::
+
+
+::: {.callout-note collapse="true"}
+## Atomic Concepts in this episode
+`coord_flip_horizontal` · `faceted_comparison` · `fct_reorder_stat` · `glue_strings` · `grouped_summary_ggplot` · `heatmap_tile` · `spline_regression` · `theme_set_global`
+:::
+
+::: {.callout-warning collapse="true"}
+## FAILS WHEN
+- dataset has no natural grouping variable — comparisons become meaningless
+- column names are unstable across TidyTuesday editions (re-check schema each year)
+- join key has trailing whitespace or case inconsistency — produces unexpected NAs
+:::
+
+::: {.callout-important collapse="true"}
+## WORKS WHEN
+- dataset has clear categorical + numeric columns for grouped comparisons
+- question is exploratory — no strong prior hypothesis
+:::
+
+```{r setup}
+library(here)
+library(scales)
+library(tidyverse)
+library(glue)
+
+# TheDataShrink™ brand colours
+TDS_BLUE  <- "#1b6ca8"
+TDS_GOLD  <- "#c8a415"
+TDS_DARK  <- "#1a1a2e"
+TDS_LIGHT <- "#f8f9fa"
+theme_set(theme_light(base_size = 13))
+
+```
+
+## Explore
+```{r chunk_01}
+library(tidyverse)
+theme_set(theme_light())
+
+media_franchises <- readr::read_csv("https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2019/2019-07-02/media_franchises.csv")
+```
+```{r chunk_02}
+media_franchises |>
+  count(franchise, sort = TRUE)
+
+franchises <- media_franchises |>
+  group_by(franchise, original_media, year_created, creators, owners) |>
+  summarize(categories = n(),
+            total_revenue = sum(revenue),
+            most_profitable = revenue_category[which.max(revenue)]) |>
+  ungroup()
+
+franchises
+
+media_franchises
+```
+
+## Franchise-level
+```{r chunk_03}
+library(glue)
+
+top_franchises <- franchises |>
+  mutate(franchise = glue("{ franchise } ({ year_created })")) |>
+  top_n(20, total_revenue)
+
+media_franchises |>
+  mutate(franchise = glue("{ franchise } ({ year_created })")) |>
+  semi_join(top_franchises, by = "franchise") |>
+  mutate(franchise = fct_reorder(franchise, revenue, sum),
+         revenue_category = fct_reorder(revenue_category, revenue, sum)) |>
+  ggplot(aes(franchise, revenue)) +
+  geom_col(aes(fill = revenue_category)) +
+  geom_text(aes(y = total_revenue,
+                label = paste0(scales::dollar(total_revenue, accuracy = 1), "B")),
+            data = top_franchises,
+            hjust = 0) +
+  scale_y_continuous(labels = scales::dollar) +
+  expand_limits(y = 100) +
+  coord_flip() +
+  theme(panel.grid.major.y = element_blank()) +
+  guides(fill = guide_legend(reverse = TRUE)) +
+  labs(title = "What are the most profitable franchises of all time?",
+       fill = "Category",
+       x = "",
+       y = "Revenue (Billions)")
+```
+```{r chunk_04}
+media_franchises |>
+  group_by(owners) |>
+  filter(n_distinct(franchise) > 2) |>
+  ungroup() |>
+  mutate(franchise = fct_reorder(franchise, revenue, sum),
+         owners = fct_reorder(owners, -revenue, sum),
+         revenue_category = fct_reorder(revenue_category, revenue, sum)) |>
+  ggplot(aes(franchise, revenue, fill = revenue_category)) +
+  geom_col() +
+  facet_wrap(~ owners, scales = "free_y") +
+  guides(fill = guide_legend(reverse = TRUE)) +
+  coord_flip() +
+  labs(title = "What companies own at least 3 franchises?",
+       fill = "Category",
+       x = "",
+       y = "Revenue (Billions)")
+```
+```{r chunk_05}
+franchises |>
+  ggplot(aes(year_created, total_revenue)) +
+  geom_point(aes(size = total_revenue, color = original_media)) +
+  geom_text(aes(label = franchise), check_overlap = TRUE, vjust = 1, hjust = 1) +
+  expand_limits(x = 1910) +
+  labs(title = "When were the 'great' franchises created?")
+```
+```{r chunk_06}
+media_franchises |>
+  group_by(original_media) |>
+  summarize(revenue = sum(revenue)) 
+
+original_media_revenue_categories <- media_franchises |>
+  group_by(original_media) |>
+  filter(sum(revenue) >= 45) |>
+  group_by(original_media, revenue_category) |>
+  summarize(revenue = sum(revenue)) |>
+  ungroup() |>
+  mutate(revenue_category = fct_reorder(revenue_category, revenue, sum),
+         original_media = fct_reorder(original_media, -revenue, sum))
+
+original_media_revenue_categories |>
+  ggplot(aes(revenue_category, revenue)) +
+  geom_col() +
+  scale_y_continuous(labels = scales::dollar) +
+  coord_flip() +
+  facet_wrap(~ original_media) +
+  labs(x = "Revenue category",
+       y = "Revenue (Billions)",
+       title = "What kinds of media lead to what types of revenue?")
+```
+```{r chunk_07}
+original_media_revenue_categories |>
+  mutate(revenue_category = fct_rev(revenue_category),
+         original_media = fct_rev(original_media)) |>
+  ggplot(aes(revenue_category, original_media, fill = revenue)) +
+  geom_tile() +
+  scale_fill_gradient2(low = "white", high = "red", labels = scales::dollar) +
+  theme(panel.grid = element_blank(),
+        axis.text.x = element_text(angle = 90, hjust = 1)) +
+  labs(fill = "Revenue (billions)")
+```
+
+---
+
+**→ [Hour 2: Modeling](h2_modeling_franchise_revenue.qmd)**
+
+*TheDataShrink™ — thedatashrink.com.au — Weekly data stories in R*

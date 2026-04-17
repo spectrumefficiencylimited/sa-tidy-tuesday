@@ -19,7 +19,7 @@ execute:
 - `ker_status`: `extracted`
 - `reproduction_status`: `ready_local`
 - `transcript_file`: `raw-data/inspiration/Analyzing ratings and scripts from The Office in R.txt`
-- `code_file`: `data-screencasts/office-transcripts.Rmd`
+- `code_file`: `data-screencasts-dgrtwo/office-transcripts.Rmd`
 - `data_source`: TidyTuesday 2020-03-17 source files
 - `analysis_type`: `Predictive`
 - `pattern_signature`: `load_inspect_reshape_join_tokenize_model_evaluate_visualize`

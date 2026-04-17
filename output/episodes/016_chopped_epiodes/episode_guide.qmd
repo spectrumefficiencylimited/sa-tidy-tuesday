@@ -19,7 +19,7 @@ execute:
 - `ker_status`: `extracted`
 - `reproduction_status`: `ready_local`
 - `transcript_file`: `raw-data/inspiration/Analyzing Chopped epiodes in R.txt`
-- `code_file`: `data-screencasts/2020_08_25_chopped.Rmd`
+- `code_file`: `data-screencasts-dgrtwo/2020_08_25_chopped.Rmd`
 - `data_source`: TidyTuesday 2020-08-25 dataset
 - `analysis_type`: `Predictive`
 - `pattern_signature`: `load_inspect_reshape_join_trend_model_evaluate_visualize`

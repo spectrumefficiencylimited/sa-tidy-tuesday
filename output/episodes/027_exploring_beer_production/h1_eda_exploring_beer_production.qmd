@@ -1,0 +1,236 @@
+---
+title: "Hour 1 — EDA: Analyzing exploring US beer production in R"
+subtitle: "David Robinson's analysis, extended | TheDataShrink™"
+author: "TheDataShrink™"
+date: today
+format:
+  html:
+    theme: flatly
+    toc: true
+    toc-depth: 3
+    code-fold: show
+    code-summary: "Show code"
+    number-sections: true
+    embed-resources: true
+execute:
+  echo: true
+  warning: false
+  message: false
+  error: true
+editor: visual
+---
+
+
+::: {.callout-tip}
+## TheDataShrink™ — Data stories worth sharing.
+Episode 027 · Hour 1
+:::
+
+
+::: {.callout-note collapse="true"}
+## Atomic Concepts in this episode
+`animated_transitions` · `choropleth_sf` · `coord_flip_horizontal` · `faceted_comparison` · `fct_lump_infrequent` · `fct_reorder_stat` · `grouped_summary_ggplot` · `lubridate_dates` · `multi_table_join` · `parse_number_dirty` · `purrr_map_iterate` · `rolling_window_metrics`
+:::
+
+::: {.callout-warning collapse="true"}
+## FAILS WHEN
+- dataset has no natural grouping variable — comparisons become meaningless
+- column names are unstable across TidyTuesday editions (re-check schema each year)
+- region name spelling differs between data and shapefile — silent dropped rows
+- join key has trailing whitespace or case inconsistency — produces unexpected NAs
+- irregular time intervals inflate or deflate apparent trends
+:::
+
+::: {.callout-important collapse="true"}
+## WORKS WHEN
+- dataset has clear categorical + numeric columns for grouped comparisons
+- question is exploratory — no strong prior hypothesis
+- geographic column can be matched to a standard ISO/FIPS shapefile without fuzzy joins
+- time dimension is regular and spans multiple periods with meaningful change
+:::
+
+```{r setup}
+library(here)
+library(scales)
+library(tidyverse)
+library(lubridate)
+library(tidymetrics)
+library(shinymetrics)
+library(maps)
+library(sf)
+library(gganimate)
+
+# TheDataShrink™ brand colours
+TDS_BLUE  <- "#1b6ca8"
+TDS_GOLD  <- "#c8a415"
+TDS_DARK  <- "#1a1a2e"
+TDS_LIGHT <- "#f8f9fa"
+theme_set(theme_light(base_size = 13))
+
+```
+
+## Explore
+```{r chunk_01}
+library(tidyverse)
+library(lubridate)
+theme_set(theme_light())
+
+brewing_materials <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-03-31/brewing_materials.csv') |>
+  mutate(date = ymd(paste(year, month, 1))) |>
+  filter(year < 2016)
+
+beer_taxed <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-03-31/beer_taxed.csv')
+brewer_size <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-03-31/brewer_size.csv')
+beer_states <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-03-31/beer_states.csv')
+```
+```{r chunk_02}
+brewing_materials |>
+  filter(date == max(date)) |>
+  filter(!str_detect(material_type, "Total")) |>
+  mutate(type = fct_reorder(type, month_current)) |>
+  ggplot(aes(type, month_current, fill = material_type)) +
+  geom_col() +
+  coord_flip()
+
+library(lubridate)
+
+brewing_materials |>
+  filter(!str_detect(material_type, "Total")) |>
+  mutate(type = fct_reorder(type, month_current, sum)) |>
+  ggplot(aes(date, month_current, fill = type)) +
+  geom_col() +
+  scale_y_continuous(labels = scales::comma) +
+  labs(x = "Time",
+       y = "Pounds used in beer production",
+       fill = "Material")
+
+brewing_materials |>
+  filter(str_detect(material_type, "Total.*products")) |>
+  mutate(type = fct_reorder(type, month_current, sum)) |>
+  ggplot(aes(date, month_current, fill = type)) +
+  geom_col() +
+  scale_y_continuous(labels = scales::comma) +
+  labs(x = "Time",
+       y = "Pounds used in beer production",
+       fill = "Material")
+```
+```{r chunk_03}
+# devtools::install_github("ramnathv/tidymetrics")
+library(tidymetrics)
+
+brewing_summarized <- brewing_materials |>
+  rename(material = type) |>
+  filter(!str_detect(material_type, "Total")) |>
+  cross_by_dimensions(material, material_type) |>
+  cross_by_periods(c("month", "quarter", "year")) |>
+  summarize(nb_pounds = sum(month_current)) |>
+  ungroup()
+
+brewing_summarized |>
+  filter(material_type == "All", material != "All", period == "quarter") |>
+  ggplot(aes(date, nb_pounds, fill = material)) +
+  geom_col()
+```
+```{r chunk_04}
+brewing_metrics <- create_metrics(brewing_summarized)
+
+library(shinymetrics)
+
+preview_metric(brewing_metrics$beer_production_nb_pounds)
+```
+
+## Brewer size distribution
+```{r chunk_05}
+brewer_size |>
+  filter(brewer_size != "Total", !is.na(total_barrels)) |>
+  mutate(brewer_size = fct_lump(brewer_size, 5, w = total_barrels),
+         barrel_number = coalesce(parse_number(as.character(brewer_size)), 1),
+         brewer_size = fct_reorder(brewer_size, barrel_number)) |>
+  ggplot(aes(year, total_barrels, fill = brewer_size)) +
+  geom_col()
+```
+```{r chunk_06}
+brewing_materials |>
+  filter(material_type == "Total Used") |>
+  ggplot(aes(month, month_current, color = factor(year))) +
+  geom_line() +
+  expand_limits(y = 0)
+```
+```{r chunk_07}
+beer_states |>
+  count(type, sort = TRUE, wt = barrels)
+
+beer_states |>
+  group_by(year) |>
+  summarize(barrels = sum(barrels, na.rm = TRUE))
+
+# Who consumes beer on premises
+state_percents_2019 <- beer_states |>
+  filter(year == max(year), state != "total") |>
+  group_by(state, year) |>
+  mutate(percent = barrels / sum(barrels)) |>
+  ungroup()
+
+state_percents_2019 |>
+  filter(type == "On Premises") |>
+  arrange(desc(percent))
+```
+```{r chunk_08}
+library(maps)
+library(sf)
+
+states <- st_as_sf(map("state", plot = FALSE, fill = TRUE))
+
+states_joined <- state_percents_2019 |>
+  mutate(ID = str_to_lower(state.name[match(state, state.abb)])) |>
+  inner_join(states, by = "ID")
+
+states_joined |>
+  filter(type == "On Premises") |>
+  ggplot(aes(geometry = geom, fill = percent)) +
+  geom_sf() +
+  scale_fill_gradient2(low = "blue", high = "orange", midpoint = .5,
+                       labels = scales::percent) +
+  ggthemes::theme_map() +
+  labs(title = "In which states is a lot of beer produced consumed on premises?",
+       fill = "% consumed on prem.")
+
+states_joined |>
+  ggplot(aes(geometry = geom, fill = percent)) +
+  geom_sf() +
+  facet_wrap(~ type, nrow = 2) +
+  scale_fill_gradient2(low = "blue", high = "orange", midpoint = .5,
+                       labels = scales::percent) +
+  ggthemes::theme_map() +
+  theme(legend.position = "right") +
+  labs(title = "How is beer consumed within each state?",
+       fill = "% consumed")
+```
+```{r chunk_09}
+library(gganimate)
+
+beer_states |>
+  filter(state != "total") |>
+  group_by(state, year) |>
+  mutate(percent = barrels / sum(barrels)) |>
+  ungroup() |>
+  filter(type == "On Premises") |>
+  mutate(ID = str_to_lower(state.name[match(state, state.abb)])) |>
+  inner_join(states, by = "ID") |>
+  ggplot(aes(geometry = geom, fill = percent)) +
+  geom_sf() +
+  transition_time(year) +
+  facet_wrap(~ type, nrow = 2) +
+  scale_fill_gradient2(low = "blue", high = "orange", midpoint = .5,
+                       labels = scales::percent) +
+  ggthemes::theme_map() +
+  theme(legend.position = "right") +
+  labs(title = "How is beer consumed within each state? ({ as.integer(frame_time) })",
+       fill = "% consumed")
+```
+
+---
+
+**→ [Hour 2: Modeling](h2_modeling_exploring_beer_production.qmd)**
+
+*TheDataShrink™ — thedatashrink.com.au — Weekly data stories in R*

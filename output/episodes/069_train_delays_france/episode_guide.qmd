@@ -19,7 +19,7 @@ execute:
 - `ker_status`: `extracted`
 - `reproduction_status`: `ready_local`
 - `transcript_file`: `raw-data/inspiration/Analyzing train delays in France in R.txt`
-- `code_file`: `data-screencasts/french-trains.Rmd`
+- `code_file`: `data-screencasts-dgrtwo/french-trains.Rmd`
 - `data_source`: TidyTuesday 2019-02-26 source files
 - `analysis_type`: `EDA`
 - `pattern_signature`: `load_inspect_trend_compare_visualize`

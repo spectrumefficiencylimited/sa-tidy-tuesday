@@ -19,7 +19,7 @@ execute:
 - `ker_status`: `extracted`
 - `reproduction_status`: `ready_local`
 - `transcript_file`: `raw-data/inspiration/Analyzing data on women in the workplace in R.txt`
-- `code_file`: `data-screencasts/women-workplace.Rmd`
+- `code_file`: `data-screencasts-dgrtwo/women-workplace.Rmd`
 - `data_source`: TidyTuesday 2019-03-05 source files
 - `analysis_type`: `EDA`
 - `pattern_signature`: `load_inspect_trend_compare_visualize`

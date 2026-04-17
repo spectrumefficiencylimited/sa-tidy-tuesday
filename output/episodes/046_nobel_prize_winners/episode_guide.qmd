@@ -19,7 +19,7 @@ execute:
 - `ker_status`: `extracted`
 - `reproduction_status`: `ready_local`
 - `transcript_file`: `raw-data/inspiration/Analyzing Nobel Prize winners in R.txt`
-- `code_file`: `data-screencasts/nobel-prize.Rmd`
+- `code_file`: `data-screencasts-dgrtwo/nobel-prize.Rmd`
 - `data_source`: TidyTuesday 2019-05-14 source files
 - `analysis_type`: `EDA`
 - `pattern_signature`: `load_inspect_join_trend_compare_visualize`

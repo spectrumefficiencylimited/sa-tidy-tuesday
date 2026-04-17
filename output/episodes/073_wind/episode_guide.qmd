@@ -19,7 +19,7 @@ execute:
 - `ker_status`: `extracted`
 - `reproduction_status`: `needs_external_sources`
 - `transcript_file`: `raw-data/inspiration/Analyzing US wind data in R.txt`
-- `code_file`: `data-screencasts/us-wind.Rmd`
+- `code_file`: `data-screencasts-dgrtwo/us-wind.Rmd`
 - `data_source`: Local source files read in episode: https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2018-11-06/us_wind.csv
 - `analysis_type`: `EDA`
 - `pattern_signature`: `load_inspect_trend_simulate_compare_visualize`

@@ -19,7 +19,7 @@ execute:
 - `ker_status`: `extracted`
 - `reproduction_status`: `ready_local`
 - `transcript_file`: `raw-data/inspiration/Analyzing Friends transcripts in R.txt`
-- `code_file`: `data-screencasts/2020_09_08_friends.Rmd`
+- `code_file`: `data-screencasts-dgrtwo/2020_09_08_friends.Rmd`
 - `data_source`: TidyTuesday 2020-09-08 dataset
 - `analysis_type`: `Modeling`
 - `pattern_signature`: `load_inspect_reshape_join_tokenize_trend_model_evaluate_visualize`

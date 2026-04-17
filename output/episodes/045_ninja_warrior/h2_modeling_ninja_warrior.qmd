@@ -1,0 +1,121 @@
+---
+title: "Hour 2 — Modeling: Analyzing Ninja Warrior in R"
+subtitle: "Going deeper with statistical models | TheDataShrink™"
+author: "TheDataShrink™"
+date: today
+format:
+  html:
+    theme: cosmo
+    toc: true
+    toc-depth: 3
+    code-fold: show
+    code-summary: "Show code"
+    number-sections: true
+    embed-resources: true
+execute:
+  echo: true
+  warning: false
+  message: false
+  error: true
+editor: visual
+---
+
+
+::: {.callout-tip}
+## TheDataShrink™ — Data stories worth sharing.
+Episode 045 · Hour 2 · [← Hour 1 EDA](h1_eda_ninja_warrior.qmd)
+:::
+
+
+::: {.callout-note collapse="true"}
+## Atomic Concepts — Hour 2
+`add_count_inline` · `boxplot_jitter` · `faceted_comparison` · `fct_lump_infrequent` · `fct_reorder_stat` · `geom_histogram_density` · `glue_strings` · `grouped_summary_ggplot` · `heatmap_tile` · `log_odds_ratio`
+:::
+
+## Setup
+
+```{r setup}
+library(tidyverse)
+library(scales)
+library(broom)
+library(here)
+theme_set(theme_light(base_size = 13))
+```
+
+## Reload data
+
+```{r load-data}
+# Re-load from Hour 1 — same local paths
+source_qmd <- here::here("output/episodes/ninja_warrior/h1_eda_ninja_warrior.qmd")
+# Data files are re-read directly below if needed
+```
+
+## Model 1 — Sentiment analysis
+
+```{r text-setup}
+library(tidytext)
+df <- read_csv("/Users/stoiana/sa-tidy-tuesday/tidytuesday/data/2020/2020-12-15/ninja_warrior.csv", show_col_types = FALSE)
+```
+
+```{r sentiment}
+afinn <- get_sentiments("afinn")
+
+# Adjust column names to match your data
+# df |> unnest_tokens(word, text_column) |> inner_join(afinn, by = "word") |>
+#   group_by(group_col) |> summarise(mean_sentiment = mean(value), .groups = "drop") |>
+#   mutate(group_col = fct_reorder(group_col, mean_sentiment)) |>
+#   ggplot(aes(mean_sentiment, group_col)) + geom_col()
+cat("Sentiment analysis: customise the column names above to your dataset\n")
+```
+
+## Model 2 — TF-IDF: most distinctive terms by group
+
+```{r tfidf}
+# df |> unnest_tokens(word, text_column) |>
+#   anti_join(stop_words, by = "word") |>
+#   count(group_col, word) |>
+#   bind_tf_idf(word, group_col, n) |>
+#   group_by(group_col) |>
+#   slice_max(tf_idf, n = 8, with_ties = FALSE) |>
+#   mutate(word = reorder_within(word, tf_idf, group_col)) |>
+#   ggplot(aes(tf_idf, word, fill = group_col)) +
+#   geom_col(show.legend = FALSE) +
+#   facet_wrap(~group_col, scales = "free_y") +
+#   scale_y_reordered()
+cat("TF-IDF: customise column names above\n")
+```
+
+
+## Model 1 — Time trend
+
+```{r time-setup}
+library(lubridate)
+df <- read_csv("/Users/stoiana/sa-tidy-tuesday/tidytuesday/data/2020/2020-12-15/ninja_warrior.csv", show_col_types = FALSE)
+```
+
+```{r trend}
+# df |>
+#   mutate(date_col = ymd(date_col)) |>
+#   group_by(floor_date(date_col, "month")) |>
+#   summarise(n = n(), .groups = "drop") |>
+#   ggplot(aes(`floor_date(date_col, "month")`, n)) +
+#   geom_line() + geom_smooth(method = "loess")
+cat("Time trend: adjust date_col to your date column\n")
+```
+
+## Model 2 — Seasonality / year-over-year
+
+```{r seasonality}
+# df |>
+#   mutate(year = year(date_col), month = month(date_col, label = TRUE)) |>
+#   group_by(year, month) |>
+#   summarise(n = n(), .groups = "drop") |>
+#   ggplot(aes(month, n, group = year, color = factor(year))) +
+#   geom_line()
+cat("Seasonality: adjust date_col above\n")
+```
+
+
+---
+
+**→ [Hour 3: Communicate](h3_communicate_ninja_warrior.qmd)**

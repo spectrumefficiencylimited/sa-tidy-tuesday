@@ -19,7 +19,7 @@ execute:
 - `ker_status`: `extracted`
 - `reproduction_status`: `needs_external_sources`
 - `transcript_file`: `raw-data/inspiration/Analyzing malaria incidence in R.txt`
-- `code_file`: `data-screencasts/malaria.Rmd`
+- `code_file`: `data-screencasts-dgrtwo/malaria.Rmd`
 - `data_source`: Local source files read in episode: https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2018-11-13/malaria_deaths.csv, https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2018-11-13/malaria_inc.csv
 - `analysis_type`: `EDA`
 - `pattern_signature`: `load_inspect_reshape_join_map_trend_compare_visualize`

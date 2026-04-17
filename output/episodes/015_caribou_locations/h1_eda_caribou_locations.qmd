@@ -1,0 +1,239 @@
+---
+title: "Hour 1 — EDA: Analyzing caribou locations in R"
+subtitle: "David Robinson's analysis, extended | TheDataShrink™"
+author: "TheDataShrink™"
+date: today
+format:
+  html:
+    theme: flatly
+    toc: true
+    toc-depth: 3
+    code-fold: show
+    code-summary: "Show code"
+    number-sections: true
+    embed-resources: true
+execute:
+  echo: true
+  warning: false
+  message: false
+  error: true
+editor: visual
+---
+
+
+::: {.callout-tip}
+## TheDataShrink™ — Data stories worth sharing.
+Episode 015 · Hour 1
+:::
+
+
+::: {.callout-note collapse="true"}
+## Atomic Concepts in this episode
+`choropleth_sf` · `faceted_comparison` · `geom_histogram_density` · `grouped_summary_ggplot` · `log_scale` · `lubridate_dates` · `spline_regression` · `theme_set_global` · `tidytuesdayr_load` · `time_series_trend`
+:::
+
+::: {.callout-warning collapse="true"}
+## FAILS WHEN
+- dataset has no natural grouping variable — comparisons become meaningless
+- column names are unstable across TidyTuesday editions (re-check schema each year)
+- region name spelling differs between data and shapefile — silent dropped rows
+- irregular time intervals inflate or deflate apparent trends
+:::
+
+::: {.callout-important collapse="true"}
+## WORKS WHEN
+- dataset has clear categorical + numeric columns for grouped comparisons
+- question is exploratory — no strong prior hypothesis
+- geographic column can be matched to a standard ISO/FIPS shapefile without fuzzy joins
+- time dimension is regular and spans multiple periods with meaningful change
+:::
+
+```{r setup}
+library(here)
+library(scales)
+library(tidyverse)
+library(sf)
+library(lubridate)
+library(geosphere)
+
+# TheDataShrink™ brand colours
+TDS_BLUE  <- "#1b6ca8"
+TDS_GOLD  <- "#c8a415"
+TDS_DARK  <- "#1a1a2e"
+TDS_LIGHT <- "#f8f9fa"
+theme_set(theme_light(base_size = 13))
+
+```
+## Load data
+```{r load-data}
+individuals <- read_csv("/Users/stoiana/sa-tidy-tuesday/tidytuesday/data/2020/2020-06-23/individuals.csv", show_col_types = FALSE)
+locations <- read_csv("/Users/stoiana/sa-tidy-tuesday/tidytuesday/data/2020/2020-06-23/locations.csv", show_col_types = FALSE)
+glimpse(individuals)
+glimpse(locations)
+```
+
+## Explore
+```{r chunk_02}
+individuals <- individuals
+locations <- locations
+```
+```{r chunk_03}
+individuals |>
+  summarize(across(sex:study_site, list(~ mean(!is.na(.)))))
+
+individuals |>
+  filter(deploy_off_type == "dead") |>
+  count(death_cause, sort = TRUE)
+```
+```{r chunk_04}
+library(sf)
+province_sf <- read_sf("~/Downloads/province")
+
+bc <- province_sf |>
+  filter(PROV == "BC")
+```
+```{r chunk_05}
+individuals |>
+  filter(deploy_on_latitude > 40) |>
+  count(study_site, deploy_on_longitude, deploy_on_latitude, sort = TRUE) |>
+  ggplot() +
+  # geom_sf(data = bc) +
+  # borders("world", regions = "canada") +
+  geom_point(aes(deploy_on_longitude, deploy_on_latitude,
+                 size = n,
+             color = study_site)) +
+  scale_size_continuous(guide = FALSE)
+```
+```{r chunk_06}
+individuals |>
+  count(animal_id, sort = TRUE)
+
+individuals |>
+  filter(animal_id == "MO_car150") |>
+```
+
+## Looking at locations
+```{r chunk_07}
+locations |>
+  ggplot(aes(longitude, latitude, color = study_site)) +
+  geom_point()
+```
+```{r chunk_08}
+by_animal <- locations |>
+  group_by(animal_id, study_site) |>
+  summarize(start = min(timestamp),
+            end = max(timestamp),
+            num_points = n()) |>
+  ungroup() |>
+  arrange(desc(num_points))
+```
+```{r chunk_09}
+library(lubridate)
+
+example_animal <- locations |>
+  arrange(timestamp) |>
+  filter(animal_id == sample(unique(animal_id), 1))
+
+example_animal |>
+  mutate(quarter = as.Date(floor_date(timestamp, "quarter"))) |>
+  ggplot(aes(longitude, latitude, color = timestamp)) +
+  geom_point(alpha = .5) +
+  geom_path(alpha = .5) +
+  facet_wrap(~ quarter) +
+  labs(title = "One caribou over time")
+```
+```{r chunk_10}
+library(geosphere)
+
+locations_with_gaps <- locations |>
+  group_by(animal_id) |>
+  mutate(last_lon = lag(longitude),
+         last_lat = lag(latitude),
+         hours = as.numeric(difftime(timestamp, lag(timestamp), unit = "hours")),
+         km = distHaversine(cbind(longitude, latitude), cbind(last_lon, last_lat)) / 1000,
+         kph = km / hours) |>
+  ungroup()
+
+locations_with_gaps |>
+  filter(hours <= 8) |>
+  ggplot(aes(kph)) +
+  geom_histogram() +
+  scale_x_log10(labels = scales::comma) +
+  labs(title = "On average, how fast do caribou travel?")
+
+by_animal <- locations_with_gaps |>
+  filter(hours <= 8,
+         hours >= .5) |>
+  group_by(animal_id, study_site) |>
+  summarize(start = min(timestamp),
+            end = max(timestamp),
+            num_points = n(),
+            avg_speed = mean(kph, na.rm = TRUE)) |>
+  ungroup() |>
+  arrange(desc(num_points)) |>
+  filter(num_points >= 10)
+```
+```{r chunk_11}
+by_animal |>
+  ggplot(aes(num_points, avg_speed)) +
+  geom_point() +
+  scale_x_log10() +
+  expand_limits(y = 0)
+
+by_animal |>
+  arrange(desc(avg_speed))
+
+locations_with_gaps |>
+  filter(animal_id == "QU_car107") |>
+  mutate(quarter = as.Date(floor_date(timestamp, "quarter"))) |>
+  ggplot(aes(longitude, latitude, color = kph)) +
+  geom_point(alpha = .5) +
+  geom_path(alpha = .5) +
+  facet_wrap(~ quarter) +
+  labs(title = "One caribou over time")
+
+locations_with_gaps |>
+  filter(animal_id == "SC_car171") |>
+  arrange(desc(kph)) |>
+```
+```{r chunk_12}
+locations_with_gaps |>
+  filter(study_site != "Hart Ranges") |>
+  filter(hours <= 8,
+         hours >= .5) |>
+  group_by(month = month(timestamp, label = TRUE),
+           study_site) |>
+  summarize(avg_speed = median(kph),
+            n = n()) |>
+  ggplot(aes(month, avg_speed, group = study_site,
+             color = study_site)) +
+  geom_line() +
+  geom_point(aes(size = n)) +
+  expand_limits(y = 0) +
+  facet_wrap(~ study_site) +
+  theme(legend.position = "none") +
+  labs(title = "Seasonal trend in Caribou speed",
+       y = "Average speed (kph)")
+```
+```{r chunk_13}
+by_animal |>
+  filter(num_points >= 10) |>
+  arrange(desc(avg_speed))
+```
+```{r chunk_14}
+locations |>
+  arrange(timestamp) |>
+  group_by(animal_id) |>
+  mutate(gap = round(difftime(timestamp, lag(timestamp), unit = "hours"))) |>
+  ungroup() |>
+  filter(!is.na(gap)) |>
+  filter(gap <= 24) |>
+  ggplot(aes(gap)) +
+  geom_histogram(binwidth = 2)
+```
+
+---
+
+**→ [Hour 2: Modeling](h2_modeling_caribou_locations.qmd)**
+
+*TheDataShrink™ — thedatashrink.com.au — Weekly data stories in R*

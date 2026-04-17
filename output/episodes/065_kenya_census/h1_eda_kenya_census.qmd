@@ -1,0 +1,221 @@
+---
+title: "Hour 1 — EDA: Analyzing the Kenya census in R"
+subtitle: "David Robinson's analysis, extended | TheDataShrink™"
+author: "TheDataShrink™"
+date: today
+format:
+  html:
+    theme: flatly
+    toc: true
+    toc-depth: 3
+    code-fold: show
+    code-summary: "Show code"
+    number-sections: true
+    embed-resources: true
+execute:
+  echo: true
+  warning: false
+  message: false
+  error: true
+editor: visual
+---
+
+
+::: {.callout-tip}
+## TheDataShrink™ — Data stories worth sharing.
+Episode 065 · Hour 1
+:::
+
+
+::: {.callout-note collapse="true"}
+## Atomic Concepts in this episode
+`choropleth_sf` · `faceted_comparison` · `fct_lump_infrequent` · `fct_reorder_stat` · `grouped_summary_ggplot` · `heatmap_tile` · `janitor_clean` · `log_scale` · `multi_table_join` · `pivot_reshape` · `spline_regression` · `theme_set_global`
+:::
+
+::: {.callout-warning collapse="true"}
+## FAILS WHEN
+- dataset has no natural grouping variable — comparisons become meaningless
+- column names are unstable across TidyTuesday editions (re-check schema each year)
+- region name spelling differs between data and shapefile — silent dropped rows
+- join key has trailing whitespace or case inconsistency — produces unexpected NAs
+- irregular time intervals inflate or deflate apparent trends
+:::
+
+::: {.callout-important collapse="true"}
+## WORKS WHEN
+- dataset has clear categorical + numeric columns for grouped comparisons
+- question is exploratory — no strong prior hypothesis
+- geographic column can be matched to a standard ISO/FIPS shapefile without fuzzy joins
+- time dimension is regular and spans multiple periods with meaningful change
+:::
+
+```{r setup}
+library(here)
+library(scales)
+library(tidyverse)
+library(rKenyaCensus)
+library(sf)
+library(ggthemes)
+
+# TheDataShrink™ brand colours
+TDS_BLUE  <- "#1b6ca8"
+TDS_GOLD  <- "#c8a415"
+TDS_DARK  <- "#1a1a2e"
+TDS_LIGHT <- "#f8f9fa"
+theme_set(theme_light(base_size = 13))
+
+```
+## Load data
+```{r load-data}
+crops <- read_csv("/Users/stoiana/sa-tidy-tuesday/tidytuesday/data/2021/2021-01-19/crops.csv", show_col_types = FALSE)
+gender <- read_csv("/Users/stoiana/sa-tidy-tuesday/tidytuesday/data/2021/2021-01-19/gender.csv", show_col_types = FALSE)
+households <- read_csv("/Users/stoiana/sa-tidy-tuesday/tidytuesday/data/2021/2021-01-19/households.csv", show_col_types = FALSE)
+glimpse(crops)
+glimpse(gender)
+```
+
+## Load the weekly Data
+```{r chunk_01}
+gender |>
+  filter(county != "Total") |>
+  mutate(county = fct_reorder(county, total)) |>
+  ggplot(aes(total, county)) +
+  geom_col() +
+  scale_x_continuous(labels = comma)
+
+gender |>
+  filter(county != "Total") |>
+  gather(gender, population, male, female, intersex) |>
+  mutate(gender = str_to_title(gender)) |>
+  mutate(county = fct_reorder(county, total, sum)) |>
+  ggplot(aes(population, county, fill = gender)) +
+  geom_col() +
+  scale_x_continuous(labels = comma)
+
+gender |>
+  filter(county != "Total") |>
+  mutate(pct_male = male / total) |>
+  arrange(desc(pct_male)) |>
+  ggplot(aes(total, pct_male)) +
+  geom_point() +
+  geom_text(aes(label = county),
+            vjust = 1, hjust = 1) +
+  geom_hline(color = "red", yintercept = .5) +
+  scale_y_continuous(labels = percent)
+```
+```{r chunk_02}
+households |>
+  filter(county != "Kenya") |>
+  arrange(desc(average_household_size)) |>
+  ggplot(aes(population, average_household_size)) +
+  geom_point() +
+  geom_text(aes(label = county),
+            vjust = 1, hjust = 1) +
+  scale_x_log10(labels = comma) +
+  expand_limits(y = 0)
+  # geom_hline(color = "red", yintercept = .5) +
+  scale_y_continuous(labels = percent)
+```
+```{r chunk_03}
+crop_counties <- tt$crops |>
+  gather(crop, households, -SubCounty, -Farming) |>
+  filter(!is.na(households)) |>
+  mutate(county = str_to_title(SubCounty)) |>
+  filter(county != "Kenya") |>
+  select(-SubCounty) |>
+  inner_join(households, by = "county") |>
+  mutate(county = fct_reorder(county, households, sum),
+         crop = fct_reorder(crop, households, sum)) |>
+  complete(crop, county, fill = list(number_of_households = 0))
+
+crop_counties |>
+  ggplot(aes(households, county, fill = crop)) +
+  geom_col() +
+  labs(x = "# of households farming this crop",
+       y = "",
+       fill = "Crop")
+
+crop_counties |>
+  complete(crop, county, fill = list(households = 0)) |>
+  ggplot(aes(crop, county, fill = households)) +
+  geom_tile() +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1)) +
+  labs(x = "Crop",
+       y = "",
+       fill = "# of households")
+
+crop_counties |>
+  mutate(pct_households = households / number_of_households) |>
+  arrange(desc(pct_households)) |>
+  ggplot(aes(number_of_households, pct_households)) +
+  geom_point() +
+  geom_text(aes(label = county), vjust = 1, hjust = 1,
+            check_overlap = TRUE) +
+  scale_y_continuous(labels = percent) +
+  labs(y = "% of households growing this crop") +
+  facet_wrap(~ crop)
+```
+
+## The package
+```{r chunk_04}
+library(rKenyaCensus)
+library(sf)
+library(ggthemes)
+
+kenya_sf <- rKenyaCensus::KenyaCounties_SHP |>
+  st_as_sf() |>
+  st_simplify(dTolerance = 200) |>
+  mutate(county = str_to_title(County)) |>
+  left_join(crop_counties |>
+              filter(crop == "Avocado"), by = "county")
+
+kenya_sf |>
+  ggplot(aes(fill = number_of_households)) +
+  geom_sf() +
+  theme_map() +
+  labs(fill = "Households growing avocado")
+```
+```{r chunk_05}
+graph_by_county <- function(tbl) {
+  tbl |>
+    tibble() |>
+    gather(category, population, -County) |>
+    filter(!is.na(population)) |>
+    mutate(category = respace(category)) |>
+    mutate(county = str_to_title(County)) |>
+    filter(county != "Kenya") |>
+    mutate(category = fct_reorder(category, population, sum),
+           county = fct_reorder(county, population, sum)) |>
+    ggplot(aes(population, county, fill = category)) +
+    geom_col()
+}
+
+V4_T2.30 |>
+  select(-Total) |>
+  graph_by_county()
+
+V4_T2.19 |>
+  filter(AdminArea == "County") |>
+  gather(category, value, MainsElectricity:NotStated) |>
+  filter(!is.na(value)) |>
+  mutate(value = ConventionalHouseholds / 100 * value) |>
+  group_by(County, category = fct_lump(category, 5, w = value)) |>
+  summarize(value = sum(value)) |>
+  spread(category, value) |>
+  graph_by_county()
+
+V4_T2.33 |>
+  ungroup() |>
+  filter(AdminArea == "County") |>
+  mutate(County = str_to_title(County),
+         County = fct_reorder(County, UoI_Total_Perc)) |>
+  ggplot(aes(UoI_Total_Perc / 100, County)) +
+  geom_col() +
+  scale_x_continuous(labels = percent)
+```
+
+---
+
+**→ [Hour 2: Modeling](h2_modeling_kenya_census.qmd)**
+
+*TheDataShrink™ — thedatashrink.com.au — Weekly data stories in R*

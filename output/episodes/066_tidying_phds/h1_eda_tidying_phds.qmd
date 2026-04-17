@@ -1,0 +1,178 @@
+---
+title: "Hour 1 — EDA: Analyzing tidying and analyzing US PhDs in R"
+subtitle: "David Robinson's analysis, extended | TheDataShrink™"
+author: "TheDataShrink™"
+date: today
+format:
+  html:
+    theme: flatly
+    toc: true
+    toc-depth: 3
+    code-fold: show
+    code-summary: "Show code"
+    number-sections: true
+    embed-resources: true
+execute:
+  echo: true
+  warning: false
+  message: false
+  error: true
+editor: visual
+---
+
+
+::: {.callout-tip}
+## TheDataShrink™ — Data stories worth sharing.
+Episode 066 · Hour 1
+:::
+
+
+::: {.callout-note collapse="true"}
+## Atomic Concepts in this episode
+`faceted_comparison` · `fct_reorder_stat` · `grouped_summary_ggplot` · `pivot_reshape` · `scales_axis_labels` · `spline_regression` · `str_detect_filter` · `theme_set_global` · `time_series_trend`
+:::
+
+::: {.callout-warning collapse="true"}
+## FAILS WHEN
+- dataset has no natural grouping variable — comparisons become meaningless
+- column names are unstable across TidyTuesday editions (re-check schema each year)
+- irregular time intervals inflate or deflate apparent trends
+:::
+
+::: {.callout-important collapse="true"}
+## WORKS WHEN
+- dataset has clear categorical + numeric columns for grouped comparisons
+- question is exploratory — no strong prior hypothesis
+- time dimension is regular and spans multiple periods with meaningful change
+:::
+
+```{r setup}
+library(here)
+library(scales)
+library(tidyverse)
+
+# TheDataShrink™ brand colours
+TDS_BLUE  <- "#1b6ca8"
+TDS_GOLD  <- "#c8a415"
+TDS_DARK  <- "#1a1a2e"
+TDS_LIGHT <- "#f8f9fa"
+theme_set(theme_light(base_size = 13))
+
+```
+
+## Explore
+```{r chunk_01}
+library(tidyverse)
+theme_set(theme_light())
+
+# Major field of study
+major_fields_raw <- readxl::read_xlsx("~/Downloads/data_tables/sed17-sr-tab012.xlsx",
+                  skip = 3)
+
+major_fields <- major_fields_raw |>
+  rename(field = `Field of study`) |>
+  gather(key, value, -field) |>
+  mutate(year = as.numeric(ifelse(str_detect(key, "X__"), NA, key)),
+         type = ifelse(!str_detect(value, "Number|Percent"), NA, value),
+         value = as.numeric(value)) |>
+  fill(year, type) |>
+  select(-key) |>
+  filter(!is.na(value)) |>
+  spread(type, value)
+```
+```{r chunk_02}
+fine_fields <- readxl::read_xlsx("~/Downloads/data_tables/sed17-sr-tab013.xlsx",
+                  skip = 3) |>
+  rename(field = 1) |>
+  gather(year, number, -field) |>
+  mutate(year = as.numeric(year),
+         number = as.numeric(number)) |>
+  filter(!is.na(number))
+
+fine_fields |>
+  filter(field %in% sample(unique(field), 6)) |>
+  ggplot(aes(year, number, color = field)) +
+  geom_line()
+```
+```{r chunk_03}
+# get the broad field names and the major field names
+
+sex <- c("All", "Male", "Female", "All doctorate recipientsa", "All fieldsa")
+
+broad_fields <- readxl::read_xlsx("~/Downloads/data_tables/sed17-sr-tab014.xlsx", skip = 4) |>
+  rename(field = 1) |>
+  filter(!field %in% sex) |>
+  mutate(field = fct_recode(field,
+                            "Life sciences" = "Life sciencesb",
+                            "Other" = "Otherc")) |>
+  pull(field) |>
+  as.character()
+```
+```{r chunk_04}
+recipients_year_field_sex <- readxl::read_xlsx("~/Downloads/data_tables/sed17-sr-tab015.xlsx", skip = 3) |>
+  rename(field = 1) |>
+  select(-contains("change")) |>
+  mutate(field = as.character(fct_recode(field, "All" = "All doctorate recipientsa",
+                                         "Other" = "Otherb")),
+         sex = if_else(field %in% sex, field, NA_character_),
+         broad_field = ifelse(field %in% broad_fields, field, NA)) |>
+  fill(sex, broad_field) |>
+  gather(year, number, -sex, -broad_field, -field) |>
+  mutate(year = as.numeric(year),
+         number = as.numeric(number)) |>
+  filter(!field %in% sex) |>
+  filter(!is.na(number))
+
+recipients_year_field_sex |>
+  filter(sex != "All",
+         broad_field == "Mathematics and computer sciences") |>
+  ggplot(aes(year, number, color = sex)) +
+  geom_line() +
+  expand_limits(y = 0) +
+  facet_wrap(~ field)
+
+recipients_year_field_sex |>
+  spread(sex, number) |>
+  mutate(pct_male = Male / All) |>
+  filter(broad_field == "Engineering") |>
+  mutate(field = fct_reorder(field, -pct_male)) |>
+  ggplot(aes(year, pct_male, color = field)) +
+  geom_line() +
+  scale_y_continuous(labels = scales::percent_format()) +
+  labs(x = "Year",
+       y = "% of PhD recipients reporting as male",
+       color = "Major field",
+       title = "Breakdown by sex over time within Engineering major fields")
+
+recipients_year_field_sex |>
+  spread(sex, number) |>
+  mutate(pct_male = Male / All) |>
+  filter(broad_field == "Humanities and arts") |>
+  mutate(field = fct_reorder(field, -pct_male)) |>
+  ggplot(aes(year, pct_male, color = field)) +
+  geom_line() +
+  scale_y_continuous(labels = scales::percent_format()) +
+  labs(x = "Year",
+       y = "% of PhD recipients reporting as male",
+       color = "Major field",
+       title = "Breakdown by sex over time within Humanities & Arts major fields")
+
+recipients_year_field_sex |>
+  spread(sex, number) |>
+  mutate(pct_male = Male / All) |>
+  filter(broad_field == "Education") |>
+  mutate(field = fct_reorder(field, -pct_male)) |>
+  ggplot(aes(year, pct_male, color = field)) +
+  geom_line() +
+  scale_y_continuous(labels = scales::percent_format()) +
+  labs(x = "Year",
+       y = "% of PhD recipients reporting as male",
+       color = "Major field",
+       title = "Breakdown by sex over time within Education major fields")
+```
+
+---
+
+**→ [Hour 2: Modeling](h2_modeling_tidying_phds.qmd)**
+
+*TheDataShrink™ — thedatashrink.com.au — Weekly data stories in R*

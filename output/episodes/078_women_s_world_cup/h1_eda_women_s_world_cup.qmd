@@ -1,0 +1,261 @@
+---
+title: "Hour 1 — EDA: Analyzing Women's World Cup data in R"
+subtitle: "David Robinson's analysis, extended | TheDataShrink™"
+author: "TheDataShrink™"
+date: today
+format:
+  html:
+    theme: flatly
+    toc: true
+    toc-depth: 3
+    code-fold: show
+    code-summary: "Show code"
+    number-sections: true
+    embed-resources: true
+execute:
+  echo: true
+  warning: false
+  message: false
+  error: true
+editor: visual
+---
+
+
+::: {.callout-tip}
+## TheDataShrink™ — Data stories worth sharing.
+Episode 078 · Hour 1
+:::
+
+
+::: {.callout-note collapse="true"}
+## Atomic Concepts in this episode
+`animated_transitions` · `coord_flip_horizontal` · `faceted_comparison` · `fct_lump_infrequent` · `fct_reorder_stat` · `geom_histogram_density` · `geom_smooth_loess` · `glue_strings` · `grouped_summary_ggplot` · `multi_table_join` · `purrr_map_iterate` · `spline_regression`
+:::
+
+::: {.callout-warning collapse="true"}
+## FAILS WHEN
+- dataset has no natural grouping variable — comparisons become meaningless
+- column names are unstable across TidyTuesday editions (re-check schema each year)
+- source HTML structure changes — selector-based scraping breaks silently
+- join key has trailing whitespace or case inconsistency — produces unexpected NAs
+- irregular time intervals inflate or deflate apparent trends
+:::
+
+::: {.callout-important collapse="true"}
+## WORKS WHEN
+- dataset has clear categorical + numeric columns for grouped comparisons
+- question is exploratory — no strong prior hypothesis
+- supplemental context is unavailable in the flat file and worth the scraping overhead
+- time dimension is regular and spans multiple periods with meaningful change
+:::
+
+```{r setup}
+library(here)
+library(scales)
+library(tidyverse)
+library(ggthemes)
+library(rvest)
+library(StatsBombR)
+library(gganimate)
+
+# TheDataShrink™ brand colours
+TDS_BLUE  <- "#1b6ca8"
+TDS_GOLD  <- "#c8a415"
+TDS_DARK  <- "#1a1a2e"
+TDS_LIGHT <- "#f8f9fa"
+theme_set(theme_light(base_size = 13))
+
+```
+
+## Explore
+```{r chunk_01}
+library(tidyverse)
+library(ggthemes)
+theme_set(theme_light())
+
+wwc_outcomes <- readr::read_csv("https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2019/2019-07-09/wwc_outcomes.csv")
+squads <- readr::read_csv("https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2019/2019-07-09/squads.csv")
+codes <- readr::read_csv("https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2019/2019-07-09/codes.csv")
+
+outcomes <- wwc_outcomes |>
+  left_join(codes, by = "team") |>
+  group_by(year, yearly_game_id) |>
+  mutate(opposing_score = rev(score)) |>
+  ungroup() |>
+  mutate(won_by = score - opposing_score)
+```
+```{r chunk_02}
+library(rvest)
+
+# Leave this code as a web scraping example
+fifa_country_codes <- read_html("https://simple.wikipedia.org/wiki/List_of_FIFA_country_codes") |>
+  html_nodes("table") |>
+  map(html_table, fill = TRUE) |>
+  .[2:5] |>
+  bind_rows() |>
+  tbl_df() |>
+  select(country = Country, team = Code)
+```
+```{r chunk_03}
+wwc_outcomes |>
+  ggplot(aes(score)) +
+  geom_histogram() +
+  facet_wrap(~ win_status)
+
+outcomes |>
+  filter(year == 2019) |>
+  count(round, sort = TRUE)
+```
+```{r chunk_04}
+# Of the 3 games each country plays in the "group" round, how much did they win by on average?
+avg_group_scores <- outcomes |>
+  filter(round == "Group") |>
+  group_by(year, team) |>
+  summarize(avg_group_score = mean(score),
+            avg_group_won_by = mean(won_by)) |>
+  ungroup()
+
+outcomes |>
+  inner_join(avg_group_scores, by = c("year", "team")) |>
+  filter(round == "Final") |>
+  ggplot(aes(country, avg_group_won_by, fill = win_status)) +
+  geom_col() +
+  facet_wrap(~ year, scales = "free_x") +
+  labs(title = "Does performance in the group round predict the winner of the finals?",
+       subtitle = "Yes in all years except 2011. (2015 had been tied)",
+       y = "Average # of goals the team had won by in the Group round",
+       x = "Country",
+       fill = "Result")
+```
+```{r chunk_05}
+outcomes |>
+  inner_join(avg_group_scores, by = c("year", "team")) |>
+  filter(round != "Group") |>
+  group_by(year, yearly_game_id) |>
+  mutate(difference = diff(avg_group_won_by)) |>
+  ungroup() |>
+  filter(team_num == 2) |>
+  mutate(round = fct_reorder(round, round, length)) |>
+  ggplot(aes(difference, won_by)) +
+  geom_point() +
+  geom_smooth(method = "lm") +
+  geom_abline(color = "red") +
+  facet_wrap(~ round) +
+  labs(x = "Difference in the team's average Group score from their opponent",
+       y = "How much they won by",
+       title = "Can we use a team's performance in the Group round to predict finals performance?",
+       subtitle = "From 1991-2019")
+```
+
+## Play by play data
+```{r chunk_06}
+library(StatsBombR)
+
+wwc_matches <- FreeMatches(72)
+
+extract_match <- function(index) {
+  wwc_match1 <- tbl_df(get.matchFree(wwc_matches[index, ])) |>
+    mutate(timestamp = as.difftime(timestamp))
+}
+
+matches <- map_df(1:12, extract_match, .id = "match_index")
+
+matches |>
+  mutate(match_index = as.integer(match_index)) |>
+  inner_join(wwc_matches |> mutate(match_index = row_number())) |>
+  transmute(index,
+            location,
+            possession,
+            minute,
+            second,
+            type = fct_lump(type.name, 8)) |>
+  mutate(x = map_dbl(location, 1, .default = NA),
+         y = map_dbl(location, 2, .default = NA),
+         timestamp = minute * 60 + second)
+
+ggplot(wwc_match1, aes(as.numeric(timestamp) / 60)) +
+  geom_histogram()
+
+match <- wwc_match1 |>
+  transmute(index,
+            location,
+            possession,
+            minute,
+            second,
+            type = fct_lump(type.name, 8)) |>
+  mutate(x = map_dbl(location, 1, .default = NA),
+         y = map_dbl(location, 2, .default = NA),
+         timestamp = minute * 60 + second)
+
+match |>
+  ggplot(aes(x, y, color = type)) +
+  geom_point() +
+  facet_wrap(~ type)
+```
+```{r chunk_07}
+library(gganimate)
+
+p <- match |>
+  filter(minute < 5) |>
+  ggplot(aes(x, y, color = type)) +
+  geom_point() +
+  coord_fixed() +
+  transition_reveal(index, timestamp)
+
+animate(p, nframes = 20)
+```
+```{r chunk_08}
+wwc_matches <- FreeMatches(72)
+
+extract_match <- function(index) {
+  wwc_match1 <- tbl_df(get.matchFree(wwc_matches[index, ])) |>
+    mutate(timestamp = as.difftime(timestamp))
+}
+
+matches <- map_df(52, extract_match)
+
+plays <- matches |>
+  inner_join(wwc_matches, by = "match_id") |>
+  transmute(match_id,
+            index,
+            location,
+            possession,
+            minute,
+            second,
+            duration,
+            player = player.name,
+            position = position.name,
+            type = fct_lump(type.name, 8)) |>
+  mutate(x = map_dbl(location, 1, .default = NA),
+         y = map_dbl(location, 2, .default = NA),
+         timestamp = minute * 60 + second)
+
+plays |>
+  filter(!is.na(player)) |>
+  mutate(player = glue::glue("{ player } ({ position })"),
+         player = fct_lump(player, 9)) |>
+  count(player, type, sort = TRUE) |>
+  mutate(type = fct_reorder(type, n, sum),
+         player = fct_reorder(player, -n, sum)) |>
+  filter(player != "Other") |>
+  ggplot(aes(type, n)) +
+  geom_col() +
+  coord_flip() +
+  facet_wrap(~ player) +
+  labs(x = "",
+       y = "# of plays they were involved in",
+       title = "Which players were involved in the most plays in the 2019 Final?")
+
+plays |>
+  filter(!is.na(position)) |>
+  mutate(position = fct_lump(position, 15)) |>
+  ggplot(aes(x, y, color = position)) +
+  geom_point() +
+  facet_wrap(~ position)
+```
+
+---
+
+**→ [Hour 2: Modeling](h2_modeling_women_s_world_cup.qmd)**
+
+*TheDataShrink™ — thedatashrink.com.au — Weekly data stories in R*

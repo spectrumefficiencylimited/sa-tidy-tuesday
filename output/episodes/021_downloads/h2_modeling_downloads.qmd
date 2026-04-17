@@ -1,0 +1,85 @@
+---
+title: "Hour 2 — Modeling: Analyzing data on R downloads"
+subtitle: "Going deeper with statistical models | TheDataShrink™"
+author: "TheDataShrink™"
+date: today
+format:
+  html:
+    theme: cosmo
+    toc: true
+    toc-depth: 3
+    code-fold: show
+    code-summary: "Show code"
+    number-sections: true
+    embed-resources: true
+execute:
+  echo: true
+  warning: false
+  message: false
+  error: true
+editor: visual
+---
+
+
+::: {.callout-tip}
+## TheDataShrink™ — Data stories worth sharing.
+Episode 021 · Hour 2 · [← Hour 1 EDA](h1_eda_downloads.qmd)
+:::
+
+
+::: {.callout-note collapse="true"}
+## Atomic Concepts — Hour 2
+`coord_flip_horizontal` · `countrycode_standardize` · `faceted_comparison` · `fct_lump_infrequent` · `fct_reorder_stat` · `geom_histogram_density` · `grouped_summary_ggplot` · `log_scale` · `lubridate_dates` · `pivot_reshape`
+:::
+
+## Setup
+
+```{r setup}
+library(tidyverse)
+library(scales)
+library(broom)
+library(here)
+theme_set(theme_light(base_size = 13))
+```
+
+## Reload data
+
+```{r load-data}
+# Re-load from Hour 1 — same local paths
+source_qmd <- here::here("output/episodes/downloads/h1_eda_downloads.qmd")
+# Data files are re-read directly below if needed
+```
+
+## Model 1 — Time trend
+
+```{r time-setup}
+library(lubridate)
+# df <- read_csv(...)
+```
+
+```{r trend}
+# df |>
+#   mutate(date_col = ymd(date_col)) |>
+#   group_by(floor_date(date_col, "month")) |>
+#   summarise(n = n(), .groups = "drop") |>
+#   ggplot(aes(`floor_date(date_col, "month")`, n)) +
+#   geom_line() + geom_smooth(method = "loess")
+cat("Time trend: adjust date_col to your date column\n")
+```
+
+## Model 2 — Seasonality / year-over-year
+
+```{r seasonality}
+# df |>
+#   mutate(year = year(date_col), month = month(date_col, label = TRUE)) |>
+#   group_by(year, month) |>
+#   summarise(n = n(), .groups = "drop") |>
+#   ggplot(aes(month, n, group = year, color = factor(year))) +
+#   geom_line()
+cat("Seasonality: adjust date_col above\n")
+```
+
+
+---
+
+**→ [Hour 3: Communicate](h3_communicate_downloads.qmd)**

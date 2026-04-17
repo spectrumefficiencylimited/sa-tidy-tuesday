@@ -1,0 +1,231 @@
+---
+title: "Hour 1 — EDA: Analyzing Bob Ross paintings in R"
+subtitle: "David Robinson's analysis, extended | TheDataShrink™"
+author: "TheDataShrink™"
+date: today
+format:
+  html:
+    theme: flatly
+    toc: true
+    toc-depth: 3
+    code-fold: show
+    code-summary: "Show code"
+    number-sections: true
+    embed-resources: true
+execute:
+  echo: true
+  warning: false
+  message: false
+  error: true
+editor: visual
+---
+
+
+::: {.callout-tip}
+## TheDataShrink™ — Data stories worth sharing.
+Episode 012 · Hour 1
+:::
+
+
+::: {.callout-note collapse="true"}
+## Atomic Concepts in this episode
+`add_count_inline` · `broom_model_output` · `coord_flip_horizontal` · `faceted_comparison` · `fct_reorder_stat` · `grouped_summary_ggplot` · `janitor_clean` · `linear_model_broom` · `network_graph_ggraph` · `pairwise_token_correlation` · `pivot_reshape` · `reorder_within_facets`
+:::
+
+::: {.callout-warning collapse="true"}
+## FAILS WHEN
+- dataset has no natural grouping variable — comparisons become meaningless
+- column names are unstable across TidyTuesday editions (re-check schema each year)
+- text is multilingual without language detection
+:::
+
+::: {.callout-important collapse="true"}
+## WORKS WHEN
+- dataset has clear categorical + numeric columns for grouped comparisons
+- question is exploratory — no strong prior hypothesis
+- text is long-form English and benefits from word-level decomposition
+:::
+
+```{r setup}
+library(here)
+library(scales)
+library(tidyverse)
+library(widyr)
+library(ggraph)
+library(igraph)
+library(reshape2)
+library(broom)
+library(tidytext)
+
+# TheDataShrink™ brand colours
+TDS_BLUE  <- "#1b6ca8"
+TDS_GOLD  <- "#c8a415"
+TDS_DARK  <- "#1a1a2e"
+TDS_LIGHT <- "#f8f9fa"
+theme_set(theme_light(base_size = 13))
+
+```
+
+## Explore
+```{r chunk_01}
+library(tidyverse)
+theme_set(theme_light())
+
+bob_ross <- readr::read_csv("https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2019/2019-08-06/bob-ross.csv")
+```
+```{r chunk_02}
+bob_ross_gathered <- bob_ross |>
+  janitor::clean_names() |>
+  gather(element, present, -episode, -title) |>
+  filter(present == 1) |>
+  mutate(title = str_to_title(str_remove_all(title, '"')),
+         element = str_to_title(str_replace(element, "_", " "))) |>
+  select(-present) |>
+  extract(episode, c("season", "episode_number"), "S(.*)E(.*)", convert = TRUE, remove = FALSE) |>
+  arrange(season, episode_number)
+```
+
+## Exploring the paintings
+```{r chunk_03}
+bob_ross_gathered |>
+  count(element, sort = TRUE) |>
+  head(25) |>
+  mutate(element = fct_reorder(element, n)) |>
+  ggplot(aes(element, n)) +
+  geom_col() +
+  coord_flip()
+```
+```{r chunk_04}
+bob_ross_gathered |>
+  add_count(episode) |>
+  arrange(desc(n))
+```
+```{r chunk_05}
+by_season_element <- bob_ross_gathered |>
+  filter(!element %in% c("Tree", "Trees")) |>
+  group_by(season) |>
+  mutate(number_episodes = n_distinct(episode)) |>
+  count(season, element, number_episodes, sort = TRUE) |>
+  mutate(percent_included = n / number_episodes) |>
+  group_by(element) |>
+  mutate(element_total = sum(n)) |>
+  ungroup()
+
+by_season_element |>
+  filter(element_total >= 50) |>
+  ggplot(aes(season, percent_included, color = element)) +
+  geom_line() +
+  scale_y_continuous(labels = scales::percent_format()) +
+  expand_limits(y = 0) +
+  facet_wrap(~ element)
+```
+
+## Clustering
+```{r chunk_06}
+library(widyr)
+
+correlations <- bob_ross_gathered |>
+  add_count(element) |>
+  filter(n >= 5) |>
+  pairwise_cor(element, episode, sort = TRUE)
+
+correlations |>
+  filter(item1 == "River") |>
+  mutate(item2 = fct_reorder(item2, correlation)) |>
+  ggplot(aes(item2, correlation)) +
+  geom_col() +
+  coord_flip() +
+  labs(title = "What tends to appear with a river?",
+       subtitle = "Among elements that appeared in at least 10 paintings")
+
+correlations |>
+  filter(item1 == "Snow") |>
+  mutate(item2 = fct_reorder(item2, correlation)) |>
+  ggplot(aes(item2, correlation)) +
+  geom_col() +
+  coord_flip() +
+  labs(title = "What tends to appear with snow?",
+       subtitle = "Among elements that appeared in at least 10 paintings")
+```
+```{r chunk_07}
+library(ggraph)
+library(igraph)
+
+set.seed(2019)
+
+correlations |>
+  head(100) |>
+  graph_from_data_frame() |>
+  ggraph() +
+  geom_edge_link(aes(alpha = correlation)) +
+  geom_node_point() +
+  geom_node_text(aes(label = name), vjust = 1, hjust = 1) +
+  theme_void()
+```
+
+## Principal Component Analysis
+```{r chunk_08}
+library(reshape2)
+library(broom)
+library(tidytext)
+
+binary_matrix <- bob_ross_gathered |>
+  acast(title ~ element)
+
+# Center the columns
+centered_matrix <- t(t(binary_matrix) - colMeans(binary_matrix))
+
+svd_result <- svd(centered_matrix)
+
+element_weights <- tidy(svd_result, matrix = "v") |>
+  mutate(element = colnames(binary_matrix)[column])
+
+element_weights |>
+  filter(PC <= 4) |>
+  group_by(PC) |>
+  top_n(16, abs(value)) |>
+  ungroup() |>
+  mutate(element = reorder_within(element, value, PC)) |>
+  ggplot(aes(element, value, fill = factor(PC))) +
+  geom_col(show.legend = FALSE) +
+  facet_wrap(~ PC, scales = "free") +
+  scale_x_reordered() +
+  coord_flip() +
+  labs(title = "First four principal components of elements in Bob Ross paintings")
+```
+```{r chunk_09}
+painting_weights <- broom::tidy(svd_result, matrix = "u") |>
+  mutate(painting = rownames(binary_matrix)[row])
+```
+```{r chunk_10}
+painting_weights |>
+  filter(PC == 1) |>
+  arrange((value))
+
+bob_ross_gathered |>
+  filter(title == "Frozen Solitude")
+
+painting_weights |>
+  filter(PC <= 4) |>
+  group_by(PC) |>
+  top_n(20, abs(value)) |>
+  ungroup() |>
+  mutate(painting = reorder_within(painting, value, PC)) |>
+  ggplot(aes(painting, value, fill = factor(PC))) +
+  geom_col(show.legend = FALSE) +
+  facet_wrap(~ PC, scales = "free") +
+  scale_x_reordered() +
+  coord_flip() +
+  labs(title = "First four principal components of Bob Ross paintings")
+```
+```{r chunk_11}
+broom::tidy(svd_result, matrix = "d") |>
+  ggplot(aes(PC, percent)) +
+  geom_point()
+```
+
+---
+
+**→ [Hour 2: Modeling](h2_modeling_bob_ross_paintings.qmd)**
+
+*TheDataShrink™ — thedatashrink.com.au — Weekly data stories in R*

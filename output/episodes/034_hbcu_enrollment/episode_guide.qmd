@@ -19,7 +19,7 @@ execute:
 - `ker_status`: `extracted`
 - `reproduction_status`: `ready_local`
 - `transcript_file`: `raw-data/inspiration/Analyzing HBCU enrollment in R.txt`
-- `code_file`: `data-screencasts/2021_02_02_hbcu.Rmd`
+- `code_file`: `data-screencasts-dgrtwo/2021_02_02_hbcu.Rmd`
 - `data_source`: TidyTuesday 2021-02-02 dataset
 - `analysis_type`: `EDA`
 - `pattern_signature`: `load_inspect_reshape_join_trend_compare_visualize`

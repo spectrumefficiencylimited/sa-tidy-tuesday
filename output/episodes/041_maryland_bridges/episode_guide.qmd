@@ -19,7 +19,7 @@ execute:
 - `ker_status`: `extracted`
 - `reproduction_status`: `needs_external_sources`
 - `transcript_file`: `raw-data/inspiration/Analyzing Maryland bridges with R.txt`
-- `code_file`: `data-screencasts/baltimore_bridges.Rmd`
+- `code_file`: `data-screencasts-dgrtwo/baltimore_bridges.Rmd`
 - `data_source`: Local source files read in episode: https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2018-11-27/baltimore_bridges.csv
 - `analysis_type`: `Modeling`
 - `pattern_signature`: `load_inspect_model_evaluate_visualize`

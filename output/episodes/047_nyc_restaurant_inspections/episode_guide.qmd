@@ -19,7 +19,7 @@ execute:
 - `ker_status`: `extracted`
 - `reproduction_status`: `needs_external_sources`
 - `transcript_file`: `raw-data/inspiration/Analyzing NYC restaurant inspections with R.txt`
-- `code_file`: `data-screencasts/nyc-restaurants.Rmd`
+- `code_file`: `data-screencasts-dgrtwo/nyc-restaurants.Rmd`
 - `data_source`: Local source files read in episode: https://data.cityofnewyork.us/api/views/43nn-pn8j/rows.csv
 - `analysis_type`: `EDA`
 - `pattern_signature`: `load_inspect_reshape_join_trend_compare_visualize`

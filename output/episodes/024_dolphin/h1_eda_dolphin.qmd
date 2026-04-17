@@ -1,0 +1,226 @@
+---
+title: "Hour 1 — EDA: Analyzing dolphin data in R"
+subtitle: "David Robinson's analysis, extended | TheDataShrink™"
+author: "TheDataShrink™"
+date: today
+format:
+  html:
+    theme: flatly
+    toc: true
+    toc-depth: 3
+    code-fold: show
+    code-summary: "Show code"
+    number-sections: true
+    embed-resources: true
+execute:
+  echo: true
+  warning: false
+  message: false
+  error: true
+editor: visual
+---
+
+
+::: {.callout-tip}
+## TheDataShrink™ — Data stories worth sharing.
+Episode 024 · Hour 1
+:::
+
+
+::: {.callout-note collapse="true"}
+## Atomic Concepts in this episode
+`boxplot_jitter` · `broom_model_output` · `confidence_ribbon` · `coord_flip_horizontal` · `fct_lump_infrequent` · `fct_reorder_stat` · `fuzzy_join` · `geom_area_stacked` · `geom_histogram_density` · `grouped_summary_ggplot` · `linear_model_broom` · `lubridate_dates`
+:::
+
+::: {.callout-warning collapse="true"}
+## FAILS WHEN
+- outcome column is missing or near-zero variance
+- training set is too small for the number of predictors
+- irregular time intervals inflate or deflate apparent trends
+:::
+
+::: {.callout-important collapse="true"}
+## WORKS WHEN
+- outcome column is clearly defined and has sufficient variance
+- features can be engineered from existing columns without external joins
+- time dimension is regular and spans multiple periods with meaningful change
+:::
+
+```{r setup}
+library(here)
+library(tidyverse)
+library(lubridate)
+library(scales)
+library(fuzzyjoin)
+library(survival)
+library(broom)
+
+# TheDataShrink™ brand colours
+TDS_BLUE  <- "#1b6ca8"
+TDS_GOLD  <- "#c8a415"
+TDS_DARK  <- "#1a1a2e"
+TDS_LIGHT <- "#f8f9fa"
+theme_set(theme_light(base_size = 13))
+
+```
+
+## Explore
+```{r chunk_01}
+library(tidyverse)
+theme_set(theme_light())
+
+cetaceans_raw <- read_csv("https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2018-12-18/allCetaceanData.csv")
+
+cetaceans <- cetaceans_raw |>
+  select(-X1) |>
+  mutate(birthYear = as.integer(birthYear),
+         age = if_else(status == "Died", year(statusDate) - birthYear, NA_real_))
+```
+```{r chunk_02}
+library(lubridate)
+
+cetaceans |>
+  count(acquisition, sort = TRUE)
+
+cetaceans |>
+  count(status, sort = TRUE)
+
+cetaceans |>
+  filter(status == "Died") |>
+  select(birthYear, statusDate) |>
+  filter(!is.na(birthYear), !is.na(statusDate)) |>
+  mutate(age = year(statusDate) - birthYear) |>
+  ggplot(aes(age)) +
+  geom_histogram()
+
+cetaceans |>
+  count(species = fct_lump(species, 5), sort = TRUE) |>
+  mutate(species = fct_reorder(species, n)) |>
+  ggplot(aes(species, n)) +
+  geom_col() +
+  coord_flip()
+
+cetaceans |>
+  mutate(species = fct_lump(species, 5), sort = TRUE) |>
+  filter(!is.na(birthYear), !is.na(statusDate)) |>
+  mutate(age = year(statusDate) - birthYear) |>
+  ggplot(aes(species, age)) +
+  geom_boxplot() +
+  coord_flip()
+```
+```{r chunk_03}
+cetaceans |>
+  count(acquisition, originLocation, sort = TRUE) |>
+  filter(originLocation != "Unknown") |>
+
+cetaceans |>
+  ggplot(aes(originDate, fill = acquisition)) +
+  geom_histogram()
+
+library(scales)
+
+cetaceans |>
+  filter(originDate >= "1960-01-01") |>
+  count(acquisition,
+        decade = 5 * (year(originDate) %/% 5)) |>
+  complete(acquisition, decade, fill = list(n = 0)) |>
+  mutate(acquisition = fct_reorder(acquisition, n, sum)) |>
+  group_by(decade) |>
+  mutate(percent = n / sum(n)) |>
+  ggplot(aes(decade, percent, fill = acquisition)) +
+  geom_area() +
+  scale_y_continuous(labels = percent_format()) +
+  theme_minimal() +
+  labs(x = "year",
+       y = "% of dolphins recorded")
+```
+```{r chunk_04}
+library(fuzzyjoin)
+
+regexes <- tribble(
+  ~ regex, ~ category,
+  "Unknown", "Unknown",
+  "Gulf of Mexico", "Gulf of Mexico",
+  "Florida|FL", "Florida",
+  "Texas|TX", "Texas",
+  "SeaWorld", "SeaWorld",
+  "Pacific", "Pacific Ocean",
+  "Atlantic", "Atlantic Ocean"
+)
+
+cetaceans_annotated <- cetaceans |>
+  mutate(unique_id = row_number()) |>
+  regex_left_join(regexes, c(originLocation = "regex")) |>
+  distinct(unique_id, .keep_all = TRUE) |>
+  mutate(category = coalesce(category, originLocation))
+
+cetaceans_annotated |>
+  filter(acquisition == "Capture") |>
+  mutate(category = fct_lump(category, 4),
+         category = fct_reorder(category, category, length)) |>
+  ggplot(aes(originDate, fill = category)) +
+  geom_histogram()
+
+  count(category,
+        decade = 5 * (year(originDate) %/% 5)) |>
+  complete(category, decade, fill = list(n = 0)) |>
+  mutate(category = fct_lump(category, 7),
+         category = fct_reorder(category, n, sum)) |>
+  group_by(decade) |>
+  mutate(percent = n / sum(n)) |>
+  ggplot(aes(decade, percent, fill = category)) +
+  geom_area() +
+  scale_y_continuous(labels = percent_format()) +
+  theme_minimal() +
+  labs(x = "year",
+       y = "% of dolphins recorded",
+       title = "Dolphins born in captivity")
+```
+
+## Survival analysis
+```{r chunk_05}
+library(survival)
+
+dolphin_survival <- cetaceans |>
+  filter(status %in% c("Alive", "Died")) |>
+  mutate(deathYear = ifelse(status == "Alive", 2017, year(statusDate)),
+         status = ifelse(status == "Alive", 0, 1),
+         age = deathYear - birthYear) |>
+  filter(!is.na(deathYear)) |>
+  select(birthYear, deathYear, status, sex, age, acquisition, species) |>
+  filter(deathYear >= birthYear) |>
+  filter(sex != "U")
+
+model <- survfit(Surv(age, status) ~ sex, dolphin_survival)
+
+library(broom)
+
+tidy(model) |>
+  ggplot(aes(time, estimate, color = strata)) +
+  geom_line() +
+  geom_ribbon(aes(ymin = conf.low, ymax = conf.high), alpha = .2) +
+  scale_y_continuous(labels = percent_format()) +
+  labs(y = "Estimated % survival")
+
+coxph(Surv(age, status) ~ sex, dolphin_survival) |>
+  tidy()
+```
+```{r chunk_06}
+model <- survfit(Surv(age, status) ~ acquisition, dolphin_survival)
+
+library(broom)
+
+tidy(model) |>
+  filter(strata != "acquisition=Unknown") |>
+  ggplot(aes(time, estimate, color = strata)) +
+  geom_line() +
+  geom_ribbon(aes(ymin = conf.low, ymax = conf.high), alpha = .2) +
+  scale_y_continuous(labels = percent_format()) +
+  labs(y = "Estimated % survival")
+```
+
+---
+
+**→ [Hour 2: Modeling](h2_modeling_dolphin.qmd)**
+
+*TheDataShrink™ — thedatashrink.com.au — Weekly data stories in R*

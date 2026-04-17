@@ -1,0 +1,204 @@
+---
+title: "Hour 1 — EDA: Analyzing NCAA Women's Basketball"
+subtitle: "David Robinson's analysis, extended | TheDataShrink™"
+author: "TheDataShrink™"
+date: today
+format:
+  html:
+    theme: flatly
+    toc: true
+    toc-depth: 3
+    code-fold: show
+    code-summary: "Show code"
+    number-sections: true
+    embed-resources: true
+execute:
+  echo: true
+  warning: false
+  message: false
+  error: true
+editor: visual
+---
+
+
+::: {.callout-tip}
+## TheDataShrink™ — Data stories worth sharing.
+Episode 043 · Hour 1
+:::
+
+
+::: {.callout-note collapse="true"}
+## Atomic Concepts in this episode
+`boxplot_jitter` · `correlation_matrix` · `faceted_comparison` · `fct_lump_infrequent` · `fct_relevel_manual` · `fct_reorder_stat` · `geom_smooth_loess` · `glue_strings` · `grouped_summary_ggplot` · `heatmap_tile` · `spline_regression` · `theme_set_global`
+:::
+
+::: {.callout-warning collapse="true"}
+## FAILS WHEN
+- dataset has no natural grouping variable — comparisons become meaningless
+- column names are unstable across TidyTuesday editions (re-check schema each year)
+- irregular time intervals inflate or deflate apparent trends
+:::
+
+::: {.callout-important collapse="true"}
+## WORKS WHEN
+- dataset has clear categorical + numeric columns for grouped comparisons
+- question is exploratory — no strong prior hypothesis
+- time dimension is regular and spans multiple periods with meaningful change
+:::
+
+```{r setup}
+library(here)
+library(scales)
+library(tidyverse)
+library(glue)
+
+# TheDataShrink™ brand colours
+TDS_BLUE  <- "#1b6ca8"
+TDS_GOLD  <- "#c8a415"
+TDS_DARK  <- "#1a1a2e"
+TDS_LIGHT <- "#f8f9fa"
+theme_set(theme_light(base_size = 13))
+
+```
+## Load data
+```{r load-data}
+tournament <- read_csv("/Users/stoiana/sa-tidy-tuesday/tidytuesday/data/2020/2020-10-06/tournament.csv", show_col_types = FALSE)
+glimpse(tournament)
+```
+
+## Load the weekly Data
+```{r chunk_01}
+tournament |>
+  count(year) |> 
+  ggplot(aes(year, n)) +
+  geom_col()
+```
+```{r chunk_02}
+tournament |>
+  ggplot(aes(full_w, tourney_w + reg_w)) +
+  geom_point(alpha = .1)
+
+tournament |>
+  filter(conf_l > reg_l)
+```
+```{r chunk_03}
+by_seed <- tournament |>
+  group_by(seed) |>
+  summarize(n = n(),
+            pct_win = mean(tourney_finish == "Champ"),
+            pct_final_four = mean(tourney_finish %in% c("Champ", "N2nd", "NSF")),
+            avg_round = mean(as.integer(tourney_finish)))
+
+by_seed |>
+  ggplot(aes(seed, avg_round)) +
+  geom_line() +
+  labs(x = "Starting seed",
+       y = "On average, eliminated in round...")
+
+by_seed |>
+  ggplot(aes(seed, pct_final_four)) +
+  geom_line() +
+  labs(x = "Starting seed",
+       y = "% of times making the Final Four")
+```
+```{r chunk_04}
+tournament |>
+  count(seed, tourney_finish) |>
+  group_by(seed) |>
+  mutate(pct = n / sum(n)) |>
+  ggplot(aes(tourney_finish, seed, fill = pct)) +
+  geom_tile() +
+  geom_text(aes(label = percent(pct))) +
+  scale_x_discrete(expand = c(0, 0)) +
+  scale_y_reverse(breaks = seq(1, 16), expand = c(0, 0)) +
+  scale_fill_gradient2(high = "blue", labels = percent) +
+  theme(panel.grid = element_blank(),
+        axis.ticks = element_blank()) +
+  labs(x = "Tournament finish (worst to best)",
+       y = "Starting seed",
+       fill = "% of seed",
+       title = "When a team starts in a seed, how do they end up?")
+```
+```{r chunk_05}
+tournament |>
+  ggplot(aes(seed, n_rounds)) +
+  geom_point(alpha = .1)
+
+tournament |>
+  group_by(year) |>
+  summarize(correlation = cor(seed, n_rounds)) |>
+  ggplot(aes(year, correlation)) +
+  geom_line()
+```
+```{r chunk_06}
+tournament |>
+  ggplot(aes(seed, reg_percent)) +
+  geom_boxplot(aes(group = seed)) +
+  geom_smooth(method = "loess")
+
+tournament |>
+  mutate(conference = fct_lump(conference, 8)) |>
+  ggplot(aes(seed, reg_percent)) +
+  geom_jitter(width = .05) +
+  # geom_boxplot(aes(group = seed)) +
+  geom_smooth(method = "loess") +
+  facet_wrap(~ conference)
+```
+```{r chunk_07}
+tournament |>
+  ggplot(aes(reg_percent, n_rounds)) +
+  geom_point() +
+  geom_smooth(method = "lm") +
+  facet_wrap(~ seed)
+
+tournament |>
+  group_by(seed) |>
+  summarize(correlation = cor(reg_percent, n_rounds))
+```
+
+## Conferences
+```{r chunk_08}
+summarize_entries <- . |>
+  summarize(n_entries = n(),
+            avg_seed = mean(seed),
+            pct_win = mean(tourney_finish == "Champ"),
+            pct_final_four = mean(tourney_finish %in% c("Champ", "N2nd", "NSF")),
+            avg_round = mean(n_rounds)) |>
+  arrange(desc(n_entries))
+
+by_conference <- tournament |>
+  group_by(conference) |>
+  summarize_entries()
+
+by_conference |>
+  filter(n_entries >= 25) |>
+  ggplot(aes(n_entries, avg_round)) +
+  geom_point() +
+  geom_text(aes(label = conference), vjust = 1, hjust = 1,
+            check_overlap = TRUE) +
+  expand_limits(x = 0)
+```
+```{r chunk_09}
+library(glue)
+
+by_school <- tournament |>
+  group_by(school) |>
+  summarize_entries()
+
+by_school |>
+  filter(n_entries >= 15) |>
+  mutate(school = glue("{ school } ({ n_entries})"),
+         school = fct_reorder(school, avg_round)) |>
+  ggplot(aes(avg_round, school)) +
+  geom_col() +
+  labs(title = "Of schools that frequently play, which perform best?",
+       subtitle = "Parentheses show the # of years out of the last 25 they played",
+       x = "Average # of rounds won",
+       y = "")
+```
+
+---
+
+**→ [Hour 2: Modeling](h2_modeling_ncaa_women_s_basketball.qmd)**
+
+*TheDataShrink™ — thedatashrink.com.au — Weekly data stories in R*

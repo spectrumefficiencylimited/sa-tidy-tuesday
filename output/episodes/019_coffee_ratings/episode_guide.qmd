@@ -19,7 +19,7 @@ execute:
 - `ker_status`: `extracted`
 - `reproduction_status`: `ready_local`
 - `transcript_file`: `raw-data/inspiration/Analyzing coffee ratings in R.txt`
-- `code_file`: `data-screencasts/coffee-ratings.Rmd`
+- `code_file`: `data-screencasts-dgrtwo/coffee-ratings.Rmd`
 - `data_source`: TidyTuesday 2020-07-07 dataset
 - `analysis_type`: `Modeling`
 - `pattern_signature`: `load_inspect_reshape_tokenize_model_evaluate_visualize`

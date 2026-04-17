@@ -19,7 +19,7 @@ execute:
 - `ker_status`: `extracted`
 - `reproduction_status`: `ready_local`
 - `transcript_file`: `raw-data/inspiration/Analyzing NCAA Women's Basketball.txt`
-- `code_file`: `data-screencasts/2020_10_06_ncaa_womens_basketball.Rmd`
+- `code_file`: `data-screencasts-dgrtwo/2020_10_06_ncaa_womens_basketball.Rmd`
 - `data_source`: TidyTuesday 2020-10-06 dataset
 - `analysis_type`: `EDA`
 - `pattern_signature`: `load_inspect_trend_compare_visualize`

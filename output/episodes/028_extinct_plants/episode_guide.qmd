@@ -19,7 +19,7 @@ execute:
 - `ker_status`: `extracted`
 - `reproduction_status`: `ready_with_external_steps`
 - `transcript_file`: `raw-data/inspiration/Analyzing extinct plants in R.txt`
-- `code_file`: `data-screencasts/2020_08_18_extinct_plants.Rmd`
+- `code_file`: `data-screencasts-dgrtwo/2020_08_18_extinct_plants.Rmd`
 - `data_source`: TidyTuesday 2020-08-18 dataset
 - `analysis_type`: `EDA`
 - `pattern_signature`: `load_inspect_scrape_join_tokenize_trend_compare_visualize`

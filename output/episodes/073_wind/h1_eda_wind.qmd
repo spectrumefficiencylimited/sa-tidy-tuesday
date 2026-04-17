@@ -1,0 +1,174 @@
+---
+title: "Hour 1 — EDA: Analyzing US wind data in R"
+subtitle: "David Robinson's analysis, extended | TheDataShrink™"
+author: "TheDataShrink™"
+date: today
+format:
+  html:
+    theme: flatly
+    toc: true
+    toc-depth: 3
+    code-fold: show
+    code-summary: "Show code"
+    number-sections: true
+    embed-resources: true
+execute:
+  echo: true
+  warning: false
+  message: false
+  error: true
+editor: visual
+---
+
+
+::: {.callout-tip}
+## TheDataShrink™ — Data stories worth sharing.
+Episode 073 · Hour 1
+:::
+
+
+::: {.callout-note collapse="true"}
+## Atomic Concepts in this episode
+`animated_transitions` · `boxplot_jitter` · `crossing_simulation_grid` · `spline_regression`
+:::
+
+::: {.callout-warning collapse="true"}
+## FAILS WHEN
+- dataset has no natural grouping variable — comparisons become meaningless
+- column names are unstable across TidyTuesday editions (re-check schema each year)
+- irregular time intervals inflate or deflate apparent trends
+:::
+
+::: {.callout-important collapse="true"}
+## WORKS WHEN
+- dataset has clear categorical + numeric columns for grouped comparisons
+- question is exploratory — no strong prior hypothesis
+- time dimension is regular and spans multiple periods with meaningful change
+:::
+
+```{r setup}
+library(here)
+library(scales)
+library(tidyverse)
+library(gganimate)
+
+# TheDataShrink™ brand colours
+TDS_BLUE  <- "#1b6ca8"
+TDS_GOLD  <- "#c8a415"
+TDS_DARK  <- "#1a1a2e"
+TDS_LIGHT <- "#f8f9fa"
+theme_set(theme_light(base_size = 13))
+
+```
+
+## Explore
+```{r chunk_01}
+library(tidyverse)
+
+us_wind <- read_csv("https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2018-11-06/us_wind.csv")
+```
+```{r chunk_02}
+us_wind_processed <- us_wind |>
+  filter(!t_state %in% c("AK", "HI", "GU", "PR")) |>
+  mutate(t_cap = ifelse(t_cap < 0, NA, t_cap)) |>
+  mutate_if(is.numeric, ~ ifelse(. == -9999, NA, .))
+
+wind_projects <- us_wind_processed |>
+  group_by(p_name, t_state) |>
+  summarize(year = min(p_year, na.rm = TRUE),
+            turbines = n(),
+            total_capacity = sum(t_cap),
+            lon = mean(xlong),
+            lat = mean(ylat),
+            lon_sd = sd(xlong),
+            lat_sd = sd(ylat)) |>
+  ungroup()
+```
+```{r chunk_03}
+turbine_models <- us_wind_processed |>
+  group_by(t_model) |>
+  summarize(t_cap = median(t_cap),
+            t_hh = median(t_hh),
+            t_rd = median(t_rd),
+            t_rsa = median(t_rsa),
+            t_ttlh = median(t_ttlh),
+            turbines = n(),
+            projects = n_distinct(p_name)) |>
+  arrange(desc(projects))
+
+turbine_models |>
+  ggplot(aes(t_ttlh, t_cap)) +
+  geom_point() +
+  labs(title = "When it comes to turbines, bigger is better!",
+       x = "Turbine total height (meters)",
+       y = "Turbine capacity (kW)")
+
+turbine_models |>
+  ggplot(aes(t_rsa, t_cap)) +
+  geom_point() +
+  labs(title = "When it comes to turbines, bigger is better!",
+       x = "Turbine rotor swept area (meters ^ 2)",
+       y = "Turbine capacity (kW)")
+```
+```{r chunk_04}
+wind_projects |>
+  ggplot(aes(year, total_capacity)) +
+  geom_point()
+
+wind_projects |>
+  ggplot(aes(year, total_capacity / turbines)) +
+  geom_point()
+```
+```{r chunk_05}
+wind_projects |>
+  ggplot(aes(lon, lat, size = turbines, color = year)) +
+  borders("state") +
+  geom_point() +
+  coord_map() +
+  theme_void()
+```
+
+## Animation
+```{r chunk_06}
+library(gganimate)
+
+ggplot(mtcars, aes(factor(cyl), mpg)) + 
+  geom_boxplot() + 
+  # Here comes the gganimate code
+  transition_states(
+    gear,
+    transition_length = 2,
+    state_length = 1
+  ) +
+  enter_fade() + 
+  exit_shrink() +
+  ease_aes('sine-in-out')
+```
+```{r chunk_07}
+wind_projects
+
+wind_projects |>
+  filter(!is.na(year), !is.infinite(year)) |>
+  crossing(time = 1981:2018) |>
+  filter(year <= time) |>
+  ggplot(aes(lon, lat, size = turbines, color = year)) +
+  borders("state") +
+  geom_point() +
+  transition_manual(time) +
+  scale_color_continuous(guide = FALSE) +
+  labs(title = "Locations of wind turbine projects in continental US (1981-2018)") +
+  coord_map() +
+  theme_void()
+
+p
+anim_save("turbines.gif")
+```
+```{r chunk_08}
+us_wind_processed
+```
+
+---
+
+**→ [Hour 2: Modeling](h2_modeling_wind.qmd)**
+
+*TheDataShrink™ — thedatashrink.com.au — Weekly data stories in R*

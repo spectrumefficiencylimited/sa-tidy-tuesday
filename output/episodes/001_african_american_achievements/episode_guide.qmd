@@ -19,7 +19,7 @@ execute:
 - `ker_status`: `extracted`
 - `reproduction_status`: `ready_with_external_steps`
 - `transcript_file`: `raw-data/inspiration/Analyzing African-American achievements in R.txt`
-- `code_file`: `data-screencasts/african-american-achievements.Rmd`
+- `code_file`: `data-screencasts-dgrtwo/african-american-achievements.Rmd`
 - `data_source`: TidyTuesday 2020-06-09 dataset
 - `analysis_type`: `EDA`
 - `pattern_signature`: `load_inspect_scrape_reshape_trend_compare_visualize`

@@ -19,7 +19,7 @@ execute:
 - `ker_status`: `extracted`
 - `reproduction_status`: `ready_local`
 - `transcript_file`: `raw-data/inspiration/Analyzing US dairy consumption in R.txt`
-- `code_file`: `data-screencasts/us-dairy.Rmd`
+- `code_file`: `data-screencasts-dgrtwo/us-dairy.Rmd`
 - `data_source`: TidyTuesday 2019-01-29 source files
 - `analysis_type`: `EDA`
 - `pattern_signature`: `load_inspect_reshape_trend_simulate_compare_visualize`

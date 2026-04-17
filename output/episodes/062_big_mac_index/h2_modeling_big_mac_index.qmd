@@ -1,0 +1,85 @@
+---
+title: "Hour 2 — Modeling: Analyzing the Big Mac index in R"
+subtitle: "Going deeper with statistical models | TheDataShrink™"
+author: "TheDataShrink™"
+date: today
+format:
+  html:
+    theme: cosmo
+    toc: true
+    toc-depth: 3
+    code-fold: show
+    code-summary: "Show code"
+    number-sections: true
+    embed-resources: true
+execute:
+  echo: true
+  warning: false
+  message: false
+  error: true
+editor: visual
+---
+
+
+::: {.callout-tip}
+## TheDataShrink™ — Data stories worth sharing.
+Episode 062 · Hour 2 · [← Hour 1 EDA](h1_eda_big_mac_index.qmd)
+:::
+
+
+::: {.callout-note collapse="true"}
+## Atomic Concepts — Hour 2
+`add_count_inline` · `animated_transitions` · `faceted_comparison` · `fct_reorder_stat` · `geom_smooth_loess` · `grouped_summary_ggplot` · `label_repulsion_ggrepel` · `log_scale` · `pairwise_token_correlation` · `pivot_reshape`
+:::
+
+## Setup
+
+```{r setup}
+library(tidyverse)
+library(scales)
+library(broom)
+library(here)
+theme_set(theme_light(base_size = 13))
+```
+
+## Reload data
+
+```{r load-data}
+# Re-load from Hour 1 — same local paths
+source_qmd <- here::here("output/episodes/big_mac_index/h1_eda_big_mac_index.qmd")
+# Data files are re-read directly below if needed
+```
+
+## Model 1 — Time trend
+
+```{r time-setup}
+library(lubridate)
+df <- read_csv("/Users/stoiana/sa-tidy-tuesday/tidytuesday/data/2020/2020-12-22/big-mac.csv", show_col_types = FALSE)
+```
+
+```{r trend}
+# df |>
+#   mutate(date_col = ymd(date_col)) |>
+#   group_by(floor_date(date_col, "month")) |>
+#   summarise(n = n(), .groups = "drop") |>
+#   ggplot(aes(`floor_date(date_col, "month")`, n)) +
+#   geom_line() + geom_smooth(method = "loess")
+cat("Time trend: adjust date_col to your date column\n")
+```
+
+## Model 2 — Seasonality / year-over-year
+
+```{r seasonality}
+# df |>
+#   mutate(year = year(date_col), month = month(date_col, label = TRUE)) |>
+#   group_by(year, month) |>
+#   summarise(n = n(), .groups = "drop") |>
+#   ggplot(aes(month, n, group = year, color = factor(year))) +
+#   geom_line()
+cat("Seasonality: adjust date_col above\n")
+```
+
+
+---
+
+**→ [Hour 3: Communicate](h3_communicate_big_mac_index.qmd)**

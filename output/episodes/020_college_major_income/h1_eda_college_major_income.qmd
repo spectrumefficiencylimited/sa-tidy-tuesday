@@ -1,0 +1,226 @@
+---
+title: "Hour 1 — EDA: Analyzing college major & income data in R"
+subtitle: "David Robinson's analysis, extended | TheDataShrink™"
+author: "TheDataShrink™"
+date: today
+format:
+  html:
+    theme: flatly
+    toc: true
+    toc-depth: 3
+    code-fold: show
+    code-summary: "Show code"
+    number-sections: true
+    embed-resources: true
+execute:
+  echo: true
+  warning: false
+  message: false
+  error: true
+editor: visual
+---
+
+
+::: {.callout-tip}
+## TheDataShrink™ — Data stories worth sharing.
+Episode 020 · Hour 1
+:::
+
+
+::: {.callout-note collapse="true"}
+## Atomic Concepts in this episode
+`add_count_inline` · `boxplot_jitter` · `coord_flip_horizontal` · `error_bar_coef_plot` · `fct_lump_infrequent` · `fct_reorder_stat` · `geom_smooth_loess` · `grouped_summary_ggplot` · `interactive_plotly` · `label_repulsion_ggrepel` · `linear_model_broom` · `log_scale`
+:::
+
+::: {.callout-warning collapse="true"}
+## FAILS WHEN
+- outcome column is missing or near-zero variance
+- training set is too small for the number of predictors
+:::
+
+::: {.callout-important collapse="true"}
+## WORKS WHEN
+- outcome column is clearly defined and has sufficient variance
+- features can be engineered from existing columns without external joins
+:::
+
+```{r setup}
+library(here)
+library(tidyverse)
+library(scales)
+library(ggrepel)
+library(plotly)
+library(broom)
+
+# TheDataShrink™ brand colours
+TDS_BLUE  <- "#1b6ca8"
+TDS_GOLD  <- "#c8a415"
+TDS_DARK  <- "#1a1a2e"
+TDS_LIGHT <- "#f8f9fa"
+theme_set(theme_light(base_size = 13))
+
+```
+
+## Explore
+```{r chunk_02}
+recent_grads <- read_csv("https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2018-10-16/recent-grads.csv")
+
+majors_processed <- recent_grads |>
+  arrange(desc(Median)) |>
+  mutate(Major = str_to_title(Major),
+         Major = fct_reorder(Major, Median))
+```
+```{r by_major_category}
+by_major_category <- majors_processed |>
+  filter(!is.na(Total)) |>
+  group_by(Major_category) |>
+  summarize(Men = sum(Men),
+            Women = sum(Women),
+            Total = sum(Total),
+            MedianSalary = sum(Median * Sample_size) / sum(Sample_size)) |>
+  mutate(ShareWomen = Women / Total) |>
+  arrange(desc(ShareWomen))
+```
+
+## What categories of majors make more money than others?
+```{r chunk_03}
+majors_processed |>
+  mutate(Major_category = fct_reorder(Major_category, Median)) |>
+  ggplot(aes(Major_category, Median, fill = Major_category)) +
+  geom_boxplot() +
+  scale_y_continuous(labels = dollar_format()) +
+  expand_limits(y = 0) +
+  coord_flip() +
+  theme(legend.position = "none")
+```
+
+## What are the highest earning majors?
+```{r chunk_04}
+majors_processed |>
+  filter(Sample_size >= 100) |>
+  head(20) |>
+  ggplot(aes(Major, Median, color = Major_category)) +
+  geom_point() +
+  geom_errorbar(aes(ymin = P25th, ymax = P75th)) +
+  expand_limits(y = 0) +
+  scale_y_continuous(labels = dollar_format()) +
+  coord_flip() +
+  labs(title = "What are the highest-earning majors?",
+       subtitle = "Top 20 majors with at least 100 graduates surveyed. Bars represent the 25th to 75th percentile.",
+       x = "",
+       y = "Median salary of gradates")
+```
+
+## How does gender breakdown relate to typical earnings?
+```{r chunk_05}
+majors_processed |>
+  arrange(desc(Total)) |>
+  head(20) |>
+  mutate(Major = fct_reorder(Major, Total)) |>
+  gather(Gender, Number, Men, Women) |>
+  ggplot(aes(Major, Number, fill = Gender)) +
+  geom_col() +
+  coord_flip()
+```
+```{r chunk_06}
+library(ggrepel)
+
+by_major_category |>
+  mutate(Major_category = fct_lump(Major_category, 6)) |>
+  ggplot(aes(ShareWomen, MedianSalary, color = Major_category)) +
+  geom_point() +
+  geom_smooth(method = "lm") +
+  geom_text_repel(aes(label = Major_category), force = .2) +
+  expand_limits(y = 0)
+```
+```{r chunk_07}
+library(plotly)
+
+g <- majors_processed |>
+  mutate(Major_category = fct_lump(Major_category, 4)) |>
+  ggplot(aes(ShareWomen, Median, color = Major_category, size = Sample_size, label = Major)) +
+  geom_point() +
+  geom_smooth(aes(group = 1), method = "lm") +
+  scale_x_continuous(labels = percent_format()) +
+  scale_y_continuous(labels = dollar_format()) +
+  expand_limits(y = 0)
+
+ggplotly(g)
+```
+```{r chunk_08}
+majors_processed |>
+  select(Major, Total, ShareWomen, Sample_size, Median) |>
+  lm(Median ~ ShareWomen, data = ., weights = Sample_size) |>
+  summary()
+```
+```{r chunk_09}
+library(broom)
+
+majors_processed |>
+  select(Major, Major_category, Total, ShareWomen, Sample_size, Median) |>
+  add_count(Major_category) |>
+  filter(n >= 10) |>
+  nest(-Major_category) |>
+  mutate(model = map(data, ~ lm(Median ~ ShareWomen, data = ., weights = Sample_size)),
+         tidied = map(model, tidy)) |>
+  unnest(tidied) |>
+  filter(term == "ShareWomen") |>
+  arrange(estimate) |>
+  mutate(fdr = p.adjust(p.value, method = "fdr"))
+```
+```{r chunk_10}
+majors_processed |>
+  filter(Sample_size >= 100) |>
+  mutate(IQR = P75th - P25th) |>
+  arrange(desc(IQR))
+```
+
+## Appendix
+```{r chunk_11}
+majors_processed |>
+  ggplot(aes(Sample_size, Median)) +
+  geom_point() +
+  geom_text(aes(label = Major), check_overlap = TRUE, vjust = 1, hjust = 1) +
+  scale_x_log10()
+```
+```{r chunk_12}
+knitr::knit_exit()
+```
+```{r chunk_13}
+majors_processed |>
+  mutate(Major = fct_reorder(Major, Total)) |>
+  arrange(desc(Total)) |>
+  head(20) |>
+  ggplot(aes(Major, Total, fill = Major_category)) +
+  geom_col() +
+  coord_flip() +
+  scale_y_continuous(labels = comma_format()) +
+  labs(x = "",
+       y = "Total # of graduates")
+```
+```{r chunk_14}
+majors_processed |>
+  group_by(Major_category) |>
+  summarize(Median = median(Median)) |>
+  mutate(Major_category = fct_reorder(Major_category, Median)) |>
+  ggplot(aes(Major_category, Median)) +
+  geom_col() +
+  scale_y_continuous(labels = dollar_format()) +
+  coord_flip()
+```
+```{r chunk_15}
+majors_processed |>
+  filter(Sample_size >= 100) |>
+  tail(20) |>
+  ggplot(aes(Major, Median, color = Major_category)) +
+  geom_point() +
+  geom_errorbar(aes(ymin = P25th, ymax = P75th)) +
+  expand_limits(y = 0) +
+  coord_flip()
+```
+
+---
+
+**→ [Hour 2: Modeling](h2_modeling_college_major_income.qmd)**
+
+*TheDataShrink™ — thedatashrink.com.au — Weekly data stories in R*

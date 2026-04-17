@@ -1,0 +1,86 @@
+---
+title: "Hour 2 — Modeling: Analyzing squirrels in NYC in R"
+subtitle: "Going deeper with statistical models | TheDataShrink™"
+author: "TheDataShrink™"
+date: today
+format:
+  html:
+    theme: cosmo
+    toc: true
+    toc-depth: 3
+    code-fold: show
+    code-summary: "Show code"
+    number-sections: true
+    embed-resources: true
+execute:
+  echo: true
+  warning: false
+  message: false
+  error: true
+editor: visual
+---
+
+
+::: {.callout-tip}
+## TheDataShrink™ — Data stories worth sharing.
+Episode 057 · Hour 2 · [← Hour 1 EDA](h1_eda_squirrels_nyc.qmd)
+:::
+
+
+::: {.callout-note collapse="true"}
+## Atomic Concepts — Hour 2
+`add_count_inline` · `choropleth_sf` · `geom_smooth_loess` · `grouped_summary_ggplot` · `logistic_regression` · `skim_inspect` · `spline_regression` · `theme_set_global` · `time_series_trend`
+:::
+
+## Setup
+
+```{r setup}
+library(tidyverse)
+library(scales)
+library(broom)
+library(here)
+theme_set(theme_light(base_size = 13))
+```
+
+## Reload data
+
+```{r load-data}
+# Re-load from Hour 1 — same local paths
+source_qmd <- here::here("output/episodes/squirrels_nyc/h1_eda_squirrels_nyc.qmd")
+# Data files are re-read directly below if needed
+```
+
+## Model 1 — Linear regression baseline
+
+```{r lm-setup}
+df <- read_csv("/Users/stoiana/sa-tidy-tuesday/tidytuesday/data/2019/2019-10-29/nyc_squirrels.csv", show_col_types = FALSE)
+glimpse(df)
+```
+
+```{r lm-fit}
+# Identify your outcome and predictors first — adjust formula below
+# fit <- lm(outcome ~ predictor1 + predictor2, data = df)
+# tidy(fit) |> filter(term != "(Intercept)") |>
+#   mutate(term = fct_reorder(term, estimate)) |>
+#   ggplot(aes(estimate, term, xmin = estimate - 2*std.error,
+#              xmax = estimate + 2*std.error)) +
+#   geom_point() + geom_errorbarh(height = 0.2) +
+#   geom_vline(xintercept = 0, lty = 2)
+cat("Linear model: adjust formula to your outcome variable\n")
+```
+
+## Model 2 — Variable importance
+
+```{r importance}
+# augment(fit) |>
+#   ggplot(aes(.fitted, outcome)) +
+#   geom_point(alpha = 0.4) +
+#   geom_abline(color = "red", lty = 2) +
+#   labs(title = "Predicted vs actual", x = "Fitted", y = "Observed")
+cat("Residual diagnostics: wire up after lm fit above\n")
+```
+
+
+---
+
+**→ [Hour 3: Communicate](h3_communicate_squirrels_nyc.qmd)**

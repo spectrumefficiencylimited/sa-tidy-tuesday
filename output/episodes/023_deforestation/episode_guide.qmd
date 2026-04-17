@@ -19,7 +19,7 @@ execute:
 - `ker_status`: `extracted`
 - `reproduction_status`: `needs_external_sources`
 - `transcript_file`: `raw-data/inspiration/Analyzing deforestation in R.txt`
-- `code_file`: `data-screencasts/2021_04_06_deforestation.Rmd`
+- `code_file`: `data-screencasts-dgrtwo/2021_04_06_deforestation.Rmd`
 - `data_source`: TidyTuesday 2021-04-06 dataset
 - `analysis_type`: `EDA`
 - `pattern_signature`: `load_inspect_reshape_join_tokenize_map_trend_compare_visualize`

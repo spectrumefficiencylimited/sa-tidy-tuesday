@@ -19,7 +19,7 @@ execute:
 - `ker_status`: `extracted`
 - `reproduction_status`: `ready_local`
 - `transcript_file`: `raw-data/inspiration/Analyzing predicting wine ratings in R.txt`
-- `code_file`: `data-screencasts/wine-ratings.Rmd`
+- `code_file`: `data-screencasts-dgrtwo/wine-ratings.Rmd`
 - `data_source`: TidyTuesday 2019-05-28 source files
 - `analysis_type`: `Predictive`
 - `pattern_signature`: `load_inspect_join_tokenize_trend_model_evaluate_visualize`

@@ -19,7 +19,7 @@ execute:
 - `ker_status`: `extracted`
 - `reproduction_status`: `ready_local`
 - `transcript_file`: `raw-data/inspiration/Analyzing board games and predicting ratings in R.txt`
-- `code_file`: `data-screencasts/board-games.Rmd`
+- `code_file`: `data-screencasts-dgrtwo/board-games.Rmd`
 - `data_source`: TidyTuesday 2019-03-12 source files
 - `analysis_type`: `Predictive`
 - `pattern_signature`: `load_inspect_reshape_join_tokenize_trend_model_evaluate_visualize`

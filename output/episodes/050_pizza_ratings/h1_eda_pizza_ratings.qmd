@@ -1,0 +1,212 @@
+---
+title: "Hour 1 — EDA: Analyzing pizza ratings in R"
+subtitle: "David Robinson's analysis, extended | TheDataShrink™"
+author: "TheDataShrink™"
+date: today
+format:
+  html:
+    theme: flatly
+    toc: true
+    toc-depth: 3
+    code-fold: show
+    code-summary: "Show code"
+    number-sections: true
+    embed-resources: true
+execute:
+  echo: true
+  warning: false
+  message: false
+  error: true
+editor: visual
+---
+
+
+::: {.callout-tip}
+## TheDataShrink™ — Data stories worth sharing.
+Episode 050 · Hour 1
+:::
+
+
+::: {.callout-note collapse="true"}
+## Atomic Concepts in this episode
+`add_count_inline` · `boxplot_jitter` · `error_bar_coef_plot` · `faceted_comparison` · `fct_lump_infrequent` · `fct_relevel_manual` · `fct_reorder_stat` · `geom_smooth_loess` · `glue_strings` · `grouped_summary_ggplot` · `linear_model_broom` · `multi_table_join`
+:::
+
+::: {.callout-warning collapse="true"}
+## FAILS WHEN
+- outcome column is missing or near-zero variance
+- training set is too small for the number of predictors
+- join key has trailing whitespace or case inconsistency — produces unexpected NAs
+- irregular time intervals inflate or deflate apparent trends
+:::
+
+::: {.callout-important collapse="true"}
+## WORKS WHEN
+- outcome column is clearly defined and has sufficient variance
+- features can be engineered from existing columns without external joins
+- time dimension is regular and spans multiple periods with meaningful change
+:::
+
+```{r setup}
+library(here)
+library(scales)
+library(tidyverse)
+library(broom)
+
+# TheDataShrink™ brand colours
+TDS_BLUE  <- "#1b6ca8"
+TDS_GOLD  <- "#c8a415"
+TDS_DARK  <- "#1a1a2e"
+TDS_LIGHT <- "#f8f9fa"
+theme_set(theme_light(base_size = 13))
+
+```
+
+## R Markdown
+```{r chunk_02}
+pizza_jared <- readr::read_csv("https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2019/2019-10-01/pizza_jared.csv")
+pizza_barstool <- readr::read_csv("https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2019/2019-10-01/pizza_barstool.csv")
+pizza_datafiniti <- readr::read_csv("https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2019/2019-10-01/pizza_datafiniti.csv")
+```
+```{r chunk_03}
+answer_orders <- c("Never Again", "Poor", "Average", "Good", "Excellent")
+
+by_place_answer <- pizza_jared |>
+  mutate(time = as.POSIXct(time, origin = "1970-01-01"),
+         date = as.Date(time),
+         answer = fct_relevel(answer, answer_orders)) |>
+  group_by(place, answer) |>
+  summarize(votes = sum(votes)) |>
+  mutate(total = sum(votes),
+         percent = votes / total,
+         answer_integer = as.integer(answer),
+         average = sum(answer_integer * percent)) |>
+  ungroup()
+
+by_place <- by_place_answer |>
+  distinct(place, total, average)
+```
+```{r chunk_04}
+by_place_answer |>
+  filter(as.integer(fct_reorder(place, total, .desc = TRUE)) <= 16,
+         answer != "Fair") |>
+  mutate(place = glue::glue("{ place } ({ total })"),
+         place = fct_reorder(place, average)) |>
+  ggplot(aes(answer, percent)) +
+  geom_col() +
+  facet_wrap(~ place) +
+  scale_y_continuous(labels = scales::percent) +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1)) +
+  labs(x = "",
+       y = "% of respondents",
+       title = "What is the most popular pizza place in Open Stats meetup?",
+       subtitle = "Only the 16 pizza places with the most respondents. # respondents shown in parentheses.")
+```
+```{r chunk_05}
+library(broom)
+
+# THIS TRICK DOESN'T WORK
+# tidy(lm(c(1, 2, 3, 4, 5) ~ 1, weights = c(100, 300, 100, 200, 150)), conf.int = TRUE)
+
+t_test_repeated <- function(x, frequency) {
+  tidy(t.test(rep(x, frequency)))
+}
+
+by_place_answer |>
+  filter(total >= 3) |>
+  group_by(place, total) |>
+  summarize(t_test_result = list(t_test_repeated(answer_integer, votes))) |>
+  ungroup() |>
+  unnest(t_test_result) |>
+  select(place, total, average = estimate, low = conf.low, high = conf.high) |>
+  top_n(16, total) |>
+  mutate(place = fct_reorder(place, average)) |>
+  ggplot(aes(average, place)) +
+  geom_point(aes(size = total)) +
+  geom_errorbarh(aes(xmin = low, xmax = high)) +
+  labs(x = "Average score (1-5 Likert Scale)",
+       y = "",
+       title = "What is the most popular pizza place in Open Stats meetup?",
+       subtitle = "Only the 16 pizza places with the most respondents.",
+       size = "# of respondents")
+```
+```{r chunk_06}
+# Don't bother comparing them, this is a bad graph
+pizza_barstool |>
+  select(place = name,
+         barstool_total = review_stats_all_count,
+         barstool_average = review_stats_all_average_score) |>
+  inner_join(by_place, by = "place") |>
+  group_by(place) |>
+  filter(n() == 1) |>
+  ungroup() |>
+  filter(barstool_total >= 5,
+         total >= 5) |>
+  ggplot(aes(average, barstool_average)) +
+  geom_point() +
+  labs(x = "Meetup",
+       y = "Barstool")
+```
+```{r chunk_07}
+pizza_barstool |>
+  top_n(50, review_stats_all_count) |>
+  ggplot(aes(price_level, review_stats_all_average_score, group = price_level)) +
+  geom_boxplot()
+
+pizza_barstool |>
+  filter(review_stats_all_count >= 50) |>
+  mutate(name = fct_reorder(name, review_stats_all_average_score)) |>
+  ggplot(aes(review_stats_all_average_score, name, size = review_stats_all_count)) +
+  geom_point() +
+  labs(x = "Average rating",
+       y = "",
+       size = "# of reviews",
+       title = "Barstool Sports ratings of pizza places",
+       subtitle = "Only places with at least 50 reviews")
+```
+```{r chunk_08}
+pizza_barstool |>
+  filter(review_stats_all_count >= 20) |>
+  mutate(city = fct_lump(city, 3)) |>
+  add_count(city) |>
+  mutate(city = glue::glue("{ city } ({ n })")) |>
+  ggplot(aes(city, review_stats_all_average_score)) +
+  geom_boxplot() +
+  labs(title = "Do pizza ratings differ across cities?",
+       subtitle = "Only pizza places with at least 20 reviews")
+```
+```{r chunk_09}
+pizza_cleaned <- pizza_barstool |>
+  select(place = name,
+         price_level,
+         contains("review")) |>
+  rename_all(~ str_remove(., "review_stats_")) |>
+  select(-contains("provider"))
+
+pizza_cleaned |>
+  filter(critic_count > 0) |>
+  ggplot(aes(critic_average_score, dave_average_score)) +
+  geom_point() +
+  geom_abline(color = "red") +
+  geom_smooth(method = "lm") +
+  labs(title = "Does Barstool Sports' Dave agree with the critics?",
+       x = "Critic average score",
+       y = "Dave score")
+```
+```{r chunk_10}
+pizza_cleaned |>
+  filter(community_count >= 20) |>
+  ggplot(aes(community_average_score, dave_average_score)) +
+  geom_point(aes(size = community_count)) +
+  geom_abline(color = "red") +
+  geom_smooth(method = "lm") +
+  labs(size = "# of community reviews",
+       x = "Community score",
+       y = "Dave score")
+```
+
+---
+
+**→ [Hour 2: Modeling](h2_modeling_pizza_ratings.qmd)**
+
+*TheDataShrink™ — thedatashrink.com.au — Weekly data stories in R*

@@ -1,0 +1,204 @@
+---
+title: "Hour 1 — EDA: Analyzing European energy in R"
+subtitle: "David Robinson's analysis, extended | TheDataShrink™"
+author: "TheDataShrink™"
+date: today
+format:
+  html:
+    theme: flatly
+    toc: true
+    toc-depth: 3
+    code-fold: show
+    code-summary: "Show code"
+    number-sections: true
+    embed-resources: true
+execute:
+  echo: true
+  warning: false
+  message: false
+  error: true
+editor: visual
+---
+
+
+::: {.callout-tip}
+## TheDataShrink™ — Data stories worth sharing.
+Episode 026 · Hour 1
+:::
+
+
+::: {.callout-note collapse="true"}
+## Atomic Concepts in this episode
+`faceted_comparison` · `fct_lump_infrequent` · `fct_reorder_stat` · `grouped_summary_ggplot` · `log_scale` · `pivot_reshape` · `reorder_within_facets` · `spline_regression` · `theme_set_global` · `tidytuesdayr_load` · `time_series_trend` · `tokenization_pipeline`
+:::
+
+::: {.callout-warning collapse="true"}
+## FAILS WHEN
+- dataset has no natural grouping variable — comparisons become meaningless
+- column names are unstable across TidyTuesday editions (re-check schema each year)
+- text is multilingual without language detection
+- irregular time intervals inflate or deflate apparent trends
+:::
+
+::: {.callout-important collapse="true"}
+## WORKS WHEN
+- dataset has clear categorical + numeric columns for grouped comparisons
+- question is exploratory — no strong prior hypothesis
+- text is long-form English and benefits from word-level decomposition
+- time dimension is regular and spans multiple periods with meaningful change
+:::
+
+```{r setup}
+library(here)
+library(scales)
+library(tidyverse)
+library(tidytext)
+library(ggflags)
+
+# TheDataShrink™ brand colours
+TDS_BLUE  <- "#1b6ca8"
+TDS_GOLD  <- "#c8a415"
+TDS_DARK  <- "#1a1a2e"
+TDS_LIGHT <- "#f8f9fa"
+theme_set(theme_light(base_size = 13))
+
+```
+## Load data
+```{r load-data}
+country_totals <- read_csv("/Users/stoiana/sa-tidy-tuesday/tidytuesday/data/2020/2020-08-04/country_totals.csv", show_col_types = FALSE)
+Electricity_generation_statistics_2019 <- read_csv("/Users/stoiana/sa-tidy-tuesday/tidytuesday/data/2020/2020-08-04/Electricity_generation_statistics_2019.xlsx", show_col_types = FALSE)
+energy_types <- read_csv("/Users/stoiana/sa-tidy-tuesday/tidytuesday/data/2020/2020-08-04/energy_types.csv", show_col_types = FALSE)
+glimpse(country_totals)
+glimpse(Electricity_generation_statistics_2019)
+```
+
+## Load the weekly Data
+```{r chunk_01}
+tt$country_totals |>
+  count(type, sort = TRUE)
+```
+
+## Total energy consumption in Europe
+```{r chunk_02}
+europe_totals <- energy_types |>
+  filter(level == "Level 1") |>
+  group_by(year, type) |>
+  summarize(total_power = sum(gigawatt_hours)) |>
+  ungroup() |>
+  mutate(type = fct_reorder(type, total_power, sum))
+
+europe_totals |>
+  ggplot(aes(year, total_power, fill = type)) +
+  geom_col() +
+  scale_y_continuous(labels = comma) +
+  labs(x = "Year",
+       y = "Total power production (gigawatt-hours)",
+       fill = "Type")
+
+europe_totals |>
+  ggplot(aes(year, total_power)) +
+  geom_col() +
+  scale_y_continuous(labels = comma) +
+  labs(x = "Year",
+       y = "Total power production (gigawatt-hours)") +
+  facet_wrap(~ type, scales = "free_y")
+```
+```{r chunk_03}
+europe_totals |>
+  filter(year == 2018) |>
+  mutate(type = fct_reorder(type, total_power, sum)) |>
+  ggplot(aes(total_power, type)) +
+  geom_col() +
+  scale_x_continuous(labels = comma) +
+  labs(x = "Total power production in 2018 in Europe (gigawatt-hours)")
+```
+```{r chunk_04}
+library(tidytext)
+# devtools::install_github("rensa/ggflags")
+
+library(ggflags)
+
+data_prepared <- energy_types |>
+  filter(level == "Level 1",
+         year == 2018,
+         gigawatt_hours > 0,
+         type != "Other") |>
+  group_by(type) |>
+  mutate(country_name = fct_lump(country_name, 10, w = gigawatt_hours),
+         country = as.character(fct_lump(country, 10, w = gigawatt_hours))) |>
+  mutate(country_name = reorder_within(country_name, gigawatt_hours, type, fun = sum),
+         type = fct_reorder(type, -gigawatt_hours, sum))
+
+data_prepared |>
+  filter(country != "Other") |>
+  mutate(country = str_to_lower(country)) |>
+  ggplot(aes(gigawatt_hours, country_name)) +
+  geom_col(width = .1) +
+  geom_flag(aes(country = country)) +
+  scale_y_reordered() +
+  facet_wrap(~ type, scales = "free") +
+  scale_x_continuous(labels = comma) +
+  scale_country(guide = FALSE) +
+  theme_minimal() +
+  theme(panel.grid.minor.x = element_blank(),
+        panel.grid.minor.y = element_blank()) +
+  labs(x = "Total power production in 2018 (gigawatt-hours)",
+       y = "")
+```
+```{r chunk_05}
+plot_slopegraph <- function(tbl) {
+  tbl |>
+    filter(gigawatt_hours > 1) |>
+    ggplot(aes(year, gigawatt_hours)) +
+    geom_line(aes(group = country)) +
+    geom_flag(aes(country = country)) +
+    geom_text(aes(label = ifelse(year == 2017, NA, country_name),
+                  hjust = ifelse(year == 2016, 1.2, -.2)),
+              check_overlap = TRUE) +
+    scale_x_continuous(breaks = c(2016, 2018),
+                       limits = c(2015, 2019)) +
+    theme(panel.grid = element_blank()) +
+    labs(x = "",
+         y = "Gigawatt hours produced in this year")
+}
+
+energy_types |>
+  filter(type == "Wind") |>
+  plot_slopegraph() +
+  scale_y_continuous(labels = comma) +
+  # scale_y_log10(labels = comma) +
+  labs(title = "Wind power production over time by country")
+
+energy_types |>
+  filter(type == "Solar") |>
+  plot_slopegraph() +
+  scale_y_continuous(labels = comma) +
+  # scale_y_log10(labels = comma) +
+  labs(title = "Solar power production over time by country")
+
+energy_types |>
+  filter(type %in% c("Solar", "Wind", "Conventional thermal", "Hydro")) |>
+  group_by(type) |>
+  filter(fct_lump(country, 10, w = gigawatt_hours) != "Other") |>
+  ungroup() |>
+  plot_slopegraph() +
+  scale_y_continuous(labels = comma) +
+  facet_wrap(~ type, scales = "free_y") +
+  # scale_y_log10(labels = comma) +
+  labs(title = "Solar power production over time by country")
+```
+```{r chunk_06}
+energy_types |>
+  filter(level == "Level 1",
+         year == 2018,
+         gigawatt_hours > 0) |>
+  ggplot(aes(type, gigawatt_hours)) +
+  geom_point() +
+  geom_flag(aes(country = country))
+```
+
+---
+
+**→ [Hour 2: Modeling](h2_modeling_european_energy.qmd)**
+
+*TheDataShrink™ — thedatashrink.com.au — Weekly data stories in R*

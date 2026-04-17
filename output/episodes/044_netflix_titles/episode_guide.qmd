@@ -19,7 +19,7 @@ execute:
 - `ker_status`: `extracted`
 - `reproduction_status`: `needs_external_sources`
 - `transcript_file`: `raw-data/inspiration/Analyzing Netflix titles in R.txt`
-- `code_file`: `data-screencasts/2021_04_20_netflix_titles.Rmd`
+- `code_file`: `data-screencasts-dgrtwo/2021_04_20_netflix_titles.Rmd`
 - `data_source`: TidyTuesday 2021-04-20 dataset
 - `analysis_type`: `Predictive`
 - `pattern_signature`: `load_inspect_reshape_join_tokenize_trend_model_evaluate_visualize`

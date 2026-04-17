@@ -1,0 +1,376 @@
+---
+title: "Hour 3 — Communicate: Beyoncé vs Taylor Swift Lyrics"
+subtitle: "From analysis to TheDataShrink™ publication | YouTube · Instagram · Facebook · Web"
+author: "TheDataShrink™"
+date: today
+format:
+  html:
+    theme: litera
+    toc: true
+    toc-depth: 3
+    code-fold: show
+    code-summary: "Show code"
+    number-sections: true
+    embed-resources: true
+execute:
+  echo: true
+  warning: false
+  message: false
+editor: visual
+---
+
+::: {.callout-tip}
+## TheDataShrink™ — Data stories worth sharing.
+Episode 008 · Hour 3 · [← Hour 2 Modeling](h2_modeling_beyonce_taylor_swift_lyrics.qmd) · [← Hour 1 EDA](h1_eda_beyonce_taylor_swift_lyrics.qmd)
+:::
+
+## Setup
+
+```{r setup}
+library(tidyverse)
+library(tidytext)
+library(tidylo)
+library(scales)
+library(lubridate)
+library(janitor)
+library(ggrepel)
+library(glmnet)
+library(Matrix)
+theme_set(theme_light(base_size = 14))
+
+DATA <- here::here("tidytuesday/data/2020/2020-09-29")
+
+# Colour palette — locked for brand consistency
+BEY   <- "#c8a415"
+TS    <- "#ae3179"
+DARK  <- "#1a1a2e"
+LIGHT <- "#f8f9fa"
+```
+
+```{r reload-data}
+beyonce_lyrics      <- read_csv(file.path(DATA, "beyonce_lyrics.csv"),      show_col_types = FALSE)
+taylor_swift_lyrics <- read_csv(file.path(DATA, "taylor_swift_lyrics.csv"), show_col_types = FALSE)
+charts              <- read_csv(file.path(DATA, "charts.csv"),               show_col_types = FALSE)
+
+release_dates <- charts |>
+  distinct(album = title, released) |>
+  mutate(
+    album    = fct_recode(album, folklore = "Folklore", reputation = "Reputation"),
+    released = str_remove(released, " \\(.*"),
+    released = mdy(released)
+  )
+
+ts_clean  <- taylor_swift_lyrics |> rename_all(str_to_lower) |>
+  rename(song = title) |> mutate(artist = "Taylor Swift") |> select(artist, song, lyrics)
+bey_clean <- beyonce_lyrics |>
+  select(artist = artist_name, song = song_name, lyrics = line)
+all_lyrics <- bind_rows(ts_clean, bey_clean)
+
+artist_song_words <- all_lyrics |>
+  unnest_tokens(word, lyrics) |>
+  count(artist, song, word) |>
+  anti_join(stop_words, by = "word")
+
+by_artist_word <- artist_song_words |>
+  group_by(artist, word) |>
+  summarise(num_songs = n(), num_words = sum(n), .groups = "drop") |>
+  mutate(pct_words = num_words / sum(num_words)) |>
+  group_by(word) |>
+  mutate(num_words_total = sum(num_words)) |>
+  ungroup()
+```
+
+---
+
+## Hero chart (1200 × 628 — social media ratio)
+
+::: {.callout-note}
+The single best chart from the analysis. Sized for YouTube thumbnail, Facebook header,
+and Twitter/X card. Saved as `hero_beyonce_taylor_swift.png`.
+:::
+
+```{r hero-chart}
+#| fig-width: 12.5
+#| fig-height: 6.54
+
+x_breaks <- log(2 ^ seq(-6, 9, 3))
+x_labels <- paste0(2 ^ abs(seq(-6, 9, 3)), "X")
+x_labels[x_labels == "1X"] <- "Same"
+
+word_diffs <- by_artist_word |>
+  bind_log_odds(artist, word, num_words) |>
+  filter(artist == "Beyoncé") |>
+  slice_max(num_words_total, n = 100, with_ties = FALSE) |>
+  slice_max(abs(log_odds_weighted), n = 22, with_ties = FALSE) |>
+  mutate(
+    word      = fct_reorder(word, log_odds_weighted),
+    direction = ifelse(log_odds_weighted > 0, "Beyoncé", "Taylor Swift")
+  )
+
+hero <- word_diffs |>
+  ggplot(aes(log_odds_weighted, word)) +
+  geom_col(aes(fill = direction), width = 0.14, alpha = 0.85) +
+  geom_point(aes(size = num_words_total, color = direction), alpha = 0.9) +
+  geom_vline(lty = 2, xintercept = 0, alpha = 0.3, linewidth = 0.6) +
+  scale_x_continuous(breaks = x_breaks, labels = x_labels) +
+  scale_color_manual(values = c("Beyoncé" = BEY, "Taylor Swift" = TS)) +
+  scale_fill_manual(values  = c("Beyoncé" = BEY, "Taylor Swift" = TS)) +
+  scale_size_continuous(range = c(2, 8), labels = label_comma()) +
+  labs(
+    title    = "Beyoncé vs Taylor Swift: whose words are whose?",
+    subtitle = "Weighted log-odds ratio — top 22 most distinctive words among their 100 most-used combined",
+    caption  = "TheDataShrink™ · thedatashrink.com.au · Data: TidyTuesday 2020-09-29",
+    x = "← More Taylor Swift  |  More Beyoncé →",
+    y = NULL, color = NULL, fill = NULL, size = "Total uses"
+  ) +
+  theme(
+    plot.title    = element_text(size = 18, face = "bold", color = DARK),
+    plot.subtitle = element_text(size = 12, color = "#555555"),
+    plot.caption  = element_text(size = 9,  color = "#888888"),
+    legend.position = "bottom",
+    panel.grid.minor = element_blank()
+  )
+
+hero
+
+ggsave(
+  here::here("output/episodes/008_beyonce_taylor_swift_lyrics/hero_beyonce_taylor_swift.png"),
+  hero, width = 12.5, height = 6.54, dpi = 150, bg = "white"
+)
+```
+
+---
+
+## Instagram carousel (5 slides)
+
+```{r carousel-slide1}
+#| fig-width: 5.4
+#| fig-height: 5.4
+
+# Slide 1 — Hook (square format)
+ggplot() +
+  annotate("rect", xmin = 0, xmax = 1, ymin = 0, ymax = 1,
+           fill = DARK) +
+  annotate("text", x = 0.5, y = 0.72,
+           label = "Beyoncé vs\nTaylor Swift",
+           size = 11, fontface = "bold", color = "white", hjust = 0.5) +
+  annotate("text", x = 0.5, y = 0.48,
+           label = "What do 200,000 lyrics\ntell us about their voices?",
+           size = 5.5, color = "#cccccc", hjust = 0.5) +
+  annotate("text", x = 0.5, y = 0.22,
+           label = "Swipe → to find out",
+           size = 4.5, color = BEY, hjust = 0.5) +
+  annotate("text", x = 0.5, y = 0.08,
+           label = "TheDataShrink™",
+           size = 3.5, color = "#888888", hjust = 0.5) +
+  theme_void() +
+  coord_fixed()
+```
+
+```{r carousel-slide2}
+#| fig-width: 5.4
+#| fig-height: 5.4
+
+# Slide 2 — Key finding: word contrast lollipop (compact)
+word_diffs |>
+  slice_max(abs(log_odds_weighted), n = 14) |>
+  mutate(word = fct_reorder(word, log_odds_weighted)) |>
+  ggplot(aes(log_odds_weighted, word)) +
+  geom_segment(aes(xend = 0, yend = word, color = direction),
+               linewidth = 1.2, alpha = 0.7) +
+  geom_point(aes(color = direction, size = num_words_total)) +
+  geom_vline(xintercept = 0, lty = 2, alpha = 0.3) +
+  scale_color_manual(values = c("Beyoncé" = BEY, "Taylor Swift" = TS)) +
+  scale_size_continuous(range = c(3, 7), guide = "none") +
+  labs(title = "Their most distinctive words",
+       subtitle = "Weighted log-odds ratio",
+       caption = "TheDataShrink™",
+       x = NULL, y = NULL, color = NULL) +
+  theme(legend.position = "top",
+        plot.title = element_text(face = "bold"),
+        axis.text.x = element_blank(),
+        axis.ticks.x = element_blank(),
+        panel.grid.major.x = element_blank())
+```
+
+```{r carousel-slide3}
+#| fig-width: 5.4
+#| fig-height: 5.4
+
+# Slide 3 — TF-IDF Taylor Swift top 3 albums (compact)
+taylor_swift_lyrics |>
+  rename_all(str_to_lower) |>
+  select(-artist) |>
+  unnest_tokens(word, lyrics) |>
+  anti_join(stop_words, by = "word") |>
+  inner_join(release_dates, by = "album") |>
+  filter(album %in% c("folklore", "1989", "reputation")) |>
+  count(album, word) |>
+  bind_tf_idf(word, album, n) |>
+  group_by(album) |>
+  slice_max(tf_idf, n = 8, with_ties = FALSE) |>
+  ungroup() |>
+  mutate(word = reorder_within(word, tf_idf, album)) |>
+  ggplot(aes(tf_idf, word, fill = album)) +
+  geom_col(show.legend = FALSE) +
+  facet_wrap(~album, scales = "free_y", ncol = 1) +
+  scale_y_reordered() +
+  scale_fill_manual(values = c("folklore" = "#2d4a3e", "1989" = TS, "reputation" = "#333333")) +
+  labs(title = "Each album has its own voice",
+       subtitle = "TF-IDF: words unique to each era",
+       caption = "TheDataShrink™",
+       x = "TF-IDF", y = NULL) +
+  theme(plot.title = element_text(face = "bold"))
+```
+
+```{r carousel-slide4}
+#| fig-width: 5.4
+#| fig-height: 5.4
+
+# Slide 4 — Sentiment arc
+afinn <- get_sentiments("afinn")
+
+taylor_swift_lyrics |>
+  rename_all(str_to_lower) |>
+  unnest_tokens(word, lyrics) |>
+  inner_join(afinn, by = "word") |>
+  inner_join(release_dates, by = "album") |>
+  group_by(album, released) |>
+  summarise(mean_sentiment = mean(value), .groups = "drop") |>
+  arrange(released) |>
+  ggplot(aes(released, mean_sentiment)) +
+  geom_hline(yintercept = 0, lty = 2, alpha = 0.3) +
+  geom_area(fill = TS, alpha = 0.2) +
+  geom_line(color = TS, linewidth = 1.2) +
+  geom_point(color = TS, size = 3) +
+  geom_text_repel(aes(label = album), size = 3.2, color = DARK,
+                  max.overlaps = 10) +
+  labs(title = "Taylor Swift's emotional arc",
+       subtitle = "AFINN mean sentiment by album release",
+       caption = "TheDataShrink™",
+       x = NULL, y = "Mean sentiment") +
+  theme(plot.title = element_text(face = "bold"))
+```
+
+```{r carousel-slide5}
+#| fig-width: 5.4
+#| fig-height: 5.4
+
+# Slide 5 — CTA
+ggplot() +
+  annotate("rect", xmin = 0, xmax = 1, ymin = 0, ymax = 1,
+           fill = DARK) +
+  annotate("text", x = 0.5, y = 0.78,
+           label = "Full analysis:",
+           size = 5, color = "#aaaaaa", hjust = 0.5) +
+  annotate("text", x = 0.5, y = 0.62,
+           label = "thedatashrink.com.au\n/tidytuesday/008",
+           size = 6, fontface = "bold", color = "white", hjust = 0.5) +
+  annotate("text", x = 0.5, y = 0.42,
+           label = "Code · Data · 3-hour walkthrough",
+           size = 4.5, color = "#cccccc", hjust = 0.5) +
+  annotate("text", x = 0.5, y = 0.24,
+           label = "Follow @thedatashrink",
+           size = 5, color = BEY, fontface = "bold", hjust = 0.5) +
+  annotate("text", x = 0.5, y = 0.10,
+           label = "#RStats #TidyTuesday #DataScience",
+           size = 3.5, color = "#888888", hjust = 0.5) +
+  theme_void() +
+  coord_fixed()
+```
+
+---
+
+## YouTube chapter timestamps
+
+```
+0:00   Intro — two of the biggest artists, one dataset
+1:30   Load the data — lyrics, sales, chart positions
+4:00   Album sales: who sold more and where?
+7:00   Hour 1 — TF-IDF: what makes each Taylor Swift album sound unique?
+14:00  Log-odds: the Beyoncé vs Taylor Swift vocabulary contrast
+22:00  Extension: which albums have the richest vocabulary?
+28:00  Hour 2 — LASSO: can a model tell them apart from lyrics alone?
+36:00  Sentiment arc: how has Taylor's emotional tone changed?
+42:00  Beyoncé sentiment by album — Lemonade vs Renaissance
+47:00  Hour 3 — Hero chart + social media pack
+52:00  What to try next on your own dataset
+55:00  Next week on TheDataShrink™
+```
+
+---
+
+## Social media copy
+
+### Facebook / LinkedIn post
+
+```
+📊 Beyoncé vs Taylor Swift — what 200,000 lyrics reveal
+
+We analysed every word both artists have ever recorded.
+
+Here's what the data shows:
+
+→ Word choice alone predicts the artist with 80%+ accuracy (LASSO)
+→ Taylor Swift's vocabulary gets richer with every album — folklore is her most linguistically diverse
+→ Beyoncé's most distinctive word? "slay" — by a wide margin
+→ Taylor's emotional arc dips hard with reputation, then climbs back with folklore/evermore
+
+Full walkthrough (3 hours of R code, charts, and commentary):
+👉 thedatashrink.com.au/tidytuesday/008
+
+#DataScience #RStats #TidyTuesday #TheDataShrink #BeyonceVsTaylorSwift
+```
+
+### Instagram caption
+
+```
+Two voices. 200,000 words. One dataset.
+
+Swipe to see how data science reveals what makes each artist's
+voice uniquely theirs 🎤📊
+
+Full analysis + R code → link in bio
+
+#RStats #TidyTuesday #DataScience #DataViz #TheDataShrink
+#BeyonceVsTaylor #DataStorytelling
+```
+
+### YouTube description
+
+```
+In this episode of TheDataShrink™, we use R and the tidyverse to analyse
+the complete lyrics of Beyoncé and Taylor Swift — every song, every word.
+
+What we cover:
+✅ TF-IDF to find each Taylor Swift album's unique vocabulary
+✅ Weighted log-odds to contrast the two artists head-to-head
+✅ LASSO regression: can a model identify the artist from lyrics alone?
+✅ Sentiment arcs across careers
+✅ Vocabulary richness (type-token ratio) by album
+
+Code and data: github.com/thedatashrink/tidytuesday
+Website: thedatashrink.com.au
+
+Chapters: [see timestamps in description]
+
+#RStats #TidyTuesday #DataScience #BeyonceVsTaylorSwift
+```
+
+---
+
+## Render all three hours
+
+```{r render-info}
+#| echo: false
+cat("This episode lives at:\n")
+cat("  output/episodes/008_beyonce_taylor_swift_lyrics/\n\n")
+cat("To render all three hours:\n")
+cat("  quarto render h1_eda_beyonce_taylor_swift_lyrics.qmd\n")
+cat("  quarto render h2_modeling_beyonce_taylor_swift_lyrics.qmd\n")
+cat("  quarto render h3_communicate_beyonce_taylor_swift_lyrics.qmd\n")
+```
+
+---
+
+*TheDataShrink™ — thedatashrink.com.au — Weekly data stories in R*

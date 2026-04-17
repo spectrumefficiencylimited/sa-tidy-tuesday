@@ -1,0 +1,204 @@
+---
+title: "Hour 1 — EDA: Analyzing volcano eruptions in R"
+subtitle: "David Robinson's analysis, extended | TheDataShrink™"
+author: "TheDataShrink™"
+date: today
+format:
+  html:
+    theme: flatly
+    toc: true
+    toc-depth: 3
+    code-fold: show
+    code-summary: "Show code"
+    number-sections: true
+    embed-resources: true
+execute:
+  echo: true
+  warning: false
+  message: false
+  error: true
+editor: visual
+---
+
+
+::: {.callout-tip}
+## TheDataShrink™ — Data stories worth sharing.
+Episode 075 · Hour 1
+:::
+
+
+::: {.callout-note collapse="true"}
+## Atomic Concepts in this episode
+`animated_transitions` · `fct_lump_infrequent` · `geom_histogram_density` · `glue_strings` · `grouped_summary_ggplot` · `log_scale` · `pivot_reshape` · `purrr_map_iterate` · `spline_regression` · `str_detect_filter` · `theme_set_global` · `tidytuesdayr_load`
+:::
+
+::: {.callout-warning collapse="true"}
+## FAILS WHEN
+- dataset has no natural grouping variable — comparisons become meaningless
+- column names are unstable across TidyTuesday editions (re-check schema each year)
+- irregular time intervals inflate or deflate apparent trends
+:::
+
+::: {.callout-important collapse="true"}
+## WORKS WHEN
+- dataset has clear categorical + numeric columns for grouped comparisons
+- question is exploratory — no strong prior hypothesis
+- time dimension is regular and spans multiple periods with meaningful change
+:::
+
+```{r setup}
+library(here)
+library(scales)
+library(tidyverse)
+library(ggthemes)
+library(leaflet)
+library(glue)
+library(htmlwidgets)
+library(DT)
+library(gganimate)
+
+# TheDataShrink™ brand colours
+TDS_BLUE  <- "#1b6ca8"
+TDS_GOLD  <- "#c8a415"
+TDS_DARK  <- "#1a1a2e"
+TDS_LIGHT <- "#f8f9fa"
+theme_set(theme_light(base_size = 13))
+
+```
+## Load data
+```{r load-data}
+eruptions <- read_csv("/Users/stoiana/sa-tidy-tuesday/tidytuesday/data/2020/2020-05-12/eruptions.csv", show_col_types = FALSE)
+events <- read_csv("/Users/stoiana/sa-tidy-tuesday/tidytuesday/data/2020/2020-05-12/events.csv", show_col_types = FALSE)
+sulfur <- read_csv("/Users/stoiana/sa-tidy-tuesday/tidytuesday/data/2020/2020-05-12/sulfur.csv", show_col_types = FALSE)
+tree_rings <- read_csv("/Users/stoiana/sa-tidy-tuesday/tidytuesday/data/2020/2020-05-12/tree_rings.csv", show_col_types = FALSE)
+volcano <- read_csv("/Users/stoiana/sa-tidy-tuesday/tidytuesday/data/2020/2020-05-12/volcano.csv", show_col_types = FALSE)
+glimpse(eruptions)
+glimpse(events)
+```
+
+## Explore
+```{r chunk_02}
+volcano <- volcano |>
+  mutate(last_eruption_year = as.numeric(last_eruption_year))
+
+eruptions <- eruptions
+```
+```{r chunk_03}
+volcano |>
+  count(evidence_category, sort = TRUE)
+
+volcano |>
+  mutate(years_ago = 2020 - last_eruption_year) |>
+  ggplot(aes(years_ago + 1, fill = evidence_category)) +
+  geom_histogram() +
+  scale_x_log10()
+```
+```{r chunk_04}
+volcano |>
+  count(region, sort = TRUE)
+
+volcano |>
+  count(primary_volcano_type, sort = TRUE)
+```
+```{r chunk_05}
+library(ggthemes)
+
+volcano |>
+  mutate(primary_volcano_type = str_remove(primary_volcano_type, "\\(.*\\)"),
+         primary_volcano_type = fct_lump(primary_volcano_type, 6)) |>
+  ggplot(aes(longitude, latitude)) +
+  borders() +
+  geom_point(aes(color = primary_volcano_type), size = .5) +
+  theme_map() +
+  labs(title = "Volcanoes of the World",
+       color = "Type")
+```
+```{r chunk_06}
+library(leaflet)
+library(glue)
+library(htmlwidgets)
+library(DT)
+
+template <- "<>{ volcano_name }</p><p>{ primary_volcano_type }</p>"
+
+volcano |>
+  mutate(transformed_pop = log2(population_within_5_km + 1),
+         pop_color = colorNumeric(c("blue", "red"), transformed_pop)(transformed_pop)) |>
+  gather(key, value,
+         volcano_name, primary_volcano_type, last_eruption_year,
+         country,
+         tectonic_settings,
+         population_within_5_km) |>
+  mutate(key = str_to_title(str_replace_all(key, "_", " ")),
+         key = paste0("<b>", key, "</b>")) |>
+  replace_na(list(value = "Unknown")) |>
+  nest(data = c(key, value)) |>
+  mutate(html = map(data,
+                    knitr::kable,
+                    format = "html",
+                    escape = FALSE,
+                    col.names = c("", ""))) |>
+  leaflet() |>
+  addTiles() |>
+  addCircleMarkers(lat = ~ latitude,
+                   lng = ~ longitude,
+                   color = ~ pop_color,
+                   popup = ~ html,
+                   radius = 1) |>
+  addMeasure()
+```
+```{r chunk_07}
+volcano |>
+  ggplot(aes(population_within_5_km)) +
+  geom_histogram() +
+  scale_x_log10()
+```
+```{r chunk_08}
+library(gganimate)
+
+eruptions |>
+  ggplot(aes(2020 - start_year)) +
+  geom_histogram() +
+  scale_x_log10()
+
+eruptions |>
+  filter(start_year >= 1900,
+         eruption_category != "Discredited Eruption")
+  ggplot(aes(2020 - start_year)) +
+  geom_histogram() +
+  scale_x_log10()
+```
+```{r chunk_09}
+library(gganimate)
+
+anim_graph <- eruptions |>
+  filter(start_year >= 1900) |>
+  mutate(volume = .00001 * 10 ^ vei) |>
+  ggplot(aes(longitude, latitude)) +
+  borders() +
+  geom_point(aes(size = volume,
+                 color = volume)) +
+  theme_map() +
+  scale_color_gradient2(low = "blue", high = "red",
+                        midpoint = log10(.01),
+                        trans = "log10",
+                        guide = FALSE) +
+  scale_size_continuous(range = c(1, 6)) +
+  # transition_reveal(start_year) +
+  transition_time(start_year) +
+  labs(title = "Eruptions: Year { round(frame_time) }") +
+  theme(legend.position = "none")
+
+animate(anim_graph, 150, fps = 4)
+
+anim_save("eruptions.gif")
+```
+```{r chunk_10}
+eruptions
+```
+
+---
+
+**→ [Hour 2: Modeling](h2_modeling_volcano_eruptions.qmd)**
+
+*TheDataShrink™ — thedatashrink.com.au — Weekly data stories in R*
