@@ -1,0 +1,25 @@
+# TidyTuesday data (large - get from original repo)
+tidytuesday/data/
+
+# Raw data
+raw-data/
+
+# R
+.Rhistory
+.RData
+.Rproj.user/
+*.Rproj
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+
+# Quarto output artifacts
+*_files/
+.quarto/
+Rplots.pdf
+
+# OS
+.DS_Store
+Thumbs.db
