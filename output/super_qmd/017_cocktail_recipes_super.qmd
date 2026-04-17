@@ -1,0 +1,308 @@
+---
+title: "Super QMD: Analyzing cocktail recipes in R"
+subtitle: "Cognition-first blueprint built from the episode guide and KER"
+format:
+  html:
+    theme: flatly
+    toc: true
+    toc-depth: 3
+    code-fold: show
+    code-summary: "Show scaffold code"
+    number-sections: true
+execute:
+  echo: true
+  warning: false
+  message: false
+editor: visual
+---
+
+## What This Document Is
+
+This super QMD is the bridge between:
+
+- the reproduction artifact in `output/episodes/017_cocktail_recipes/episode_guide.qmd`
+- the KER entry for `cocktail_recipes`
+- a final guided analysis document like `bechdel_ker_guided_analysis.qmd`
+
+The point is to preserve not only the code path, but the author's cognition:
+
+- what question gets asked first
+- how the dataset is inspected
+- when transformation happens
+- why one comparison is chosen before another
+- which pieces should become reusable helpers
+
+## Episode Snapshot
+
+- `queue_position`: `17`
+- `function_name`: `cocktail_recipes`
+- `analysis_type`: `EDA`
+- `pattern_signature`: `load_inspect_tokenize_compare_visualize`
+- `data_source`: TidyTuesday 2020-05-26 dataset
+- `reproduction_status`: `ready_local`
+
+::: {.callout-note}
+## Analysis Intent
+Explore and compare language patterns in cocktail recipes using tokenization, grouped counts, and discriminative text analysis
+:::
+
+
+
+## Transcript Preview
+
+Analyzing cocktail recipes in R David Robinson 15.9k subscribers 155 Share Save Clip 4,790 views Streamed live on 27 May 2020 Tidy Tuesday R Screencasts I'll analyze a dataset on cocktail recipes in R, without looking at the dataset in advance. The dataset comes from the Tidy Tuesday project: https://github.com/rfordatascience/ti... Introduction 0:04 hi I'm Dave Robinson and welcome to another one of my screencast well be 0:10 using our to analyze data I've never seen before as usual the data comes from the tie 0:1...
+
+## Cognitive Signature
+
+- Start by naming the question and the unit of analysis before choosing plots or metrics.
+- Use schema inspection to decide which table carries the main story and which tables are support tables.
+- Lock the grouping variable first, then tokenize text and compare language only after the corpus structure is clear.
+- End with one communication-ready chart or table that carries the episode's main claim.
+
+## Data and Execution Context
+
+### Local Assets
+
+- `tidytuesday/data/2020/2020-05-26/all_drinks.csv`
+- `tidytuesday/data/2020/2020-05-26/boston_cocktails.csv`
+- `tidytuesday/data/2020/2020-05-26/cocktails.csv`
+- `tidytuesday/data/2020/2020-05-26/mr-boston-flattened.csv`
+
+### Execution Notes
+
+- local TidyTuesday files were matched, so you can use `load_tidyweek_data()` and avoid a GitHub PAT
+
+### External Dependencies
+
+- No external dependencies were captured.
+
+## Setup Scaffold
+
+```{r}
+#| label: setup
+#| eval: false
+
+library(tidyverse)
+source("R/screencast_helpers.R")
+
+# Optional episode packages:
+# library(ggraph)
+# library(ggrepel)
+# library(igraph)
+# library(scales)
+# library(tidytext)
+# library(tidytuesdayR)
+# library(widyr)
+
+tuesdata <- load_tidyweek_data("2020-05-26")
+names(tuesdata)
+mr_boston <- tuesdata$boston_cocktails
+```
+
+## Thought -> Code -> Data Bridge
+
+### Thought Process Map
+
+- `T1 | Context | Frame the episode as exploratory analysis of cocktail recipes with limited advance knowledge of the data. | Transcript title and opening context`
+- `T2 | Inspect | Load the data, inspect table shape, and identify the main entities, measures, and comparison axes. | Initial data load and early counts or prints`
+- `T5 | Compare | Tokenize text, remove noise terms, and compare vocabulary across groups or documents. | tidytext workflow in the episode`
+- `T6 | Compare | Summarize group differences, rates, rankings, or trajectories to surface the main story in the data. | Grouped summaries and comparative plots`
+- `T7 | Visualize | Turn the cleaned summaries into interpretable visual comparisons and iterate toward the clearest view. | ggplot workflow`
+- `T8 | Reflect | Identify reusable workflow pieces that can transfer to future datasets with a similar shape or question. | End-state of the analysis pattern`
+
+### Code Mapping Table
+
+- `T1 | Data load and inspection | tt_load, count | Establish source shape, units, and comparison candidates`
+- `T5 | Text comparison | episode-specific dplyr and ggplot verbs | Identify terms that distinguish groups or documents`
+- `T6 | Group comparison | group_by, summarize, count, mutate | Compare categories, time periods, or entities`
+- `T7 | Visualization | ggplot, geom_col, geom_point, facet_wrap | Communicate the core result visually`
+
+### Data Transformation Flow
+
+- `Raw | Imported source tables or files | Load source data into tibbles or lists | Raw episode objects | Establish the starting analysis surface`
+- `Raw -> Clean | Raw source tables | Filter, rename, and derive analysis columns | Cleaned table | Make the data comparable and plot-ready`
+- `Clean -> Analytical | Clean text corpus | Tokenize text, remove stop words, and count terms by group | Term-frequency comparison tables | Surface language differences and signatures`
+- `Analytical -> Visual | Summary or model outputs | Reorder factors and prepare plotting fields | Plot-ready table | Turn the analytical result into an interpretable chart`
+
+## Guided Build Sequence
+
+## Stage 1: Context
+
+Frame the episode as exploratory analysis of cocktail recipes with limited advance knowledge of the data.
+
+::: {.callout-note}
+## Cognitive Move
+Define the analytical question, likely unit of analysis, and what would count as an interesting result.
+
+Trigger:
+
+- Transcript title and opening context
+
+
+:::
+
+```{r}
+#| label: stage_01_context
+#| eval: false
+
+# Write the one-sentence analytical question for this episode.
+# Topic: cocktail recipes
+# Unit of analysis:
+# Main comparison axis:
+# What would make the result interesting?
+```
+## Stage 2: Inspect
+
+Load the data, inspect table shape, and identify the main entities, measures, and comparison axes.
+
+::: {.callout-note}
+## Cognitive Move
+Inspect shape, columns, missingness, and table roles before committing to transformations.
+
+Trigger:
+
+- Initial data load and early counts or prints
+
+
+:::
+
+```{r}
+#| label: stage_02_inspect
+#| eval: false
+
+# Start here once data is loaded.
+# names(tuesdata)
+# purrr::imap_dfr(tuesdata, ~ tibble(table = .y, rows = nrow(.x), cols = ncol(.x)))
+# glimpse(analysis_tbl)
+```
+## Stage 3: Compare
+
+Tokenize text, remove noise terms, and compare vocabulary across groups or documents.
+
+::: {.callout-note}
+## Cognitive Move
+Summarize groups or entities in a way that reveals differences, rankings, or trends without overfitting the story.
+
+Trigger:
+
+- tidytext workflow in the episode
+
+Additional guidance:
+
+- For text work, compare grouped term patterns only after you know what counts as a document and a group.
+:::
+
+```{r}
+#| label: stage_03_compare
+#| eval: false
+
+# Summarize the comparison that best answers the question.
+# comparison_tbl <- analysis_tbl %>%
+#   group_by(...) %>%
+#   summarise(...) %>%
+#   arrange(desc(...))
+```
+## Stage 4: Compare
+
+Summarize group differences, rates, rankings, or trajectories to surface the main story in the data.
+
+::: {.callout-note}
+## Cognitive Move
+Summarize groups or entities in a way that reveals differences, rankings, or trends without overfitting the story.
+
+Trigger:
+
+- Grouped summaries and comparative plots
+
+Additional guidance:
+
+- For text work, compare grouped term patterns only after you know what counts as a document and a group.
+:::
+
+```{r}
+#| label: stage_04_compare
+#| eval: false
+
+# Summarize the comparison that best answers the question.
+# comparison_tbl <- analysis_tbl %>%
+#   group_by(...) %>%
+#   summarise(...) %>%
+#   arrange(desc(...))
+```
+## Stage 5: Visualize
+
+Turn the cleaned summaries into interpretable visual comparisons and iterate toward the clearest view.
+
+::: {.callout-note}
+## Cognitive Move
+Choose the plot after the summary table exists, then optimize for clarity rather than novelty.
+
+Trigger:
+
+- ggplot workflow
+
+
+:::
+
+```{r}
+#| label: stage_05_visualize
+#| eval: false
+
+# Turn the comparison table into one clear communication plot.
+# ggplot(comparison_tbl, aes(...)) +
+#   geom_col() +
+#   labs(title = ..., subtitle = ...)
+```
+## Stage 6: Reflect
+
+Identify reusable workflow pieces that can transfer to future datasets with a similar shape or question.
+
+::: {.callout-note}
+## Cognitive Move
+Translate the episode-specific move into a reusable function, helper, or workflow note.
+
+Trigger:
+
+- End-state of the analysis pattern
+
+
+:::
+
+```{r}
+#| label: stage_06_reflect
+#| eval: false
+
+# Capture the reusable move after the analysis is clear.
+# Candidate helper:
+# - input:
+# - output:
+# - why it is reusable:
+```
+
+## Reusable Layer
+
+### Reusable Patterns
+
+- `inspect_source_schema | Inspect source tables, field meanings, and likely comparison axes | Raw dataset or dataset list | Initial analysis plan | Y`
+- `compare_group_vocabulary | Tokenize text and compute grouped term distinctiveness | Text, grouping variable, document or entity ids | Ranked term comparison tables | Y`
+- `plot_comparative_story | Reorder entities and visualize the main comparison cleanly | Summary table or model output | Communication-ready plot | Y`
+
+### Function Candidates
+
+- `prepare_text_tokens(data, text_column)`
+- `compare_group_vocabulary(data, group_col, term_col, count_col = 'n')`
+- `plot_comparative_story(data, x_col, y_col, group_col = NULL)`
+
+## How To Finish This Super QMD
+
+1. Replace each scaffold chunk with the real episode-specific analysis code.
+2. After each major result, add a short callout explaining what changed in your thinking.
+3. Keep one broad chart early, one comparison chart in the middle, and one final communication chart at the end.
+4. Move any repeated transformation or comparison logic into `R/screencast_helpers.R`.
+5. Once the document reads like a guided walkthrough instead of a reproduction note, promote it into a finished KER-guided analysis.
+
+## Adaptation Layer
+
+- `1 | inspect_source_schema | Start by mapping entities, measures, and likely comparison axes before transforming anything`
+- `5 | compare_group_vocabulary | Tokenize the new corpus and compare terms across groups or documents`
+- `8 | plot_comparative_story | Choose the clearest visual comparison once the analytical table is ready`

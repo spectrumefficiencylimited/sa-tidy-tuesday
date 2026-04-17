@@ -1,0 +1,63 @@
+{
+  "queue_position": 2,
+  "folder_name": "002_african_american_history",
+  "transcript_title": "Analyzing African-American history in R",
+  "function_name": "african_american_history",
+  "ker_status": "extracted",
+  "reproduction_status": "ready_local",
+  "source_files": {
+    "transcript_file": "raw-data/inspiration/Analyzing African-American history in R.txt",
+    "code_file": "data-screencasts/african-american-history.Rmd"
+  },
+  "source_exists": {
+    "transcript": true,
+    "code": true
+  },
+  "data_source": "TidyTuesday 2020-06-16 dataset",
+  "analysis_intent": "Explore and compare language patterns in African-American history using tokenization, grouped counts, and discriminative text analysis",
+  "analysis_type": "EDA",
+  "pattern_signature": "load_inspect_reshape_tokenize_trend_compare_visualize",
+  "required_packages": [
+    "ggraph",
+    "ggwordcloud",
+    "grid",
+    "scales",
+    "tidytext",
+    "tidytuesdayR",
+    "tidyverse"
+  ],
+  "features": {
+    "ggplot": true,
+    "joins": false,
+    "reshape": true,
+    "text_analysis": true,
+    "modeling": false,
+    "predictive": false,
+    "scraping": false,
+    "maps": false,
+    "time": true,
+    "simulation": false,
+    "multi_table": false
+  },
+  "local_data_files": [
+    "tidytuesday/data/2020/2020-06-16/african_names.csv",
+    "tidytuesday/data/2020/2020-06-16/blackpast.csv",
+    "tidytuesday/data/2020/2020-06-16/census.csv",
+    "tidytuesday/data/2020/2020-06-16/slave_routes.csv"
+  ],
+  "reference_files": [
+    "tidytuesday/data/2020/2020-06-16/blackpast.csv",
+    "tidytuesday/data/2020/2020-06-16/census.csv",
+    "tidytuesday/data/2020/2020-06-16/key-concepts.png",
+    "tidytuesday/data/2020/2020-06-16/pic1.png",
+    "tidytuesday/data/2020/2020-06-16/pic2.png",
+    "tidytuesday/data/2020/2020-06-16/readme.md",
+    "tidytuesday/data/2020/2020-06-16/slave_routes.csv",
+    "tidytuesday/data/2020/2020-06-16/african_names.csv"
+  ],
+  "external_dependencies": [],
+  "execution_notes": [
+    "interactive `View()` calls are present and should be skipped or replaced in automated runs",
+    "local TidyTuesday files were matched, so you can use `load_tidyweek_data()` and avoid a GitHub PAT"
+  ]
+}

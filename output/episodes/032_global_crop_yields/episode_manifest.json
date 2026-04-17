@@ -1,0 +1,61 @@
+{
+  "queue_position": 32,
+  "folder_name": "032_global_crop_yields",
+  "transcript_title": "Analyzing global crop yields in R",
+  "function_name": "global_crop_yields",
+  "ker_status": "extracted",
+  "reproduction_status": "ready_local",
+  "source_files": {
+    "transcript_file": "raw-data/inspiration/Analyzing global crop yields in R.txt",
+    "code_file": "data-screencasts/2020_09_01_crop_yields.Rmd"
+  },
+  "source_exists": {
+    "transcript": true,
+    "code": true
+  },
+  "data_source": "TidyTuesday 2020-09-01 dataset",
+  "analysis_intent": "Explore distributions, group differences, and notable patterns in global crop yields through cleaning, summarization, and visualization",
+  "analysis_type": "EDA",
+  "pattern_signature": "load_inspect_reshape_trend_compare_visualize",
+  "required_packages": [
+    "countrycode",
+    "ggrepel",
+    "janitor",
+    "scales",
+    "tidytuesdayR",
+    "tidyverse"
+  ],
+  "features": {
+    "ggplot": true,
+    "joins": false,
+    "reshape": true,
+    "text_analysis": false,
+    "modeling": false,
+    "predictive": false,
+    "scraping": false,
+    "maps": false,
+    "time": true,
+    "simulation": false,
+    "multi_table": true
+  },
+  "local_data_files": [
+    "tidytuesday/data/2020/2020-09-01/arable_land_pin.csv",
+    "tidytuesday/data/2020/2020-09-01/cereal_crop_yield_vs_fertilizer_application.csv",
+    "tidytuesday/data/2020/2020-09-01/cereal_yields_vs_tractor_inputs_in_agriculture.csv",
+    "tidytuesday/data/2020/2020-09-01/key_crop_yields.csv",
+    "tidytuesday/data/2020/2020-09-01/land_use_vs_yield_change_in_cereal_production.csv"
+  ],
+  "reference_files": [
+    "tidytuesday/data/2020/2020-09-01/cereal_crop_yield_vs_fertilizer_application.csv",
+    "tidytuesday/data/2020/2020-09-01/cereal_yields_vs_tractor_inputs_in_agriculture.csv",
+    "tidytuesday/data/2020/2020-09-01/key_crop_yields.csv",
+    "tidytuesday/data/2020/2020-09-01/land_use_vs_yield_change_in_cereal_production.csv",
+    "tidytuesday/data/2020/2020-09-01/readme.md",
+    "tidytuesday/data/2020/2020-09-01/arable_land_pin.csv"
+  ],
+  "external_dependencies": [],
+  "execution_notes": [
+    "interactive `View()` calls are present and should be skipped or replaced in automated runs",
+    "local TidyTuesday files were matched, so you can use `load_tidyweek_data()` and avoid a GitHub PAT"
+  ]
+}

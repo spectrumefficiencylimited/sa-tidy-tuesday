@@ -1,0 +1,54 @@
+{
+  "queue_position": 70,
+  "folder_name": "070_transit_costs",
+  "transcript_title": "Analyzing transit costs in R",
+  "function_name": "transit_costs",
+  "ker_status": "extracted",
+  "reproduction_status": "ready_local",
+  "source_files": {
+    "transcript_file": "raw-data/inspiration/Analyzing transit costs in R.txt",
+    "code_file": "data-screencasts/2021_01_05_transit_costs.Rmd"
+  },
+  "source_exists": {
+    "transcript": true,
+    "code": true
+  },
+  "data_source": "TidyTuesday 2021-01-05 dataset",
+  "analysis_intent": "Explore distributions, group differences, and notable patterns in transit costs through cleaning, summarization, and visualization",
+  "analysis_type": "EDA",
+  "pattern_signature": "load_inspect_trend_compare_visualize",
+  "required_packages": [
+    "countrycode",
+    "glue",
+    "scales",
+    "tidytuesdayR",
+    "tidyverse"
+  ],
+  "features": {
+    "ggplot": true,
+    "joins": false,
+    "reshape": false,
+    "text_analysis": false,
+    "modeling": false,
+    "predictive": false,
+    "scraping": false,
+    "maps": false,
+    "time": true,
+    "simulation": false,
+    "multi_table": false
+  },
+  "local_data_files": [
+    "tidytuesday/data/2021/2021-01-05/Merged Costs (1.0) - Sheet1.csv",
+    "tidytuesday/data/2021/2021-01-05/transit_cost.csv"
+  ],
+  "reference_files": [
+    "tidytuesday/data/2021/2021-01-05/readme.md",
+    "tidytuesday/data/2021/2021-01-05/transit-map.png",
+    "tidytuesday/data/2021/2021-01-05/transit_cost.csv",
+    "tidytuesday/data/2021/2021-01-05/Merged Costs (1.0) - Sheet1.csv"
+  ],
+  "external_dependencies": [],
+  "execution_notes": [
+    "local TidyTuesday files were matched, so you can use `load_tidyweek_data()` and avoid a GitHub PAT"
+  ]
+}

@@ -1,0 +1,140 @@
+---
+title: "Reproduction Guide: Analyzing employment and earnings in R"
+subtitle: "Ordered episode output built from the control table and KER"
+format:
+  html:
+    theme: flatly
+    toc: true
+    toc-depth: 2
+    code-fold: show
+execute:
+  echo: false
+  warning: false
+  message: false
+---
+
+## Episode Snapshot
+
+- `function_name`: `employment_earnings`
+- `ker_status`: `extracted`
+- `reproduction_status`: `ready_local`
+- `transcript_file`: `raw-data/inspiration/Analyzing employment and earnings in R.txt`
+- `code_file`: `data-screencasts/2021_02_23_employment_earnings.Rmd`
+- `data_source`: TidyTuesday 2021-02-23 dataset
+- `analysis_type`: `EDA`
+- `pattern_signature`: `load_inspect_reshape_trend_compare_visualize`
+
+::: {.callout-note}
+## Why this episode
+This output was generated in control-table order so we can reproduce the repository one episode at a time from the top of the queue.
+
+The KER classifies this episode as **EDA** and the main intent is:
+
+Explore distributions, group differences, and notable patterns in employment and earnings through cleaning, summarization, and visualization
+:::
+
+## Transcript Preview
+
+Analyzing employment and earnings in R David Robinson 15.9k subscribers 108 Share Save Clip 3,265 views Streamed live on 24 Feb 2021 Tidy Tuesday R Screencasts I'll analyze a dataset about employment and earnings over time, without looking at the dataset in advance. The dataset comes from the Tidy Tuesday project: https://github.com/rfordatascience/ti... Code: https://github.com/dgrtwo/data-screen... Timestamped annotations of specific tricks, ti...
+
+## Required Packages
+
+- `ggrepel`
+- `glue`
+- `scales`
+- `tidytuesdayR`
+- `tidyverse`
+
+## Local Data Assets
+
+- `tidytuesday/data/2021/2021-02-23/bls-2015.xlsx`
+- `tidytuesday/data/2021/2021-02-23/bls-2016.xlsx`
+- `tidytuesday/data/2021/2021-02-23/bls-2017.xlsx`
+- `tidytuesday/data/2021/2021-02-23/bls-2018.xlsx`
+- `tidytuesday/data/2021/2021-02-23/bls-2019.xlsx`
+- `tidytuesday/data/2021/2021-02-23/bls-2020.xlsx`
+- `tidytuesday/data/2021/2021-02-23/earn.csv`
+- `tidytuesday/data/2021/2021-02-23/employed.csv`
+- `tidytuesday/data/2021/2021-02-23/~$bls-2020.xlsx`
+
+## Nearby Reference Files
+
+- `tidytuesday/data/2021/2021-02-23/bls-2016.xlsx`
+- `tidytuesday/data/2021/2021-02-23/bls-2017.xlsx`
+- `tidytuesday/data/2021/2021-02-23/bls-2018.xlsx`
+- `tidytuesday/data/2021/2021-02-23/bls-2019.xlsx`
+- `tidytuesday/data/2021/2021-02-23/bls-2020.xlsx`
+- `tidytuesday/data/2021/2021-02-23/earn.csv`
+- `tidytuesday/data/2021/2021-02-23/employed.csv`
+- `tidytuesday/data/2021/2021-02-23/pic1.png`
+- `tidytuesday/data/2021/2021-02-23/pic2.png`
+- `tidytuesday/data/2021/2021-02-23/readme.md`
+- `tidytuesday/data/2021/2021-02-23/~$bls-2020.xlsx`
+- `tidytuesday/data/2021/2021-02-23/bls-2015.xlsx`
+
+## External Dependencies
+
+- No external dependencies were detected from the code scan.
+
+## Execution Notes
+
+- interactive `View()` calls are present and should be skipped or replaced in automated runs
+- local TidyTuesday files were matched, so you can use `load_tidyweek_data()` and avoid a GitHub PAT
+
+## Extracted Code Chunks
+
+- `setup`
+- `Load`
+- `chunk_03`
+- `chunk_04`
+- `chunk_05`
+- `chunk_06`
+
+## Thought Process Map
+
+- `T1 | Context | Frame the episode as exploratory analysis of employment and earnings with limited advance knowledge of the data. | Transcript title and opening context`
+- `T2 | Inspect | Load the data, inspect table shape, and identify the main entities, measures, and comparison axes. | Initial data load and early counts or prints`
+- `T4 | Transform | Reshape fields, standardize column meanings, and join supporting tables to create analysis-ready records. | Join and reshaping operations in the Rmd`
+- `T6 | Compare | Summarize group differences, rates, rankings, or trajectories to surface the main story in the data. | Grouped summaries and comparative plots`
+- `T7 | Visualize | Turn the cleaned summaries into interpretable visual comparisons and iterate toward the clearest view. | ggplot workflow`
+- `T8 | Reflect | Identify reusable workflow pieces that can transfer to future datasets with a similar shape or question. | End-state of the analysis pattern`
+
+## Data Transformation Flow
+
+- `Raw | Imported source tables or files | Load source data into tibbles or lists | Raw episode objects | Establish the starting analysis surface`
+- `Raw -> Clean | Raw source tables | Rename, reshape, unnest, and join supporting data | Analysis-ready rows with consistent keys | Standardize the schema before comparison`
+- `Clean -> Analytical | Cleaned table | Group, summarize, rank, or compare entities | Summary tables or rate calculations | Surface the core analytical story`
+- `Analytical -> Visual | Summary or model outputs | Reorder factors and prepare plotting fields | Plot-ready table | Turn the analytical result into an interpretable chart`
+
+## Reusable Patterns
+
+- `inspect_source_schema | Inspect source tables, field meanings, and likely comparison axes | Raw dataset or dataset list | Initial analysis plan | Y`
+- `reshape_analysis_inputs | Convert wide or nested source fields into normalized long-form records | Raw tabular fields | Tidy analysis table | Y`
+- `plot_comparative_story | Reorder entities and visualize the main comparison cleanly | Summary table or model output | Communication-ready plot | Y`
+
+## Function Candidates
+
+- `reshape_episode_inputs(data, ...)`
+- `join_episode_context(primary_data, lookup_data, by)`
+- `plot_comparative_story(data, x_col, y_col, group_col = NULL)`
+
+## Reproduction Steps
+
+- 1. Start from the control-table metadata and confirm the transcript, code file, and function identity match this episode.
+- 2. Read the transcript first to understand the story, then inspect the source `.Rmd` to locate the main transformation and plotting chunks.
+- 3. Prefer the local mirrored TidyTuesday files or `load_tidyweek_data()` from `R/screencast_helpers.R`; that keeps reproduction local and avoids the GitHub PAT requirement.
+- 4. Run the extracted episode script in chunk order and compare the resulting tables and plots to the original screencast intent.
+- 5. Use the KER thought process map and adaptation plan in this folder when rewriting the episode into a cleaner reusable analysis.
+- 6. Mark the episode as implemented or reviewed only after the reproduced workflow runs cleanly in the local environment.
+
+## Adaptation Plan
+
+- `1 | inspect_source_schema | Start by mapping entities, measures, and likely comparison axes before transforming anything`
+- `3 | reshape_analysis_inputs | Normalize wide, nested, or repeated fields into one analysis-ready row structure`
+- `8 | plot_comparative_story | Choose the clearest visual comparison once the analytical table is ready`
+
+## Source Artifacts in This Folder
+
+- `episode_guide.qmd`: this guided reproduction document
+- `episode_source.R`: R code extracted from the original episode `.Rmd`
+- `episode_manifest.json`: machine-readable metadata for automation and checks

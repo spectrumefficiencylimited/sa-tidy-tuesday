@@ -1,0 +1,55 @@
+{
+  "queue_position": 5,
+  "folder_name": "005_art_collections",
+  "transcript_title": "Analyzing art collections in R",
+  "function_name": "art_collections",
+  "ker_status": "extracted",
+  "reproduction_status": "ready_local",
+  "source_files": {
+    "transcript_file": "raw-data/inspiration/Analyzing art collections in R.txt",
+    "code_file": "data-screencasts/2021_01_12_tate_art.Rmd"
+  },
+  "source_exists": {
+    "transcript": true,
+    "code": true
+  },
+  "data_source": "TidyTuesday 2021-01-12 dataset",
+  "analysis_intent": "Explore distributions, group differences, and notable patterns in art collections through cleaning, summarization, and visualization",
+  "analysis_type": "EDA",
+  "pattern_signature": "load_inspect_trend_compare_visualize",
+  "required_packages": [
+    "ggridges",
+    "glue",
+    "janitor",
+    "scales",
+    "tidytuesdayR",
+    "tidyverse"
+  ],
+  "features": {
+    "ggplot": true,
+    "joins": false,
+    "reshape": false,
+    "text_analysis": false,
+    "modeling": false,
+    "predictive": false,
+    "scraping": false,
+    "maps": false,
+    "time": true,
+    "simulation": false,
+    "multi_table": true
+  },
+  "local_data_files": [
+    "tidytuesday/data/2021/2021-01-12/artists.csv",
+    "tidytuesday/data/2021/2021-01-12/artwork.csv"
+  ],
+  "reference_files": [
+    "tidytuesday/data/2021/2021-01-12/artwork.csv",
+    "tidytuesday/data/2021/2021-01-12/preview.png",
+    "tidytuesday/data/2021/2021-01-12/readme.md",
+    "tidytuesday/data/2021/2021-01-12/artists.csv"
+  ],
+  "external_dependencies": [],
+  "execution_notes": [
+    "local TidyTuesday files were matched, so you can use `load_tidyweek_data()` and avoid a GitHub PAT"
+  ]
+}

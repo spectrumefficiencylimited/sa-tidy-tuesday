@@ -1,0 +1,559 @@
+---
+title: "Super QMD: Analyzing Alone Data in R"
+subtitle: "Cognition-first blueprint built from the episode guide and KER"
+format:
+  html:
+    theme: flatly
+    toc: true
+    toc-depth: 3
+    code-fold: show
+    code-summary: "Show scaffold code"
+    number-sections: true
+execute:
+  echo: true
+  warning: false
+  message: false
+editor: visual
+---
+
+## What This Document Is
+
+This super QMD is the bridge between:
+
+- the TidyTuesday dataset for `2023-01-24`
+- the KER entry for `alone_data`
+- a final guided analysis document
+
+The point is to preserve not only the code path, but the author's cognition:
+
+- what question gets asked first
+- how the dataset is inspected
+- when transformation happens
+- why one comparison is chosen before another
+- which pieces should become reusable helpers
+
+## Episode Snapshot
+
+- `queue_position`: `226`
+- `function_name`: `alone_data`
+- `analysis_type`: `EDA`
+- `pattern_signature`: `load_inspect_recode_summarize_trend_compare_visualize`
+- `data_source`: TidyTuesday 2023-01-24
+- `reproduction_status`: `needs_mapping`
+
+::: {.callout-note}
+## Analysis Intent
+Explore distributions, group differences, and notable patterns in Alone Data through cleaning, summarization, and visualization
+:::
+
+
+
+## Transcript Preview
+
+Analyzing Alone Data in R David Robinson 15.9k subscribers 72 Share Save Clip 4,521 views Streamed live on 2023-01-24 Tidy Tuesday R Screencasts I'll analyze a dataset about alone data without looking at the dataset in advance. The dataset comes from the Tidy Tuesday project: https://github.com/rfor...
+
+## Cognitive Signature
+
+- Start by naming the question and the unit of analysis before choosing plots or metrics.
+- Use schema inspection to decide which columns carry the main story.
+- Build one analysis-ready table before comparing groups.
+- Start broad with time or trend structure when it helps explain which later comparisons are fair.
+- End with one communication-ready chart or table that carries the episode's main claim.
+
+## Data and Execution Context
+
+### Local Assets
+
+- `tidytuesday/data/2023/2023-01-24/episodes.csv`
+- `tidytuesday/data/2023/2023-01-24/loadouts.csv`
+- `tidytuesday/data/2023/2023-01-24/seasons.csv`
+- `tidytuesday/data/2023/2023-01-24/survivalists.csv`
+
+### Execution Notes
+
+- Use `load_tidyweek_data("2023-01-24")` from `R/screencast_helpers.R` if local files are present
+- Otherwise fall back to `tidytuesdayR::tt_load("2023-01-24")`
+
+### External Dependencies
+
+- No external dependencies captured.
+
+## Setup Scaffold
+
+```{r}
+#| label: setup
+#| eval: false
+
+library(tidyverse)
+source("R/screencast_helpers.R")
+
+# Optional episode packages:
+# library(scales)
+# library(tidytuesdayR)
+
+tuesdata <- load_tidyweek_data("2023-01-24")
+names(tuesdata)
+
+episodes <- tuesdata$episodes  # or read from local path
+loadouts <- tuesdata$loadouts  # or read from local path
+seasons <- tuesdata$seasons  # or read from local path
+survivalists <- tuesdata$survivalists  # or read from local path
+```
+
+## Thought -> Code -> Data Bridge
+
+### Thought Process Map
+
+- `T1 | Context | Frame the episode as exploratory analysis of Alone Data with limited advance knowledge of the data. | Transcript title and opening context`
+- `T2 | Inspect | Load the data, inspect table shape, and identify the main entities, measures, and comparison axes. | Initial data load and early counts or prints`
+- `T3 | Transform | Reshape fields, standardize column meanings, and join supporting tables to create analysis-ready records. | Join and reshaping operations`
+- `T4 | Trend | Identify temporal patterns and seasonal variation before comparing sub-groups. | Time-based grouping and line charts`
+- `T6 | Compare | Summarize groups in a way that reveals differences, rankings, or trends. | group_by + summarise + arrange pattern`
+- `T7 | Visualize | Turn the cleaned summaries into interpretable visual comparisons and iterate toward the clearest view. | ggplot workflow`
+- `T8 | Reflect | Identify reusable workflow pieces that can transfer to future datasets with a similar shape or question. | End-state of the analysis pattern`
+
+### Code Mapping Table
+
+- `T1 | Data load and inspection | tt_load, count | Establish source shape, units, and comparison candidates`
+- `T3 | Structuring and enrichment | mutate, left_join, pivot_longer | Convert messy inputs into analysis-ready tables`
+- `T4 | Temporal summary | group_by year/month, summarise, geom_line | Show trend over time`
+- `T7 | Visualization | ggplot, geom_col, geom_point, geom_line | Communicate the core result visually`
+
+### Data Transformation Flow
+
+- `Raw | Imported source tables or files | Load source data into tibbles or lists | Raw episode objects | Establish the starting analysis surface`
+- `Raw -> Clean | Raw source tables | Rename, reshape, unnest, and join supporting data | Analysis-ready rows with consistent keys | Standardize the schema before comparison`
+- `Clean -> Analytical | Feature table | Engineer predictors or compute group metrics | Summary or model outputs | Quantify relationships beyond descriptive summaries`
+- `Analytical -> Visual | Summary or model outputs | Reorder factors and prepare plotting fields | Plot-ready table | Turn the analytical result into an interpretable chart`
+
+## Guided Build Sequence
+
+## Stage 1: Context
+
+Frame the episode as exploratory analysis of Alone Data with limited advance knowledge of the data.
+
+::: {.callout-note}
+## Cognitive Move
+Define the analytical question, likely unit of analysis, and what would count as an interesting result.
+
+Trigger:
+
+- Transcript title and opening context
+
+
+:::
+
+```{r}
+#| label: stage_01_context
+#| eval: false
+
+# Write the one-sentence analytical question for this episode.
+# Topic: Alone Data
+# Unit of analysis:
+# Main comparison axis:
+# What would make the result interesting?
+```
+## Stage 2: Inspect
+
+Load the data, inspect table shape, and identify the main entities, measures, and comparison axes.
+
+::: {.callout-note}
+## Cognitive Move
+Inspect shape, columns, missingness, and table roles before committing to transformations.
+
+Trigger:
+
+- Initial data load and early counts or prints
+
+
+:::
+
+```{r}
+#| label: stage_02_inspect
+#| eval: false
+
+# Start here once data is loaded.
+# names(tuesdata)
+# purrr::imap_dfr(tuesdata, ~ tibble(table = .y, rows = nrow(.x), cols = ncol(.x)))
+# glimpse(analysis_tbl)
+# skimr::skim(analysis_tbl)
+```
+## Stage 3: Transform
+
+Reshape fields, standardize column meanings, and join supporting tables to create analysis-ready records.
+
+::: {.callout-note}
+## Cognitive Move
+Reshape, join, or normalize only enough to make the next comparison possible.
+
+Trigger:
+
+- Join and reshaping operations in the source Rmd
+
+
+:::
+
+```{r}
+#| label: stage_03_transform
+#| eval: false
+
+# Build the canonical analysis table for this episode.
+# Source assets: tidytuesday/data/2023/2023-01-24/episodes.csv, tidytuesday/data/2023/2023-01-24/loadouts.csv, tidytuesday/data/2023/2023-01-24/seasons.csv, tidytuesday/data/2023/2023-01-24/survivalists.csv
+# Suggested verbs: mutate(), separate_rows(), pivot_longer(), left_join(), unnest()
+# analysis_tbl <- raw_tbl %>%
+#   ...
+```
+## Stage 4: Compare
+
+Summarize groups or entities in a way that reveals differences, rankings, or trends.
+
+::: {.callout-note}
+## Cognitive Move
+Summarize groups or entities in a way that reveals differences, rankings, or trends without overfitting the story.
+
+Trigger:
+
+- count() and group_by() + summarise() patterns
+
+Additional guidance:
+
+- If you plan to model, use this step to identify which predictors deserve to enter the first baseline model.
+:::
+
+```{r}
+#| label: stage_04_compare
+#| eval: false
+
+# Summarize the comparison that best answers the question.
+# comparison_tbl <- analysis_tbl %>%
+#   count(category_col, sort = TRUE)   # or
+#   group_by(group_col) %>%
+#   summarise(metric = mean(value_col, na.rm = TRUE)) %>%
+#   arrange(desc(metric))
+```
+## Stage 5: Visualize
+
+Turn the cleaned summaries into interpretable visual comparisons and iterate toward the clearest view.
+
+::: {.callout-note}
+## Cognitive Move
+Choose the plot after the summary table exists, then optimize for clarity rather than novelty.
+
+Trigger:
+
+- ggplot workflow
+
+Additional guidance:
+
+- When time is present, lead with the broad trend before showing narrower subgroup comparisons.
+:::
+
+```{r}
+#| label: stage_05_visualize
+#| eval: false
+
+# Turn the comparison table into one clear communication plot.
+# ggplot(comparison_tbl, aes(x = fct_reorder(category, metric), y = metric)) +
+#   geom_col() +
+#   coord_flip() +
+#   labs(
+#     title = "...",
+#     subtitle = "Source: TidyTuesday 2023-01-24",
+#     x = NULL, y = NULL
+#   )
+```
+## Stage 6: Reflect
+
+Identify reusable workflow pieces that can transfer to future datasets with a similar shape or question.
+
+::: {.callout-note}
+## Cognitive Move
+Translate the episode-specific move into a reusable function, helper, or workflow note.
+
+Trigger:
+
+- End-state of the analysis pattern
+
+
+:::
+
+```{r}
+#| label: stage_06_reflect
+#| eval: false
+
+# Capture the reusable move after the analysis is clear.
+# Candidate helper:
+# - input:
+# - output:
+# - why it is reusable:
+```
+
+---
+
+## Hour 2 — Depth
+
+
+
+### Stage 7: Multi-axis Comparison
+
+Examine the interaction between two grouping variables rather than one at a time.
+
+::: {.callout-note}
+## Cognitive Move
+One-dimensional summaries miss interaction effects. Cross two categoricals to see whether the relationship holds across all sub-groups or only some.
+
+Trigger: group_by(cat1, cat2) + summarise + facet_wrap
+:::
+
+```{r}
+#| label: stage_07_multiaxis
+#| eval: false
+
+cross_tbl <- analysis_tbl |>
+  group_by(name, gender) |>
+  summarise(
+    n      = n(),
+    median = median(season, na.rm = TRUE),
+    .groups = "drop"
+  ) |>
+  filter(n >= 3)
+
+ggplot(cross_tbl, aes(x = fct_reorder(name, median), y = median, fill = gender)) +
+  geom_col(position = "dodge") +
+  coord_flip() +
+  facet_wrap(~ gender, scales = "free_x") +
+  labs(title = "Alone Data: season by name and gender",
+       x = NULL, y = "Median season")
+```
+
+### Stage 8: Outlier Investigation
+
+Find cases that sit far from their group expectation.
+
+::: {.callout-note}
+## Cognitive Move
+After the aggregate pattern is clear, the outliers are often the most interesting story — they show where the rule breaks down.
+
+Trigger: group_by + mutate(residual = value - group_median) + slice_max(abs(residual))
+:::
+
+```{r}
+#| label: stage_08_outliers
+#| eval: false
+
+residual_tbl <- analysis_tbl |>
+  group_by(name) |>
+  mutate(
+    group_median = median(season, na.rm = TRUE),
+    residual     = season - group_median
+  ) |>
+  ungroup() |>
+  arrange(desc(abs(residual)))
+
+# Label the top outliers
+library(ggrepel)
+
+ggplot(residual_tbl,
+       aes(x = group_median, y = season, label = name)) +
+  geom_point(alpha = 0.4) +
+  geom_text_repel(
+    data = slice_max(residual_tbl, abs(residual), n = 15),
+    size = 3, max.overlaps = 20
+  ) +
+  geom_abline(slope = 1, intercept = 0, linetype = "dashed") +
+  labs(title = "Who over- or underperforms their group median?",
+       x = "Group median season", y = "Observed season")
+```
+
+### Stage 9: Correlation Structure
+
+Examine how numeric columns relate to each other and to the outcome.
+
+::: {.callout-note}
+## Cognitive Move
+Scatter plots with colour encoding reveal whether a confound explains the group difference, or whether the effect is additive.
+
+Trigger: geom_point + geom_smooth(method = "lm") + color by group
+:::
+
+```{r}
+#| label: stage_09_correlation
+#| eval: false
+
+ggplot(analysis_tbl,
+       aes(x = age, y = season, colour = name)) +
+  geom_point(alpha = 0.5) +
+  geom_smooth(method = "lm", se = FALSE) +
+  scale_colour_viridis_d(end = 0.85) +
+  labs(title = "Relationship between season and age",
+       subtitle = "Coloured by name",
+       x = "age", y = "season")
+```
+
+---
+
+## Hour 3 — Synthesis
+
+### Stage 10: Model
+
+Fit a linear model to quantify what predicts season.
+
+::: {.callout-note}
+## Cognitive Move
+Move from "what differs" (descriptive) to "what explains" (inferential). The model should confirm the story the charts already suggested — not replace it.
+
+Trigger: lm() + broom::tidy() + coefficient plot
+:::
+
+```{r}
+#| label: stage_10_model
+#| eval: false
+
+model_tbl <- analysis_tbl |>
+  mutate(across(where(is.character), as.factor))
+
+model_fit <- lm(season ~ name + gender + season + age, data = model_tbl)
+
+broom::tidy(model_fit, conf.int = TRUE) |>
+  filter(term != "(Intercept)") |>
+  mutate(term = fct_reorder(term, estimate)) |>
+  ggplot(aes(estimate, term,
+             xmin = conf.low, xmax = conf.high)) +
+  geom_pointrange() +
+  geom_vline(xintercept = 0, linetype = "dashed") +
+  labs(title = "What predicts season?",
+       subtitle = "Linear model coefficients (95% CI)",
+       x = "Estimate", y = NULL)
+```
+
+### Stage 11: Residuals
+
+Which cases does the model get most wrong?
+
+::: {.callout-note}
+## Cognitive Move
+Residuals reveal where the model's assumptions break down — often these are the most analytically interesting cases.
+
+Trigger: broom::augment() + geom_point(.resid) + geom_text_repel
+:::
+
+```{r}
+#| label: stage_11_residuals
+#| eval: false
+
+augmented_tbl <- broom::augment(model_fit, data = model_tbl)
+
+ggplot(augmented_tbl, aes(.fitted, .resid, label = name)) +
+  geom_point(alpha = 0.4) +
+  geom_smooth(method = "loess", se = FALSE, colour = "steelblue") +
+  geom_hline(yintercept = 0, linetype = "dashed") +
+  geom_text_repel(
+    data = filter(augmented_tbl, abs(.resid) > quantile(abs(.resid), 0.95)),
+    size = 3, max.overlaps = 15
+  ) +
+  labs(title = "Residuals: who over- or underperforms the model?",
+       x = "Fitted season", y = "Residual")
+```
+
+### Stage 12: Final Communication Chart
+
+One polished chart that carries the entire episode's story.
+
+::: {.callout-note}
+## Cognitive Move
+The communication chart is not a summary of everything — it is the single clearest view of the main finding. Choose the encoding that requires the least explanation.
+
+Trigger: After residuals and model are stable, step back and pick the clearest one-chart story
+:::
+
+```{r}
+#| label: stage_12_final_chart
+#| eval: false
+
+final_tbl <- analysis_tbl |>
+  group_by(name) |>
+  summarise(
+    median_season = median(season, na.rm = TRUE),
+    n = n(),
+    .groups = "drop"
+  ) |>
+  filter(n >= 5) |>
+  mutate(name = fct_reorder(name, median_season))
+
+ggplot(final_tbl,
+       aes(x = name, y = median_season,
+           fill = median_season)) +
+  geom_col(show.legend = FALSE) +
+  scale_fill_gradient2(
+    low = "tomato", mid = "gray90", high = "steelblue",
+    midpoint = median(analysis_tbl$season, na.rm = TRUE)
+  ) +
+  coord_flip() +
+  labs(
+    title    = "Alone Data: season by name",
+    subtitle = "Median per group | colour = above/below overall median",
+    caption  = "Source: TidyTuesday 2023-01-24",
+    x = NULL, y = "Median season"
+  ) +
+  theme_minimal(base_size = 13) +
+  theme(plot.title = element_text(face = "bold"))
+```
+
+### Stage 13: Knowledge Extraction
+
+Capture the reusable pattern for the KER.
+
+::: {.callout-note}
+## Cognitive Move
+After the analysis is clear, abstract it: what is the general workflow that would work on any similar dataset? That is what goes into the KER and into a helper function.
+
+Trigger: End of episode — write the function stub before closing the session
+:::
+
+```{r}
+#| label: stage_13_ker_capture
+#| eval: false
+
+# Pattern: load -> inspect -> join ->
+#          multi-axis compare -> outlier detection -> model -> residuals -> final chart
+
+# Candidate helper:
+# compare_groups_by_outcome <- function(data, group_col, outcome_col,
+#                                        secondary_group = NULL,
+#                                        model = TRUE) {
+#   # 1. group_by + summarise
+#   # 2. residual calculation
+#   # 3. optional lm + broom::tidy
+#   # 4. ggplot output
+# }
+```
+
+
+## Reusable Layer
+
+### Reusable Patterns
+
+- `inspect_source_schema | Inspect source tables, field meanings, and likely comparison axes | Raw dataset or dataset list | Initial analysis plan | Y`
+- `count_and_rank | Count and rank categorical variables to find the dominant groups | Any categorical column | Ranked frequency table | Y`
+- `plot_comparative_story | Reorder entities and visualize the main comparison cleanly | Summary table or model output | Communication-ready plot | Y`
+
+### Function Candidates
+
+- `reshape_episode_inputs(data, ...)`
+- `summarize_by_group(data, group_col, metric_col)`
+- `plot_comparative_story(data, x_col, y_col, group_col = NULL)`
+
+## How To Finish This Super QMD
+
+1. Replace each scaffold chunk with the real episode-specific analysis code.
+2. After each major result, add a short callout explaining what changed in your thinking.
+3. Keep one broad chart early, one comparison chart in the middle, and one final communication chart at the end.
+4. Move any repeated transformation or comparison logic into `R/screencast_helpers.R`.
+5. Once the document reads like a guided walkthrough instead of a reproduction note, promote it into a finished KER-guided analysis.
+
+## Adaptation Layer
+
+- `1 | inspect_source_schema | Start by mapping entities, measures, and likely comparison axes before transforming anything`
+- `3 | reshape_for_analysis | Pivot, join, or unnest only enough to make the next comparison possible`
+- `6 | count_and_rank | Surface the dominant categories before building the comparative chart`
+- `8 | plot_comparative_story | Choose the clearest visual comparison once the analytical table is ready`

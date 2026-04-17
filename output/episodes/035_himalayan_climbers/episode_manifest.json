@@ -1,0 +1,55 @@
+{
+  "queue_position": 35,
+  "folder_name": "035_himalayan_climbers",
+  "transcript_title": "Analyzing Himalayan climbers in R",
+  "function_name": "himalayan_climbers",
+  "ker_status": "reviewed",
+  "reproduction_status": "ready_local",
+  "source_files": {
+    "transcript_file": "raw-data/inspiration/Analyzing Himalayan climbers in R.txt",
+    "code_file": "data-screencasts/2020_09_22_himalayan_climbers.Rmd"
+  },
+  "source_exists": {
+    "transcript": true,
+    "code": true
+  },
+  "data_source": "TidyTuesday 2020-09-22 Himalayan climbers data: peaks, expeditions, and members tables",
+  "analysis_intent": "Explore expedition outcomes, climbing duration, and peak-level success patterns across Himalayan expeditions",
+  "analysis_type": "EDA",
+  "pattern_signature": "load_inspect_recode_summarize_compare_visualize",
+  "required_packages": [
+    "broom",
+    "ebbr",
+    "scales",
+    "tidytuesdayR",
+    "tidyverse"
+  ],
+  "features": {
+    "ggplot": true,
+    "joins": true,
+    "reshape": false,
+    "text_analysis": false,
+    "modeling": true,
+    "predictive": false,
+    "scraping": false,
+    "maps": false,
+    "time": true,
+    "simulation": false,
+    "multi_table": true
+  },
+  "local_data_files": [
+    "tidytuesday/data/2020/2020-09-22/expeditions.csv",
+    "tidytuesday/data/2020/2020-09-22/members.csv",
+    "tidytuesday/data/2020/2020-09-22/peaks.csv"
+  ],
+  "reference_files": [
+    "tidytuesday/data/2020/2020-09-22/members.csv",
+    "tidytuesday/data/2020/2020-09-22/peaks.csv",
+    "tidytuesday/data/2020/2020-09-22/readme.md",
+    "tidytuesday/data/2020/2020-09-22/expeditions.csv"
+  ],
+  "external_dependencies": [],
+  "execution_notes": [
+    "local TidyTuesday files were matched, so you can use `load_tidyweek_data()` and avoid a GitHub PAT"
+  ]
+}

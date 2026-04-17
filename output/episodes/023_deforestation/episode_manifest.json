@@ -1,0 +1,50 @@
+{
+  "queue_position": 23,
+  "folder_name": "023_deforestation",
+  "transcript_title": "Analyzing deforestation in R",
+  "function_name": "deforestation",
+  "ker_status": "extracted",
+  "reproduction_status": "needs_external_sources",
+  "source_files": {
+    "transcript_file": "raw-data/inspiration/Analyzing deforestation in R.txt",
+    "code_file": "data-screencasts/2021_04_06_deforestation.Rmd"
+  },
+  "source_exists": {
+    "transcript": true,
+    "code": true
+  },
+  "data_source": "TidyTuesday 2021-04-06 dataset",
+  "analysis_intent": "Explore and compare language patterns in deforestation using tokenization, grouped counts, and discriminative text analysis",
+  "analysis_type": "EDA",
+  "pattern_signature": "load_inspect_reshape_join_tokenize_map_trend_compare_visualize",
+  "required_packages": [
+    "fuzzyjoin",
+    "ggthemes",
+    "scales",
+    "tidytext",
+    "tidytuesdayR",
+    "tidyverse"
+  ],
+  "features": {
+    "ggplot": true,
+    "joins": true,
+    "reshape": true,
+    "text_analysis": true,
+    "modeling": false,
+    "predictive": false,
+    "scraping": false,
+    "maps": true,
+    "time": true,
+    "simulation": false,
+    "multi_table": true
+  },
+  "local_data_files": [],
+  "reference_files": [],
+  "external_dependencies": [
+    "tidytuesdayR::tt_load is used and no local TidyTuesday files were matched"
+  ],
+  "execution_notes": [
+    "interactive `View()` calls are present and should be skipped or replaced in automated runs",
+    "this episode depends on `tidytuesdayR::tt_load()`, so set `GITHUB_PAT` if GitHub rate limits appear"
+  ]
+}

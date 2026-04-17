@@ -1,0 +1,47 @@
+{
+  "queue_position": 37,
+  "folder_name": "037_horror_movie_profits",
+  "transcript_title": "Analyzing horror movie profits in R",
+  "function_name": "horror_movie_profits",
+  "ker_status": "extracted",
+  "reproduction_status": "needs_external_sources",
+  "source_files": {
+    "transcript_file": "raw-data/inspiration/Analyzing horror movie profits in R.txt",
+    "code_file": "data-screencasts/movie-profit.Rmd"
+  },
+  "source_exists": {
+    "transcript": true,
+    "code": true
+  },
+  "data_source": "Local source files read in episode: https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2018-10-23/movie_profit.csv",
+  "analysis_intent": "Explore distributions, group differences, and notable patterns in horror movie profits through cleaning, summarization, and visualization",
+  "analysis_type": "EDA",
+  "pattern_signature": "load_inspect_reshape_trend_compare_visualize",
+  "required_packages": [
+    "lubridate",
+    "plotly",
+    "scales",
+    "tidyverse"
+  ],
+  "features": {
+    "ggplot": true,
+    "joins": false,
+    "reshape": true,
+    "text_analysis": false,
+    "modeling": false,
+    "predictive": false,
+    "scraping": false,
+    "maps": false,
+    "time": true,
+    "simulation": false,
+    "multi_table": false
+  },
+  "local_data_files": [],
+  "reference_files": [],
+  "external_dependencies": [
+    "remote file or API download detected in code"
+  ],
+  "execution_notes": [
+    "htmlwidget or interactive plotting calls are present"
+  ]
+}

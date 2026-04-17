@@ -1,0 +1,61 @@
+{
+  "queue_position": 36,
+  "folder_name": "036_historical_phones",
+  "transcript_title": "Analyzing historical phones in R",
+  "function_name": "historical_phones",
+  "ker_status": "extracted",
+  "reproduction_status": "ready_local",
+  "source_files": {
+    "transcript_file": "raw-data/inspiration/Analyzing historical phones in R.txt",
+    "code_file": "data-screencasts/2020_11_10_phone_history.Rmd"
+  },
+  "source_exists": {
+    "transcript": true,
+    "code": true
+  },
+  "data_source": "TidyTuesday 2020-11-10 dataset",
+  "analysis_intent": "Explore geographic and temporal variation in historical phones through joins, summarization, and mapping",
+  "analysis_type": "EDA",
+  "pattern_signature": "load_inspect_reshape_join_map_trend_compare_visualize",
+  "required_packages": [
+    "WDI",
+    "fuzzyjoin",
+    "gganimate",
+    "scales",
+    "tidytuesdayR",
+    "tidyverse"
+  ],
+  "features": {
+    "ggplot": true,
+    "joins": true,
+    "reshape": true,
+    "text_analysis": false,
+    "modeling": false,
+    "predictive": false,
+    "scraping": false,
+    "maps": true,
+    "time": true,
+    "simulation": false,
+    "multi_table": true
+  },
+  "local_data_files": [
+    "tidytuesday/data/2020/2020-11-10/fixed-landline-telephone-subscriptions-vs-gdp-per-capita.csv",
+    "tidytuesday/data/2020/2020-11-10/landline.csv",
+    "tidytuesday/data/2020/2020-11-10/mobile-phone-subscriptions-vs-gdp-per-capita.csv",
+    "tidytuesday/data/2020/2020-11-10/mobile.csv"
+  ],
+  "reference_files": [
+    "tidytuesday/data/2020/2020-11-10/landline.csv",
+    "tidytuesday/data/2020/2020-11-10/mobile-phone-subscriptions-vs-gdp-per-capita.csv",
+    "tidytuesday/data/2020/2020-11-10/mobile.csv",
+    "tidytuesday/data/2020/2020-11-10/pic1.png",
+    "tidytuesday/data/2020/2020-11-10/pic2.png",
+    "tidytuesday/data/2020/2020-11-10/readme.md",
+    "tidytuesday/data/2020/2020-11-10/fixed-landline-telephone-subscriptions-vs-gdp-per-capita.csv"
+  ],
+  "external_dependencies": [],
+  "execution_notes": [
+    "interactive `View()` calls are present and should be skipped or replaced in automated runs",
+    "local TidyTuesday files were matched, so you can use `load_tidyweek_data()` and avoid a GitHub PAT"
+  ]
+}

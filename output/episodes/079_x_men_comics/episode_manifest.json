@@ -1,0 +1,65 @@
+{
+  "queue_position": 79,
+  "folder_name": "079_x_men_comics",
+  "transcript_title": "Analyzing X-Men comics in R",
+  "function_name": "x_men_comics",
+  "ker_status": "extracted",
+  "reproduction_status": "ready_local",
+  "source_files": {
+    "transcript_file": "raw-data/inspiration/Analyzing X-Men comics in R.txt",
+    "code_file": "data-screencasts/uncanny-xmen.Rmd"
+  },
+  "source_exists": {
+    "transcript": true,
+    "code": true
+  },
+  "data_source": "TidyTuesday 2020-06-30 dataset",
+  "analysis_intent": "Explore distributions, group differences, and notable patterns in X-Men comics through cleaning, summarization, and visualization",
+  "analysis_type": "EDA",
+  "pattern_signature": "load_inspect_join_compare_visualize",
+  "required_packages": [
+    "ggrepel",
+    "tidytuesdayR",
+    "tidyverse"
+  ],
+  "features": {
+    "ggplot": true,
+    "joins": true,
+    "reshape": false,
+    "text_analysis": false,
+    "modeling": false,
+    "predictive": false,
+    "scraping": false,
+    "maps": false,
+    "time": false,
+    "simulation": false,
+    "multi_table": false
+  },
+  "local_data_files": [
+    "tidytuesday/data/2020/2020-06-30/character_visualization.csv",
+    "tidytuesday/data/2020/2020-06-30/characters.csv",
+    "tidytuesday/data/2020/2020-06-30/comic_bechdel.csv",
+    "tidytuesday/data/2020/2020-06-30/covers.csv",
+    "tidytuesday/data/2020/2020-06-30/issue_collaborators.csv",
+    "tidytuesday/data/2020/2020-06-30/locations.csv",
+    "tidytuesday/data/2020/2020-06-30/xmen_bechdel.csv"
+  ],
+  "reference_files": [
+    "tidytuesday/data/2020/2020-06-30/characters.csv",
+    "tidytuesday/data/2020/2020-06-30/comic_bechdel.csv",
+    "tidytuesday/data/2020/2020-06-30/covers.csv",
+    "tidytuesday/data/2020/2020-06-30/issue_collaborators.csv",
+    "tidytuesday/data/2020/2020-06-30/locations.csv",
+    "tidytuesday/data/2020/2020-06-30/pic1.png",
+    "tidytuesday/data/2020/2020-06-30/pic2.png",
+    "tidytuesday/data/2020/2020-06-30/readme.md",
+    "tidytuesday/data/2020/2020-06-30/xmen-hero.png",
+    "tidytuesday/data/2020/2020-06-30/xmen_bechdel.csv",
+    "tidytuesday/data/2020/2020-06-30/character_visualization.csv"
+  ],
+  "external_dependencies": [],
+  "execution_notes": [
+    "interactive `View()` calls are present and should be skipped or replaced in automated runs",
+    "local TidyTuesday files were matched, so you can use `load_tidyweek_data()` and avoid a GitHub PAT"
+  ]
+}

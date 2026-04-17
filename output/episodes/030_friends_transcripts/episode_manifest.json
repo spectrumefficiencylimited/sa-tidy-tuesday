@@ -1,0 +1,59 @@
+{
+  "queue_position": 30,
+  "folder_name": "030_friends_transcripts",
+  "transcript_title": "Analyzing Friends transcripts in R",
+  "function_name": "friends_transcripts",
+  "ker_status": "extracted",
+  "reproduction_status": "ready_local",
+  "source_files": {
+    "transcript_file": "raw-data/inspiration/Analyzing Friends transcripts in R.txt",
+    "code_file": "data-screencasts/2020_09_08_friends.Rmd"
+  },
+  "source_exists": {
+    "transcript": true,
+    "code": true
+  },
+  "data_source": "TidyTuesday 2020-09-08 dataset",
+  "analysis_intent": "Explore and compare language patterns in Friends transcripts using tokenization, grouped counts, and discriminative text analysis",
+  "analysis_type": "Modeling",
+  "pattern_signature": "load_inspect_reshape_join_tokenize_trend_model_evaluate_visualize",
+  "required_packages": [
+    "glue",
+    "scales",
+    "tidylo",
+    "tidytext",
+    "tidytuesdayR",
+    "tidyverse",
+    "widyr"
+  ],
+  "features": {
+    "ggplot": true,
+    "joins": true,
+    "reshape": true,
+    "text_analysis": true,
+    "modeling": true,
+    "predictive": false,
+    "scraping": false,
+    "maps": false,
+    "time": true,
+    "simulation": false,
+    "multi_table": true
+  },
+  "local_data_files": [
+    "tidytuesday/data/2020/2020-09-08/friends.csv",
+    "tidytuesday/data/2020/2020-09-08/friends_emotions.csv",
+    "tidytuesday/data/2020/2020-09-08/friends_info.csv"
+  ],
+  "reference_files": [
+    "tidytuesday/data/2020/2020-09-08/friends_emotions.csv",
+    "tidytuesday/data/2020/2020-09-08/friends_info.csv",
+    "tidytuesday/data/2020/2020-09-08/pic1.png",
+    "tidytuesday/data/2020/2020-09-08/pic2.png",
+    "tidytuesday/data/2020/2020-09-08/readme.md",
+    "tidytuesday/data/2020/2020-09-08/friends.csv"
+  ],
+  "external_dependencies": [],
+  "execution_notes": [
+    "local TidyTuesday files were matched, so you can use `load_tidyweek_data()` and avoid a GitHub PAT"
+  ]
+}

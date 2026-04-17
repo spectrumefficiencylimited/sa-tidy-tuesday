@@ -1,0 +1,48 @@
+{
+  "queue_position": 60,
+  "folder_name": "060_thanksgiving_dinners",
+  "transcript_title": "Analyzing Thanksgiving dinners in R",
+  "function_name": "thanksgiving_dinners",
+  "ker_status": "extracted",
+  "reproduction_status": "needs_external_sources",
+  "source_files": {
+    "transcript_file": "raw-data/inspiration/Analyzing Thanksgiving dinners in R.txt",
+    "code_file": "data-screencasts/thanksgiving.Rmd"
+  },
+  "source_exists": {
+    "transcript": true,
+    "code": true
+  },
+  "data_source": "Local source files read in episode: https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2018-11-20/thanksgiving_meals.csv",
+  "analysis_intent": "Explore distributions, group differences, and notable patterns in Thanksgiving dinners through cleaning, summarization, and visualization",
+  "analysis_type": "EDA",
+  "pattern_signature": "load_inspect_reshape_join_compare_visualize",
+  "required_packages": [
+    "ebbr",
+    "ggraph",
+    "igraph",
+    "tidyverse",
+    "widyr"
+  ],
+  "features": {
+    "ggplot": true,
+    "joins": true,
+    "reshape": true,
+    "text_analysis": false,
+    "modeling": false,
+    "predictive": false,
+    "scraping": false,
+    "maps": false,
+    "time": false,
+    "simulation": false,
+    "multi_table": false
+  },
+  "local_data_files": [],
+  "reference_files": [],
+  "external_dependencies": [
+    "remote file or API download detected in code"
+  ],
+  "execution_notes": [
+    "interactive `View()` calls are present and should be skipped or replaced in automated runs"
+  ]
+}

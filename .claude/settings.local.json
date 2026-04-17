@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(py -3 build_new_control_rows.py)",
+      "Bash(py -3 build_transcripts.py)",
+      "Bash(py -3 build_new_super_qmds.py)",
+      "Bash(ls output/super_qmd/*.qmd)",
+      "Bash(ls raw-data/inspiration/*.txt)",
+      "Bash(py -3 -c \"import build_new_super_qmds; print\\(''syntax OK''\\)\")",
+      "Bash(py -3 build_new_super_qmds.py --force)"
+    ]
+  }
+}

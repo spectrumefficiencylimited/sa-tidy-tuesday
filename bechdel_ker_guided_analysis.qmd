@@ -1,0 +1,477 @@
+---
+title: "KER-Guided Analysis: The Bechdel Test"
+subtitle: "A from-scratch Quarto walkthrough built from the Knowledge Extraction Register"
+author: "Codex"
+date: today
+format:
+  html:
+    theme: flatly
+    toc: true
+    toc-depth: 3
+    code-fold: show
+    code-summary: "Show the analysis code"
+    number-sections: true
+    fig-width: 9
+    fig-height: 5.5
+    df-print: paged
+execute:
+  echo: true
+  warning: false
+  message: false
+editor: visual
+---
+
+```{r}
+#| label: setup
+
+library(tidyverse)
+library(scales)
+
+theme_set(theme_light(base_size = 13))
+
+simple_stop_words <- c(
+  "the", "and", "for", "that", "with", "this", "from", "their", "have", "into",
+  "about", "after", "before", "while", "where", "when", "what", "which", "will",
+  "would", "there", "these", "those", "they", "them", "then", "than", "just",
+  "like", "been", "being", "over", "under", "between", "through", "during",
+  "against", "because", "around", "also", "only", "very", "more", "most", "some",
+  "such", "much", "many", "each", "other", "another", "into", "onto", "upon",
+  "movie", "film", "story", "life", "lives", "young", "man", "men", "woman",
+  "women", "boy", "girl", "family", "friends", "father", "mother", "son",
+  "daughter", "new", "old", "one", "two", "three", "four", "five", "who",
+  "whose", "your", "our", "his", "her", "hers", "him", "she", "himself",
+  "herself", "its", "it's", "are", "was", "were", "has", "had", "did", "does",
+  "not", "but", "out", "off", "all", "any", "can", "may", "get", "gets", "got",
+  "set", "made", "make", "takes", "take"
+)
+
+raw_bechdel_path <- "tidytuesday/data/2021/2021-03-09/raw_bechdel.csv"
+movies_path <- "tidytuesday/data/2021/2021-03-09/movies.csv"
+
+raw_bechdel <- readr::read_csv(raw_bechdel_path, show_col_types = FALSE)
+movies <- readr::read_csv(movies_path, show_col_types = FALSE) %>%
+  mutate(
+    across(contains("gross"), readr::parse_number),
+    binary = factor(binary, levels = c("FAIL", "PASS"))
+  )
+```
+
+## Why this dataset
+
+This walkthrough uses the Bechdel dataset because it is a strong fit for the workflow our KER already surfaced:
+
+-   `load -> inspect -> reshape -> compare -> visualize`
+-   plus a light predictive extension
+-   plus optional text analysis from plot summaries
+
+From the KER, the matching episode pattern is:
+
+-   `analysis_type`: `Predictive`
+-   `pattern_signature`: `load_inspect_reshape_join_tokenize_trend_model_evaluate_visualize`
+
+That gives us a useful starting point without forcing us to copy the original screencast.
+
+::: callout-note
+## Thought Process
+
+The KER suggests that this is not just a "make one chart" dataset. It supports three layers:
+
+1.  trend over time
+2.  commercial and genre comparison
+3.  light modeling and plot-text comparison
+
+So the plan is to build the analysis in that same order.
+:::
+
+## Step 1: Inspect the shape of the data
+
+We have two related files:
+
+-   `raw_bechdel.csv`: longer historical coverage with the raw test outcome
+-   `movies.csv`: richer movie metadata, but only through 2013
+
+```{r}
+#| label: inspect-shape
+
+tibble(
+  dataset = c("raw_bechdel", "movies"),
+  rows = c(nrow(raw_bechdel), nrow(movies)),
+  columns = c(ncol(raw_bechdel), ncol(movies))
+)
+```
+
+```{r}
+#| label: inspect-columns
+
+tibble(
+  movies_columns = names(movies)
+) %>%
+  slice_head(n = 15)
+```
+
+::: callout-note
+## Thought Process
+
+Before choosing visuals, we want to answer two boring-but-critical questions:
+
+-   Which file is best for long-run trend?
+-   Which file is best for richer comparisons?
+
+The answer is:
+
+-   use `raw_bechdel` for the historical pass-rate timeline
+-   use `movies` for genre, revenue, ratings, and plot text
+:::
+
+## Step 2: Build a clean analytical base
+
+The enriched `movies` table needs only a little cleaning for this analysis:
+
+-   gross columns parsed as numeric
+-   decade bucket
+-   a simplified pass flag
+-   a 1990+ subset for modern comparisons
+
+```{r}
+#| label: clean-data
+
+movies_clean <- movies %>%
+  mutate(
+    decade = 10 * (year %/% 10),
+    pass_flag = binary == "PASS",
+    log_intgross_2013 = log10(intgross_2013),
+    log_budget_2013 = log10(budget_2013)
+  )
+
+movies_modern <- movies_clean %>%
+  filter(year >= 1990)
+
+glimpse(movies_modern)
+```
+
+## Step 3: Start with the broadest question
+
+How has the pass rate changed over time?
+
+```{r}
+#| label: trend-raw
+
+raw_bechdel_trend <- raw_bechdel %>%
+  mutate(
+    pass_flag = rating == 3,
+    decade = 10 * (year %/% 10)
+  ) %>%
+  group_by(decade) %>%
+  summarise(
+    n_movies = n(),
+    pct_pass = mean(pass_flag, na.rm = TRUE),
+    .groups = "drop"
+  )
+raw_bechdel_trend |> 
+ggplot(aes(decade, pct_pass)) +
+  geom_line(linewidth = 1, color = "#1f4e79") +
+  geom_point(aes(size = n_movies), color = "#d55e00", alpha = 0.9) +
+  scale_y_continuous(labels = percent_format(accuracy = 1)) +
+  scale_size_continuous(range = c(2.5, 8)) +
+  expand_limits(y = 0) +
+  labs(
+    title = "Bechdel pass rates have generally improved over time",
+    subtitle = "Point size shows how many movies are represented in each decade",
+    x = "Decade",
+    y = "Share of movies that pass",
+    size = "Movies"
+  )
+```
+
+::: callout-note
+## Interpretation Guide
+
+This is the classic KER move: start broad before getting specific.
+
+The long-run trend helps us decide whether later comparisons should control for time. Because the pass rate changes across decades, it makes sense to focus many downstream comparisons on more modern films.
+:::
+
+## Step 4: Compare representation and commercial outcomes
+
+One natural next question is whether passing the Bechdel test travels with commercial success.
+
+```{r}
+#| label: revenue-summary
+
+movies_modern %>%
+  group_by(binary) %>%
+  summarise(
+    n_movies = n(),
+    median_budget = median(budget_2013, na.rm = TRUE),
+    median_intgross = median(intgross_2013, na.rm = TRUE),
+    median_imdb_rating = median(imdb_rating, na.rm = TRUE),
+    .groups = "drop"
+  ) %>%
+  mutate(
+    across(c(median_budget, median_intgross), dollar)
+  )
+```
+
+```{r}
+#| label: gross-density
+
+ggplot(
+  movies_modern %>% filter(!is.na(intgross_2013)),
+  aes(intgross_2013, fill = binary)
+) +
+  geom_density(alpha = 0.45) +
+  scale_x_log10(labels = dollar_format()) +
+  labs(
+    title = "Pass and fail movies overlap heavily in gross revenue",
+    subtitle = "The question is less about one clean split and more about differences in distribution",
+    x = "International gross (2013 dollars, log scale)",
+    y = "Density",
+    fill = "Bechdel result"
+  )
+```
+
+```{r}
+#| label: top-grossing
+
+movies_modern %>%
+  filter(!is.na(intgross_2013)) %>%
+  slice_max(intgross_2013, n = 20, with_ties = FALSE) %>%
+  mutate(title = fct_reorder(title, intgross_2013)) %>%
+  ggplot(aes(intgross_2013, title, fill = binary)) +
+  geom_col() +
+  scale_x_continuous(labels = dollar_format(scale_cut = cut_short_scale())) +
+  labs(
+    title = "Many of the biggest-grossing films still fail the test",
+    subtitle = "A simple ranking is often more persuasive than a model at this stage",
+    x = "International gross (2013 dollars)",
+    y = NULL,
+    fill = "Bechdel result"
+  )
+```
+
+::: callout-note
+## Thought Process
+
+The KER pattern says to compare distributions, then rankings.
+
+-   distribution plots tell us whether the two groups separate cleanly
+-   ranked plots tell us what the high-profile exceptions look like
+
+Using both gives a better guide-through than either one alone.
+:::
+
+## Step 5: Bring genre into the story
+
+Genres are stored as comma-separated values, so we need to reshape them before comparing pass rates.
+
+```{r}
+#| label: genre-data
+
+movie_genres <- movies_modern %>%
+  filter(!is.na(genre)) %>%
+  separate_rows(genre, sep = ",\\s*") %>%
+  filter(genre != "")
+
+genre_summary <- movie_genres %>%
+  group_by(genre) %>%
+  summarise(
+    n_movies = n(),
+    pct_pass = mean(pass_flag, na.rm = TRUE),
+    median_intgross = median(intgross_2013, na.rm = TRUE),
+    .groups = "drop"
+  ) %>%
+  filter(n_movies >= 25)
+
+genre_summary %>%
+  arrange(desc(pct_pass)) %>%
+  slice_head(n = 12)
+```
+
+```{r}
+#| label: genre-bubble
+
+ggplot(genre_summary, aes(median_intgross, pct_pass)) +
+  geom_point(aes(size = n_movies), color = "#2c7fb8", alpha = 0.8) +
+  geom_text(aes(label = genre), check_overlap = TRUE, nudge_y = 0.015, size = 3.4) +
+  scale_x_log10(labels = dollar_format()) +
+  scale_y_continuous(labels = percent_format(accuracy = 1)) +
+  expand_limits(x = 1, y = 0) +
+  labs(
+    title = "Genre matters more than a single overall pass/fail average",
+    subtitle = "Some genres pair stronger representation with stronger median grosses",
+    x = "Median international gross (2013 dollars, log scale)",
+    y = "Share of movies that pass",
+    size = "Movies"
+  )
+```
+
+## Step 6: Use plot summaries for a text signal
+
+The KER flagged this episode as a good candidate for tokenization. We can compare the words that show up more often in plot summaries for passing versus failing films.
+
+```{r}
+#| label: tokenize-plots
+
+movie_words <- movies_modern %>%
+  filter(!is.na(plot)) %>%
+  select(imdb, binary, plot) %>%
+  mutate(
+    plot = str_to_lower(plot),
+    plot = str_replace_all(plot, "[^a-z\\s]", " ")
+  ) %>%
+  mutate(word = str_split(plot, "\\s+")) %>%
+  unnest(word) %>%
+  filter(
+    word != "",
+    !word %in% simple_stop_words,
+    str_detect(word, "^[a-z]+$"),
+    str_length(word) >= 3
+  )
+
+word_rates <- movie_words %>%
+  count(binary, word, sort = TRUE) %>%
+  group_by(binary) %>%
+  mutate(total_words = sum(n)) %>%
+  ungroup() %>%
+  select(binary, word, n, total_words) %>%
+  pivot_wider(
+    names_from = binary,
+    values_from = c(n, total_words),
+    values_fill = 0
+  ) %>%
+  mutate(
+    total_n = n_FAIL + n_PASS,
+    pass_rate = (n_PASS + 1) / (total_words_PASS + 1),
+    fail_rate = (n_FAIL + 1) / (total_words_FAIL + 1),
+    log_ratio = log(pass_rate / fail_rate)
+  ) %>%
+  filter(total_n >= 40)
+
+word_extremes <- bind_rows(
+  word_rates %>% slice_max(log_ratio, n = 12, with_ties = FALSE),
+  word_rates %>% slice_min(log_ratio, n = 12, with_ties = FALSE)
+) %>%
+  mutate(direction = if_else(log_ratio > 0, "More common in PASS plots", "More common in FAIL plots")) %>%
+  mutate(word = fct_reorder(word, log_ratio))
+```
+
+```{r}
+#| label: word-plot
+
+ggplot(word_extremes, aes(log_ratio, word, fill = direction)) +
+  geom_col() +
+  labs(
+    title = "Plot summaries also carry a representation signal",
+    subtitle = "Positive values mean the word appears more often in PASS movie plots",
+    x = "Log ratio of word use in PASS vs FAIL plots",
+    y = NULL,
+    fill = NULL
+  )
+```
+
+::: callout-note
+## Interpretation Guide
+
+This is not a causal claim. These words do not *cause* a movie to pass.
+
+They are just a compact way to show that the kinds of stories associated with passing and failing films are not randomly distributed.
+:::
+
+## Step 7: Add a light model
+
+The KER also suggested a predictive extension. We will keep it intentionally modest: a logistic regression predicting whether a movie passes the Bechdel test using year, ratings, and broad commercial signals.
+
+```{r}
+#| label: model-data
+
+model_data <- movies_modern %>%
+  mutate(
+    genre_action = str_detect(coalesce(genre, ""), "Action"),
+    genre_comedy = str_detect(coalesce(genre, ""), "Comedy"),
+    genre_drama = str_detect(coalesce(genre, ""), "Drama"),
+    genre_romance = str_detect(coalesce(genre, ""), "Romance"),
+    genre_horror = str_detect(coalesce(genre, ""), "Horror"),
+    genre_thriller = str_detect(coalesce(genre, ""), "Thriller"),
+    log_budget_2013 = log1p(budget_2013),
+    log_intgross_2013 = log1p(intgross_2013)
+  ) %>%
+  filter(
+    !is.na(pass_flag),
+    !is.na(year),
+    !is.na(imdb_rating),
+    !is.na(metascore),
+    !is.na(log_budget_2013),
+    !is.na(log_intgross_2013)
+  )
+
+bechdel_model <- glm(
+  pass_flag ~ year + imdb_rating + metascore + log_budget_2013 + log_intgross_2013 +
+    genre_action + genre_comedy + genre_drama + genre_romance + genre_horror + genre_thriller,
+  data = model_data,
+  family = binomial()
+)
+
+model_coefficients <- summary(bechdel_model)$coefficients %>%
+  as.data.frame() %>%
+  rownames_to_column("term") %>%
+  as_tibble() %>%
+  filter(term != "(Intercept)") %>%
+  transmute(
+    term,
+    estimate = Estimate,
+    std_error = `Std. Error`,
+    z_value = `z value`,
+    p_value = `Pr(>|z|)`
+  ) %>%
+  arrange(desc(abs(estimate)))
+
+model_coefficients
+```
+
+```{r}
+#| label: model-coefs
+
+model_coefficients %>%
+  slice_head(n = 12) %>%
+  mutate(term = fct_reorder(term, estimate)) %>%
+  ggplot(aes(estimate, term, fill = estimate > 0)) +
+  geom_col(show.legend = FALSE) +
+  labs(
+    title = "The model is a guide, not the goal",
+    subtitle = "Positive coefficients align with a higher probability of passing",
+    x = "Log-odds coefficient",
+    y = NULL
+  )
+```
+
+## What we learned
+
+This KER-guided build points to a few useful takeaways:
+
+-   pass rates improve over time, so time is part of the story
+-   commercial success and representation are related in a nuanced way, not a clean split
+-   genre composition matters a lot
+-   plot summaries carry a measurable representation signal
+-   a light model can organize the relationships, but the explanatory visuals do most of the teaching
+
+## Why this matches the KER
+
+This document followed the KER-derived workflow quite closely:
+
+1.  **Context** Pick the question and define the unit of analysis.
+2.  **Inspect** Decide which table is best for which question.
+3.  **Transform** Parse numerics, create decade buckets, and unnest genres.
+4.  **Compare** Look at time, revenue, and genre-level differences.
+5.  **Tokenize** Use plot summaries for a lightweight language comparison.
+6.  **Model** Add a simple predictive layer after the descriptive work is clear.
+7.  **Reflect** Summarize reusable moves for the next dataset.
+
+## Reuse pattern
+
+If we wanted to port this exact approach to another dataset, the reusable workflow would be:
+
+-   start with a broad trend chart
+-   separate descriptive comparison from modeling
+-   reshape multi-value text fields into long form
+-   create one "story chart", one "business chart", one "text signal chart", and one "model chart"
+-   keep the narrative explicit so the analysis reads like a guided walkthrough, not a code dump

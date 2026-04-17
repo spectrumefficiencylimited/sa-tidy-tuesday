@@ -1,0 +1,411 @@
+transcript_title,transcript_file,code_file,function_name,data_source,analysis_intent,analysis_type,pattern_signature,adaptation_hint,ker_status,notes,normalized_key
+Analyzing African-American achievements in R,raw-data/inspiration/Analyzing African-American achievements in R.txt,data-screencasts/african-american-achievements.Rmd,african_american_achievements,,,,,,mapped,,african american achievements
+Analyzing African-American history in R,raw-data/inspiration/Analyzing African-American history in R.txt,data-screencasts/african-american-history.Rmd,african_american_history,,,,,,mapped,,african american history
+Analyzing Animal Crossing in R,raw-data/inspiration/Analyzing Animal Crossing in R.txt,data-screencasts/animal-crossing.Rmd,animal_crossing,,,,,,mapped,,animal crossing
+Analyzing Australian animal outcomes in R,raw-data/inspiration/Analyzing Australian animal outcomes in R.txt,data-screencasts/australian-animal-outcomes.Rmd,australian_animal_outcomes,,,,,,mapped,,australian animal outcomes
+Analyzing Beyonce and Taylor Swift lyrics in R,raw-data/inspiration/Analyzing Beyonce and Taylor Swift lyrics in R.txt,data-screencasts/2020_09_29_taylor_swift_beyonce.Rmd,beyonce_taylor_swift_lyrics,"TidyTuesday 2020-09-29 lyrics, sales, and chart data for Beyonce and Taylor Swift","Compare artist and album language patterns using tokenization, tf-idf, and log-odds alongside sales context",EDA,text_tokenize_compare_tf_idf_log_odds_visualize,"Reuse for multi-group text corpora with document, term, and count structure",implemented,,beyonce taylor swift lyrics
+Analyzing Bob Ross paintings in R,raw-data/inspiration/Analyzing Bob Ross paintings in R.txt,data-screencasts/bob-ross.Rmd,bob_ross_paintings,,,,,,mapped,,bob ross paintings
+Analyzing Broadway shows in R,raw-data/inspiration/Analyzing Broadway shows in R.txt,data-screencasts/broadway.Rmd,broadway_shows,,,,,,mapped,,broadway shows
+Analyzing Chopped epiodes in R,raw-data/inspiration/Analyzing Chopped epiodes in R.txt,data-screencasts/2020_08_25_chopped.Rmd,chopped_epiodes,,,,,,mapped,,chopped epiodes
+Analyzing European energy in R,raw-data/inspiration/Analyzing European energy in R.txt,data-screencasts/2020_08_04_europe_energy.Rmd,european_energy,,,,,,mapped,,european energy
+Analyzing Friends transcripts in R,raw-data/inspiration/Analyzing Friends transcripts in R.txt,data-screencasts/2020_09_08_friends.Rmd,friends_transcripts,,,,,,mapped,,friends transcripts
+Analyzing GDPR violations in R,raw-data/inspiration/Analyzing GDPR violations in R.txt,data-screencasts/gdpr.Rmd,gdpr_violations,,,,,,mapped,,gdpr violations
+Analyzing HBCU enrollment in R,raw-data/inspiration/Analyzing HBCU enrollment in R.txt,data-screencasts/2021_02_02_hbcu.Rmd,hbcu_enrollment,,,,,,mapped,,hbcu enrollment
+Analyzing Himalayan climbers in R,raw-data/inspiration/Analyzing Himalayan climbers in R.txt,data-screencasts/2020_09_22_himalayan_climbers.Rmd,himalayan_climbers,"TidyTuesday 2020-09-22 Himalayan climbers data: peaks, expeditions, and members tables","Explore expedition outcomes, climbing duration, and peak-level success patterns across Himalayan expeditions",EDA,load_inspect_recode_summarize_compare_visualize,"Reuse for event or expedition datasets with outcome labels, elapsed time, and group-level summaries",implemented,,himalayan climbers
+Analyzing IKEA furniture in R,raw-data/inspiration/Analyzing IKEA furniture in R.txt,data-screencasts/2020_11_03_ikea.Rmd,ikea_furniture,,,,,,mapped,,ikea furniture
+Analyzing Maryland bridges with R,raw-data/inspiration/Analyzing Maryland bridges with R.txt,data-screencasts/baltimore_bridges.Rmd,maryland_bridges,,,,,,mapped,,maryland bridges
+Analyzing Medium articles with R,raw-data/inspiration/Analyzing Medium articles with R.txt,data-screencasts/medium-datasci.Rmd,medium_articles,,,,,,mapped,,medium articles
+Analyzing NCAA Women's Basketball,raw-data/inspiration/Analyzing NCAA Women's Basketball.txt,data-screencasts/2020_10_06_ncaa_womens_basketball.Rmd,ncaa_women_s_basketball,,,,,,mapped,,ncaa women s basketball
+Analyzing NYC restaurant inspections with R,raw-data/inspiration/Analyzing NYC restaurant inspections with R.txt,data-screencasts/nyc-restaurants.Rmd,nyc_restaurant_inspections,,,,,,mapped,,nyc restaurant inspections
+Analyzing Netflix titles in R,raw-data/inspiration/Analyzing Netflix titles in R.txt,data-screencasts/2021_04_20_netflix_titles.Rmd,netflix_titles,,,,,,mapped,,netflix titles
+Analyzing Ninja Warrior in R,raw-data/inspiration/Analyzing Ninja Warrior in R.txt,data-screencasts/2020_12_15_ninja_warrior.Rmd,ninja_warrior,,,,,,mapped,,ninja warrior
+Analyzing Nobel Prize winners in R,raw-data/inspiration/Analyzing Nobel Prize winners in R.txt,data-screencasts/nobel-prize.Rmd,nobel_prize_winners,,,,,,mapped,,nobel prize winners
+Analyzing Simpsons guest stars and dialogue in R,raw-data/inspiration/Analyzing Simpsons guest stars and dialogue in R.txt,data-screencasts/simpsons-guests.Rmd,simpsons_guest_stars_dialogue,,,,,,mapped,,simpsons guest stars dialogue
+Analyzing Super Bowl ads in R,raw-data/inspiration/Analyzing Super Bowl ads in R.txt,data-screencasts/2021_03_02_super_bowl_ads.Rmd,super_bowl_ads,,,,,,mapped,,super bowl ads
+Analyzing Thanksgiving dinners in R,raw-data/inspiration/Analyzing Thanksgiving dinners in R.txt,data-screencasts/thanksgiving.Rmd,thanksgiving_dinners,,,,,,mapped,,thanksgiving dinners
+Analyzing Tour de France data in R,raw-data/inspiration/Analyzing Tour de France data in R.txt,data-screencasts/tour-de-france.Rmd,tour_de_france,,,,,,mapped,,tour de france
+Analyzing UN votes in R,raw-data/inspiration/Analyzing UN votes in R.txt,data-screencasts/2021_03_23_un_votes.Rmd,un_votes,,,,,,mapped,,un votes
+Analyzing US dairy consumption in R,raw-data/inspiration/Analyzing US dairy consumption in R.txt,data-screencasts/us-dairy.Rmd,dairy_consumption,,,,,,mapped,,dairy consumption
+Analyzing US wind data in R,raw-data/inspiration/Analyzing US wind data in R.txt,data-screencasts/us-wind.Rmd,wind,,,,,,mapped,,wind
+Analyzing Video Games in R,raw-data/inspiration/Analyzing Video Games in R.txt,data-screencasts/2021_03_16_video_games.Rmd,video_games,,,,,,mapped,,video games
+Analyzing Women's World Cup data in R,raw-data/inspiration/Analyzing Women's World Cup data.txt,data-screencasts/womens-world-cup.Rmd,women_s_world_cup,,,,,,mapped,,women s world cup
+Analyzing X-Men comics in R,raw-data/inspiration/Analyzing X-Men comics in R.txt,data-screencasts/uncanny-xmen.Rmd,x_men_comics,,,,,,mapped,,x men comics
+Analyzing and predicting horror movie ratings in R,raw-data/inspiration/Analyzing and predicting horror movie ratings in R.txt,data-screencasts/horror-movie-ratings.Rmd,predicting_horror_movie_ratings,,,,,,mapped,,predicting horror movie ratings
+Analyzing art collections in R,raw-data/inspiration/Analyzing art collections in R.txt,data-screencasts/2021_01_12_tate_art.Rmd,art_collections,,,,,,mapped,approximate match to Tate art analysis,art collections
+Analyzing beach volleyball in R,raw-data/inspiration/Analyzing beach volleyball in R.txt,data-screencasts/beach-volleyball.Rmd,beach_volleyball,,,,,,mapped,,beach volleyball
+Analyzing bike frequencies in Seattle in R,raw-data/inspiration/Analyzing bike frequencies in Seattle in R.txt,data-screencasts/bike_traffic.Rmd,bike_frequencies_seattle,,,,,,mapped,approximate match to bike traffic analysis,bike frequencies seattle
+Analyzing bird collisions with bootstrapping in R,raw-data/inspiration/Analyzing bird collisions with bootstrapping in R.txt,data-screencasts/bird-collisions.Rmd,bird_collisions_bootstrapping,,,,,,mapped,,bird collisions bootstrapping
+Analyzing board games and predicting ratings in R,raw-data/inspiration/Analyzing board games and predicting ratings in R.txt,data-screencasts/board-games.Rmd,board_games_predicting_ratings,,,,,,mapped,,board games predicting ratings
+Analyzing car fuel efficiency in R,raw-data/inspiration/Analyzing car fuel efficiency in R.txt,data-screencasts/car-economy.Rmd,car_fuel_efficiency,,,,,,mapped,,car fuel efficiency
+Analyzing caribou locations in R,raw-data/inspiration/Analyzing caribou locations in R.txt,data-screencasts/caribou-locations.Rmd,caribou_locations,,,,,,mapped,,caribou locations
+Analyzing cocktail recipes in R,raw-data/inspiration/Analyzing cocktail recipes in R.txt,data-screencasts/cocktails.Rmd,cocktail_recipes,,,,,,mapped,,cocktail recipes
+Analyzing code in CRAN packages in R,raw-data/inspiration/Analyzing code in CRAN packages in R.txt,data-screencasts/cran-code.Rmd,code_cran_packages,,,,,,mapped,,code cran packages
+Analyzing coffee ratings in R,raw-data/inspiration/Analyzing coffee ratings in R.txt,data-screencasts/coffee-ratings.Rmd,coffee_ratings,,,,,,mapped,,coffee ratings
+Analyzing college major & income data in R,raw-data/inspiration/Analyzing college major & income data in R.txt,data-screencasts/college-majors.Rmd,college_major_income,,,,,,mapped,,college major income
+Analyzing data on R downloads,raw-data/inspiration/Analyzing data on R downloads.txt,data-screencasts/r-downloads.Rmd,downloads,,,,,,mapped,,downloads
+Analyzing data on women in the workplace in R,raw-data/inspiration/Analyzing data on women in the workplace in R.txt,data-screencasts/women-workplace.Rmd,women_workplace,,,,,,mapped,,women workplace
+Analyzing deforestation in R,raw-data/inspiration/Analyzing deforestation in R.txt,data-screencasts/2021_04_06_deforestation.Rmd,deforestation,,,,,,mapped,,deforestation
+Analyzing dolphin data in R,raw-data/inspiration/Analyzing dolphin data in R.txt,data-screencasts/cetaceans.Rmd,dolphin,,,,,,mapped,match by marine mammal dataset,dolphin
+Analyzing employment and earnings in R,raw-data/inspiration/Analyzing employment and earnings in R.txt,data-screencasts/2021_02_23_employment_earnings.Rmd,employment_earnings,,,,,,mapped,,employment earnings
+Analyzing exploring US beer production in R,raw-data/inspiration/Analyzing exploring US beer production in R.txt,data-screencasts/beer-production.Rmd,exploring_beer_production,,,,,,mapped,,exploring beer production
+Analyzing extinct plants in R,raw-data/inspiration/Analyzing extinct plants in R.txt,data-screencasts/2020_08_18_extinct_plants.Rmd,extinct_plants,,,,,,mapped,,extinct plants
+Analyzing franchise revenue in R,raw-data/inspiration/Analyzing franchise revenue in R.txt,data-screencasts/media-franchises.Rmd,franchise_revenue,,,,,,mapped,topic match to media franchises revenue,franchise revenue
+Analyzing global crop yields in R,raw-data/inspiration/Analyzing global crop yields in R.txt,data-screencasts/2020_09_01_crop_yields.Rmd,global_crop_yields,,,,,,mapped,,global crop yields
+Analyzing government spending on kids in R,raw-data/inspiration/Analyzing government spending on kids in R.txt,data-screencasts/2020_09_15_government_spending_kids.Rmd,government_spending_kids,,,,,,mapped,,government spending kids
+Analyzing historical phones in R,raw-data/inspiration/Analyzing historical phones in R.txt,data-screencasts/2020_11_10_phone_history.Rmd,historical_phones,,,,,,mapped,,historical phones
+Analyzing horror movie profits in R,raw-data/inspiration/Analyzing horror movie profits in R.txt,data-screencasts/movie-profit.Rmd,horror_movie_profits,,,,,,mapped,,horror movie profits
+Analyzing incarceration data in R,raw-data/inspiration/Analyzing incarceration data in R.txt,,incarceration,,,,,,needs_mapping,no matching Rmd found; likely missing codebook-based analysis from Vera Institute dataset https://github.com/vera-institute/incarceration_trends/blob/master/incarceration_trends-Codebook.pdf?raw=true,incarceration
+Analyzing malaria incidence in R,raw-data/inspiration/Analyzing malaria incidence in R.txt,data-screencasts/malaria.Rmd,malaria_incidence,,,,,,mapped,,malaria incidence
+Analyzing penguins in R,raw-data/inspiration/Analyzing penguins in R.txt,data-screencasts/2020_07_28_penguins.Rmd,penguins,,,,,,mapped,,penguins
+Analyzing pet names in Seattle in R,raw-data/inspiration/Analyzing pet names in Seattle in R.txt,data-screencasts/seattle-pets.Rmd,pet_names_seattle,,,,,,mapped,,pet names seattle
+Analyzing pizza ratings in R,raw-data/inspiration/Analyzing pizza ratings in R.txt,data-screencasts/nyc-pizza.Rmd,pizza_ratings,,,,,,mapped,,pizza ratings
+Analyzing plastic waste across countries in R,raw-data/inspiration/Analyzing plastic waste across countries in R.txt,data-screencasts/plastic-waste.Rmd,plastic_waste_across_countries,,,,,,mapped,,plastic waste across countries
+Analyzing post offices in R,raw-data/inspiration/Analyzing post offices in R.txt,data-screencasts/2021_04_13_post_offices.Rmd,post_offices,,,,,,mapped,,post offices
+Analyzing predicting wine ratings in R,raw-data/inspiration/Analyzing predicting wine ratings in R.txt,data-screencasts/wine-ratings.Rmd,predicting_wine_ratings,,,,,,mapped,,predicting wine ratings
+Analyzing ratings and scripts from The Office in R,raw-data/inspiration/Analyzing ratings and scripts from The Office in R.txt,data-screencasts/office-transcripts.Rmd,ratings_scripts_from_office,,,,,,mapped,,ratings scripts from office
+Analyzing space launches in R,raw-data/inspiration/Analyzing space launches in R.txt,data-screencasts/space-launches.Rmd,space_launches,,,,,,mapped,,space launches
+Analyzing squirrels in NYC in R,raw-data/inspiration/Analyzing squirrels in NYC in R.txt,data-screencasts/nyc-squirrels.Rmd,squirrels_nyc,,,,,,mapped,,squirrels nyc
+Analyzing tennis tournaments in R,raw-data/inspiration/Analyzing tennis tournaments in R.txt,data-screencasts/grand-slams.Rmd,tennis_tournaments,,,,,,mapped,,tennis tournaments
+Analyzing the Bechdel test in R,raw-data/inspiration/Analyzing the Bechdel test in R.txt,data-screencasts/2021_03_09_bechdel_test.Rmd,bechdel_test,,,,,,mapped,,bechdel test
+Analyzing the Big Mac index in R,raw-data/inspiration/Analyzing the Big Mac index in R.txt,data-screencasts/2020_12_22_big_mac_index.Rmd,big_mac_index,,,,,,mapped,,big mac index
+Analyzing the Great American Beer Festival,raw-data/inspiration/Analyzing the Great American Beer Festival.txt,data-screencasts/2020_10_20_beer_awards.Rmd,great_american_beer_festival,,,,,,mapped,approximate topic match,great american beer festival
+Analyzing the Kenya census in R,raw-data/inspiration/Analyzing the Kenya census in R.txt,data-screencasts/2021_01_19_kenya_census.Rmd,kenya_census,,,,,,mapped,,kenya census
+Analyzing the golden age of television in R,raw-data/inspiration/Analyzing the golden age of television in R.txt,data-screencasts/golden-age-tv.Rmd,golden_age_television,,,,,,mapped,,golden age television
+Analyzing tidying and analyzing US PhDs in R,raw-data/inspiration/Analyzing tidying and analyzing US PhDs in R.txt,data-screencasts/us_phds.Rmd,tidying_phds,,,,,,mapped,,tidying phds
+Analyzing tidytuesday and rstats tweets in R,raw-data/inspiration/Analyzing tidytuesday and rstats tweets in R.txt,data-screencasts/tidytuesday-tweets.Rmd,tidytuesday_rstats_tweets,,,,,,mapped,,tidytuesday rstats tweets
+Analyzing train delays in France in R,raw-data/inspiration/Analyzing train delays in France in R.txt,data-screencasts/french-trains.Rmd,train_delays_france,,,,,,mapped,,train delays france
+Analyzing transit costs in R,raw-data/inspiration/Analyzing transit costs in R.txt,data-screencasts/2021_01_05_transit_costs.Rmd,transit_costs,,,,,,mapped,,transit costs
+Analyzing volcano eruptions in R,raw-data/inspiration/Analyzing volcano eruptions in R.txt,data-screencasts/volcano-eruptions.Rmd,volcano_eruptions,,,,,,mapped,,volcano eruptions
+Analyzing water access points in R,raw-data/inspiration/Analyzing water access points in R.txt,data-screencasts/2021_05_04_water_access.Rmd,water_access_points,,,,,,mapped,,water access points
+Analyzing wealth and income in R,raw-data/inspiration/Analyzing wealth and income in R.txt,data-screencasts/2021_05_18_salary_survey.Rmd,wealth_income,,,,,,mapped,approximate topic match,wealth income
+Analyzng scraping and analyzing ramen reviews in R,raw-data/inspiration/Analyzng scraping and analyzing ramen reviews in R.txt,data-screencasts/ramen-ratings.Rmd,analyzng_scraping_ramen_reviews,,,,,,mapped,,analyzng scraping ramen reviews
+Analyzing US Tuition Costs in R,,,us_tuition_costs,TidyTuesday 2018-04-02,,,,,needs_mapping,,us tuition costs
+Analyzing NFL Positional Salaries in R,,,nfl_positional_salaries,TidyTuesday 2018-04-09,,,,,needs_mapping,,nfl positional salaries
+Analyzing Global Mortality in R,,,global_mortality,TidyTuesday 2018-04-16,,,,,needs_mapping,,global mortality
+Analyzing Australian Salaries by Gender in R,,,australian_salaries_by_gender,TidyTuesday 2018-04-23,,,,,needs_mapping,,australian salaries by gender
+Analyzing ACS Census Data 2015 in R,,,acs_census_data_2015,TidyTuesday 2018-04-30,,,,,needs_mapping,,acs census data 2015
+Analyzing Global Coffee Chains in R,,,global_coffee_chains,TidyTuesday 2018-05-07,,,,,needs_mapping,,global coffee chains
+Analyzing Star Wars Survey in R,raw-data/inspiration/Analyzing Star Wars Survey in R.txt,,star_wars_survey,TidyTuesday 2018-05-14,,,,,needs_mapping,,star wars survey
+Analyzing US Honey Production in R,,,us_honey_production,TidyTuesday 2018-05-21,,,,,needs_mapping,,us honey production
+Analyzing Comic Book Characters in R,,,comic_book_characters,TidyTuesday 2018-05-29,,,,,needs_mapping,,comic book characters
+Analyzing Biketown Bikeshare in R,,,biketown_bikeshare,TidyTuesday 2018-06-05,,,,,needs_mapping,,biketown bikeshare
+Analyzing FIFA World Cup Audience in R,,,fifa_world_cup_audience,TidyTuesday 2018-06-12,,,,,needs_mapping,,fifa world cup audience
+Analyzing Hurricanes and Puerto Rico in R,,,hurricanes_and_puerto_rico,TidyTuesday 2018-06-19,,,,,needs_mapping,,hurricanes and puerto rico
+Analyzing Alcohol Consumption in R,,,alcohol_consumption,TidyTuesday 2018-06-26,,,,,needs_mapping,,alcohol consumption
+Analyzing Global Life Expectancy in R,,,global_life_expectancy,TidyTuesday 2018-07-03,,,,,needs_mapping,,global life expectancy
+Analyzing Craft Beer USA in R,,,craft_beer_usa,TidyTuesday 2018-07-10,,,,,needs_mapping,,craft beer usa
+Analyzing Exercise USA in R,,,exercise_usa,TidyTuesday 2018-07-17,,,,,needs_mapping,,exercise usa
+Analyzing Dallas Animal Shelter FY2017 in R,,,dallas_animal_shelter_fy2017,TidyTuesday 2018-07-31,,,,,needs_mapping,,dallas animal shelter fy2017
+Analyzing Airline Safety in R,,,airline_safety,TidyTuesday 2018-08-07,,,,,needs_mapping,,airline safety
+Analyzing Russian Troll Tweets in R,,,russian_troll_tweets,TidyTuesday 2018-08-14,,,,,needs_mapping,,russian troll tweets
+Analyzing California Fires in R,raw-data/inspiration/Analyzing California Fires in R.txt,,california_fires,TidyTuesday 2018-08-21,,,,,needs_mapping,,california fires
+Analyzing NFL Stats in R,,,nfl_stats,TidyTuesday 2018-08-28,,,,,needs_mapping,,nfl stats
+Analyzing Fast Food Calories in R,raw-data/inspiration/Analyzing Fast Food Calories in R.txt,,fast_food_calories,TidyTuesday 2018-09-04,,,,,needs_mapping,,fast food calories
+Analyzing Cats vs Dogs USA in R,raw-data/inspiration/Analyzing Cats vs Dogs USA in R.txt,,cats_vs_dogs_usa,TidyTuesday 2018-09-11,,,,,needs_mapping,,cats vs dogs usa
+Analyzing US Flights in R,raw-data/inspiration/Analyzing US Flights in R.txt,,us_flights,TidyTuesday 2018-09-18,,,,,needs_mapping,,us flights
+Analyzing Global Invasive Species in R,raw-data/inspiration/Analyzing Global Invasive Species in R.txt,,global_invasive_species,TidyTuesday 2018-09-25,,,,,needs_mapping,,global invasive species
+Analyzing US Births in R,raw-data/inspiration/Analyzing US Births in R.txt,,us_births,TidyTuesday 2018-10-02,,,,,needs_mapping,,us births
+Analyzing US Voter Turnout in R,raw-data/inspiration/Analyzing US Voter Turnout in R.txt,,us_voter_turnout,TidyTuesday 2018-10-09,,,,,needs_mapping,,us voter turnout
+Analyzing House Price Index and Mortgage Rates in R,raw-data/inspiration/Analyzing House Price Index and Mortgage Rates in R.txt,,house_price_index_and_mortgage_rates,TidyTuesday 2019-02-05,,,,,needs_mapping,,house price index and mortgage rates
+Analyzing Federal RD Spending in R,raw-data/inspiration/Analyzing Federal RD Spending in R.txt,,federal_rd_spending,TidyTuesday 2019-02-12,,,,,needs_mapping,,federal rd spending
+Analyzing Stanford Open Policing Project in R,raw-data/inspiration/Analyzing Stanford Open Policing Project in R.txt,,stanford_open_policing_project,TidyTuesday 2019-03-19,,,,,needs_mapping,,stanford open policing project
+Analyzing The Economist Data Viz Mistakes in R,raw-data/inspiration/Analyzing The Economist Data Viz Mistakes in R.txt,,the_economist_data_viz_mistakes,TidyTuesday 2019-04-16,,,,,needs_mapping,,the economist data viz mistakes
+Analyzing Anime Data in R,raw-data/inspiration/Analyzing Anime Data in R.txt,,anime_data,TidyTuesday 2019-04-23,,,,,needs_mapping,,anime data
+Analyzing Global Student to Teacher Ratios in R,raw-data/inspiration/Analyzing Global Student to Teacher Ratios in R.txt,,global_student_to_teacher_ratios,TidyTuesday 2019-05-07,,,,,needs_mapping,,global student to teacher ratios
+Analyzing Meteorites in R,raw-data/inspiration/Analyzing Meteorites in R.txt,,meteorites,TidyTuesday 2019-06-11,,,,,needs_mapping,,meteorites
+Analyzing Christmas Bird Counts in R,raw-data/inspiration/Analyzing Christmas Bird Counts in R.txt,,christmas_bird_counts,TidyTuesday 2019-06-18,,,,,needs_mapping,,christmas bird counts
+Analyzing Global UFO Sightings in R,raw-data/inspiration/Analyzing Global UFO Sightings in R.txt,,global_ufo_sightings,TidyTuesday 2019-06-25,,,,,needs_mapping,,global ufo sightings
+Analyzing R4DS Membership in R,raw-data/inspiration/Analyzing R4DS Membership in R.txt,,r4ds_membership,TidyTuesday 2019-07-16,,,,,needs_mapping,,r4ds membership
+Analyzing Wildlife Strikes in R,raw-data/inspiration/Analyzing Wildlife Strikes in R.txt,,wildlife_strikes,TidyTuesday 2019-07-23,,,,,needs_mapping,,wildlife strikes
+Analyzing Video Games Steam in R,raw-data/inspiration/Analyzing Video Games Steam in R.txt,,video_games_steam,TidyTuesday 2019-07-30,,,,,needs_mapping,,video games steam
+Analyzing Roman Emperors in R,raw-data/inspiration/Analyzing Roman Emperors in R.txt,,roman_emperors,TidyTuesday 2019-08-13,,,,,needs_mapping,,roman emperors
+Analyzing Nuclear Explosions in R,raw-data/inspiration/Analyzing Nuclear Explosions in R.txt,,nuclear_explosions,TidyTuesday 2019-08-20,,,,,needs_mapping,,nuclear explosions
+Analyzing Moores Law in R,raw-data/inspiration/Analyzing Moores Law in R.txt,,moores_law,TidyTuesday 2019-09-03,,,,,needs_mapping,,moores law
+Analyzing Amusement Park Injuries in R,raw-data/inspiration/Analyzing Amusement Park Injuries in R.txt,,amusement_park_injuries,TidyTuesday 2019-09-10,,,,,needs_mapping,,amusement park injuries
+Analyzing National Park Visits in R,raw-data/inspiration/Analyzing National Park Visits in R.txt,,national_park_visits,TidyTuesday 2019-09-17,,,,,needs_mapping,,national park visits
+Analyzing School Diversity in R,raw-data/inspiration/Analyzing School Diversity in R.txt,,school_diversity,TidyTuesday 2019-09-24,,,,,needs_mapping,,school diversity
+Analyzing Powerlifting in R,raw-data/inspiration/Analyzing Powerlifting in R.txt,,powerlifting,TidyTuesday 2019-10-08,,,,,needs_mapping,,powerlifting
+Analyzing Bike and Walk Commutes in R,raw-data/inspiration/Analyzing Bike and Walk Commutes in R.txt,,bike_and_walk_commutes,TidyTuesday 2019-11-05,,,,,needs_mapping,,bike and walk commutes
+Analyzing NZ Bird of the Year in R,raw-data/inspiration/Analyzing NZ Bird of the Year in R.txt,,nz_bird_of_the_year,TidyTuesday 2019-11-19,,,,,needs_mapping,,nz bird of the year
+Analyzing Student Loan Debt in R,raw-data/inspiration/Analyzing Student Loan Debt in R.txt,,student_loan_debt,TidyTuesday 2019-11-26,,,,,needs_mapping,,student loan debt
+Analyzing Philly Parking Tickets in R,raw-data/inspiration/Analyzing Philly Parking Tickets in R.txt,,philly_parking_tickets,TidyTuesday 2019-12-03,,,,,needs_mapping,,philly parking tickets
+Analyzing Replicating Plots in R in R,raw-data/inspiration/Analyzing Replicating Plots in R in R.txt,,replicating_plots_in_r,TidyTuesday 2019-12-10,,,,,needs_mapping,,replicating plots in r
+Analyzing Adoptable Dogs in R,raw-data/inspiration/Analyzing Adoptable Dogs in R.txt,,adoptable_dogs,TidyTuesday 2019-12-17,,,,,needs_mapping,,adoptable dogs
+Analyzing Christmas Songs in R,raw-data/inspiration/Analyzing Christmas Songs in R.txt,,christmas_songs,TidyTuesday 2019-12-24,,,,,needs_mapping,,christmas songs
+Analyzing Australian Fires in R,raw-data/inspiration/Analyzing Australian Fires in R.txt,,australian_fires,TidyTuesday 2020-01-07,,,,,needs_mapping,,australian fires
+Analyzing Passwords in R,raw-data/inspiration/Analyzing Passwords in R.txt,,passwords,TidyTuesday 2020-01-14,,,,,needs_mapping,,passwords
+Analyzing Song Genres in R,raw-data/inspiration/Analyzing Song Genres in R.txt,,song_genres,TidyTuesday 2020-01-21,,,,,needs_mapping,,song genres
+Analyzing San Francisco Trees in R,raw-data/inspiration/Analyzing San Francisco Trees in R.txt,,san_francisco_trees,TidyTuesday 2020-01-28,,,,,needs_mapping,,san francisco trees
+Analyzing NFL Attendance in R,raw-data/inspiration/Analyzing NFL Attendance in R.txt,,nfl_attendance,TidyTuesday 2020-02-04,,,,,needs_mapping,,nfl attendance
+Analyzing Hotel Bookings in R,raw-data/inspiration/Analyzing Hotel Bookings in R.txt,,hotel_bookings,TidyTuesday 2020-02-11,,,,,needs_mapping,,hotel bookings
+Analyzing Foods Carbon Footprint in R,raw-data/inspiration/Analyzing Foods Carbon Footprint in R.txt,,foods_carbon_footprint,TidyTuesday 2020-02-18,,,,,needs_mapping,,foods carbon footprint
+Analyzing Measles Vaccination in R,raw-data/inspiration/Analyzing Measles Vaccination in R.txt,,measles_vaccination,TidyTuesday 2020-02-25,,,,,needs_mapping,,measles vaccination
+Analyzing NHL Goals in R,raw-data/inspiration/Analyzing NHL Goals in R.txt,,nhl_goals,TidyTuesday 2020-03-03,,,,,needs_mapping,,nhl goals
+Analyzing College Tuition Diversity and Pay in R,raw-data/inspiration/Analyzing College Tuition Diversity and Pay in R.txt,,college_tuition_diversity_and_pay,TidyTuesday 2020-03-10,,,,,needs_mapping,,college tuition diversity and pay
+Analyzing Traumatic Brain Injury in R,raw-data/inspiration/Analyzing Traumatic Brain Injury in R.txt,,traumatic_brain_injury,TidyTuesday 2020-03-24,,,,,needs_mapping,,traumatic brain injury
+Analyzing Best Rap Artists in R,raw-data/inspiration/Analyzing Best Rap Artists in R.txt,,best_rap_artists,TidyTuesday 2020-04-14,,,,,needs_mapping,,best rap artists
+Analyzing Marble Races in R,raw-data/inspiration/Analyzing Marble Races in R.txt,,marble_races,TidyTuesday 2020-06-02,,,,,needs_mapping,,marble races
+Analyzing Astronaut Database in R,raw-data/inspiration/Analyzing Astronaut Database in R.txt,,astronaut_database,TidyTuesday 2020-07-14,,,,,needs_mapping,,astronaut database
+Analyzing Avatar The Last Airbender in R,raw-data/inspiration/Analyzing Avatar The Last Airbender in R.txt,,avatar_the_last_airbender,TidyTuesday 2020-08-11,,,,,needs_mapping,,avatar the last airbender
+Analyzing DatasauRus Dozen in R,raw-data/inspiration/Analyzing DatasauRus Dozen in R.txt,,datasaurus_dozen,TidyTuesday 2020-10-13,,,,,needs_mapping,,datasaurus dozen
+Analyzing Canadian Wind Turbines in R,raw-data/inspiration/Analyzing Canadian Wind Turbines in R.txt,,canadian_wind_turbines,TidyTuesday 2020-10-27,,,,,needs_mapping,,canadian wind turbines
+Analyzing Black in Data in R,raw-data/inspiration/Analyzing Black in Data in R.txt,,black_in_data,TidyTuesday 2020-11-17,,,,,needs_mapping,,black in data
+Analyzing Washington Trails in R,raw-data/inspiration/Analyzing Washington Trails in R.txt,,washington_trails,TidyTuesday 2020-11-24,,,,,needs_mapping,,washington trails
+Analyzing Toronto Shelters in R,raw-data/inspiration/Analyzing Toronto Shelters in R.txt,,toronto_shelters,TidyTuesday 2020-12-01,,,,,needs_mapping,,toronto shelters
+Analyzing Women of 2020 in R,raw-data/inspiration/Analyzing Women of 2020 in R.txt,,women_of_2020,TidyTuesday 2020-12-08,,,,,needs_mapping,,women of 2020
+Analyzing Plastic Pollution in R,raw-data/inspiration/Analyzing Plastic Pollution in R.txt,,plastic_pollution,TidyTuesday 2021-01-26,,,,,needs_mapping,,plastic pollution
+Analyzing WEB Du Bois Challenge in R,raw-data/inspiration/Analyzing WEB Du Bois Challenge in R.txt,,web_du_bois_challenge,TidyTuesday 2021-02-16,,,,,needs_mapping,,web du bois challenge
+Analyzing Makeup Shades in R,raw-data/inspiration/Analyzing Makeup Shades in R.txt,,makeup_shades,TidyTuesday 2021-03-30,,,,,needs_mapping,,makeup shades
+Analyzing CEO Departures in R,raw-data/inspiration/Analyzing CEO Departures in R.txt,,ceo_departures,TidyTuesday 2021-04-27,,,,,needs_mapping,,ceo departures
+Analyzing US Broadband in R,raw-data/inspiration/Analyzing US Broadband in R.txt,,us_broadband,TidyTuesday 2021-05-11,,,,,needs_mapping,,us broadband
+Analyzing Ask a Manager Salary Survey in R,raw-data/inspiration/Analyzing Ask a Manager Salary Survey in R.txt,,ask_a_manager_salary_survey,TidyTuesday 2021-05-18,,,,,needs_mapping,,ask a manager salary survey
+Analyzing Mario Kart World Records in R,raw-data/inspiration/Analyzing Mario Kart World Records in R.txt,,mario_kart_world_records,TidyTuesday 2021-05-25,,,,,needs_mapping,,mario kart world records
+Analyzing Survivor TV Show in R,raw-data/inspiration/Analyzing Survivor TV Show in R.txt,,survivor_tv_show,TidyTuesday 2021-06-01,,,,,needs_mapping,,survivor tv show
+Analyzing Great Lakes Fish in R,raw-data/inspiration/Analyzing Great Lakes Fish in R.txt,,great_lakes_fish,TidyTuesday 2021-06-08,,,,,needs_mapping,,great lakes fish
+Analyzing WEB Du Bois and Juneteenth in R,raw-data/inspiration/Analyzing WEB Du Bois and Juneteenth in R.txt,,web_du_bois_and_juneteenth,TidyTuesday 2021-06-15,,,,,needs_mapping,,web du bois and juneteenth
+Analyzing Public Park Access in R,raw-data/inspiration/Analyzing Public Park Access in R.txt,,public_park_access,TidyTuesday 2021-06-22,,,,,needs_mapping,,public park access
+Analyzing Animal Rescues in R,raw-data/inspiration/Analyzing Animal Rescues in R.txt,,animal_rescues,TidyTuesday 2021-06-29,,,,,needs_mapping,,animal rescues
+Analyzing International Independence Days in R,raw-data/inspiration/Analyzing International Independence Days in R.txt,,international_independence_days,TidyTuesday 2021-07-06,,,,,needs_mapping,,international independence days
+Analyzing Scooby Doo in R,raw-data/inspiration/Analyzing Scooby Doo in R.txt,,scooby_doo,TidyTuesday 2021-07-13,,,,,needs_mapping,,scooby doo
+Analyzing US Droughts in R,raw-data/inspiration/Analyzing US Droughts in R.txt,,us_droughts,TidyTuesday 2021-07-20,,,,,needs_mapping,,us droughts
+Analyzing Olympic Medals in R,raw-data/inspiration/Analyzing Olympic Medals in R.txt,,olympic_medals,TidyTuesday 2021-07-27,,,,,needs_mapping,,olympic medals
+Analyzing Paralympic Medals in R,raw-data/inspiration/Analyzing Paralympic Medals in R.txt,,paralympic_medals,TidyTuesday 2021-08-03,,,,,needs_mapping,,paralympic medals
+Analyzing BEA Infrastructure Investment in R,raw-data/inspiration/Analyzing BEA Infrastructure Investment in R.txt,,bea_infrastructure_investment,TidyTuesday 2021-08-10,,,,,needs_mapping,,bea infrastructure investment
+Analyzing Star Trek Voice Commands in R,raw-data/inspiration/Analyzing Star Trek Voice Commands in R.txt,,star_trek_voice_commands,TidyTuesday 2021-08-17,,,,,needs_mapping,,star trek voice commands
+Analyzing Lemurs in R,raw-data/inspiration/Analyzing Lemurs in R.txt,,lemurs,TidyTuesday 2021-08-24,,,,,needs_mapping,,lemurs
+Analyzing Bird Baths in R,raw-data/inspiration/Analyzing Bird Baths in R.txt,,bird_baths,TidyTuesday 2021-08-31,,,,,needs_mapping,,bird baths
+Analyzing Formula 1 Races in R,raw-data/inspiration/Analyzing Formula 1 Races in R.txt,,formula_1_races,TidyTuesday 2021-09-07,,,,,needs_mapping,,formula 1 races
+Analyzing Billboard Top 100 in R,raw-data/inspiration/Analyzing Billboard Top 100 in R.txt,,billboard_top_100,TidyTuesday 2021-09-14,,,,,needs_mapping,,billboard top 100
+Analyzing Emmy Awards in R,raw-data/inspiration/Analyzing Emmy Awards in R.txt,,emmy_awards,TidyTuesday 2021-09-21,,,,,needs_mapping,,emmy awards
+Analyzing NBER Papers in R,raw-data/inspiration/Analyzing NBER Papers in R.txt,,nber_papers,TidyTuesday 2021-09-28,,,,,needs_mapping,,nber papers
+Analyzing Registered Nurses in R,raw-data/inspiration/Analyzing Registered Nurses in R.txt,,registered_nurses,TidyTuesday 2021-10-05,,,,,needs_mapping,,registered nurses
+Analyzing Global Seafood in R,raw-data/inspiration/Analyzing Global Seafood in R.txt,,global_seafood,TidyTuesday 2021-10-12,,,,,needs_mapping,,global seafood
+Analyzing Big Pumpkins in R,raw-data/inspiration/Analyzing Big Pumpkins in R.txt,,big_pumpkins,TidyTuesday 2021-10-19,,,,,needs_mapping,,big pumpkins
+Analyzing Ultra Trail Running in R,raw-data/inspiration/Analyzing Ultra Trail Running in R.txt,,ultra_trail_running,TidyTuesday 2021-10-26,,,,,needs_mapping,,ultra trail running
+Analyzing Making Maps with R in R,raw-data/inspiration/Analyzing Making Maps with R in R.txt,,making_maps_with_r,TidyTuesday 2021-11-02,,,,,needs_mapping,,making maps with r
+Analyzing Learning with Afrilearndata in R,raw-data/inspiration/Analyzing Learning with Afrilearndata in R.txt,,learning_with_afrilearndata,TidyTuesday 2021-11-09,,,,,needs_mapping,,learning with afrilearndata
+Analyzing BlackInDataWeek 2021 in R,raw-data/inspiration/Analyzing BlackInDataWeek 2021 in R.txt,,blackindataweek_2021,TidyTuesday 2021-11-16,,,,,needs_mapping,,blackindataweek 2021
+Analyzing Dr Who in R,raw-data/inspiration/Analyzing Dr Who in R.txt,,dr_who,TidyTuesday 2021-11-23,,,,,needs_mapping,,dr who
+Analyzing World Cup Cricket in R,raw-data/inspiration/Analyzing World Cup Cricket in R.txt,,world_cup_cricket,TidyTuesday 2021-11-30,,,,,needs_mapping,,world cup cricket
+Analyzing Spiders in R,raw-data/inspiration/Analyzing Spiders in R.txt,,spiders,TidyTuesday 2021-12-07,,,,,needs_mapping,,spiders
+Analyzing Spice Girls in R,raw-data/inspiration/Analyzing Spice Girls in R.txt,,spice_girls,TidyTuesday 2021-12-14,,,,,needs_mapping,,spice girls
+Analyzing Starbucks Drinks in R,raw-data/inspiration/Analyzing Starbucks Drinks in R.txt,,starbucks_drinks,TidyTuesday 2021-12-21,,,,,needs_mapping,,starbucks drinks
+Analyzing Bee Colony Losses in R,raw-data/inspiration/Analyzing Bee Colony Losses in R.txt,,bee_colony_losses,TidyTuesday 2022-01-11,,,,,needs_mapping,,bee colony losses
+Analyzing Chocolate Bar Ratings in R,raw-data/inspiration/Analyzing Chocolate Bar Ratings in R.txt,,chocolate_bar_ratings,TidyTuesday 2022-01-18,,,,,needs_mapping,,chocolate bar ratings
+Analyzing Board Games 2022 in R,raw-data/inspiration/Analyzing Board Games 2022 in R.txt,,board_games_2022,TidyTuesday 2022-01-25,,,,,needs_mapping,,board games 2022
+Analyzing Dog Breeds in R,raw-data/inspiration/Analyzing Dog Breeds in R.txt,,dog_breeds,TidyTuesday 2022-02-01,,,,,needs_mapping,,dog breeds
+Analyzing Tuskegee Airmen in R,raw-data/inspiration/Analyzing Tuskegee Airmen in R.txt,,tuskegee_airmen,TidyTuesday 2022-02-08,,,,,needs_mapping,,tuskegee airmen
+Analyzing DuBois Challenge 2022 in R,raw-data/inspiration/Analyzing DuBois Challenge 2022 in R.txt,,dubois_challenge_2022,TidyTuesday 2022-02-15,,,,,needs_mapping,,dubois challenge 2022
+Analyzing World Freedom Index in R,raw-data/inspiration/Analyzing World Freedom Index in R.txt,,world_freedom_index,TidyTuesday 2022-02-22,,,,,needs_mapping,,world freedom index
+Analyzing Alternative Fuel Stations in R,raw-data/inspiration/Analyzing Alternative Fuel Stations in R.txt,,alternative_fuel_stations,TidyTuesday 2022-03-01,,,,,needs_mapping,,alternative fuel stations
+Analyzing Erasmus Student Mobility in R,raw-data/inspiration/Analyzing Erasmus Student Mobility in R.txt,,erasmus_student_mobility,TidyTuesday 2022-03-08,,,,,needs_mapping,,erasmus student mobility
+Analyzing CRAN BIOC Vignettes in R,raw-data/inspiration/Analyzing CRAN BIOC Vignettes in R.txt,,cran_bioc_vignettes,TidyTuesday 2022-03-15,,,,,needs_mapping,,cran bioc vignettes
+Analyzing Baby Names in R,raw-data/inspiration/Analyzing Baby Names in R.txt,,baby_names,TidyTuesday 2022-03-22,,,,,needs_mapping,,baby names
+Analyzing Collegiate Sports Budgets in R,raw-data/inspiration/Analyzing Collegiate Sports Budgets in R.txt,,collegiate_sports_budgets,TidyTuesday 2022-03-29,,,,,needs_mapping,,collegiate sports budgets
+Analyzing Digital Publications in R,raw-data/inspiration/Analyzing Digital Publications in R.txt,,digital_publications,TidyTuesday 2022-04-05,,,,,needs_mapping,,digital publications
+Analyzing Indoor Air Pollution in R,raw-data/inspiration/Analyzing Indoor Air Pollution in R.txt,,indoor_air_pollution,TidyTuesday 2022-04-12,,,,,needs_mapping,,indoor air pollution
+Analyzing Crossword Puzzles and Clues in R,raw-data/inspiration/Analyzing Crossword Puzzles and Clues in R.txt,,crossword_puzzles_and_clues,TidyTuesday 2022-04-19,,,,,needs_mapping,,crossword puzzles and clues
+Analyzing Kaggle Hidden Gems in R,raw-data/inspiration/Analyzing Kaggle Hidden Gems in R.txt,,kaggle_hidden_gems,TidyTuesday 2022-04-26,,,,,needs_mapping,,kaggle hidden gems
+Analyzing Solar Wind Utilities in R,raw-data/inspiration/Analyzing Solar Wind Utilities in R.txt,,solar_wind_utilities,TidyTuesday 2022-05-03,,,,,needs_mapping,,solar wind utilities
+Analyzing NYTimes Best Sellers in R,raw-data/inspiration/Analyzing NYTimes Best Sellers in R.txt,,nytimes_best_sellers,TidyTuesday 2022-05-10,,,,,needs_mapping,,nytimes best sellers
+Analyzing Eurovision in R,raw-data/inspiration/Analyzing Eurovision in R.txt,,eurovision,TidyTuesday 2022-05-17,,,,,needs_mapping,,eurovision
+Analyzing Womens Rugby in R,raw-data/inspiration/Analyzing Womens Rugby in R.txt,,womens_rugby,TidyTuesday 2022-05-24,,,,,needs_mapping,,womens rugby
+Analyzing Company Reputation Poll in R,raw-data/inspiration/Analyzing Company Reputation Poll in R.txt,,company_reputation_poll,TidyTuesday 2022-05-31,,,,,needs_mapping,,company reputation poll
+Analyzing Pride Corporate Accountability in R,raw-data/inspiration/Analyzing Pride Corporate Accountability in R.txt,,pride_corporate_accountability,TidyTuesday 2022-06-07,,,,,needs_mapping,,pride corporate accountability
+Analyzing US Drought 2022 in R,raw-data/inspiration/Analyzing US Drought 2022 in R.txt,,us_drought_2022,TidyTuesday 2022-06-14,,,,,needs_mapping,,us drought 2022
+Analyzing Juneteenth 2022 in R,raw-data/inspiration/Analyzing Juneteenth 2022 in R.txt,,juneteenth_2022,TidyTuesday 2022-06-21,,,,,needs_mapping,,juneteenth 2022
+Analyzing UK Gender Pay Gap in R,raw-data/inspiration/Analyzing UK Gender Pay Gap in R.txt,,uk_gender_pay_gap,TidyTuesday 2022-06-28,,,,,needs_mapping,,uk gender pay gap
+Analyzing San Francisco Rentals in R,raw-data/inspiration/Analyzing San Francisco Rentals in R.txt,,san_francisco_rentals,TidyTuesday 2022-07-05,,,,,needs_mapping,,san francisco rentals
+Analyzing European Flights in R,raw-data/inspiration/Analyzing European Flights in R.txt,,european_flights,TidyTuesday 2022-07-12,,,,,needs_mapping,,european flights
+Analyzing Technology Adoption in R,raw-data/inspiration/Analyzing Technology Adoption in R.txt,,technology_adoption,TidyTuesday 2022-07-19,,,,,needs_mapping,,technology adoption
+Analyzing Oregon Spotted Frog in R,raw-data/inspiration/Analyzing Oregon Spotted Frog in R.txt,,oregon_spotted_frog,TidyTuesday 2022-08-02,,,,,needs_mapping,,oregon spotted frog
+Analyzing Ferris Wheels in R,raw-data/inspiration/Analyzing Ferris Wheels in R.txt,,ferris_wheels,TidyTuesday 2022-08-09,,,,,needs_mapping,,ferris wheels
+Analyzing Open Source Psychometrics in R,raw-data/inspiration/Analyzing Open Source Psychometrics in R.txt,,open_source_psychometrics,TidyTuesday 2022-08-16,,,,,needs_mapping,,open source psychometrics
+Analyzing CHIP Dataset in R,raw-data/inspiration/Analyzing CHIP Dataset in R.txt,,chip_dataset,TidyTuesday 2022-08-23,,,,,needs_mapping,,chip dataset
+Analyzing Pell Grants in R,raw-data/inspiration/Analyzing Pell Grants in R.txt,,pell_grants,TidyTuesday 2022-08-30,,,,,needs_mapping,,pell grants
+Analyzing LEGO Database in R,raw-data/inspiration/Analyzing LEGO Database in R.txt,,lego_database,TidyTuesday 2022-09-06,,,,,needs_mapping,,lego database
+Analyzing Bigfoot Sightings in R,raw-data/inspiration/Analyzing Bigfoot Sightings in R.txt,,bigfoot_sightings,TidyTuesday 2022-09-13,,,,,needs_mapping,,bigfoot sightings
+Analyzing Hydro Wastewater Plants in R,raw-data/inspiration/Analyzing Hydro Wastewater Plants in R.txt,,hydro_wastewater_plants,TidyTuesday 2022-09-20,,,,,needs_mapping,,hydro wastewater plants
+Analyzing Artists in the USA in R,raw-data/inspiration/Analyzing Artists in the USA in R.txt,,artists_in_the_usa,TidyTuesday 2022-09-27,,,,,needs_mapping,,artists in the usa
+Analyzing Product Hunt Products in R,raw-data/inspiration/Analyzing Product Hunt Products in R.txt,,product_hunt_products,TidyTuesday 2022-10-04,,,,,needs_mapping,,product hunt products
+Analyzing Ravelry Data in R,raw-data/inspiration/Analyzing Ravelry Data in R.txt,,ravelry_data,TidyTuesday 2022-10-11,,,,,needs_mapping,,ravelry data
+Analyzing Stranger Things Dialogue in R,raw-data/inspiration/Analyzing Stranger Things Dialogue in R.txt,,stranger_things_dialogue,TidyTuesday 2022-10-18,,,,,needs_mapping,,stranger things dialogue
+Analyzing Great British Bakeoff in R,raw-data/inspiration/Analyzing Great British Bakeoff in R.txt,,great_british_bakeoff,TidyTuesday 2022-10-25,,,,,needs_mapping,,great british bakeoff
+Analyzing Horror Movies 2022 in R,raw-data/inspiration/Analyzing Horror Movies 2022 in R.txt,,horror_movies_2022,TidyTuesday 2022-11-01,,,,,needs_mapping,,horror movies 2022
+Analyzing Radio Stations in R,raw-data/inspiration/Analyzing Radio Stations in R.txt,,radio_stations,TidyTuesday 2022-11-08,,,,,needs_mapping,,radio stations
+Analyzing Web Page Metrics in R,raw-data/inspiration/Analyzing Web Page Metrics in R.txt,,web_page_metrics,TidyTuesday 2022-11-15,,,,,needs_mapping,,web page metrics
+Analyzing UK Museums in R,raw-data/inspiration/Analyzing UK Museums in R.txt,,uk_museums,TidyTuesday 2022-11-22,,,,,needs_mapping,,uk museums
+Analyzing FIFA World Cup 2022 in R,raw-data/inspiration/Analyzing FIFA World Cup 2022 in R.txt,,fifa_world_cup_2022,TidyTuesday 2022-11-29,,,,,needs_mapping,,fifa world cup 2022
+Analyzing Elevators in R,raw-data/inspiration/Analyzing Elevators in R.txt,,elevators,TidyTuesday 2022-12-06,,,,,needs_mapping,,elevators
+Analyzing Monthly State Retail Sales in R,raw-data/inspiration/Analyzing Monthly State Retail Sales in R.txt,,monthly_state_retail_sales,TidyTuesday 2022-12-13,,,,,needs_mapping,,monthly state retail sales
+Analyzing Weather Forecast Accuracy in R,raw-data/inspiration/Analyzing Weather Forecast Accuracy in R.txt,,weather_forecast_accuracy,TidyTuesday 2022-12-20,,,,,needs_mapping,,weather forecast accuracy
+Analyzing Star Trek Timelines in R,raw-data/inspiration/Analyzing Star Trek Timelines in R.txt,,star_trek_timelines,TidyTuesday 2022-12-27,,,,,needs_mapping,,star trek timelines
+Analyzing Bird FeederWatch Data in R,raw-data/inspiration/Analyzing Bird FeederWatch Data in R.txt,,bird_feederwatch_data,TidyTuesday 2023-01-10,,,,,needs_mapping,,bird feederwatch data
+Analyzing Art History Data in R,raw-data/inspiration/Analyzing Art History Data in R.txt,,art_history_data,TidyTuesday 2023-01-17,,,,,needs_mapping,,art history data
+Analyzing Alone Data in R,raw-data/inspiration/Analyzing Alone Data in R.txt,,alone_data,TidyTuesday 2023-01-24,,,,,needs_mapping,,alone data
+Analyzing Pet Cats UK in R,raw-data/inspiration/Analyzing Pet Cats UK in R.txt,,pet_cats_uk,TidyTuesday 2023-01-31,,,,,needs_mapping,,pet cats uk
+Analyzing Big Tech Stock Prices in R,raw-data/inspiration/Analyzing Big Tech Stock Prices in R.txt,,big_tech_stock_prices,TidyTuesday 2023-02-07,,,,,needs_mapping,,big tech stock prices
+Analyzing Hollywood Age Gaps in R,raw-data/inspiration/Analyzing Hollywood Age Gaps in R.txt,,hollywood_age_gaps,TidyTuesday 2023-02-14,,,,,needs_mapping,,hollywood age gaps
+Analyzing Bob Ross Paintings 2023 in R,raw-data/inspiration/Analyzing Bob Ross Paintings 2023 in R.txt,,bob_ross_paintings_2023,TidyTuesday 2023-02-21,,,,,needs_mapping,,bob ross paintings 2023
+Analyzing African Language Sentiment in R,raw-data/inspiration/Analyzing African Language Sentiment in R.txt,,african_language_sentiment,TidyTuesday 2023-02-28,,,,,needs_mapping,,african language sentiment
+Analyzing Numbats in Australia in R,raw-data/inspiration/Analyzing Numbats in Australia in R.txt,,numbats_in_australia,TidyTuesday 2023-03-07,,,,,needs_mapping,,numbats in australia
+Analyzing European Drug Development in R,raw-data/inspiration/Analyzing European Drug Development in R.txt,,european_drug_development,TidyTuesday 2023-03-14,,,,,needs_mapping,,european drug development
+Analyzing Programming Languages in R,raw-data/inspiration/Analyzing Programming Languages in R.txt,,programming_languages,TidyTuesday 2023-03-21,,,,,needs_mapping,,programming languages
+Analyzing Time Zones in R,raw-data/inspiration/Analyzing Time Zones in R.txt,,time_zones,TidyTuesday 2023-03-28,,,,,needs_mapping,,time zones
+Analyzing Premier League Match Data in R,raw-data/inspiration/Analyzing Premier League Match Data in R.txt,,premier_league_match_data,TidyTuesday 2023-04-04,,,,,needs_mapping,,premier league match data
+Analyzing US Egg Production Data in R,raw-data/inspiration/Analyzing US Egg Production Data in R.txt,,us_egg_production_data,TidyTuesday 2023-04-11,,,,,needs_mapping,,us egg production data
+Analyzing Neolithic Founder Crops in R,raw-data/inspiration/Analyzing Neolithic Founder Crops in R.txt,,neolithic_founder_crops,TidyTuesday 2023-04-18,,,,,needs_mapping,,neolithic founder crops
+Analyzing London Marathon in R,raw-data/inspiration/Analyzing London Marathon in R.txt,,london_marathon,TidyTuesday 2023-04-25,,,,,needs_mapping,,london marathon
+Analyzing The Portal Project in R,raw-data/inspiration/Analyzing The Portal Project in R.txt,,the_portal_project,TidyTuesday 2023-05-02,,,,,needs_mapping,,the portal project
+Analyzing Childcare Costs in R,raw-data/inspiration/Analyzing Childcare Costs in R.txt,,childcare_costs,TidyTuesday 2023-05-09,,,,,needs_mapping,,childcare costs
+Analyzing Tornados in R,raw-data/inspiration/Analyzing Tornados in R.txt,,tornados,TidyTuesday 2023-05-16,,,,,needs_mapping,,tornados
+Analyzing Central Park Squirrels 2023 in R,raw-data/inspiration/Analyzing Central Park Squirrels 2023 in R.txt,,central_park_squirrels_2023,TidyTuesday 2023-05-23,,,,,needs_mapping,,central park squirrels 2023
+Analyzing Verified Oldest People in R,raw-data/inspiration/Analyzing Verified Oldest People in R.txt,,verified_oldest_people,TidyTuesday 2023-05-30,,,,,needs_mapping,,verified oldest people
+Analyzing Energy 2023 in R,raw-data/inspiration/Analyzing Energy 2023 in R.txt,,energy_2023,TidyTuesday 2023-06-06,,,,,needs_mapping,,energy 2023
+Analyzing African Farmer Led Irrigation Survey in R,raw-data/inspiration/Analyzing African Farmer Led Irrigation Survey in R.txt,,african_farmer_led_irrigation_survey,TidyTuesday 2023-06-13,,,,,needs_mapping,,african farmer led irrigation survey
+Analyzing UFO Sightings Redux in R,raw-data/inspiration/Analyzing UFO Sightings Redux in R.txt,,ufo_sightings_redux,TidyTuesday 2023-06-20,,,,,needs_mapping,,ufo sightings redux
+Analyzing US Populated Places in R,raw-data/inspiration/Analyzing US Populated Places in R.txt,,us_populated_places,TidyTuesday 2023-06-27,,,,,needs_mapping,,us populated places
+Analyzing Historical Markers in R,raw-data/inspiration/Analyzing Historical Markers in R.txt,,historical_markers,TidyTuesday 2023-07-04,,,,,needs_mapping,,historical markers
+Analyzing Global Surface Temperatures in R,raw-data/inspiration/Analyzing Global Surface Temperatures in R.txt,,global_surface_temperatures,TidyTuesday 2023-07-11,,,,,needs_mapping,,global surface temperatures
+Analyzing GPT Detectors in R,raw-data/inspiration/Analyzing GPT Detectors in R.txt,,gpt_detectors,TidyTuesday 2023-07-18,,,,,needs_mapping,,gpt detectors
+Analyzing Scurvy in R,raw-data/inspiration/Analyzing Scurvy in R.txt,,scurvy,TidyTuesday 2023-07-25,,,,,needs_mapping,,scurvy
+Analyzing US States in R,raw-data/inspiration/Analyzing US States in R.txt,,us_states,TidyTuesday 2023-08-01,,,,,needs_mapping,,us states
+Analyzing Hot Ones Episodes in R,raw-data/inspiration/Analyzing Hot Ones Episodes in R.txt,,hot_ones_episodes,TidyTuesday 2023-08-08,,,,,needs_mapping,,hot ones episodes
+Analyzing Spam Email in R,raw-data/inspiration/Analyzing Spam Email in R.txt,,spam_email,TidyTuesday 2023-08-15,,,,,needs_mapping,,spam email
+Analyzing Refugees in R,raw-data/inspiration/Analyzing Refugees in R.txt,,refugees,TidyTuesday 2023-08-22,,,,,needs_mapping,,refugees
+Analyzing Fair Use in R,raw-data/inspiration/Analyzing Fair Use in R.txt,,fair_use,TidyTuesday 2023-08-29,,,,,needs_mapping,,fair use
+Analyzing Union Membership in the United States in R,raw-data/inspiration/Analyzing Union Membership in the United States in R.txt,,union_membership_in_the_united_states,TidyTuesday 2023-09-05,,,,,needs_mapping,,union membership in the united states
+Analyzing The Global Human Day in R,raw-data/inspiration/Analyzing The Global Human Day in R.txt,,the_global_human_day,TidyTuesday 2023-09-12,,,,,needs_mapping,,the global human day
+Analyzing CRAN Package Authors in R,raw-data/inspiration/Analyzing CRAN Package Authors in R.txt,,cran_package_authors,TidyTuesday 2023-09-19,,,,,needs_mapping,,cran package authors
+Analyzing Roy Kent F Count in R,raw-data/inspiration/Analyzing Roy Kent F Count in R.txt,,roy_kent_f_count,TidyTuesday 2023-09-26,,,,,needs_mapping,,roy kent f count
+Analyzing US Government Grant Opportunities in R,raw-data/inspiration/Analyzing US Government Grant Opportunities in R.txt,,us_government_grant_opportunities,TidyTuesday 2023-10-03,,,,,needs_mapping,,us government grant opportunities
+Analyzing Haunted Places in the United States in R,raw-data/inspiration/Analyzing Haunted Places in the United States in R.txt,,haunted_places_in_the_united_states,TidyTuesday 2023-10-10,,,,,needs_mapping,,haunted places in the united states
+Analyzing Taylor Swift Data in R,raw-data/inspiration/Analyzing Taylor Swift Data in R.txt,,taylor_swift_data,TidyTuesday 2023-10-17,,,,,needs_mapping,,taylor swift data
+Analyzing Patient Risk Profiles in R,raw-data/inspiration/Analyzing Patient Risk Profiles in R.txt,,patient_risk_profiles,TidyTuesday 2023-10-24,,,,,needs_mapping,,patient risk profiles
+Analyzing Horror Legends in R,raw-data/inspiration/Analyzing Horror Legends in R.txt,,horror_legends,TidyTuesday 2023-10-31,,,,,needs_mapping,,horror legends
+Analyzing US House Election Results in R,raw-data/inspiration/Analyzing US House Election Results in R.txt,,us_house_election_results,TidyTuesday 2023-11-07,,,,,needs_mapping,,us house election results
+Analyzing Diwali Sales Data in R,raw-data/inspiration/Analyzing Diwali Sales Data in R.txt,,diwali_sales_data,TidyTuesday 2023-11-14,,,,,needs_mapping,,diwali sales data
+Analyzing R-Ladies Chapter Events in R,raw-data/inspiration/Analyzing R-Ladies Chapter Events in R.txt,,r_ladies_chapter_events,TidyTuesday 2023-11-21,,,,,needs_mapping,,r ladies chapter events
+Analyzing Doctor Who Episodes in R,raw-data/inspiration/Analyzing Doctor Who Episodes in R.txt,,doctor_who_episodes,TidyTuesday 2023-11-28,,,,,needs_mapping,,doctor who episodes
+Analyzing Life Expectancy in R,raw-data/inspiration/Analyzing Life Expectancy in R.txt,,life_expectancy,TidyTuesday 2023-12-05,,,,,needs_mapping,,life expectancy
+Analyzing Holiday Movies in R,raw-data/inspiration/Analyzing Holiday Movies in R.txt,,holiday_movies,TidyTuesday 2023-12-12,,,,,needs_mapping,,holiday movies
+Analyzing Holiday Episodes in R,raw-data/inspiration/Analyzing Holiday Episodes in R.txt,,holiday_episodes,TidyTuesday 2023-12-19,,,,,needs_mapping,,holiday episodes
+Analyzing R Package Structure in R,raw-data/inspiration/Analyzing R Package Structure in R.txt,,r_package_structure,TidyTuesday 2023-12-26,,,,,needs_mapping,,r package structure
+Analyzing Canadian NHL Player Birth Dates in R,raw-data/inspiration/Analyzing Canadian NHL Player Birth Dates in R.txt,,canadian_nhl_player_birth_dates,TidyTuesday 2024-01-09,,,,,needs_mapping,,canadian nhl player birth dates
+Analyzing US Polling Places 2012 2020 in R,raw-data/inspiration/Analyzing US Polling Places 2012 2020 in R.txt,,us_polling_places_2012_2020,TidyTuesday 2024-01-16,,,,,needs_mapping,,us polling places 2012 2020
+Analyzing Educational Attainment of Young People in English Towns in R,raw-data/inspiration/Analyzing Educational Attainment of Young People in English Towns in R.txt,,educational_attainment_of_young_people_in_english_towns,TidyTuesday 2024-01-23,,,,,needs_mapping,,educational attainment of young people in english towns
+Analyzing Groundhog Predictions in R,raw-data/inspiration/Analyzing Groundhog Predictions in R.txt,,groundhog_predictions,TidyTuesday 2024-01-30,,,,,needs_mapping,,groundhog predictions
+Analyzing World Heritage Sites in R,raw-data/inspiration/Analyzing World Heritage Sites in R.txt,,world_heritage_sites,TidyTuesday 2024-02-06,,,,,needs_mapping,,world heritage sites
+Analyzing Valentines Day Consumer Data in R,raw-data/inspiration/Analyzing Valentines Day Consumer Data in R.txt,,valentines_day_consumer_data,TidyTuesday 2024-02-13,,,,,needs_mapping,,valentines day consumer data
+Analyzing R Consortium ISC Grants in R,raw-data/inspiration/Analyzing R Consortium ISC Grants in R.txt,,r_consortium_isc_grants,TidyTuesday 2024-02-20,,,,,needs_mapping,,r consortium isc grants
+Analyzing Leap Day in R,raw-data/inspiration/Analyzing Leap Day in R.txt,,leap_day,TidyTuesday 2024-02-27,,,,,needs_mapping,,leap day
+Analyzing Trash Wheel Collection Data in R,raw-data/inspiration/Analyzing Trash Wheel Collection Data in R.txt,,trash_wheel_collection_data,TidyTuesday 2024-03-05,,,,,needs_mapping,,trash wheel collection data
+Analyzing Fiscal Sponsors in R,raw-data/inspiration/Analyzing Fiscal Sponsors in R.txt,,fiscal_sponsors,TidyTuesday 2024-03-12,,,,,needs_mapping,,fiscal sponsors
+Analyzing X-Men Mutant Moneyball in R,raw-data/inspiration/Analyzing X-Men Mutant Moneyball in R.txt,,x_men_mutant_moneyball,TidyTuesday 2024-03-19,,,,,needs_mapping,,x men mutant moneyball
+Analyzing NCAA Mens March Madness in R,raw-data/inspiration/Analyzing NCAA Mens March Madness in R.txt,,ncaa_mens_march_madness,TidyTuesday 2024-03-26,,,,,needs_mapping,,ncaa mens march madness
+Analyzing Du Bois Visualization Challenge 2024 in R,raw-data/inspiration/Analyzing Du Bois Visualization Challenge 2024 in R.txt,,du_bois_visualization_challenge_2024,TidyTuesday 2024-04-02,,,,,needs_mapping,,du bois visualization challenge 2024
+Analyzing US Solar Eclipses 2023 and 2024 in R,raw-data/inspiration/Analyzing US Solar Eclipses 2023 and 2024 in R.txt,,us_solar_eclipses_2023_and_2024,TidyTuesday 2024-04-09,,,,,needs_mapping,,us solar eclipses 2023 and 2024
+Analyzing Shiny Packages in R,raw-data/inspiration/Analyzing Shiny Packages in R.txt,,shiny_packages,TidyTuesday 2024-04-16,,,,,needs_mapping,,shiny packages
+Analyzing Objects Launched into Space in R,raw-data/inspiration/Analyzing Objects Launched into Space in R.txt,,objects_launched_into_space,TidyTuesday 2024-04-23,,,,,needs_mapping,,objects launched into space
+Analyzing Worldwide Bureaucracy Indicators in R,raw-data/inspiration/Analyzing Worldwide Bureaucracy Indicators in R.txt,,worldwide_bureaucracy_indicators,TidyTuesday 2024-04-30,,,,,needs_mapping,,worldwide bureaucracy indicators
+Analyzing Rolling Stone Album Rankings in R,raw-data/inspiration/Analyzing Rolling Stone Album Rankings in R.txt,,rolling_stone_album_rankings,TidyTuesday 2024-05-07,,,,,needs_mapping,,rolling stone album rankings
+Analyzing The Great American Coffee Taste Test in R,raw-data/inspiration/Analyzing The Great American Coffee Taste Test in R.txt,,the_great_american_coffee_taste_test,TidyTuesday 2024-05-14,,,,,needs_mapping,,the great american coffee taste test
+Analyzing Carbon Majors Emissions Data in R,raw-data/inspiration/Analyzing Carbon Majors Emissions Data in R.txt,,carbon_majors_emissions_data,TidyTuesday 2024-05-21,,,,,needs_mapping,,carbon majors emissions data
+Analyzing Lisas Vegetable Garden Data in R,raw-data/inspiration/Analyzing Lisas Vegetable Garden Data in R.txt,,lisas_vegetable_garden_data,TidyTuesday 2024-05-28,,,,,needs_mapping,,lisas vegetable garden data
+Analyzing Cheese in R,raw-data/inspiration/Analyzing Cheese in R.txt,,cheese,TidyTuesday 2024-06-04,,,,,needs_mapping,,cheese
+Analyzing Campus Pride Index in R,raw-data/inspiration/Analyzing Campus Pride Index in R.txt,,campus_pride_index,TidyTuesday 2024-06-11,,,,,needs_mapping,,campus pride index
+Analyzing US Federal Holidays in R,raw-data/inspiration/Analyzing US Federal Holidays in R.txt,,us_federal_holidays,TidyTuesday 2024-06-18,,,,,needs_mapping,,us federal holidays
+Analyzing tidyRainbow Datasets in R,raw-data/inspiration/Analyzing tidyRainbow Datasets in R.txt,,tidyrainbow_datasets,TidyTuesday 2024-06-25,,,,,needs_mapping,,tidyrainbow datasets
+Analyzing TidyTuesday Datasets Meta in R,raw-data/inspiration/Analyzing TidyTuesday Datasets Meta in R.txt,,tidytuesday_datasets_meta,TidyTuesday 2024-07-02,,,,,needs_mapping,,tidytuesday datasets meta
+Analyzing David Robinsons TidyTuesday Functions in R,raw-data/inspiration/Analyzing David Robinsons TidyTuesday Functions in R.txt,,david_robinsons_tidytuesday_functions,TidyTuesday 2024-07-09,,,,,needs_mapping,,david robinsons tidytuesday functions
+Analyzing English Womens Football in R,raw-data/inspiration/Analyzing English Womens Football in R.txt,,english_womens_football,TidyTuesday 2024-07-16,,,,,needs_mapping,,english womens football
+Analyzing American Idol Data in R,raw-data/inspiration/Analyzing American Idol Data in R.txt,,american_idol_data,TidyTuesday 2024-07-23,,,,,needs_mapping,,american idol data
+Analyzing Summer Movies in R,raw-data/inspiration/Analyzing Summer Movies in R.txt,,summer_movies,TidyTuesday 2024-07-30,,,,,needs_mapping,,summer movies
+Analyzing Olympic Medals 2024 in R,raw-data/inspiration/Analyzing Olympic Medals 2024 in R.txt,,olympic_medals_2024,TidyTuesday 2024-08-06,,,,,needs_mapping,,olympic medals 2024
+Analyzing Worlds Fairs in R,raw-data/inspiration/Analyzing Worlds Fairs in R.txt,,worlds_fairs,TidyTuesday 2024-08-13,,,,,needs_mapping,,worlds fairs
+Analyzing English Monarchs and Marriages in R,raw-data/inspiration/Analyzing English Monarchs and Marriages in R.txt,,english_monarchs_and_marriages,TidyTuesday 2024-08-20,,,,,needs_mapping,,english monarchs and marriages
+Analyzing The Power Rangers Franchise in R,raw-data/inspiration/Analyzing The Power Rangers Franchise in R.txt,,the_power_rangers_franchise,TidyTuesday 2024-08-27,,,,,needs_mapping,,the power rangers franchise
+Analyzing Stack Overflow Annual Developer Survey 2024 in R,raw-data/inspiration/Analyzing Stack Overflow Annual Developer Survey 2024 in R.txt,,stack_overflow_annual_developer_survey_2024,TidyTuesday 2024-09-03,,,,,needs_mapping,,stack overflow annual developer survey 2024
+Analyzing Economic Diversity and Student Outcomes in R,raw-data/inspiration/Analyzing Economic Diversity and Student Outcomes in R.txt,,economic_diversity_and_student_outcomes,TidyTuesday 2024-09-10,,,,,needs_mapping,,economic diversity and student outcomes
+Analyzing Shakespeare Dialogue in R,raw-data/inspiration/Analyzing Shakespeare Dialogue in R.txt,,shakespeare_dialogue,TidyTuesday 2024-09-17,,,,,needs_mapping,,shakespeare dialogue
+Analyzing International Mathematical Olympiad Data in R,raw-data/inspiration/Analyzing International Mathematical Olympiad Data in R.txt,,international_mathematical_olympiad_data,TidyTuesday 2024-09-24,,,,,needs_mapping,,international mathematical olympiad data
+Analyzing Chess Game Dataset Lichess in R,raw-data/inspiration/Analyzing Chess Game Dataset Lichess in R.txt,,chess_game_dataset_lichess,TidyTuesday 2024-10-01,,,,,needs_mapping,,chess game dataset lichess
+Analyzing National Park Species in R,raw-data/inspiration/Analyzing National Park Species in R.txt,,national_park_species,TidyTuesday 2024-10-08,,,,,needs_mapping,,national park species
+Analyzing Southern Resident Killer Whale Encounters in R,raw-data/inspiration/Analyzing Southern Resident Killer Whale Encounters in R.txt,,southern_resident_killer_whale_encounters,TidyTuesday 2024-10-15,,,,,needs_mapping,,southern resident killer whale encounters
+Analyzing The CIA World Factbook in R,raw-data/inspiration/Analyzing The CIA World Factbook in R.txt,,the_cia_world_factbook,TidyTuesday 2024-10-22,,,,,needs_mapping,,the cia world factbook
+Analyzing Monster Movies in R,raw-data/inspiration/Analyzing Monster Movies in R.txt,,monster_movies,TidyTuesday 2024-10-29,,,,,needs_mapping,,monster movies
+Analyzing Democracy and Dictatorship in R,raw-data/inspiration/Analyzing Democracy and Dictatorship in R.txt,,democracy_and_dictatorship,TidyTuesday 2024-11-05,,,,,needs_mapping,,democracy and dictatorship
+Analyzing ISO Country Codes in R,raw-data/inspiration/Analyzing ISO Country Codes in R.txt,,iso_country_codes,TidyTuesday 2024-11-12,,,,,needs_mapping,,iso country codes
+Analyzing Bobs Burgers Episodes in R,raw-data/inspiration/Analyzing Bobs Burgers Episodes in R.txt,,bobs_burgers_episodes,TidyTuesday 2024-11-19,,,,,needs_mapping,,bobs burgers episodes
+Analyzing US Customs and Border Protection Encounter Data in R,raw-data/inspiration/Analyzing US Customs and Border Protection Encounter Data in R.txt,,us_customs_and_border_protection_encounter_data,TidyTuesday 2024-11-26,,,,,needs_mapping,,us customs and border protection encounter data
+Analyzing National Highways Traffic Flow in R,raw-data/inspiration/Analyzing National Highways Traffic Flow in R.txt,,national_highways_traffic_flow,TidyTuesday 2024-12-03,,,,,needs_mapping,,national highways traffic flow
+Analyzing Parfumo Fragrance Dataset in R,raw-data/inspiration/Analyzing Parfumo Fragrance Dataset in R.txt,,parfumo_fragrance_dataset,TidyTuesday 2024-12-10,,,,,needs_mapping,,parfumo fragrance dataset
+Analyzing Dungeons and Dragons Spells 2024 in R,raw-data/inspiration/Analyzing Dungeons and Dragons Spells 2024 in R.txt,,dungeons_and_dragons_spells_2024,TidyTuesday 2024-12-17,,,,,needs_mapping,,dungeons and dragons spells 2024
+Analyzing Global Holidays and Travel in R,raw-data/inspiration/Analyzing Global Holidays and Travel in R.txt,,global_holidays_and_travel,TidyTuesday 2024-12-24,,,,,needs_mapping,,global holidays and travel
+Analyzing James Beard Awards in R,raw-data/inspiration/Analyzing James Beard Awards in R.txt,,james_beard_awards,TidyTuesday 2024-12-31,,,,,needs_mapping,,james beard awards
+Analyzing Posit Conf Talks in R,raw-data/inspiration/Analyzing Posit Conf Talks in R.txt,,posit_conf_talks,TidyTuesday 2025-01-14,,,,,needs_mapping,,posit conf talks
+Analyzing The History of Himalayan Mountaineering Expeditions in R,raw-data/inspiration/Analyzing The History of Himalayan Mountaineering Expeditions in R.txt,,the_history_of_himalayan_mountaineering_expeditions,TidyTuesday 2025-01-21,,,,,needs_mapping,,the history of himalayan mountaineering expeditions
+Analyzing Water Insecurity in R,raw-data/inspiration/Analyzing Water Insecurity in R.txt,,water_insecurity,TidyTuesday 2025-01-28,,,,,needs_mapping,,water insecurity
+Analyzing The Simpsons Deep Dive in R,raw-data/inspiration/Analyzing The Simpsons Deep Dive in R.txt,,the_simpsons_deep_dive,TidyTuesday 2025-02-04,,,,,needs_mapping,,the simpsons deep dive
+Analyzing CDC Datasets in R,raw-data/inspiration/Analyzing CDC Datasets in R.txt,,cdc_datasets,TidyTuesday 2025-02-11,,,,,needs_mapping,,cdc datasets
+Analyzing Agencies from the FBI Crime Data API in R,raw-data/inspiration/Analyzing Agencies from the FBI Crime Data API in R.txt,,agencies_from_the_fbi_crime_data_api,TidyTuesday 2025-02-18,,,,,needs_mapping,,agencies from the fbi crime data api
+Analyzing Racial and Ethnic Disparities in Reproductive Medicine in R,raw-data/inspiration/Analyzing Racial and Ethnic Disparities in Reproductive Medicine in R.txt,,racial_and_ethnic_disparities_in_reproductive_medicine,TidyTuesday 2025-02-25,,,,,needs_mapping,,racial and ethnic disparities in reproductive medicine
+Analyzing Long Beach Animal Shelter in R,raw-data/inspiration/Analyzing Long Beach Animal Shelter in R.txt,,long_beach_animal_shelter,TidyTuesday 2025-03-04,,,,,needs_mapping,,long beach animal shelter
+Analyzing Pixar Films in R,raw-data/inspiration/Analyzing Pixar Films in R.txt,,pixar_films,TidyTuesday 2025-03-11,,,,,needs_mapping,,pixar films
+Analyzing Palm Trees in R,raw-data/inspiration/Analyzing Palm Trees in R.txt,,palm_trees,TidyTuesday 2025-03-18,,,,,needs_mapping,,palm trees
+Analyzing Amazon Annual Reports Text Data in R,raw-data/inspiration/Analyzing Amazon Annual Reports Text Data in R.txt,,amazon_annual_reports_text_data,TidyTuesday 2025-03-25,,,,,needs_mapping,,amazon annual reports text data
+Analyzing Pokemon in R,raw-data/inspiration/Analyzing Pokemon in R.txt,,pokemon,TidyTuesday 2025-04-01,,,,,needs_mapping,,pokemon
+Analyzing Timely and Effective Care by US State in R,raw-data/inspiration/Analyzing Timely and Effective Care by US State in R.txt,,timely_and_effective_care_by_us_state,TidyTuesday 2025-04-08,,,,,needs_mapping,,timely and effective care by us state
+Analyzing Base R Penguins in R,raw-data/inspiration/Analyzing Base R Penguins in R.txt,,base_r_penguins,TidyTuesday 2025-04-15,,,,,needs_mapping,,base r penguins
+Analyzing Fatal Car Crashes on 4 20 in R,raw-data/inspiration/Analyzing Fatal Car Crashes on 4 20 in R.txt,,fatal_car_crashes_on_4_20,TidyTuesday 2025-04-22,,,,,needs_mapping,,fatal car crashes on 4 20
+Analyzing useR 2025 Program in R,raw-data/inspiration/Analyzing useR 2025 Program in R.txt,,user_2025_program,TidyTuesday 2025-04-29,,,,,needs_mapping,,user 2025 program
+Analyzing NSF Grant Terminations under Trump Administration in R,raw-data/inspiration/Analyzing NSF Grant Terminations under Trump Administration in R.txt,,nsf_grant_terminations_under_trump_administration,TidyTuesday 2025-05-06,,,,,needs_mapping,,nsf grant terminations under trump administration
+Analyzing Seismic Events at Mount Vesuvius in R,raw-data/inspiration/Analyzing Seismic Events at Mount Vesuvius in R.txt,,seismic_events_at_mount_vesuvius,TidyTuesday 2025-05-13,,,,,needs_mapping,,seismic events at mount vesuvius
+Analyzing Water Quality at Sydney Beaches in R,raw-data/inspiration/Analyzing Water Quality at Sydney Beaches in R.txt,,water_quality_at_sydney_beaches,TidyTuesday 2025-05-20,,,,,needs_mapping,,water quality at sydney beaches
+Analyzing Dungeons and Dragons Monsters 2024 in R,raw-data/inspiration/Analyzing Dungeons and Dragons Monsters 2024 in R.txt,,dungeons_and_dragons_monsters_2024,TidyTuesday 2025-05-27,,,,,needs_mapping,,dungeons and dragons monsters 2024
+Analyzing Project Gutenberg in R,raw-data/inspiration/Analyzing Project Gutenberg in R.txt,,project_gutenberg,TidyTuesday 2025-06-03,,,,,needs_mapping,,project gutenberg
+Analyzing US Judges and historydata R Package in R,raw-data/inspiration/Analyzing US Judges and historydata R Package in R.txt,,us_judges_and_historydata_r_package,TidyTuesday 2025-06-10,,,,,needs_mapping,,us judges and historydata r package
+Analyzing API Specs in R,raw-data/inspiration/Analyzing API Specs in R.txt,,api_specs,TidyTuesday 2025-06-17,,,,,needs_mapping,,api specs
+Analyzing Measles Cases Across the World in R,raw-data/inspiration/Analyzing Measles Cases Across the World in R.txt,,measles_cases_across_the_world,TidyTuesday 2025-06-24,,,,,needs_mapping,,measles cases across the world
+Analyzing Weekly US Gas Prices in R,raw-data/inspiration/Analyzing Weekly US Gas Prices in R.txt,,weekly_us_gas_prices,TidyTuesday 2025-07-01,,,,,needs_mapping,,weekly us gas prices
+Analyzing The xkcd Color Survey Results in R,raw-data/inspiration/Analyzing The xkcd Color Survey Results in R.txt,,the_xkcd_color_survey_results,TidyTuesday 2025-07-08,,,,,needs_mapping,,the xkcd color survey results
+Analyzing British Library Funding in R,raw-data/inspiration/Analyzing British Library Funding in R.txt,,british_library_funding,TidyTuesday 2025-07-15,,,,,needs_mapping,,british library funding
+Analyzing MTA Permanent Art Catalog in R,raw-data/inspiration/Analyzing MTA Permanent Art Catalog in R.txt,,mta_permanent_art_catalog,TidyTuesday 2025-07-22,,,,,needs_mapping,,mta permanent art catalog
+Analyzing What Have We Been Watching on Netflix in R,raw-data/inspiration/Analyzing What Have We Been Watching on Netflix in R.txt,,what_have_we_been_watching_on_netflix,TidyTuesday 2025-07-29,,,,,needs_mapping,,what have we been watching on netflix
+Analyzing Income Inequality Before and After Taxes in R,raw-data/inspiration/Analyzing Income Inequality Before and After Taxes in R.txt,,income_inequality_before_and_after_taxes,TidyTuesday 2025-08-05,,,,,needs_mapping,,income inequality before and after taxes
+Analyzing Extreme Weather Attribution Studies in R,raw-data/inspiration/Analyzing Extreme Weather Attribution Studies in R.txt,,extreme_weather_attribution_studies,TidyTuesday 2025-08-12,,,,,needs_mapping,,extreme weather attribution studies
+Analyzing Scottish Munros in R,raw-data/inspiration/Analyzing Scottish Munros in R.txt,,scottish_munros,TidyTuesday 2025-08-19,,,,,needs_mapping,,scottish munros
+Analyzing Billboard Hot 100 Number Ones in R,raw-data/inspiration/Analyzing Billboard Hot 100 Number Ones in R.txt,,billboard_hot_100_number_ones,TidyTuesday 2025-08-26,,,,,needs_mapping,,billboard hot 100 number ones
+Analyzing Australian Frogs in R,raw-data/inspiration/Analyzing Australian Frogs in R.txt,,australian_frogs,TidyTuesday 2025-09-02,,,,,needs_mapping,,australian frogs
+Analyzing Henley Passport Index Data in R,raw-data/inspiration/Analyzing Henley Passport Index Data in R.txt,,henley_passport_index_data,TidyTuesday 2025-09-09,,,,,needs_mapping,,henley passport index data
+Analyzing Allrecipes in R,raw-data/inspiration/Analyzing Allrecipes in R.txt,,allrecipes,TidyTuesday 2025-09-16,,,,,needs_mapping,,allrecipes
+Analyzing FIDE Chess Player Ratings in R,raw-data/inspiration/Analyzing FIDE Chess Player Ratings in R.txt,,fide_chess_player_ratings,TidyTuesday 2025-09-23,,,,,needs_mapping,,fide chess player ratings
+Analyzing Crane Observations at Lake Hornborgasjon Sweden in R,raw-data/inspiration/Analyzing Crane Observations at Lake Hornborgasjon Sweden in R.txt,,crane_observations_at_lake_hornborgasjon_sweden,TidyTuesday 2025-09-30,,,,,needs_mapping,,crane observations at lake hornborgasjon sweden
+Analyzing EuroLeague Basketball in R,raw-data/inspiration/Analyzing EuroLeague Basketball in R.txt,,euroleague_basketball,TidyTuesday 2025-10-07,,,,,needs_mapping,,euroleague basketball
+Analyzing World Food Day in R,raw-data/inspiration/Analyzing World Food Day in R.txt,,world_food_day,TidyTuesday 2025-10-14,,,,,needs_mapping,,world food day
+Analyzing Historic UK Meteorological and Climate Data in R,raw-data/inspiration/Analyzing Historic UK Meteorological and Climate Data in R.txt,,historic_uk_meteorological_and_climate_data,TidyTuesday 2025-10-21,,,,,needs_mapping,,historic uk meteorological and climate data
+Analyzing Selected British Literary Prizes 1990 2022 in R,raw-data/inspiration/Analyzing Selected British Literary Prizes 1990 2022 in R.txt,,selected_british_literary_prizes_1990_2022,TidyTuesday 2025-10-28,,,,,needs_mapping,,selected british literary prizes 1990 2022
+Analyzing Lead Concentration in Flint Water Samples in R,raw-data/inspiration/Analyzing Lead Concentration in Flint Water Samples in R.txt,,lead_concentration_in_flint_water_samples,TidyTuesday 2025-11-04,,,,,needs_mapping,,lead concentration in flint water samples
+Analyzing WHO TB Burden Data in R,raw-data/inspiration/Analyzing WHO TB Burden Data in R.txt,,who_tb_burden_data,TidyTuesday 2025-11-11,,,,,needs_mapping,,who tb burden data
+Analyzing The Complete Sherlock Holmes in R,raw-data/inspiration/Analyzing The Complete Sherlock Holmes in R.txt,,the_complete_sherlock_holmes,TidyTuesday 2025-11-18,,,,,needs_mapping,,the complete sherlock holmes
+Analyzing Statistical Performance Indicators in R,raw-data/inspiration/Analyzing Statistical Performance Indicators in R.txt,,statistical_performance_indicators,TidyTuesday 2025-11-25,,,,,needs_mapping,,statistical performance indicators
+Analyzing Zurich Sechselaeuten Snowman in R,raw-data/inspiration/Analyzing Zurich Sechselaeuten Snowman in R.txt,,zurich_sechselaeuten_snowman,TidyTuesday 2025-12-02,,,,,needs_mapping,,zurich sechselaeuten snowman
+Analyzing Cars in Qatar in R,raw-data/inspiration/Analyzing Cars in Qatar in R.txt,,cars_in_qatar,TidyTuesday 2025-12-09,,,,,needs_mapping,,cars in qatar
+Analyzing Roundabouts Across the World in R,raw-data/inspiration/Analyzing Roundabouts Across the World in R.txt,,roundabouts_across_the_world,TidyTuesday 2025-12-16,,,,,needs_mapping,,roundabouts across the world
+Analyzing The Languages of the World in R,raw-data/inspiration/Analyzing The Languages of the World in R.txt,,the_languages_of_the_world,TidyTuesday 2025-12-23,,,,,needs_mapping,,the languages of the world
+Analyzing Christmas Novels in R,raw-data/inspiration/Analyzing Christmas Novels in R.txt,,christmas_novels,TidyTuesday 2025-12-30,,,,,needs_mapping,,christmas novels
+Analyzing The Languages of Africa in R,raw-data/inspiration/Analyzing The Languages of Africa in R.txt,,the_languages_of_africa,TidyTuesday 2026-01-13,,,,,needs_mapping,,the languages of africa
+Analyzing Astronomy Picture of the Day APOD Archive in R,raw-data/inspiration/Analyzing Astronomy Picture of the Day APOD Archive in R.txt,,astronomy_picture_of_the_day_apod_archive,TidyTuesday 2026-01-20,,,,,needs_mapping,,astronomy picture of the day apod archive
+Analyzing Brazilian Companies in R,raw-data/inspiration/Analyzing Brazilian Companies in R.txt,,brazilian_companies,TidyTuesday 2026-01-27,,,,,needs_mapping,,brazilian companies
+Analyzing Edible Plants Database in R,raw-data/inspiration/Analyzing Edible Plants Database in R.txt,,edible_plants_database,TidyTuesday 2026-02-03,,,,,needs_mapping,,edible plants database
+Analyzing The 2026 Winter Olympics in R,raw-data/inspiration/Analyzing The 2026 Winter Olympics in R.txt,,the_2026_winter_olympics,TidyTuesday 2026-02-10,,,,,needs_mapping,,the 2026 winter olympics
+Analyzing Agricultural Production Statistics in New Zealand in R,raw-data/inspiration/Analyzing Agricultural Production Statistics in New Zealand in R.txt,,agricultural_production_statistics_in_new_zealand,TidyTuesday 2026-02-17,,,,,needs_mapping,,agricultural production statistics in new zealand
+Analyzing Science Foundation Ireland Grants Commitments in R,raw-data/inspiration/Analyzing Science Foundation Ireland Grants Commitments in R.txt,,science_foundation_ireland_grants_commitments,TidyTuesday 2026-02-24,,,,,needs_mapping,,science foundation ireland grants commitments
+Analyzing Golem Grad Tortoise Data in R,raw-data/inspiration/Analyzing Golem Grad Tortoise Data in R.txt,,golem_grad_tortoise_data,TidyTuesday 2026-03-03,,,,,needs_mapping,,golem grad tortoise data
+Analyzing How Likely Is Likely Probability Phrases in R,raw-data/inspiration/Analyzing How Likely Is Likely Probability Phrases in R.txt,,how_likely_is_likely_probability_phrases,TidyTuesday 2026-03-10,,,,,needs_mapping,,how likely is likely probability phrases
+Analyzing Salmonid Mortality Data in R,raw-data/inspiration/Analyzing Salmonid Mortality Data in R.txt,,salmonid_mortality_data,TidyTuesday 2026-03-17,,,,,needs_mapping,,salmonid mortality data
+Analyzing One Million Digits of Pi in R,raw-data/inspiration/Analyzing One Million Digits of Pi in R.txt,,one_million_digits_of_pi,TidyTuesday 2026-03-24,,,,,needs_mapping,,one million digits of pi
+Analyzing Coastal Ocean Temperature by Depth in R,raw-data/inspiration/Analyzing Coastal Ocean Temperature by Depth in R.txt,,coastal_ocean_temperature_by_depth,TidyTuesday 2026-03-31,,,,,needs_mapping,,coastal ocean temperature by depth
+Analyzing Repair Cafes Worldwide in R,raw-data/inspiration/Analyzing Repair Cafes Worldwide in R.txt,,repair_cafes_worldwide,TidyTuesday 2026-04-07,,,,,needs_mapping,,repair cafes worldwide
+Analyzing Bird Sightings at Sea in R,raw-data/inspiration/Analyzing Bird Sightings at Sea in R.txt,,bird_sightings_at_sea,TidyTuesday 2026-04-14,,,,,needs_mapping,,bird sightings at sea
+Analyzing Global Health Spending in R,raw-data/inspiration/Analyzing Global Health Spending in R.txt,,global_health_spending,TidyTuesday 2026-04-21,,,,,needs_mapping,,global health spending

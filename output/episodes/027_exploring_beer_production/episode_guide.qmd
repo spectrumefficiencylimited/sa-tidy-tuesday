@@ -1,0 +1,183 @@
+---
+title: "Reproduction Guide: Analyzing exploring US beer production in R"
+subtitle: "Ordered episode output built from the control table and KER"
+format:
+  html:
+    theme: flatly
+    toc: true
+    toc-depth: 2
+    code-fold: show
+execute:
+  echo: false
+  warning: false
+  message: false
+---
+
+## Episode Snapshot
+
+- `function_name`: `exploring_beer_production`
+- `ker_status`: `extracted`
+- `reproduction_status`: `ready_local`
+- `transcript_file`: `raw-data/inspiration/Analyzing exploring US beer production in R.txt`
+- `code_file`: `data-screencasts/beer-production.Rmd`
+- `data_source`: TidyTuesday 2020-03-31 source files
+- `analysis_type`: `EDA`
+- `pattern_signature`: `load_inspect_join_map_trend_compare_visualize`
+
+::: {.callout-note}
+## Why this episode
+This output was generated in control-table order so we can reproduce the repository one episode at a time from the top of the queue.
+
+The KER classifies this episode as **EDA** and the main intent is:
+
+Explore geographic and temporal variation in exploring US beer production through joins, summarization, and mapping
+:::
+
+## Transcript Preview
+
+exploring US beer production David Robinson 15.9k subscribers 128 Share Save Clip 5,070 views 2 Apr 2020 Tidy Tuesday R Screencasts I analyze a dataset of US beer production wins as an example of exploratory data analysis in R, performed without looking at the data in advance. In particular, I show how the (in-development) tidymetrics and shinymetrics packages can create interactive visualizations of metrics like ingredient usage over time. For m...
+
+## Required Packages
+
+- `gganimate`
+- `lubridate`
+- `maps`
+- `sf`
+- `shinymetrics`
+- `tidymetrics`
+- `tidyverse`
+
+## Local Data Assets
+
+- `tidytuesday/data/2020/2020-03-31/beer_states.csv`
+- `tidytuesday/data/2020/2020-03-31/beer_taxed.csv`
+- `tidytuesday/data/2020/2020-03-31/brewer_size.csv`
+- `tidytuesday/data/2020/2020-03-31/brewing_materials.csv`
+- `tidytuesday/data/2020/2020-03-31/brewing_products.csv`
+- `tidytuesday/data/2020/2020-03-31/ttb_brewery_size_2008.xlsx`
+- `tidytuesday/data/2020/2020-03-31/ttb_brewery_size_2009.xlsx`
+- `tidytuesday/data/2020/2020-03-31/ttb_brewery_size_2010.xlsx`
+- `tidytuesday/data/2020/2020-03-31/ttb_brewery_size_2011.xlsx`
+- `tidytuesday/data/2020/2020-03-31/ttb_brewery_size_2012.xlsx`
+- `tidytuesday/data/2020/2020-03-31/ttb_brewery_size_2013.xlsx`
+- `tidytuesday/data/2020/2020-03-31/ttb_brewery_size_2014.xlsx`
+- `tidytuesday/data/2020/2020-03-31/ttb_brewery_size_2015.xlsx`
+- `tidytuesday/data/2020/2020-03-31/ttb_brewery_size_2016.xlsx`
+- `tidytuesday/data/2020/2020-03-31/ttb_brewery_size_2017.xlsx`
+- `tidytuesday/data/2020/2020-03-31/ttb_brewery_size_2018.xlsx`
+- `tidytuesday/data/2020/2020-03-31/ttb_brewery_size_2019.xlsx`
+- `tidytuesday/data/2020/2020-03-31/ttb_brewery_state_2008-2019.xlsx`
+- `tidytuesday/data/2020/2020-03-31/ttb_monthly_stats_2018-01.xlsx`
+- `tidytuesday/data/2020/2020-03-31/ttb_monthly_stats_2018-02.xlsx`
+- `tidytuesday/data/2020/2020-03-31/ttb_monthly_stats_2018-03.xlsx`
+- `tidytuesday/data/2020/2020-03-31/ttb_monthly_stats_2018-04.xlsx`
+- `tidytuesday/data/2020/2020-03-31/ttb_monthly_stats_2018-05.xlsx`
+- `tidytuesday/data/2020/2020-03-31/ttb_monthly_stats_2018-06.xlsx`
+- `tidytuesday/data/2020/2020-03-31/ttb_monthly_stats_2018-07.xlsx`
+- `tidytuesday/data/2020/2020-03-31/ttb_monthly_stats_2018-08.xlsx`
+- `tidytuesday/data/2020/2020-03-31/ttb_monthly_stats_2018-09.xlsx`
+- `tidytuesday/data/2020/2020-03-31/ttb_monthly_stats_2018-10.xlsx`
+- `tidytuesday/data/2020/2020-03-31/ttb_monthly_stats_2018-11.xlsx`
+- `tidytuesday/data/2020/2020-03-31/ttb_monthly_stats_2018-12.xlsx`
+- `tidytuesday/data/2020/2020-03-31/ttb_monthly_stats_2019-01.xlsx`
+- `tidytuesday/data/2020/2020-03-31/ttb_monthly_stats_2019-02.xlsx`
+- `tidytuesday/data/2020/2020-03-31/ttb_monthly_stats_2019-03.xlsx`
+- `tidytuesday/data/2020/2020-03-31/ttb_monthly_stats_2019-04.xlsx`
+- `tidytuesday/data/2020/2020-03-31/ttb_monthly_stats_2019-05.xlsx`
+- `tidytuesday/data/2020/2020-03-31/ttb_monthly_stats_2019-06.xlsx`
+- `tidytuesday/data/2020/2020-03-31/ttb_monthly_stats_2019-07.xlsx`
+- `tidytuesday/data/2020/2020-03-31/ttb_monthly_stats_2019-08.xlsx`
+- `tidytuesday/data/2020/2020-03-31/ttb_monthly_stats_2019-09.xlsx`
+- `tidytuesday/data/2020/2020-03-31/ttb_monthly_stats_2019-10.xlsx`
+- `tidytuesday/data/2020/2020-03-31/ttb_monthly_stats_2019-11.xlsx`
+- `tidytuesday/data/2020/2020-03-31/ttb_monthly_stats_2019-12.xlsx`
+- `tidytuesday/data/2020/2020-03-31/~$ttb_brewery_state_2008-2019.xlsx`
+
+## Nearby Reference Files
+
+- `tidytuesday/data/2020/2020-03-31/beer_taxed.csv`
+- `tidytuesday/data/2020/2020-03-31/brewer_size.csv`
+- `tidytuesday/data/2020/2020-03-31/brewing_materials.csv`
+- `tidytuesday/data/2020/2020-03-31/brewing_products.csv`
+- `tidytuesday/data/2020/2020-03-31/readme.md`
+- `tidytuesday/data/2020/2020-03-31/ttb_brewery_size_2008.xlsx`
+- `tidytuesday/data/2020/2020-03-31/ttb_brewery_size_2009.xlsx`
+- `tidytuesday/data/2020/2020-03-31/ttb_brewery_size_2010.xlsx`
+- `tidytuesday/data/2020/2020-03-31/ttb_brewery_size_2011.xlsx`
+- `tidytuesday/data/2020/2020-03-31/ttb_brewery_size_2012.xlsx`
+- `tidytuesday/data/2020/2020-03-31/ttb_brewery_size_2013.xlsx`
+- `tidytuesday/data/2020/2020-03-31/ttb_brewery_size_2014.xlsx`
+
+## External Dependencies
+
+- No external dependencies were detected from the code scan.
+
+## Execution Notes
+
+- local TidyTuesday files were matched, so you can use `load_tidyweek_data()` and avoid a GitHub PAT
+
+## Extracted Code Chunks
+
+- `setup`
+- `chunk_02`
+- `chunk_03`
+- `chunk_04`
+- `chunk_05`
+- `chunk_06`
+- `chunk_07`
+- `chunk_08`
+- `chunk_09`
+- `chunk_10`
+
+## Thought Process Map
+
+- `T1 | Context | Frame the episode as exploratory analysis of exploring US beer production with limited advance knowledge of the data. | Transcript title and opening context`
+- `T2 | Inspect | Load the data, inspect table shape, and identify the main entities, measures, and comparison axes. | Initial data load and early counts or prints`
+- `T4 | Transform | Reshape fields, standardize column meanings, and join supporting tables to create analysis-ready records. | Join and reshaping operations in the Rmd`
+- `T6 | Compare | Summarize group differences, rates, rankings, or trajectories to surface the main story in the data. | Grouped summaries and comparative plots`
+- `T7 | Visualize | Translate the analytical result into geographic views to reveal regional variation and outliers. | Spatial joins or mapping code`
+- `T8 | Reflect | Identify reusable workflow pieces that can transfer to future datasets with a similar shape or question. | End-state of the analysis pattern`
+
+## Data Transformation Flow
+
+- `Raw | Imported source tables or files | Load source data into tibbles or lists | Raw episode objects | Establish the starting analysis surface`
+- `Raw -> Clean | Raw source tables | Rename, reshape, unnest, and join supporting data | Analysis-ready rows with consistent keys | Standardize the schema before comparison`
+- `Clean -> Analytical | Cleaned table | Group, summarize, rank, or compare entities | Summary tables or rate calculations | Surface the core analytical story`
+- `Analytical -> Visual | Analytical summaries with geographic identifiers | Join map geometry or region lookup data | Map-ready plotting table | Display geographic variation`
+
+## Reusable Patterns
+
+- `inspect_source_schema | Inspect source tables, field meanings, and likely comparison axes | Raw dataset or dataset list | Initial analysis plan | Y`
+- `join_context_tables | Enrich the main table with lookup or metadata tables | Primary data plus keys | Context-enriched analysis table | Y`
+- `prepare_geographic_summary | Aggregate metrics by region and join map geometry or lookup tables | Regional metrics and identifiers | Map-ready data | Y`
+- `plot_comparative_story | Reorder entities and visualize the main comparison cleanly | Summary table or model output | Communication-ready plot | Y`
+
+## Function Candidates
+
+- `reshape_episode_inputs(data, ...)`
+- `join_episode_context(primary_data, lookup_data, by)`
+- `prepare_map_summary(data, region_col, value_col)`
+- `plot_geographic_metric(map_data, value_col)`
+- `plot_comparative_story(data, x_col, y_col, group_col = NULL)`
+
+## Reproduction Steps
+
+- 1. Start from the control-table metadata and confirm the transcript, code file, and function identity match this episode.
+- 2. Read the transcript first to understand the story, then inspect the source `.Rmd` to locate the main transformation and plotting chunks.
+- 3. Prefer the local mirrored TidyTuesday files or `load_tidyweek_data()` from `R/screencast_helpers.R`; that keeps reproduction local and avoids the GitHub PAT requirement.
+- 4. Run the extracted episode script in chunk order and compare the resulting tables and plots to the original screencast intent.
+- 5. Use the KER thought process map and adaptation plan in this folder when rewriting the episode into a cleaner reusable analysis.
+- 6. Mark the episode as implemented or reviewed only after the reproduced workflow runs cleanly in the local environment.
+
+## Adaptation Plan
+
+- `1 | inspect_source_schema | Start by mapping entities, measures, and likely comparison axes before transforming anything`
+- `4 | join_context_tables | Enrich the main analysis table with keys, metadata, or auxiliary measurements`
+- `7 | prepare_geographic_summary | Aggregate to the geographic unit available in the new dataset and rebuild the map join`
+- `8 | plot_comparative_story | Choose the clearest visual comparison once the analytical table is ready`
+
+## Source Artifacts in This Folder
+
+- `episode_guide.qmd`: this guided reproduction document
+- `episode_source.R`: R code extracted from the original episode `.Rmd`
+- `episode_manifest.json`: machine-readable metadata for automation and checks
