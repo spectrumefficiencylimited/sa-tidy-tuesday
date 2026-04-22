@@ -35,23 +35,31 @@ The point is to preserve not only the code path, but the author's cognition:
 
 ## Episode Snapshot
 
-- `queue_position`: `48`
-- `function_name`: `penguins`
-- `analysis_type`: `Predictive`
-- `pattern_signature`: `load_inspect_reshape_trend_model_evaluate_visualize`
-- `data_source`: TidyTuesday 2020-07-28 dataset
-- `reproduction_status`: `ready_local`
-
 ::: {.callout-note}
 ## Analysis Intent
 Predict or estimate outcomes in penguins using cleaned features, exploratory analysis, and model evaluation
 :::
 
+| Field | Value |
+|---|---|
+| Queue | #48 |
+| Function | `penguins` |
+| Analysis type | Predictive |
+| Data source | TidyTuesday 2020-07-28 dataset |
+| Status | `ready_local` |
+
+**Packages:** `modeldata`, `tidymodels`, `tidytuesdayR`, `tidyverse`
+
+**Features:** ggplot, reshape, modeling, predictive, time
+
+**Execution notes:**
+- local TidyTuesday files were matched, so you can use `load_tidyweek_data()` and avoid a GitHub PAT
+
+**Analytical pattern:** `load_inspect_reshape_trend_model_evaluate_visualize`
 
 
-## Transcript Preview
 
-Analyzing penguins in R 15.9k subscribers 106 Share Save Clip 3,832 views Streamed live on 29 Jul 2020 Tidy Tuesday R Screencasts I'll analyze a dataset on penguins in R, without looking at the dataset in advance. The dataset comes from the Tidy Tuesday project: https://github.com/rfordatascience/ti... Search in video 0:03 hi i'm dave robinson and welcome to another one of my screencasts where i'll be using rnr studio to analyze data i've 0:10 never seen before as usual the data comes from the thai t...
+
 
 ## Cognitive Signature
 
@@ -105,6 +113,24 @@ names(tuesdata)
 - `T6 | Compare | Move from descriptive patterns into statistical or predictive modeling once the feature space is ready. | Modeling functions and evaluation code`
 - `T7 | Visualize | Turn the cleaned summaries into interpretable visual comparisons and iterate toward the clearest view. | ggplot workflow`
 - `T8 | Reflect | Identify reusable workflow pieces that can transfer to future datasets with a similar shape or question. | End-state of the analysis pattern`
+
+```{r}
+#| label: thought_execution_log
+#| eval: false
+
+# Fill in `finding` after completing each stage.
+thought_log <- tibble::tribble(
+  ~step,  ~move,        ~finding,
+  "T1", "Context", "",
+  "T2", "Inspect", "",
+  "T4", "Transform", "",
+  "T6", "Compare", "",
+  "T7", "Visualize", "",
+  "T8", "Reflect", "",
+)
+thought_log
+```
+
 
 ### Code Mapping Table
 

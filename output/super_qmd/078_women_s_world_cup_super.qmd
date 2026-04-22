@@ -35,23 +35,31 @@ The point is to preserve not only the code path, but the author's cognition:
 
 ## Episode Snapshot
 
-- `queue_position`: `78`
-- `function_name`: `women_s_world_cup`
-- `analysis_type`: `EDA`
-- `pattern_signature`: `load_inspect_scrape_join_trend_compare_visualize`
-- `data_source`: TidyTuesday 2019-07-09 source files
-- `reproduction_status`: `ready_with_external_steps`
-
 ::: {.callout-note}
 ## Analysis Intent
 Explore distributions, group differences, and notable patterns in Women's World Cup through cleaning, summarization, and visualization
 :::
 
+| Field | Value |
+|---|---|
+| Queue | #78 |
+| Function | `women_s_world_cup` |
+| Analysis type | EDA |
+| Data source | TidyTuesday 2019-07-09 source files |
+| Status | `ready_with_external_steps` |
+
+**Packages:** `StatsBombR`, `gganimate`, `ggthemes`, `rvest`, `tidyverse`
+
+**Features:** ggplot, joins, scraping, time
+
+**Execution notes:**
+- local TidyTuesday files were matched, so you can use `load_tidyweek_data()` and avoid a GitHub PAT
+
+**Analytical pattern:** `load_inspect_scrape_join_trend_compare_visualize`
 
 
-## Transcript Preview
 
-analyzing Women's World Cup data 15.9k subscribers 68 Share Save Clip 3,265 views 23 Jul 2019 Tidy Tuesday R Screencasts I analyze a dataset on Women's World Cup results since 1992 as an example of exploratory data analysis in R, performed without looking at the data in advance. I also do some exploration of a very rich dataset of soccer play-by-play statistics from StatsBomb. The data comes from the #tidytuesday project: https://github.com/rfordatascience/ti... You can find the code produced in the...
+
 
 ## Cognitive Signature
 
@@ -108,6 +116,25 @@ names(tuesdata)
 - `T6 | Compare | Summarize group differences, rates, rankings, or trajectories to surface the main story in the data. | Grouped summaries and comparative plots`
 - `T7 | Visualize | Turn the cleaned summaries into interpretable visual comparisons and iterate toward the clearest view. | ggplot workflow`
 - `T8 | Reflect | Identify reusable workflow pieces that can transfer to future datasets with a similar shape or question. | End-state of the analysis pattern`
+
+```{r}
+#| label: thought_execution_log
+#| eval: false
+
+# Fill in `finding` after completing each stage.
+thought_log <- tibble::tribble(
+  ~step,  ~move,        ~finding,
+  "T1", "Context", "",
+  "T2", "Inspect", "",
+  "T3", "Transform", "",
+  "T4", "Transform", "",
+  "T6", "Compare", "",
+  "T7", "Visualize", "",
+  "T8", "Reflect", "",
+)
+thought_log
+```
+
 
 ### Code Mapping Table
 

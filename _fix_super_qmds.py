@@ -27,65 +27,81 @@ def extract_fn(text):
     return m.group(1) if m else None
 
 
-SNAPSHOT_RE = re.compile(
-    r"## Episode Snapshot\n\n"
-    r"((?:- `.+`\n)+)\n"
-    r"::: \{\.callout-note\}\n## Analysis Intent\n(.*?)\n:::",
-    re.DOTALL,
-)
-
 def reformat_snapshot(text, manifest=None):
-    def replacer(m):
-        bullets_raw = m.group(1)
-        intent = m.group(2).strip()
+    """Replace Episode Snapshot bullet-list with table + intent-first structure.
+    Uses string operations (no DOTALL regex) to avoid catastrophic backtracking.
+    """
+    HEADER  = "## Episode Snapshot\n\n"
+    CALLOUT = "::: {.callout-note}\n## Analysis Intent\n"
+    END_C   = "\n:::"
 
-        fields = {}
-        for line in bullets_raw.splitlines():
-            hit = re.match(r"- `(\w+)`: `?([^`\n]+)`?", line)
-            if hit:
-                fields[hit.group(1)] = hit.group(2)
-            else:
-                hit2 = re.match(r"- `(\w+)`: (.+)", line)
-                if hit2:
-                    fields[hit2.group(1)] = hit2.group(2).strip()
+    h_idx = text.find(HEADER)
+    if h_idx == -1:
+        return text
 
-        pos         = fields.get("queue_position", "—")
-        fn          = fields.get("function_name",  "—")
-        atype       = fields.get("analysis_type",  "—")
-        pattern_sig = fields.get("pattern_signature", "—")
-        dsrc        = fields.get("data_source",    "—")
-        status      = fields.get("reproduction_status", "—")
+    c_idx = text.find(CALLOUT, h_idx)
+    if c_idx == -1:
+        return text
 
-        pkg_lines = feature_lines = exec_lines = ""
-        if manifest:
-            pkgs = manifest.get("required_packages", [])
-            if pkgs:
-                pkg_list = ", ".join(f"`{p}`" for p in pkgs)
-                pkg_lines = f"\n**Packages:** {pkg_list}\n"
-            features = manifest.get("features", {})
-            active = [k for k, v in features.items() if v]
-            if active:
-                feature_lines = f"\n**Features:** {', '.join(active)}\n"
-            exec_notes = manifest.get("execution_notes", [])
-            if exec_notes:
-                exec_lines = "\n**Execution notes:**\n" + "".join(f"- {n}\n" for n in exec_notes)
+    # Collect bullet lines between HEADER and callout
+    bullets_raw = text[h_idx + len(HEADER) : c_idx].strip()
+    if not bullets_raw.startswith("- `"):
+        return text  # already reformatted
 
-        return (
-            f"## Episode Snapshot\n\n"
-            f"::: {{.callout-note}}\n## Analysis Intent\n{intent}\n:::\n\n"
-            f"| Field | Value |\n|---|---|\n"
-            f"| Queue | #{pos} |\n"
-            f"| Function | `{fn}` |\n"
-            f"| Analysis type | {atype} |\n"
-            f"| Data source | {dsrc} |\n"
-            f"| Status | `{status}` |\n"
-            f"{pkg_lines}"
-            f"{feature_lines}"
-            f"{exec_lines}"
-            f"\n**Analytical pattern:** `{pattern_sig}`\n"
-        )
+    # Find end of callout
+    ec_idx = text.find(END_C, c_idx + len(CALLOUT))
+    if ec_idx == -1:
+        return text
+    intent = text[c_idx + len(CALLOUT) : ec_idx].strip()
+    end_of_block = ec_idx + len(END_C)
 
-    return SNAPSHOT_RE.sub(replacer, text)
+    # Parse bullet fields
+    fields = {}
+    for line in bullets_raw.splitlines():
+        hit = re.match(r"- `(\w+)`: `?([^`\n]+)`?", line)
+        if hit:
+            fields[hit.group(1)] = hit.group(2)
+        else:
+            hit2 = re.match(r"- `(\w+)`: (.+)", line)
+            if hit2:
+                fields[hit2.group(1)] = hit2.group(2).strip()
+
+    pos         = fields.get("queue_position", "—")
+    fn          = fields.get("function_name",  "—")
+    atype       = fields.get("analysis_type",  "—")
+    pattern_sig = fields.get("pattern_signature", "—")
+    dsrc        = fields.get("data_source",    "—")
+    status      = fields.get("reproduction_status", "—")
+
+    pkg_lines = feature_lines = exec_lines = ""
+    if manifest:
+        pkgs = manifest.get("required_packages", [])
+        if pkgs:
+            pkg_list = ", ".join(f"`{p}`" for p in pkgs)
+            pkg_lines = f"\n**Packages:** {pkg_list}\n"
+        features = manifest.get("features", {})
+        active = [k for k, v in features.items() if v]
+        if active:
+            feature_lines = f"\n**Features:** {', '.join(active)}\n"
+        exec_notes = manifest.get("execution_notes", [])
+        if exec_notes:
+            exec_lines = "\n**Execution notes:**\n" + "".join(f"- {n}\n" for n in exec_notes)
+
+    new_block = (
+        f"## Episode Snapshot\n\n"
+        f"::: {{.callout-note}}\n## Analysis Intent\n{intent}\n:::\n\n"
+        f"| Field | Value |\n|---|---|\n"
+        f"| Queue | #{pos} |\n"
+        f"| Function | `{fn}` |\n"
+        f"| Analysis type | {atype} |\n"
+        f"| Data source | {dsrc} |\n"
+        f"| Status | `{status}` |\n"
+        f"{pkg_lines}"
+        f"{feature_lines}"
+        f"{exec_lines}"
+        f"\n**Analytical pattern:** `{pattern_sig}`\n"
+    )
+    return text[:h_idx] + new_block + text[end_of_block:]
 
 
 def add_thought_code(text):
@@ -126,17 +142,19 @@ def add_thought_code(text):
 # ── Main loop ─────────────────────────────────────────────────────────────────
 changed = skipped = already_done = 0
 
-for qmd in sorted(SUPER_DIR.glob("*.qmd")):
+for i, qmd in enumerate(sorted(SUPER_DIR.glob("*.qmd"))):
+    if i % 50 == 0:
+        print(f"  [{i}] {qmd.name}", flush=True)
     text     = qmd.read_text(encoding="utf-8")
     original = text
 
-    # 1. Remove Transcript Preview
-    text = re.sub(
-        r"\n## Transcript Preview\n\n.+?\n\n(?=## )",
-        "\n\n",
-        text,
-        flags=re.DOTALL,
-    )
+    # 1. Remove Transcript Preview (string-based, no DOTALL backtracking risk)
+    tp_start = text.find("\n## Transcript Preview\n\n")
+    if tp_start != -1:
+        tp_body_start = tp_start + len("\n## Transcript Preview\n\n")
+        tp_end = text.find("\n\n## ", tp_body_start)
+        if tp_end != -1:
+            text = text[:tp_start] + "\n\n" + text[tp_end + 2:]  # keep the \n\n## next section
 
     # 2. Reformat Episode Snapshot
     fn       = extract_fn(text)

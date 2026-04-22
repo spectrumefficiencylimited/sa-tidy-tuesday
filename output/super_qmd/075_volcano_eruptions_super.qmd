@@ -35,23 +35,31 @@ The point is to preserve not only the code path, but the author's cognition:
 
 ## Episode Snapshot
 
-- `queue_position`: `75`
-- `function_name`: `volcano_eruptions`
-- `analysis_type`: `EDA`
-- `pattern_signature`: `load_inspect_reshape_trend_compare_visualize`
-- `data_source`: TidyTuesday 2020-05-12 dataset
-- `reproduction_status`: `ready_local`
-
 ::: {.callout-note}
 ## Analysis Intent
 Explore distributions, group differences, and notable patterns in volcano eruptions through cleaning, summarization, and visualization
 :::
 
+| Field | Value |
+|---|---|
+| Queue | #75 |
+| Function | `volcano_eruptions` |
+| Analysis type | EDA |
+| Data source | TidyTuesday 2020-05-12 dataset |
+| Status | `ready_local` |
+
+**Packages:** `DT`, `gganimate`, `ggthemes`, `glue`, `htmlwidgets`, `leaflet`, `tidyverse`
+
+**Features:** ggplot, reshape, time
+
+**Execution notes:**
+- local TidyTuesday files were matched, so you can use `load_tidyweek_data()` and avoid a GitHub PAT
+
+**Analytical pattern:** `load_inspect_reshape_trend_compare_visualize`
 
 
-## Transcript Preview
 
-Analyzing volcano eruptions in R 15.9k subscribers 113 Share Save Clip 3,462 views Streamed live on 13 May 2020 Tidy Tuesday R Screencasts I'll analyze a dataset on volcano eruptions in R, without looking at the dataset in advance. The dataset comes from the Tidy Tuesday project: https://github.com/rfordatascience/ti... Transcript Search in video 0:06 hi I'm Dave Robinson and welcome to another screencast where I'll be using 0:11 our and our studio to analyze data I've never seen before as usual the...
+
 
 ## Cognitive Signature
 
@@ -112,6 +120,24 @@ eruptions <- tuesdata$eruptions
 - `T6 | Compare | Summarize group differences, rates, rankings, or trajectories to surface the main story in the data. | Grouped summaries and comparative plots`
 - `T7 | Visualize | Turn the cleaned summaries into interpretable visual comparisons and iterate toward the clearest view. | ggplot workflow`
 - `T8 | Reflect | Identify reusable workflow pieces that can transfer to future datasets with a similar shape or question. | End-state of the analysis pattern`
+
+```{r}
+#| label: thought_execution_log
+#| eval: false
+
+# Fill in `finding` after completing each stage.
+thought_log <- tibble::tribble(
+  ~step,  ~move,        ~finding,
+  "T1", "Context", "",
+  "T2", "Inspect", "",
+  "T4", "Transform", "",
+  "T6", "Compare", "",
+  "T7", "Visualize", "",
+  "T8", "Reflect", "",
+)
+thought_log
+```
+
 
 ### Code Mapping Table
 

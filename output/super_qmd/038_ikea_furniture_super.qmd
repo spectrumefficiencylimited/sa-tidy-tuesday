@@ -35,23 +35,32 @@ The point is to preserve not only the code path, but the author's cognition:
 
 ## Episode Snapshot
 
-- `queue_position`: `38`
-- `function_name`: `ikea_furniture`
-- `analysis_type`: `Modeling`
-- `pattern_signature`: `load_inspect_trend_model_evaluate_visualize`
-- `data_source`: TidyTuesday 2020-11-03 dataset
-- `reproduction_status`: `ready_local`
-
 ::: {.callout-note}
 ## Analysis Intent
 Explore, explain, and model patterns in IKEA furniture using engineered features and comparative summaries
 :::
 
+| Field | Value |
+|---|---|
+| Queue | #38 |
+| Function | `ikea_furniture` |
+| Analysis type | Modeling |
+| Data source | TidyTuesday 2020-11-03 dataset |
+| Status | `ready_local` |
+
+**Packages:** `broom`, `ggridges`, `glue`, `scales`, `tidytuesdayR`, `tidyverse`
+
+**Features:** ggplot, modeling, time
+
+**Execution notes:**
+- interactive `View()` calls are present and should be skipped or replaced in automated runs
+- local TidyTuesday files were matched, so you can use `load_tidyweek_data()` and avoid a GitHub PAT
+
+**Analytical pattern:** `load_inspect_trend_model_evaluate_visualize`
 
 
-## Transcript Preview
 
-Analyzing IKEA furniture in R 15.9k subscribers 145 Share Save Clip 5,530 views Streamed live on 4 Nov 2020 Tidy Tuesday R Screencasts I'll analyze a dataset about the IKEA furniture, without looking at the dataset in advance. The dataset comes from the Tidy Tuesday project: https://github.com/rfordatascience/ti... Code: https://github.com/dgrtwo/data-screen... Timestamped annotations of specific tricks, tips and tools used: https://github.com/dgrtwo/data-screen... Introduction 0:08 hi I'm Dave Robin...
+
 
 ## Cognitive Signature
 
@@ -105,6 +114,23 @@ names(tuesdata)
 - `T6 | Compare | Move from descriptive patterns into statistical or predictive modeling once the feature space is ready. | Modeling functions and evaluation code`
 - `T7 | Visualize | Turn the cleaned summaries into interpretable visual comparisons and iterate toward the clearest view. | ggplot workflow`
 - `T8 | Reflect | Identify reusable workflow pieces that can transfer to future datasets with a similar shape or question. | End-state of the analysis pattern`
+
+```{r}
+#| label: thought_execution_log
+#| eval: false
+
+# Fill in `finding` after completing each stage.
+thought_log <- tibble::tribble(
+  ~step,  ~move,        ~finding,
+  "T1", "Context", "",
+  "T2", "Inspect", "",
+  "T6", "Compare", "",
+  "T7", "Visualize", "",
+  "T8", "Reflect", "",
+)
+thought_log
+```
+
 
 ### Code Mapping Table
 

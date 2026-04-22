@@ -35,17 +35,25 @@ The point is to preserve not only the code path, but the author's cognition:
 
 ## Episode Snapshot
 
-- `queue_position`: `40`
-- `function_name`: `malaria_incidence`
-- `analysis_type`: `EDA`
-- `pattern_signature`: `load_inspect_reshape_join_map_trend_compare_visualize`
-- `data_source`: Local source files read in episode: https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2018-11-13/malaria_deaths.csv, https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2018-11-13/malaria_inc.csv
-- `reproduction_status`: `needs_external_sources`
-
 ::: {.callout-note}
 ## Analysis Intent
 Explore geographic and temporal variation in malaria incidence through joins, summarization, and mapping
 :::
+
+| Field | Value |
+|---|---|
+| Queue | #40 |
+| Function | `malaria_incidence` |
+| Analysis type | EDA |
+| Data source | Local source files read in episode: https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2018-11-13/malaria_deaths.csv, https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2018-11-13/malaria_inc.csv |
+| Status | `needs_external_sources` |
+
+**Packages:** `countrycode`, `fuzzyjoin`, `gganimate`, `malariaAtlas`, `stringr`, `tidyverse`
+
+**Features:** ggplot, joins, reshape, maps, time
+
+**Analytical pattern:** `load_inspect_reshape_join_map_trend_compare_visualize`
+
 
 ::: {.callout-important}
 ## Status Note
@@ -53,9 +61,6 @@ This episode currently depends on external data retrieval. The cognitive structu
 :::
 
 
-## Transcript Preview
-
-analyzing malaria incidence in R 15.9k subscribers 145 Share 5,660 views 13 Nov 2018 Tidy Tuesday R Screencasts I analyze a dataset of malaria incidence across countries as an example of exploratory data analysis in R, performed without looking at the data in advance. This is part of the #tidytuesday project: https://github.com/rfordatascience/ti... Transcript Search in video 0:00 hi I'm Dave Robinson chief data scientist at data camp and this is gonna 0:05 be another screencast where I analyze data...
 
 ## Cognitive Signature
 
@@ -110,6 +115,24 @@ source("R/screencast_helpers.R")
 - `T6 | Compare | Summarize group differences, rates, rankings, or trajectories to surface the main story in the data. | Grouped summaries and comparative plots`
 - `T7 | Visualize | Translate the analytical result into geographic views to reveal regional variation and outliers. | Spatial joins or mapping code`
 - `T8 | Reflect | Identify reusable workflow pieces that can transfer to future datasets with a similar shape or question. | End-state of the analysis pattern`
+
+```{r}
+#| label: thought_execution_log
+#| eval: false
+
+# Fill in `finding` after completing each stage.
+thought_log <- tibble::tribble(
+  ~step,  ~move,        ~finding,
+  "T1", "Context", "",
+  "T2", "Inspect", "",
+  "T4", "Transform", "",
+  "T6", "Compare", "",
+  "T7", "Visualize", "",
+  "T8", "Reflect", "",
+)
+thought_log
+```
+
 
 ### Code Mapping Table
 

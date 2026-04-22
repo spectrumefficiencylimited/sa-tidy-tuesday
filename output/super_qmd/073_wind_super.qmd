@@ -35,17 +35,25 @@ The point is to preserve not only the code path, but the author's cognition:
 
 ## Episode Snapshot
 
-- `queue_position`: `73`
-- `function_name`: `wind`
-- `analysis_type`: `EDA`
-- `pattern_signature`: `load_inspect_trend_simulate_compare_visualize`
-- `data_source`: Local source files read in episode: https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2018-11-06/us_wind.csv
-- `reproduction_status`: `needs_external_sources`
-
 ::: {.callout-note}
 ## Analysis Intent
 Explore distributions, group differences, and notable patterns in US wind through cleaning, summarization, and visualization
 :::
+
+| Field | Value |
+|---|---|
+| Queue | #73 |
+| Function | `wind` |
+| Analysis type | EDA |
+| Data source | Local source files read in episode: https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2018-11-06/us_wind.csv |
+| Status | `needs_external_sources` |
+
+**Packages:** `gganimate`, `tidyverse`
+
+**Features:** ggplot, time, simulation
+
+**Analytical pattern:** `load_inspect_trend_simulate_compare_visualize`
+
 
 ::: {.callout-important}
 ## Status Note
@@ -53,9 +61,6 @@ This episode currently depends on external data retrieval. The cognitive structu
 :::
 
 
-## Transcript Preview
-
-analyzing US wind data in R 15.9k subscribers 160 Share 6,924 views 7 Nov 2018 Tidy Tuesday R Screencasts I analyze a dataset of wind turbines in the US as an example of exploratory data analysis in R, performed without looking at the data in advance. This is part of the #tidytuesday project: https://github.com/rfordatascience/ti... Introduction 0:00 hi I'm Dave Robinson chief data scientist at data camp and today I'm 0:06 gonna be recording a screencast of myself analyzing some data that I have neve...
 
 ## Cognitive Signature
 
@@ -103,6 +108,23 @@ source("R/screencast_helpers.R")
 - `T6 | Compare | Summarize group differences, rates, rankings, or trajectories to surface the main story in the data. | Grouped summaries and comparative plots`
 - `T7 | Visualize | Turn the cleaned summaries into interpretable visual comparisons and iterate toward the clearest view. | ggplot workflow`
 - `T8 | Reflect | Identify reusable workflow pieces that can transfer to future datasets with a similar shape or question. | End-state of the analysis pattern`
+
+```{r}
+#| label: thought_execution_log
+#| eval: false
+
+# Fill in `finding` after completing each stage.
+thought_log <- tibble::tribble(
+  ~step,  ~move,        ~finding,
+  "T1", "Context", "",
+  "T2", "Inspect", "",
+  "T6", "Compare", "",
+  "T7", "Visualize", "",
+  "T8", "Reflect", "",
+)
+thought_log
+```
+
 
 ### Code Mapping Table
 

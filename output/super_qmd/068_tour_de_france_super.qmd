@@ -35,23 +35,32 @@ The point is to preserve not only the code path, but the author's cognition:
 
 ## Episode Snapshot
 
-- `queue_position`: `68`
-- `function_name`: `tour_de_france`
-- `analysis_type`: `Modeling`
-- `pattern_signature`: `load_inspect_join_tokenize_trend_model_evaluate_visualize`
-- `data_source`: TidyTuesday 2020-04-07 dataset
-- `reproduction_status`: `ready_local`
-
 ::: {.callout-note}
 ## Analysis Intent
 Explore and compare language patterns in Tour de France using tokenization, grouped counts, and discriminative text analysis
 :::
 
+| Field | Value |
+|---|---|
+| Queue | #68 |
+| Function | `tour_de_france` |
+| Analysis type | Modeling |
+| Data source | TidyTuesday 2020-04-07 dataset |
+| Status | `ready_local` |
+
+**Packages:** `broom`, `gganimate`, `lubridate`, `survival`, `tidytext`, `tidytuesdayR`, `tidyverse`
+
+**Features:** ggplot, joins, text_analysis, modeling, time
+
+**Execution notes:**
+- interactive `View()` calls are present and should be skipped or replaced in automated runs
+- local TidyTuesday files were matched, so you can use `load_tidyweek_data()` and avoid a GitHub PAT
+
+**Analytical pattern:** `load_inspect_join_tokenize_trend_model_evaluate_visualize`
 
 
-## Transcript Preview
 
-Analyzing Tour de France data in R 15.9k subscribers 124 Share Save Clip 4,266 views Streamed live on 8 Apr 2020 Tidy Tuesday R Screencasts I'll analyze a dataset on the Tour de France competition in R, without looking at the data in advance. For the first time (and just as an experiment), I'll be analyzing the dataset as a live stream instead of prerecording it. The dataset comes from the Tidy Tuesday project: https://github.com/rfordatascience/ti... Transcript Search in video 0:05 hi everyone I'm D...
+
 
 ## Cognitive Signature
 
@@ -115,6 +124,25 @@ tdf_stages <- tuesdata$tdf_stages
 - `T6 | Compare | Move from descriptive patterns into statistical or predictive modeling once the feature space is ready. | Modeling functions and evaluation code`
 - `T7 | Visualize | Turn the cleaned summaries into interpretable visual comparisons and iterate toward the clearest view. | ggplot workflow`
 - `T8 | Reflect | Identify reusable workflow pieces that can transfer to future datasets with a similar shape or question. | End-state of the analysis pattern`
+
+```{r}
+#| label: thought_execution_log
+#| eval: false
+
+# Fill in `finding` after completing each stage.
+thought_log <- tibble::tribble(
+  ~step,  ~move,        ~finding,
+  "T1", "Context", "",
+  "T2", "Inspect", "",
+  "T4", "Transform", "",
+  "T5", "Compare", "",
+  "T6", "Compare", "",
+  "T7", "Visualize", "",
+  "T8", "Reflect", "",
+)
+thought_log
+```
+
 
 ### Code Mapping Table
 

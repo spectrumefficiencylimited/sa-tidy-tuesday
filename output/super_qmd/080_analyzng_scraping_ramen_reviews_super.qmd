@@ -35,23 +35,31 @@ The point is to preserve not only the code path, but the author's cognition:
 
 ## Episode Snapshot
 
-- `queue_position`: `80`
-- `function_name`: `analyzng_scraping_ramen_reviews`
-- `analysis_type`: `Modeling`
-- `pattern_signature`: `load_inspect_scrape_reshape_join_tokenize_model_evaluate_visualize`
-- `data_source`: TidyTuesday 2019-06-04 source files
-- `reproduction_status`: `ready_with_external_steps`
-
 ::: {.callout-note}
 ## Analysis Intent
 Explore and compare language patterns in scraping and analyzing ramen reviews using tokenization, grouped counts, and discriminative text analysis
 :::
 
+| Field | Value |
+|---|---|
+| Queue | #80 |
+| Function | `analyzng_scraping_ramen_reviews` |
+| Analysis type | Modeling |
+| Data source | TidyTuesday 2019-06-04 source files |
+| Status | `ready_with_external_steps` |
+
+**Packages:** `broom`, `drlib`, `ggraph`, `igraph`, `rvest`, `tidytext`, `tidyverse`, `widyr`
+
+**Features:** ggplot, joins, reshape, text_analysis, modeling, scraping
+
+**Execution notes:**
+- local TidyTuesday files were matched, so you can use `load_tidyweek_data()` and avoid a GitHub PAT
+
+**Analytical pattern:** `load_inspect_scrape_reshape_join_tokenize_model_evaluate_visualize`
 
 
-## Transcript Preview
 
-scraping and analyzing ramen reviews in R 15.9k subscribers 212 Share Save Clip 8,315 views 4 Jun 2019 Tidy Tuesday R Screencasts I analyze a dataset on ramen ratings as an example of exploratory data analysis in R, performed without looking at the data in advance. This episode features web scraping with the rvest package to download several hundred ramen reviews from the original website, then analyzing them with tidytext and widyr. The data comes from the #tidytuesday project: https://github.com/rf...
+
 
 ## Cognitive Signature
 
@@ -111,6 +119,26 @@ names(tuesdata)
 - `T6 | Compare | Move from descriptive patterns into statistical or predictive modeling once the feature space is ready. | Modeling functions and evaluation code`
 - `T7 | Visualize | Turn the cleaned summaries into interpretable visual comparisons and iterate toward the clearest view. | ggplot workflow`
 - `T8 | Reflect | Identify reusable workflow pieces that can transfer to future datasets with a similar shape or question. | End-state of the analysis pattern`
+
+```{r}
+#| label: thought_execution_log
+#| eval: false
+
+# Fill in `finding` after completing each stage.
+thought_log <- tibble::tribble(
+  ~step,  ~move,        ~finding,
+  "T1", "Context", "",
+  "T2", "Inspect", "",
+  "T3", "Transform", "",
+  "T4", "Transform", "",
+  "T5", "Compare", "",
+  "T6", "Compare", "",
+  "T7", "Visualize", "",
+  "T8", "Reflect", "",
+)
+thought_log
+```
+
 
 ### Code Mapping Table
 

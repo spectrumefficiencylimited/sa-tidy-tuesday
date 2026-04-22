@@ -35,17 +35,28 @@ The point is to preserve not only the code path, but the author's cognition:
 
 ## Episode Snapshot
 
-- `queue_position`: `44`
-- `function_name`: `netflix_titles`
-- `analysis_type`: `Predictive`
-- `pattern_signature`: `load_inspect_reshape_join_tokenize_trend_model_evaluate_visualize`
-- `data_source`: TidyTuesday 2021-04-20 dataset
-- `reproduction_status`: `needs_external_sources`
-
 ::: {.callout-note}
 ## Analysis Intent
 Predict or estimate outcomes in Netflix titles using cleaned features, exploratory analysis, and model evaluation
 :::
+
+| Field | Value |
+|---|---|
+| Queue | #44 |
+| Function | `netflix_titles` |
+| Analysis type | Predictive |
+| Data source | TidyTuesday 2021-04-20 dataset |
+| Status | `needs_external_sources` |
+
+**Packages:** `broom`, `ggraph`, `glmnet`, `lubridate`, `scales`, `snakecase`, `tidygraph`, `tidylo`, `tidytext`, `tidytuesdayR`, `tidyverse`, `widyr`
+
+**Features:** ggplot, joins, reshape, text_analysis, modeling, predictive, time
+
+**Execution notes:**
+- local TidyTuesday files were matched, so you can use `load_tidyweek_data()` and avoid a GitHub PAT
+
+**Analytical pattern:** `load_inspect_reshape_join_tokenize_trend_model_evaluate_visualize`
+
 
 ::: {.callout-important}
 ## Status Note
@@ -53,9 +64,6 @@ This episode currently depends on external data retrieval. The cognitive structu
 :::
 
 
-## Transcript Preview
-
-Tidy Tuesday live screencast: Analyzing Netflix titles in R 15.9k subscribers 169 Share Save Clip 6,810 views Streamed live on 21 Apr 2021 Tidy Tuesday R Screencasts I'll analyze a dataset about Netflix titles, without looking at the dataset in advance. The dataset comes from the Tidy Tuesday project: https://github.com/rfordatascience/ti... Code: https://github.com/dgrtwo/data-screen... Timestamped annotations of specific tricks, tips and tools used: https://github.com/dgrtwo/data-screen... Intro 0:...
 
 ## Cognitive Signature
 
@@ -118,6 +126,25 @@ names(tuesdata)
 - `T6 | Compare | Move from descriptive patterns into statistical or predictive modeling once the feature space is ready. | Modeling functions and evaluation code`
 - `T7 | Visualize | Turn the cleaned summaries into interpretable visual comparisons and iterate toward the clearest view. | ggplot workflow`
 - `T8 | Reflect | Identify reusable workflow pieces that can transfer to future datasets with a similar shape or question. | End-state of the analysis pattern`
+
+```{r}
+#| label: thought_execution_log
+#| eval: false
+
+# Fill in `finding` after completing each stage.
+thought_log <- tibble::tribble(
+  ~step,  ~move,        ~finding,
+  "T1", "Context", "",
+  "T2", "Inspect", "",
+  "T4", "Transform", "",
+  "T5", "Compare", "",
+  "T6", "Compare", "",
+  "T7", "Visualize", "",
+  "T8", "Reflect", "",
+)
+thought_log
+```
+
 
 ### Code Mapping Table
 

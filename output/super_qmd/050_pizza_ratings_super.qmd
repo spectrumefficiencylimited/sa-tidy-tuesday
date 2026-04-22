@@ -35,23 +35,31 @@ The point is to preserve not only the code path, but the author's cognition:
 
 ## Episode Snapshot
 
-- `queue_position`: `50`
-- `function_name`: `pizza_ratings`
-- `analysis_type`: `Modeling`
-- `pattern_signature`: `load_inspect_reshape_join_trend_model_evaluate_visualize`
-- `data_source`: TidyTuesday 2019-10-01 source files
-- `reproduction_status`: `ready_local`
-
 ::: {.callout-note}
 ## Analysis Intent
 Explore, explain, and model patterns in pizza ratings using engineered features and comparative summaries
 :::
 
+| Field | Value |
+|---|---|
+| Queue | #50 |
+| Function | `pizza_ratings` |
+| Analysis type | Modeling |
+| Data source | TidyTuesday 2019-10-01 source files |
+| Status | `ready_local` |
+
+**Packages:** `broom`, `tidyverse`
+
+**Features:** ggplot, joins, reshape, modeling, time
+
+**Execution notes:**
+- local TidyTuesday files were matched, so you can use `load_tidyweek_data()` and avoid a GitHub PAT
+
+**Analytical pattern:** `load_inspect_reshape_join_trend_model_evaluate_visualize`
 
 
-## Transcript Preview
 
-analyzing pizza ratings 15.9k subscribers 115 Share Save Clip 4,473 views 2 Oct 2019 Tidy Tuesday R Screencasts I analyze two datasets of pizza restaurant ratings in R, without looking at the data in advance. This includes calculating and visualizing confidence intervals for restaurants, as well as some dplyr and forcats tricks. The data comes from the #tidytuesday project: https://github.com/rfordatascience/ti... You can find the code produced in the session here: https://github.com/dgrtwo/data-scre...
+
 
 ## Cognitive Signature
 
@@ -104,6 +112,24 @@ names(tuesdata)
 - `T6 | Compare | Move from descriptive patterns into statistical or predictive modeling once the feature space is ready. | Modeling functions and evaluation code`
 - `T7 | Visualize | Turn the cleaned summaries into interpretable visual comparisons and iterate toward the clearest view. | ggplot workflow`
 - `T8 | Reflect | Identify reusable workflow pieces that can transfer to future datasets with a similar shape or question. | End-state of the analysis pattern`
+
+```{r}
+#| label: thought_execution_log
+#| eval: false
+
+# Fill in `finding` after completing each stage.
+thought_log <- tibble::tribble(
+  ~step,  ~move,        ~finding,
+  "T1", "Context", "",
+  "T2", "Inspect", "",
+  "T4", "Transform", "",
+  "T6", "Compare", "",
+  "T7", "Visualize", "",
+  "T8", "Reflect", "",
+)
+thought_log
+```
+
 
 ### Code Mapping Table
 

@@ -35,23 +35,24 @@ The point is to preserve not only the code path, but the author's cognition:
 
 ## Episode Snapshot
 
-- `queue_position`: `082`
-- `function_name`: `star_wars_survey`
-- `analysis_type`: `EDA`
-- `pattern_signature`: `load_inspect_summarize_compare_visualize`
-- `data_source`: TidyTuesday 2018-05-14
-- `reproduction_status`: `needs_mapping`
-
 ::: {.callout-note}
 ## Analysis Intent
 Explore distributions, group differences, and notable patterns in Star Wars Survey through cleaning, summarization, and visualization
 :::
 
+| Field | Value |
+|---|---|
+| Queue | #082 |
+| Function | `star_wars_survey` |
+| Analysis type | EDA |
+| Data source | TidyTuesday 2018-05-14 |
+| Status | `needs_mapping` |
+
+**Analytical pattern:** `load_inspect_summarize_compare_visualize`
 
 
-## Transcript Preview
 
-Analyzing Star Wars Survey in R 15.9k subscribers 72 Share Save Clip 4,521 views Streamed live on 2018-05-14 Tidy Tuesday R Screencasts I'll analyze a dataset about star wars survey without looking at the dataset in advance. The dataset comes from the Tidy Tuesday project: https://git...
+
 
 ## Cognitive Signature
 
@@ -104,6 +105,24 @@ week7_starwars <- tuesdata$week7_starwars # or read from local path
 - `T6 | Compare | Summarize groups in a way that reveals differences, rankings, or trends. | group_by + summarise + arrange pattern`
 - `T7 | Visualize | Turn the cleaned summaries into interpretable visual comparisons and iterate toward the clearest view. | ggplot workflow`
 - `T8 | Reflect | Identify reusable workflow pieces that can transfer to future datasets with a similar shape or question. | End-state of the analysis pattern`
+
+```{r}
+#| label: thought_execution_log
+#| eval: false
+
+# Fill in `finding` after completing each stage.
+thought_log <- tibble::tribble(
+  ~step,  ~move,        ~finding,
+  "T1", "Context", "",
+  "T2", "Inspect", "",
+  "T3", "Transform", "",
+  "T6", "Compare", "",
+  "T7", "Visualize", "",
+  "T8", "Reflect", "",
+)
+thought_log
+```
+
 
 ### Code Mapping Table
 

@@ -35,17 +35,29 @@ The point is to preserve not only the code path, but the author's cognition:
 
 ## Episode Snapshot
 
-- `queue_position`: `76`
-- `function_name`: `water_access_points`
-- `analysis_type`: `EDA`
-- `pattern_signature`: `load_inspect_reshape_trend_compare_visualize`
-- `data_source`: TidyTuesday 2021-05-04 dataset
-- `reproduction_status`: `needs_external_sources`
-
 ::: {.callout-note}
 ## Analysis Intent
 Explore distributions, group differences, and notable patterns in water access points through cleaning, summarization, and visualization
 :::
+
+| Field | Value |
+|---|---|
+| Queue | #76 |
+| Function | `water_access_points` |
+| Analysis type | EDA |
+| Data source | TidyTuesday 2021-05-04 dataset |
+| Status | `needs_external_sources` |
+
+**Packages:** `countrycode`, `gganimate`, `ggthemes`, `lubridate`, `scales`, `tidytuesdayR`, `tidyverse`
+
+**Features:** ggplot, reshape, time
+
+**Execution notes:**
+- interactive `View()` calls are present and should be skipped or replaced in automated runs
+- local TidyTuesday files were matched, so you can use `load_tidyweek_data()` and avoid a GitHub PAT
+
+**Analytical pattern:** `load_inspect_reshape_trend_compare_visualize`
+
 
 ::: {.callout-important}
 ## Status Note
@@ -53,9 +65,6 @@ This episode currently depends on external data retrieval. The cognitive structu
 :::
 
 
-## Transcript Preview
-
-Tidy Tuesday live screencast: Analyzing water access points in R 15.9k subscribers 208 Share Save Clip 13,142 views Streamed live on 5 May 2021 Tidy Tuesday R Screencasts I'll analyze a dataset about water access points, without looking at the dataset in advance. The dataset comes from the Tidy Tuesday project: https://github.com/rfordatascience/ti... Code: https://github.com/dgrtwo/data-screen... Timestamped annotations of specific tricks, tips and tools used: https://github.com/dgrtwo/data-screen.....
 
 ## Cognitive Signature
 
@@ -111,6 +120,24 @@ names(tuesdata)
 - `T6 | Compare | Summarize group differences, rates, rankings, or trajectories to surface the main story in the data. | Grouped summaries and comparative plots`
 - `T7 | Visualize | Turn the cleaned summaries into interpretable visual comparisons and iterate toward the clearest view. | ggplot workflow`
 - `T8 | Reflect | Identify reusable workflow pieces that can transfer to future datasets with a similar shape or question. | End-state of the analysis pattern`
+
+```{r}
+#| label: thought_execution_log
+#| eval: false
+
+# Fill in `finding` after completing each stage.
+thought_log <- tibble::tribble(
+  ~step,  ~move,        ~finding,
+  "T1", "Context", "",
+  "T2", "Inspect", "",
+  "T4", "Transform", "",
+  "T6", "Compare", "",
+  "T7", "Visualize", "",
+  "T8", "Reflect", "",
+)
+thought_log
+```
+
 
 ### Code Mapping Table
 

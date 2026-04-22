@@ -35,23 +35,24 @@ The point is to preserve not only the code path, but the author's cognition:
 
 ## Episode Snapshot
 
-- `queue_position`: `234`
-- `function_name`: `programming_languages`
-- `analysis_type`: `Text`
-- `pattern_signature`: `load_inspect_tokenize_trend_compare_visualize`
-- `data_source`: TidyTuesday 2023-03-21
-- `reproduction_status`: `needs_mapping`
-
 ::: {.callout-note}
 ## Analysis Intent
 Explore and compare language patterns in Programming Languages using tokenization, grouped counts, and discriminative text analysis
 :::
 
+| Field | Value |
+|---|---|
+| Queue | #234 |
+| Function | `programming_languages` |
+| Analysis type | Text |
+| Data source | TidyTuesday 2023-03-21 |
+| Status | `needs_mapping` |
+
+**Analytical pattern:** `load_inspect_tokenize_trend_compare_visualize`
 
 
-## Transcript Preview
 
-Analyzing Programming Languages in R 15.9k subscribers 72 Share Save Clip 4,521 views Streamed live on 2023-03-21 Tidy Tuesday R Screencasts I'll analyze a dataset about programming languages without looking at the dataset in advance. The dataset comes from the Tidy Tuesday project: h...
+
 
 ## Cognitive Signature
 
@@ -108,6 +109,26 @@ languages <- tuesdata$languages # or read from local path
 - `T6 | Compare | Summarize groups in a way that reveals differences, rankings, or trends. | group_by + summarise + arrange pattern`
 - `T7 | Visualize | Turn the cleaned summaries into interpretable visual comparisons and iterate toward the clearest view. | ggplot workflow`
 - `T8 | Reflect | Identify reusable workflow pieces that can transfer to future datasets with a similar shape or question. | End-state of the analysis pattern`
+
+```{r}
+#| label: thought_execution_log
+#| eval: false
+
+# Fill in `finding` after completing each stage.
+thought_log <- tibble::tribble(
+  ~step,  ~move,        ~finding,
+  "T1", "Context", "",
+  "T2", "Inspect", "",
+  "T3", "Transform", "",
+  "T4", "Trend", "",
+  "T4", "Tokenize", "",
+  "T6", "Compare", "",
+  "T7", "Visualize", "",
+  "T8", "Reflect", "",
+)
+thought_log
+```
+
 
 ### Code Mapping Table
 

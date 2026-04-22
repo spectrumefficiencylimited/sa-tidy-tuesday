@@ -35,23 +35,24 @@ The point is to preserve not only the code path, but the author's cognition:
 
 ## Episode Snapshot
 
-- `queue_position`: `081`
-- `function_name`: `incarceration`
-- `analysis_type`: `EDA`
-- `pattern_signature`: `load_inspect_summarize_compare_visualize`
-- `data_source`: 
-- `reproduction_status`: `needs_mapping`
-
 ::: {.callout-note}
 ## Analysis Intent
 Explore distributions, group differences, and notable patterns in incarceration data through cleaning, summarization, and visualization
 :::
 
+| Field | Value |
+|---|---|
+| Queue | #081 |
+| Function | `incarceration` |
+| Analysis type | EDA |
+| Data source | — |
+| Status | `needs_mapping` |
+
+**Analytical pattern:** `load_inspect_summarize_compare_visualize`
 
 
-## Transcript Preview
 
-Analyzing incarceration data in R 15.9k subscribers 83 Share Save Clip 3,254 views 26 Jan 2019 Tidy Tuesday R Screencasts I analyze a dataset of incarceration by county and time as an example of exploratory data analysis in R, performed without looking at the data in advance. Includes...
+
 
 ## Cognitive Signature
 
@@ -104,6 +105,24 @@ names(tuesdata)
 - `T6 | Compare | Summarize groups in a way that reveals differences, rankings, or trends. | group_by + summarise + arrange pattern`
 - `T7 | Visualize | Turn the cleaned summaries into interpretable visual comparisons and iterate toward the clearest view. | ggplot workflow`
 - `T8 | Reflect | Identify reusable workflow pieces that can transfer to future datasets with a similar shape or question. | End-state of the analysis pattern`
+
+```{r}
+#| label: thought_execution_log
+#| eval: false
+
+# Fill in `finding` after completing each stage.
+thought_log <- tibble::tribble(
+  ~step,  ~move,        ~finding,
+  "T1", "Context", "",
+  "T2", "Inspect", "",
+  "T3", "Transform", "",
+  "T6", "Compare", "",
+  "T7", "Visualize", "",
+  "T8", "Reflect", "",
+)
+thought_log
+```
+
 
 ### Code Mapping Table
 

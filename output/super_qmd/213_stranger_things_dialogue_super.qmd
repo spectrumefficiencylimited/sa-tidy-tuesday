@@ -35,23 +35,24 @@ The point is to preserve not only the code path, but the author's cognition:
 
 ## Episode Snapshot
 
-- `queue_position`: `213`
-- `function_name`: `stranger_things_dialogue`
-- `analysis_type`: `Text`
-- `pattern_signature`: `load_inspect_tokenize_trend_compare_visualize`
-- `data_source`: TidyTuesday 2022-10-18
-- `reproduction_status`: `needs_mapping`
-
 ::: {.callout-note}
 ## Analysis Intent
 Explore and compare language patterns in Stranger Things Dialogue using tokenization, grouped counts, and discriminative text analysis
 :::
 
+| Field | Value |
+|---|---|
+| Queue | #213 |
+| Function | `stranger_things_dialogue` |
+| Analysis type | Text |
+| Data source | TidyTuesday 2022-10-18 |
+| Status | `needs_mapping` |
+
+**Analytical pattern:** `load_inspect_tokenize_trend_compare_visualize`
 
 
-## Transcript Preview
 
-Analyzing Stranger Things Dialogue in R 15.9k subscribers 72 Share Save Clip 4,521 views Streamed live on 2022-10-18 Tidy Tuesday R Screencasts I'll analyze a dataset about stranger things dialogue without looking at the dataset in advance. The dataset comes from the Tidy Tuesday proj...
+
 
 ## Cognitive Signature
 
@@ -110,6 +111,26 @@ stranger_things_all_dialogue <- tuesdata$stranger_things_all_dialogue # or read 
 - `T6 | Compare | Summarize groups in a way that reveals differences, rankings, or trends. | group_by + summarise + arrange pattern`
 - `T7 | Visualize | Turn the cleaned summaries into interpretable visual comparisons and iterate toward the clearest view. | ggplot workflow`
 - `T8 | Reflect | Identify reusable workflow pieces that can transfer to future datasets with a similar shape or question. | End-state of the analysis pattern`
+
+```{r}
+#| label: thought_execution_log
+#| eval: false
+
+# Fill in `finding` after completing each stage.
+thought_log <- tibble::tribble(
+  ~step,  ~move,        ~finding,
+  "T1", "Context", "",
+  "T2", "Inspect", "",
+  "T3", "Transform", "",
+  "T4", "Trend", "",
+  "T4", "Tokenize", "",
+  "T6", "Compare", "",
+  "T7", "Visualize", "",
+  "T8", "Reflect", "",
+)
+thought_log
+```
+
 
 ### Code Mapping Table
 

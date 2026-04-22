@@ -35,23 +35,32 @@ The point is to preserve not only the code path, but the author's cognition:
 
 ## Episode Snapshot
 
-- `queue_position`: `56`
-- `function_name`: `space_launches`
-- `analysis_type`: `EDA`
-- `pattern_signature`: `load_inspect_join_trend_compare_visualize`
-- `data_source`: TidyTuesday 2019-01-15 source files
-- `reproduction_status`: `ready_local`
-
 ::: {.callout-note}
 ## Analysis Intent
 Explore distributions, group differences, and notable patterns in space launches through cleaning, summarization, and visualization
 :::
 
+| Field | Value |
+|---|---|
+| Queue | #56 |
+| Function | `space_launches` |
+| Analysis type | EDA |
+| Data source | TidyTuesday 2019-01-15 source files |
+| Status | `ready_local` |
+
+**Packages:** `countrycode`, `tidyverse`
+
+**Features:** ggplot, joins, time
+
+**Execution notes:**
+- interactive `View()` calls are present and should be skipped or replaced in automated runs
+- local TidyTuesday files were matched, so you can use `load_tidyweek_data()` and avoid a GitHub PAT
+
+**Analytical pattern:** `load_inspect_join_trend_compare_visualize`
 
 
-## Transcript Preview
 
-analyzing space launches in R 15.9k subscribers 70 Share Save Clip 2,920 views 16 Jan 2019 Tidy Tuesday R Screencasts I analyze a dataset on the quality of Maryland bridges as an example of exploratory data analysis in R, performed without looking at the data in advance. This is part of the #tidytuesday project: https://github.com/rfordatascience/ti... Introduction 0:00 chief data scientist at data camp and welcome to another screencast where I'll analyze some data in R without seeing 0:06 the data i...
+
 
 ## Cognitive Signature
 
@@ -103,6 +112,24 @@ names(tuesdata)
 - `T6 | Compare | Summarize group differences, rates, rankings, or trajectories to surface the main story in the data. | Grouped summaries and comparative plots`
 - `T7 | Visualize | Turn the cleaned summaries into interpretable visual comparisons and iterate toward the clearest view. | ggplot workflow`
 - `T8 | Reflect | Identify reusable workflow pieces that can transfer to future datasets with a similar shape or question. | End-state of the analysis pattern`
+
+```{r}
+#| label: thought_execution_log
+#| eval: false
+
+# Fill in `finding` after completing each stage.
+thought_log <- tibble::tribble(
+  ~step,  ~move,        ~finding,
+  "T1", "Context", "",
+  "T2", "Inspect", "",
+  "T4", "Transform", "",
+  "T6", "Compare", "",
+  "T7", "Visualize", "",
+  "T8", "Reflect", "",
+)
+thought_log
+```
+
 
 ### Code Mapping Table
 

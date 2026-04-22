@@ -35,23 +35,31 @@ The point is to preserve not only the code path, but the author's cognition:
 
 ## Episode Snapshot
 
-- `queue_position`: `63`
-- `function_name`: `golden_age_television`
-- `analysis_type`: `Modeling`
-- `pattern_signature`: `load_inspect_reshape_join_trend_model_evaluate_visualize`
-- `data_source`: TidyTuesday 2019-01-08 source files
-- `reproduction_status`: `ready_local`
-
 ::: {.callout-note}
 ## Analysis Intent
 Explore, explain, and model patterns in the golden age of television using engineered features and comparative summaries
 :::
 
+| Field | Value |
+|---|---|
+| Queue | #63 |
+| Function | `golden_age_television` |
+| Analysis type | Modeling |
+| Data source | TidyTuesday 2019-01-08 source files |
+| Status | `ready_local` |
+
+**Packages:** `broom`, `lubridate`, `splines`, `tidyverse`
+
+**Features:** ggplot, joins, reshape, modeling, time
+
+**Execution notes:**
+- local TidyTuesday files were matched, so you can use `load_tidyweek_data()` and avoid a GitHub PAT
+
+**Analytical pattern:** `load_inspect_reshape_join_trend_model_evaluate_visualize`
 
 
-## Transcript Preview
 
-the golden age of television 15.9k subscribers 99 Share Save Clip 3,068 views 9 Jan 2019 Tidy Tuesday R Screencasts I analyze a dataset about IMDb ratings of television seasons, performed without looking at the data in advance. This video is part of the #tidytuesday project: https://github.com/rfordatascience/ti... Introduction 0:02 hi I'm Dave Robinson chief data scientist at data camp and welcome to 0:09 another one of my screencasts where I use the programming language R to analyze a data set that...
+
 
 ## Cognitive Signature
 
@@ -104,6 +112,24 @@ names(tuesdata)
 - `T6 | Compare | Move from descriptive patterns into statistical or predictive modeling once the feature space is ready. | Modeling functions and evaluation code`
 - `T7 | Visualize | Turn the cleaned summaries into interpretable visual comparisons and iterate toward the clearest view. | ggplot workflow`
 - `T8 | Reflect | Identify reusable workflow pieces that can transfer to future datasets with a similar shape or question. | End-state of the analysis pattern`
+
+```{r}
+#| label: thought_execution_log
+#| eval: false
+
+# Fill in `finding` after completing each stage.
+thought_log <- tibble::tribble(
+  ~step,  ~move,        ~finding,
+  "T1", "Context", "",
+  "T2", "Inspect", "",
+  "T4", "Transform", "",
+  "T6", "Compare", "",
+  "T7", "Visualize", "",
+  "T8", "Reflect", "",
+)
+thought_log
+```
+
 
 ### Code Mapping Table
 

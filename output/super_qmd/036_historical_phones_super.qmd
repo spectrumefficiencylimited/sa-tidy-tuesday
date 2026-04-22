@@ -35,23 +35,32 @@ The point is to preserve not only the code path, but the author's cognition:
 
 ## Episode Snapshot
 
-- `queue_position`: `36`
-- `function_name`: `historical_phones`
-- `analysis_type`: `EDA`
-- `pattern_signature`: `load_inspect_reshape_join_map_trend_compare_visualize`
-- `data_source`: TidyTuesday 2020-11-10 dataset
-- `reproduction_status`: `ready_local`
-
 ::: {.callout-note}
 ## Analysis Intent
 Explore geographic and temporal variation in historical phones through joins, summarization, and mapping
 :::
 
+| Field | Value |
+|---|---|
+| Queue | #36 |
+| Function | `historical_phones` |
+| Analysis type | EDA |
+| Data source | TidyTuesday 2020-11-10 dataset |
+| Status | `ready_local` |
+
+**Packages:** `WDI`, `fuzzyjoin`, `gganimate`, `scales`, `tidytuesdayR`, `tidyverse`
+
+**Features:** ggplot, joins, reshape, maps, time, multi_table
+
+**Execution notes:**
+- interactive `View()` calls are present and should be skipped or replaced in automated runs
+- local TidyTuesday files were matched, so you can use `load_tidyweek_data()` and avoid a GitHub PAT
+
+**Analytical pattern:** `load_inspect_reshape_join_map_trend_compare_visualize`
 
 
-## Transcript Preview
 
-Analyzing historical phones in R 15.9k subscribers 90 Share Save Clip 4,110 views Streamed live on 11 Nov 2020 Tidy Tuesday R Screencasts I'll analyze a dataset about historical phone adoption, without looking at the dataset in advance. The dataset comes from the Tidy Tuesday project: https://github.com/rfordatascience/ti... Code: https://github.com/dgrtwo/data-screen... Timestamped annotations of specific tricks, tips and tools used: https://github.com/dgrtwo/data-screen... Intro 0:04 hi I'm Dave Ro...
+
 
 ## Cognitive Signature
 
@@ -110,6 +119,24 @@ names(tuesdata)
 - `T6 | Compare | Summarize group differences, rates, rankings, or trajectories to surface the main story in the data. | Grouped summaries and comparative plots`
 - `T7 | Visualize | Translate the analytical result into geographic views to reveal regional variation and outliers. | Spatial joins or mapping code`
 - `T8 | Reflect | Identify reusable workflow pieces that can transfer to future datasets with a similar shape or question. | End-state of the analysis pattern`
+
+```{r}
+#| label: thought_execution_log
+#| eval: false
+
+# Fill in `finding` after completing each stage.
+thought_log <- tibble::tribble(
+  ~step,  ~move,        ~finding,
+  "T1", "Context", "",
+  "T2", "Inspect", "",
+  "T4", "Transform", "",
+  "T6", "Compare", "",
+  "T7", "Visualize", "",
+  "T8", "Reflect", "",
+)
+thought_log
+```
+
 
 ### Code Mapping Table
 

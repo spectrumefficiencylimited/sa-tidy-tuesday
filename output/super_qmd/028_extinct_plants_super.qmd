@@ -35,23 +35,32 @@ The point is to preserve not only the code path, but the author's cognition:
 
 ## Episode Snapshot
 
-- `queue_position`: `28`
-- `function_name`: `extinct_plants`
-- `analysis_type`: `EDA`
-- `pattern_signature`: `load_inspect_scrape_join_tokenize_trend_compare_visualize`
-- `data_source`: TidyTuesday 2020-08-18 dataset
-- `reproduction_status`: `ready_with_external_steps`
-
 ::: {.callout-note}
 ## Analysis Intent
 Explore and compare language patterns in extinct plants using tokenization, grouped counts, and discriminative text analysis
 :::
 
+| Field | Value |
+|---|---|
+| Queue | #28 |
+| Function | `extinct_plants` |
+| Analysis type | EDA |
+| Data source | TidyTuesday 2020-08-18 dataset |
+| Status | `ready_with_external_steps` |
+
+**Packages:** `rvest`, `scales`, `tidytext`, `tidytuesdayR`, `tidyverse`
+
+**Features:** ggplot, joins, text_analysis, scraping, time, multi_table
+
+**Execution notes:**
+- interactive `View()` calls are present and should be skipped or replaced in automated runs
+- local TidyTuesday files were matched, so you can use `load_tidyweek_data()` and avoid a GitHub PAT
+
+**Analytical pattern:** `load_inspect_scrape_join_tokenize_trend_compare_visualize`
 
 
-## Transcript Preview
 
-Analyzing extinct plants in R 15.9k subscribers 88 Share Save Clip 2,541 views Streamed live on 19 Aug 2020 Tidy Tuesday R Screencasts I'll analyze a dataset on extinct plants in R, without looking at the dataset in advance. The dataset comes from the Tidy Tuesday project: https://github.com/rfordatascience/ti... Search in video 0:03 hi i'm dave robinson and welcome to another screencast where i'll be using r and rstudio to analyze data i've never seen 0:09 before as usual the data comes from the tid...
+
 
 ## Cognitive Signature
 
@@ -111,6 +120,26 @@ names(tuesdata)
 - `T6 | Compare | Summarize group differences, rates, rankings, or trajectories to surface the main story in the data. | Grouped summaries and comparative plots`
 - `T7 | Visualize | Turn the cleaned summaries into interpretable visual comparisons and iterate toward the clearest view. | ggplot workflow`
 - `T8 | Reflect | Identify reusable workflow pieces that can transfer to future datasets with a similar shape or question. | End-state of the analysis pattern`
+
+```{r}
+#| label: thought_execution_log
+#| eval: false
+
+# Fill in `finding` after completing each stage.
+thought_log <- tibble::tribble(
+  ~step,  ~move,        ~finding,
+  "T1", "Context", "",
+  "T2", "Inspect", "",
+  "T3", "Transform", "",
+  "T4", "Transform", "",
+  "T5", "Compare", "",
+  "T6", "Compare", "",
+  "T7", "Visualize", "",
+  "T8", "Reflect", "",
+)
+thought_log
+```
+
 
 ### Code Mapping Table
 

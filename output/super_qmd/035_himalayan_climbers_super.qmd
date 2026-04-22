@@ -35,23 +35,31 @@ The point is to preserve not only the code path, but the author's cognition:
 
 ## Episode Snapshot
 
-- `queue_position`: `35`
-- `function_name`: `himalayan_climbers`
-- `analysis_type`: `EDA`
-- `pattern_signature`: `load_inspect_recode_summarize_compare_visualize`
-- `data_source`: TidyTuesday 2020-09-22 Himalayan climbers data: peaks, expeditions, and members tables
-- `reproduction_status`: `ready_local`
-
 ::: {.callout-note}
 ## Analysis Intent
 Explore expedition outcomes, climbing duration, and peak-level success patterns across Himalayan expeditions
 :::
 
+| Field | Value |
+|---|---|
+| Queue | #35 |
+| Function | `himalayan_climbers` |
+| Analysis type | EDA |
+| Data source | TidyTuesday 2020-09-22 Himalayan climbers data: peaks, expeditions, and members tables |
+| Status | `ready_local` |
+
+**Packages:** `broom`, `ebbr`, `scales`, `tidytuesdayR`, `tidyverse`
+
+**Features:** ggplot, joins, modeling, time, multi_table
+
+**Execution notes:**
+- local TidyTuesday files were matched, so you can use `load_tidyweek_data()` and avoid a GitHub PAT
+
+**Analytical pattern:** `load_inspect_recode_summarize_compare_visualize`
 
 
-## Transcript Preview
 
-Analyzing Himalayan climbers in R 15.9k subscribers 78 Share Save Clip 3,257 views Streamed live on 23 Sept 2020 Tidy Tuesday R Screencasts I'll analyze a dataset about Himalayan climbers without looking at the dataset in advance. The dataset comes from the Tidy Tuesday project: https://github.com/rfordatascience/ti... Code: https://github.com/dgrtwo/data-screen... Timestamped annotations of specific tricks, tips and tools used: https://github.com/dgrtwo/data-screen... Search in video 0:03 hi i'm dav...
+
 
 ## Cognitive Signature
 
@@ -107,6 +115,24 @@ names(tuesdata)
 - `T6 | Compare | Move from descriptive patterns into statistical or predictive modeling once the feature space is ready. | Modeling functions and evaluation code`
 - `T7 | Visualize | Turn the cleaned summaries into interpretable visual comparisons and iterate toward the clearest view. | ggplot workflow`
 - `T8 | Reflect | Identify reusable workflow pieces that can transfer to future datasets with a similar shape or question. | End-state of the analysis pattern`
+
+```{r}
+#| label: thought_execution_log
+#| eval: false
+
+# Fill in `finding` after completing each stage.
+thought_log <- tibble::tribble(
+  ~step,  ~move,        ~finding,
+  "T1", "Context", "",
+  "T2", "Inspect", "",
+  "T4", "Transform", "",
+  "T6", "Compare", "",
+  "T7", "Visualize", "",
+  "T8", "Reflect", "",
+)
+thought_log
+```
+
 
 ### Code Mapping Table
 

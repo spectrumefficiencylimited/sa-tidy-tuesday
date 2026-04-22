@@ -35,23 +35,24 @@ The point is to preserve not only the code path, but the author's cognition:
 
 ## Episode Snapshot
 
-- `queue_position`: `363`
-- `function_name`: `fide_chess_player_ratings`
-- `analysis_type`: `Predictive`
-- `pattern_signature`: `load_inspect_reshape_join_trend_model_evaluate_visualize`
-- `data_source`: TidyTuesday 2025-09-23
-- `reproduction_status`: `needs_mapping`
-
 ::: {.callout-note}
 ## Analysis Intent
 Predict or estimate outcomes in FIDE Chess Player Ratings using cleaned features, exploratory analysis, and model evaluation
 :::
 
+| Field | Value |
+|---|---|
+| Queue | #363 |
+| Function | `fide_chess_player_ratings` |
+| Analysis type | Predictive |
+| Data source | TidyTuesday 2025-09-23 |
+| Status | `needs_mapping` |
+
+**Analytical pattern:** `load_inspect_reshape_join_trend_model_evaluate_visualize`
 
 
-## Transcript Preview
 
-Analyzing FIDE Chess Player Ratings in R 15.9k subscribers 72 Share Save Clip 4,521 views Streamed live on 2025-09-23 Tidy Tuesday R Screencasts I'll analyze a dataset about fide chess player ratings without looking at the dataset in advance. The dataset comes from the Tidy Tuesday pr...
+
 
 ## Cognitive Signature
 
@@ -110,6 +111,26 @@ fide_ratings_september <- tuesdata$fide_ratings_september # or read from local p
 - `T6 | Compare | Summarize groups in a way that reveals differences, rankings, or trends. | group_by + summarise + arrange pattern`
 - `T7 | Visualize | Turn the cleaned summaries into interpretable visual comparisons and iterate toward the clearest view. | ggplot workflow`
 - `T8 | Reflect | Identify reusable workflow pieces that can transfer to future datasets with a similar shape or question. | End-state of the analysis pattern`
+
+```{r}
+#| label: thought_execution_log
+#| eval: false
+
+# Fill in `finding` after completing each stage.
+thought_log <- tibble::tribble(
+  ~step,  ~move,        ~finding,
+  "T1", "Context", "",
+  "T2", "Inspect", "",
+  "T3", "Transform", "",
+  "T4", "Trend", "",
+  "T5", "Model", "",
+  "T6", "Compare", "",
+  "T7", "Visualize", "",
+  "T8", "Reflect", "",
+)
+thought_log
+```
+
 
 ### Code Mapping Table
 
