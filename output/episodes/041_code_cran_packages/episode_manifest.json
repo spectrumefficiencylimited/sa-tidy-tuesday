@@ -1,0 +1,48 @@
+{
+  "queue_position": 41,
+  "folder_name": "041_code_cran_packages",
+  "transcript_title": "Analyzing code in CRAN packages in R",
+  "function_name": "code_cran_packages",
+  "ker_status": "extracted",
+  "reproduction_status": "ready_local",
+  "source_files": {
+    "transcript_file": "raw-data/inspiration/Analyzing code in CRAN packages in R.txt",
+    "code_file": "data-screencasts/cran-code.Rmd"
+  },
+  "source_exists": {
+    "transcript": true,
+    "code": true
+  },
+  "data_source": "TidyTuesday 2019-11-12 dataset",
+  "analysis_intent": "Explore and compare language patterns in code in CRAN packages using tokenization, grouped counts, and discriminative text analysis",
+  "analysis_type": "EDA",
+  "pattern_signature": "load_inspect_reshape_join_tokenize_compare_visualize",
+  "required_packages": [
+    "tidytext",
+    "tidyverse"
+  ],
+  "features": {
+    "ggplot": true,
+    "joins": true,
+    "reshape": true,
+    "text_analysis": true,
+    "modeling": false,
+    "predictive": false,
+    "scraping": false,
+    "maps": false,
+    "time": false,
+    "simulation": false,
+    "multi_table": false
+  },
+  "local_data_files": [
+    "tidytuesday/data/2019/2019-11-12/loc_cran_packages.csv"
+  ],
+  "reference_files": [
+    "tidytuesday/data/2019/2019-11-12/readme.md"
+  ],
+  "external_dependencies": [],
+  "execution_notes": [
+    "interactive `View()` calls are present and should be skipped or replaced in automated runs",
+    "local TidyTuesday files were matched, so you can use `load_tidyweek_data()` and avoid a GitHub PAT"
+  ]
+}

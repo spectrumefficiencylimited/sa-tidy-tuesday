@@ -1,6 +1,7 @@
 ---
 title: "Super QMD: Analyzing post offices in R"
 subtitle: "Cognition-first blueprint built from the episode guide and KER"
+author: "Andrei Stoian"
 format:
   html:
     theme: flatly
@@ -54,7 +55,7 @@ This episode currently depends on external data retrieval. The cognitive structu
 
 ## Transcript Preview
 
-David Robinson 15.9k subscribers 91 Share Save Clip 3,206 views Streamed live on 14 Apr 2021 Tidy Tuesday R Screencasts I'll analyze a dataset about US post office locations in R, without looking at the dataset in advance. The dataset comes from the Tidy Tuesday project: https://github.com/rfordatascience/ti... Code: https://github.com/dgrtwo/data-screen... Timestamped annotations of specific tricks, tips and tools used: https://github.com/dgrtwo/data-screen... Intro 0:05 hi i'm dave robinson and welcome to another...
+ 15.9k subscribers 91 Share Save Clip 3,206 views Streamed live on 14 Apr 2021 Tidy Tuesday R Screencasts I'll analyze a dataset about US post office locations in R, without looking at the dataset in advance. The dataset comes from the Tidy Tuesday project: https://github.com/rfordatascience/ti... Code: https://github.com/dgrtwo/data-screen... Timestamped annotations of specific tricks, tips and tools used: https://github.com/dgrtwo/data-screen... Intro 0:05 hi i'm dave robinson and welcome to another...
 
 ## Cognitive Signature
 
@@ -198,7 +199,7 @@ Trigger:
 # Source assets: local episode data
 # Suggested verbs: mutate(), separate_rows(), pivot_longer(), left_join(), unnest()
 # analysis_tbl <- raw_tbl %>%
-#   ...
+# ...
 ```
 ## Stage 4: Compare
 
@@ -221,9 +222,9 @@ Trigger:
 
 # Summarize the comparison that best answers the question.
 # comparison_tbl <- analysis_tbl %>%
-#   group_by(...) %>%
-#   summarise(...) %>%
-#   arrange(desc(...))
+# group_by(...) %>%
+# summarise(...) %>%
+# arrange(desc(...))
 ```
 ## Stage 5: Visualize
 
@@ -248,8 +249,8 @@ Additional guidance:
 
 # Turn the comparison table into one clear communication plot.
 # ggplot(comparison_tbl, aes(...)) +
-#   geom_col() +
-#   labs(title = ..., subtitle = ...)
+# geom_col() +
+# labs(title = ..., subtitle = ...)
 ```
 ## Stage 6: Reflect
 

@@ -1,0 +1,38 @@
+{
+  "queue_position": 99,
+  "folder_name": "099_russian_troll_tweets",
+  "transcript_title": "Analyzing Russian Troll Tweets in R",
+  "function_name": "russian_troll_tweets",
+  "ker_status": "needs_mapping",
+  "reproduction_status": "blocked_needs_mapping",
+  "source_files": {
+    "transcript_file": "",
+    "code_file": ""
+  },
+  "source_exists": {
+    "transcript": false,
+    "code": false
+  },
+  "data_source": "TidyTuesday 2018-08-14",
+  "analysis_intent": "Explore distributions, group differences, and notable patterns in Russian Troll Tweets through cleaning, summarization, and visualization",
+  "analysis_type": "EDA",
+  "pattern_signature": "load_inspect_compare",
+  "required_packages": [],
+  "features": {
+    "ggplot": false,
+    "joins": false,
+    "reshape": false,
+    "text_analysis": false,
+    "modeling": false,
+    "predictive": false,
+    "scraping": false,
+    "maps": false,
+    "time": false,
+    "simulation": false,
+    "multi_table": false
+  },
+  "local_data_files": [],
+  "reference_files": [],
+  "external_dependencies": [],
+  "execution_notes": []
+}

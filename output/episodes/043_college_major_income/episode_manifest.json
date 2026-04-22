@@ -1,0 +1,48 @@
+{
+  "queue_position": 43,
+  "folder_name": "043_college_major_income",
+  "transcript_title": "Analyzing college major & income data in R",
+  "function_name": "college_major_income",
+  "ker_status": "extracted",
+  "reproduction_status": "needs_external_sources",
+  "source_files": {
+    "transcript_file": "raw-data/inspiration/Analyzing college major & income data in R.txt",
+    "code_file": "data-screencasts/college-majors.Rmd"
+  },
+  "source_exists": {
+    "transcript": true,
+    "code": true
+  },
+  "data_source": "Local source files read in episode: https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2018-10-16/recent-grads.csv",
+  "analysis_intent": "Explore, explain, and model patterns in college major & income using engineered features and comparative summaries",
+  "analysis_type": "Modeling",
+  "pattern_signature": "load_inspect_reshape_model_evaluate_visualize",
+  "required_packages": [
+    "broom",
+    "ggrepel",
+    "plotly",
+    "scales",
+    "tidyverse"
+  ],
+  "features": {
+    "ggplot": true,
+    "joins": false,
+    "reshape": true,
+    "text_analysis": false,
+    "modeling": true,
+    "predictive": false,
+    "scraping": false,
+    "maps": false,
+    "time": false,
+    "simulation": false,
+    "multi_table": false
+  },
+  "local_data_files": [],
+  "reference_files": [],
+  "external_dependencies": [
+    "remote file or API download detected in code"
+  ],
+  "execution_notes": [
+    "htmlwidget or interactive plotting calls are present"
+  ]
+}

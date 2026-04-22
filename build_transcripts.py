@@ -571,20 +571,7 @@ def _wrap_header(title, topic, date_str, spoken_date, body):
     return f"""\
 {title}
 
-David Robinson
-15.9k subscribers
-
-
-72
-
-
-Share
-
-Save
-
-Clip
-
-4,521 views  Streamed live on {spoken_date}  Tidy Tuesday R Screencasts
+Streamed live on {spoken_date}  Tidy Tuesday R Screencasts
 I'll analyze a dataset about {topic.lower()} without looking at the dataset in advance.
 
 The dataset comes from the Tidy Tuesday project: https://github.com/rfordatascience/tidytuesday/

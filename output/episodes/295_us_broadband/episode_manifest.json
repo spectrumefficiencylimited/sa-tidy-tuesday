@@ -1,0 +1,59 @@
+{
+  "queue_position": 295,
+  "folder_name": "295_us_broadband",
+  "transcript_title": "Analyzing US Broadband in R",
+  "function_name": "us_broadband",
+  "ker_status": "needs_mapping",
+  "reproduction_status": "blocked_needs_mapping",
+  "source_files": {
+    "transcript_file": "raw-data/inspiration/Analyzing US Broadband in R.txt",
+    "code_file": "data-screencasts/2021_05_11_broadband.Rmd"
+  },
+  "source_exists": {
+    "transcript": true,
+    "code": true
+  },
+  "data_source": "TidyTuesday 2021-05-11",
+  "analysis_intent": "Explore geographic and temporal variation in US Broadband through joins, summarization, and mapping",
+  "analysis_type": "EDA",
+  "pattern_signature": "load_inspect_join_map_trend_compare_visualize",
+  "required_packages": [
+    "readxl",
+    "rio",
+    "scales",
+    "sf",
+    "tidycensus",
+    "tidytuesdayR",
+    "tidyverse",
+    "tigris",
+    "zipcodeR"
+  ],
+  "features": {
+    "ggplot": true,
+    "joins": true,
+    "reshape": false,
+    "text_analysis": false,
+    "modeling": false,
+    "predictive": false,
+    "scraping": false,
+    "maps": true,
+    "time": true,
+    "simulation": false,
+    "multi_table": true
+  },
+  "local_data_files": [
+    "tidytuesday/data/2021/2021-05-11/broadband.csv",
+    "tidytuesday/data/2021/2021-05-11/broadband_zip.csv"
+  ],
+  "reference_files": [
+    "tidytuesday/data/2021/2021-05-11/broadband_zip.csv",
+    "tidytuesday/data/2021/2021-05-11/pic1.png",
+    "tidytuesday/data/2021/2021-05-11/pic2.png",
+    "tidytuesday/data/2021/2021-05-11/readme.md",
+    "tidytuesday/data/2021/2021-05-11/broadband.csv"
+  ],
+  "external_dependencies": [],
+  "execution_notes": [
+    "local TidyTuesday files were matched, so you can use `load_tidyweek_data()` and avoid a GitHub PAT"
+  ]
+}

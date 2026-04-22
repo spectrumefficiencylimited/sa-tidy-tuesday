@@ -1,6 +1,7 @@
 ---
 title: "Super QMD: Analyzing exploring US beer production in R"
 subtitle: "Cognition-first blueprint built from the episode guide and KER"
+author: "Andrei Stoian"
 format:
   html:
     theme: flatly
@@ -50,7 +51,7 @@ Explore geographic and temporal variation in exploring US beer production throug
 
 ## Transcript Preview
 
-exploring US beer production David Robinson 15.9k subscribers 128 Share Save Clip 5,070 views 2 Apr 2020 Tidy Tuesday R Screencasts I analyze a dataset of US beer production wins as an example of exploratory data analysis in R, performed without looking at the data in advance. In particular, I show how the (in-development) tidymetrics and shinymetrics packages can create interactive visualizations of metrics like ingredient usage over time. For more about the tidymetrics/shinymetrics framework, see this package: ht...
+exploring US beer production 15.9k subscribers 128 Share Save Clip 5,070 views 2 Apr 2020 Tidy Tuesday R Screencasts I analyze a dataset of US beer production wins as an example of exploratory data analysis in R, performed without looking at the data in advance. In particular, I show how the (in-development) tidymetrics and shinymetrics packages can create interactive visualizations of metrics like ingredient usage over time. For more about the tidymetrics/shinymetrics framework, see this package: ht...
 
 ## Cognitive Signature
 
@@ -237,7 +238,7 @@ Trigger:
 # Source assets: tidytuesday/data/2020/2020-03-31/beer_states.csv, tidytuesday/data/2020/2020-03-31/beer_taxed.csv, tidytuesday/data/2020/2020-03-31/brewer_size.csv
 # Suggested verbs: mutate(), separate_rows(), pivot_longer(), left_join(), unnest()
 # analysis_tbl <- raw_tbl %>%
-#   ...
+# ...
 ```
 ## Stage 4: Compare
 
@@ -260,9 +261,9 @@ Trigger:
 
 # Summarize the comparison that best answers the question.
 # comparison_tbl <- analysis_tbl %>%
-#   group_by(...) %>%
-#   summarise(...) %>%
-#   arrange(desc(...))
+# group_by(...) %>%
+# summarise(...) %>%
+# arrange(desc(...))
 ```
 ## Stage 5: Visualize
 
@@ -287,8 +288,8 @@ Additional guidance:
 
 # Turn the comparison table into one clear communication plot.
 # ggplot(comparison_tbl, aes(...)) +
-#   geom_col() +
-#   labs(title = ..., subtitle = ...)
+# geom_col() +
+# labs(title = ..., subtitle = ...)
 ```
 ## Stage 6: Reflect
 

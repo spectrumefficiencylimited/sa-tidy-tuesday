@@ -7,7 +7,7 @@ ROOT = os.path.abspath(os.path.dirname(__file__))
 TRANSCRIPT_DIR = os.path.join(ROOT, "raw-data", "inspiration")
 CODE_DIR = os.path.join(ROOT, "data-screencasts")
 EXISTING_CONTROL_PATH = os.path.join(ROOT, "control_table.csv")
-OUTPUT_PATH = os.path.join(ROOT, "control_table_full.csv")
+OUTPUT_PATH = os.path.join(ROOT, "control_table.csv")
 
 IGNORE_WORDS = {
     "the",
@@ -45,12 +45,12 @@ CONTROL_COLUMNS = [
     "adaptation_hint",
     "ker_status",
     "notes",
-    "normalized_key",
 ]
 
 
 def normalize_tokens(text):
     text = text.lower()
+    text = re.sub(r"^\d{4}[_\-]\d{2}[_\-]\d{2}[_\-]", "", text)  # strip date prefix e.g. 2026_04_21_
     text = re.sub(r"[^a-z0-9]+", " ", text)
     tokens = [token for token in text.split() if token not in IGNORE_WORDS]
     return " ".join(tokens)
@@ -132,7 +132,6 @@ def main():
             "adaptation_hint": existing.get("adaptation_hint", "").strip(),
             "ker_status": existing.get("ker_status", "").strip(),
             "notes": existing.get("notes", "").strip(),
-            "normalized_key": normalized_key,
         }
         rows.append(row)
 
@@ -150,7 +149,7 @@ def main():
     print("Unmatched:", unmatched_count)
     for row in rows:
         if not row["code_file"]:
-            print("UNMATCHED:", row["transcript_file"], "key=", row["normalized_key"])
+            print("UNMATCHED:", row["transcript_file"])
 
 
 if __name__ == "__main__":

@@ -1,6 +1,7 @@
 ---
 title: "Super QMD: Analyzing Company Reputation Poll in R"
 subtitle: "Cognition-first blueprint built from the episode guide and KER"
+author: "Andrei Stoian"
 format:
   html:
     theme: flatly
@@ -50,7 +51,7 @@ Explore distributions, group differences, and notable patterns in Company Reputa
 
 ## Transcript Preview
 
-Analyzing Company Reputation Poll in R David Robinson 15.9k subscribers 72 Share Save Clip 4,521 views Streamed live on 2022-05-31 Tidy Tuesday R Screencasts I'll analyze a dataset about company reputation poll without looking at the dataset in advance. The dataset comes from the Tidy Tuesday projec...
+Analyzing Company Reputation Poll in R 15.9k subscribers 72 Share Save Clip 4,521 views Streamed live on 2022-05-31 Tidy Tuesday R Screencasts I'll analyze a dataset about company reputation poll without looking at the dataset in advance. The dataset comes from the Tidy Tuesday projec...
 
 ## Cognitive Signature
 
@@ -93,9 +94,9 @@ source("R/screencast_helpers.R")
 tuesdata <- load_tidyweek_data("2022-05-31")
 names(tuesdata)
 
-axios <- tuesdata$axios  # or read from local path
-poll <- tuesdata$poll  # or read from local path
-reputation <- tuesdata$reputation  # or read from local path
+axios <- tuesdata$axios # or read from local path
+poll <- tuesdata$poll # or read from local path
+reputation <- tuesdata$reputation # or read from local path
 ```
 
 ## Thought -> Code -> Data Bridge
@@ -199,7 +200,7 @@ Trigger:
 # Source assets: tidytuesday/data/2022/2022-05-31/axios.csv, tidytuesday/data/2022/2022-05-31/poll.csv, tidytuesday/data/2022/2022-05-31/reputation.csv
 # Suggested verbs: mutate(), separate_rows(), pivot_longer(), left_join(), unnest()
 # analysis_tbl <- raw_tbl %>%
-#   ...
+# ...
 ```
 ## Stage 4: Compare
 
@@ -224,10 +225,10 @@ Additional guidance:
 
 # Summarize the comparison that best answers the question.
 # comparison_tbl <- analysis_tbl %>%
-#   count(category_col, sort = TRUE)   # or
-#   group_by(group_col) %>%
-#   summarise(metric = mean(value_col, na.rm = TRUE)) %>%
-#   arrange(desc(metric))
+# count(category_col, sort = TRUE) # or
+# group_by(group_col) %>%
+# summarise(metric = mean(value_col, na.rm = TRUE)) %>%
+# arrange(desc(metric))
 ```
 ## Stage 5: Visualize
 
@@ -252,13 +253,13 @@ Additional guidance:
 
 # Turn the comparison table into one clear communication plot.
 # ggplot(comparison_tbl, aes(x = fct_reorder(category, metric), y = metric)) +
-#   geom_col() +
-#   coord_flip() +
-#   labs(
-#     title = "...",
-#     subtitle = "Source: TidyTuesday 2022-05-31",
-#     x = NULL, y = NULL
-#   )
+# geom_col() +
+# coord_flip() +
+# labs(
+# title = "...",
+# subtitle = "Source: TidyTuesday 2022-05-31",
+# x = NULL, y = NULL
+# )
 ```
 ## Stage 6: Reflect
 
@@ -308,20 +309,20 @@ Trigger: group_by(cat1, cat2) + summarise + facet_wrap
 #| eval: false
 
 cross_tbl <- analysis_tbl |>
-  group_by(company, industry) |>
-  summarise(
-    n      = n(),
-    median = median(2022_rank, na.rm = TRUE),
-    .groups = "drop"
-  ) |>
-  filter(n >= 3)
+ group_by(company, industry) |>
+ summarise(
+ n = n(),
+ median = median(2022_rank, na.rm = TRUE),
+ .groups = "drop"
+ ) |>
+ filter(n >= 3)
 
 ggplot(cross_tbl, aes(x = fct_reorder(company, median), y = median, fill = industry)) +
-  geom_col(position = "dodge") +
-  coord_flip() +
-  facet_wrap(~ industry, scales = "free_x") +
-  labs(title = "Company Reputation Poll: 2022_rank by company and industry",
-       x = NULL, y = "Median 2022_rank")
+ geom_col(position = "dodge") +
+ coord_flip() +
+ facet_wrap(~ industry, scales = "free_x") +
+ labs(title = "Company Reputation Poll: 2022_rank by company and industry",
+ x = NULL, y = "Median 2022_rank")
 ```
 
 ### Stage 8: Outlier Investigation
@@ -340,27 +341,27 @@ Trigger: group_by + mutate(residual = value - group_median) + slice_max(abs(resi
 #| eval: false
 
 residual_tbl <- analysis_tbl |>
-  group_by(company) |>
-  mutate(
-    group_median = median(2022_rank, na.rm = TRUE),
-    residual     = 2022_rank - group_median
-  ) |>
-  ungroup() |>
-  arrange(desc(abs(residual)))
+ group_by(company) |>
+ mutate(
+ group_median = median(2022_rank, na.rm = TRUE),
+ residual = 2022_rank - group_median
+ ) |>
+ ungroup() |>
+ arrange(desc(abs(residual)))
 
 # Label the top outliers
 library(ggrepel)
 
 ggplot(residual_tbl,
-       aes(x = group_median, y = 2022_rank, label = company)) +
-  geom_point(alpha = 0.4) +
-  geom_text_repel(
-    data = slice_max(residual_tbl, abs(residual), n = 15),
-    size = 3, max.overlaps = 20
-  ) +
-  geom_abline(slope = 1, intercept = 0, linetype = "dashed") +
-  labs(title = "Who over- or underperforms their group median?",
-       x = "Group median 2022_rank", y = "Observed 2022_rank")
+ aes(x = group_median, y = 2022_rank, label = company)) +
+ geom_point(alpha = 0.4) +
+ geom_text_repel(
+ data = slice_max(residual_tbl, abs(residual), n = 15),
+ size = 3, max.overlaps = 20
+ ) +
+ geom_abline(slope = 1, intercept = 0, linetype = "dashed") +
+ labs(title = "Who over- or underperforms their group median?",
+ x = "Group median 2022_rank", y = "Observed 2022_rank")
 ```
 
 ### Stage 9: Correlation Structure
@@ -379,13 +380,13 @@ Trigger: geom_point + geom_smooth(method = "lm") + color by group
 #| eval: false
 
 ggplot(analysis_tbl,
-       aes(x = 2022_rq, y = 2022_rank, colour = company)) +
-  geom_point(alpha = 0.5) +
-  geom_smooth(method = "lm", se = FALSE) +
-  scale_colour_viridis_d(end = 0.85) +
-  labs(title = "Relationship between 2022_rank and 2022_rq",
-       subtitle = "Coloured by company",
-       x = "2022_rq", y = "2022_rank")
+ aes(x = 2022_rq, y = 2022_rank, colour = company)) +
+ geom_point(alpha = 0.5) +
+ geom_smooth(method = "lm", se = FALSE) +
+ scale_colour_viridis_d(end = 0.85) +
+ labs(title = "Relationship between 2022_rank and 2022_rq",
+ subtitle = "Coloured by company",
+ x = "2022_rq", y = "2022_rank")
 ```
 
 ---
@@ -408,20 +409,20 @@ Trigger: lm() + broom::tidy() + coefficient plot
 #| eval: false
 
 model_tbl <- analysis_tbl |>
-  mutate(across(where(is.character), as.factor))
+ mutate(across(where(is.character), as.factor))
 
 model_fit <- lm(2022_rank ~ company + industry + 2022_rank + 2022_rq, data = model_tbl)
 
 broom::tidy(model_fit, conf.int = TRUE) |>
-  filter(term != "(Intercept)") |>
-  mutate(term = fct_reorder(term, estimate)) |>
-  ggplot(aes(estimate, term,
-             xmin = conf.low, xmax = conf.high)) +
-  geom_pointrange() +
-  geom_vline(xintercept = 0, linetype = "dashed") +
-  labs(title = "What predicts 2022_rank?",
-       subtitle = "Linear model coefficients (95% CI)",
-       x = "Estimate", y = NULL)
+ filter(term != "(Intercept)") |>
+ mutate(term = fct_reorder(term, estimate)) |>
+ ggplot(aes(estimate, term,
+ xmin = conf.low, xmax = conf.high)) +
+ geom_pointrange() +
+ geom_vline(xintercept = 0, linetype = "dashed") +
+ labs(title = "What predicts 2022_rank?",
+ subtitle = "Linear model coefficients (95% CI)",
+ x = "Estimate", y = NULL)
 ```
 
 ### Stage 11: Residuals
@@ -442,15 +443,15 @@ Trigger: broom::augment() + geom_point(.resid) + geom_text_repel
 augmented_tbl <- broom::augment(model_fit, data = model_tbl)
 
 ggplot(augmented_tbl, aes(.fitted, .resid, label = company)) +
-  geom_point(alpha = 0.4) +
-  geom_smooth(method = "loess", se = FALSE, colour = "steelblue") +
-  geom_hline(yintercept = 0, linetype = "dashed") +
-  geom_text_repel(
-    data = filter(augmented_tbl, abs(.resid) > quantile(abs(.resid), 0.95)),
-    size = 3, max.overlaps = 15
-  ) +
-  labs(title = "Residuals: who over- or underperforms the model?",
-       x = "Fitted 2022_rank", y = "Residual")
+ geom_point(alpha = 0.4) +
+ geom_smooth(method = "loess", se = FALSE, colour = "steelblue") +
+ geom_hline(yintercept = 0, linetype = "dashed") +
+ geom_text_repel(
+ data = filter(augmented_tbl, abs(.resid) > quantile(abs(.resid), 0.95)),
+ size = 3, max.overlaps = 15
+ ) +
+ labs(title = "Residuals: who over- or underperforms the model?",
+ x = "Fitted 2022_rank", y = "Residual")
 ```
 
 ### Stage 12: Final Communication Chart
@@ -469,32 +470,32 @@ Trigger: After residuals and model are stable, step back and pick the clearest o
 #| eval: false
 
 final_tbl <- analysis_tbl |>
-  group_by(company) |>
-  summarise(
-    median_2022_rank = median(2022_rank, na.rm = TRUE),
-    n = n(),
-    .groups = "drop"
-  ) |>
-  filter(n >= 5) |>
-  mutate(company = fct_reorder(company, median_2022_rank))
+ group_by(company) |>
+ summarise(
+ median_2022_rank = median(2022_rank, na.rm = TRUE),
+ n = n(),
+ .groups = "drop"
+ ) |>
+ filter(n >= 5) |>
+ mutate(company = fct_reorder(company, median_2022_rank))
 
 ggplot(final_tbl,
-       aes(x = company, y = median_2022_rank,
-           fill = median_2022_rank)) +
-  geom_col(show.legend = FALSE) +
-  scale_fill_gradient2(
-    low = "tomato", mid = "gray90", high = "steelblue",
-    midpoint = median(analysis_tbl$2022_rank, na.rm = TRUE)
-  ) +
-  coord_flip() +
-  labs(
-    title    = "Company Reputation Poll: 2022_rank by company",
-    subtitle = "Median per group | colour = above/below overall median",
-    caption  = "Source: TidyTuesday 2022-05-31",
-    x = NULL, y = "Median 2022_rank"
-  ) +
-  theme_minimal(base_size = 13) +
-  theme(plot.title = element_text(face = "bold"))
+ aes(x = company, y = median_2022_rank,
+ fill = median_2022_rank)) +
+ geom_col(show.legend = FALSE) +
+ scale_fill_gradient2(
+ low = "tomato", mid = "gray90", high = "steelblue",
+ midpoint = median(analysis_tbl$2022_rank, na.rm = TRUE)
+ ) +
+ coord_flip() +
+ labs(
+ title = "Company Reputation Poll: 2022_rank by company",
+ subtitle = "Median per group | colour = above/below overall median",
+ caption = "Source: TidyTuesday 2022-05-31",
+ x = NULL, y = "Median 2022_rank"
+ ) +
+ theme_minimal(base_size = 13) +
+ theme(plot.title = element_text(face = "bold"))
 ```
 
 ### Stage 13: Knowledge Extraction
@@ -513,16 +514,16 @@ Trigger: End of episode — write the function stub before closing the session
 #| eval: false
 
 # Pattern: load -> inspect -> join ->
-#          multi-axis compare -> outlier detection -> model -> residuals -> final chart
+# multi-axis compare -> outlier detection -> model -> residuals -> final chart
 
 # Candidate helper:
 # compare_groups_by_outcome <- function(data, group_col, outcome_col,
-#                                        secondary_group = NULL,
-#                                        model = TRUE) {
-#   # 1. group_by + summarise
-#   # 2. residual calculation
-#   # 3. optional lm + broom::tidy
-#   # 4. ggplot output
+# secondary_group = NULL,
+# model = TRUE) {
+# # 1. group_by + summarise
+# # 2. residual calculation
+# # 3. optional lm + broom::tidy
+# # 4. ggplot output
 # }
 ```
 

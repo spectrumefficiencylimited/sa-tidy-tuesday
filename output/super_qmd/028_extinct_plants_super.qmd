@@ -1,6 +1,7 @@
 ---
 title: "Super QMD: Analyzing extinct plants in R"
 subtitle: "Cognition-first blueprint built from the episode guide and KER"
+author: "Andrei Stoian"
 format:
   html:
     theme: flatly
@@ -50,7 +51,7 @@ Explore and compare language patterns in extinct plants using tokenization, grou
 
 ## Transcript Preview
 
-Analyzing extinct plants in R David Robinson 15.9k subscribers 88 Share Save Clip 2,541 views Streamed live on 19 Aug 2020 Tidy Tuesday R Screencasts I'll analyze a dataset on extinct plants in R, without looking at the dataset in advance. The dataset comes from the Tidy Tuesday project: https://github.com/rfordatascience/ti... Search in video 0:03 hi i'm dave robinson and welcome to another screencast where i'll be using r and rstudio to analyze data i've never seen 0:09 before as usual the data comes from the tid...
+Analyzing extinct plants in R 15.9k subscribers 88 Share Save Clip 2,541 views Streamed live on 19 Aug 2020 Tidy Tuesday R Screencasts I'll analyze a dataset on extinct plants in R, without looking at the dataset in advance. The dataset comes from the Tidy Tuesday project: https://github.com/rfordatascience/ti... Search in video 0:03 hi i'm dave robinson and welcome to another screencast where i'll be using r and rstudio to analyze data i've never seen 0:09 before as usual the data comes from the tid...
 
 ## Cognitive Signature
 
@@ -204,7 +205,7 @@ Additional guidance:
 # Source assets: tidytuesday/data/2020/2020-08-18/actions.csv, tidytuesday/data/2020/2020-08-18/plants.csv, tidytuesday/data/2020/2020-08-18/threats.csv
 # Suggested verbs: mutate(), separate_rows(), pivot_longer(), left_join(), unnest()
 # analysis_tbl <- raw_tbl %>%
-#   ...
+# ...
 ```
 ## Stage 4: Transform
 
@@ -231,7 +232,7 @@ Additional guidance:
 # Source assets: tidytuesday/data/2020/2020-08-18/actions.csv, tidytuesday/data/2020/2020-08-18/plants.csv, tidytuesday/data/2020/2020-08-18/threats.csv
 # Suggested verbs: mutate(), separate_rows(), pivot_longer(), left_join(), unnest()
 # analysis_tbl <- raw_tbl %>%
-#   ...
+# ...
 ```
 ## Stage 5: Compare
 
@@ -256,9 +257,9 @@ Additional guidance:
 
 # Summarize the comparison that best answers the question.
 # comparison_tbl <- analysis_tbl %>%
-#   group_by(...) %>%
-#   summarise(...) %>%
-#   arrange(desc(...))
+# group_by(...) %>%
+# summarise(...) %>%
+# arrange(desc(...))
 ```
 ## Stage 6: Compare
 
@@ -283,9 +284,9 @@ Additional guidance:
 
 # Summarize the comparison that best answers the question.
 # comparison_tbl <- analysis_tbl %>%
-#   group_by(...) %>%
-#   summarise(...) %>%
-#   arrange(desc(...))
+# group_by(...) %>%
+# summarise(...) %>%
+# arrange(desc(...))
 ```
 ## Stage 7: Visualize
 
@@ -310,8 +311,8 @@ Additional guidance:
 
 # Turn the comparison table into one clear communication plot.
 # ggplot(comparison_tbl, aes(...)) +
-#   geom_col() +
-#   labs(title = ..., subtitle = ...)
+# geom_col() +
+# labs(title = ..., subtitle = ...)
 ```
 ## Stage 8: Reflect
 

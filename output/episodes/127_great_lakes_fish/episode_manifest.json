@@ -1,0 +1,59 @@
+{
+  "queue_position": 127,
+  "folder_name": "127_great_lakes_fish",
+  "transcript_title": "Analyzing Great Lakes Fish in R",
+  "function_name": "great_lakes_fish",
+  "ker_status": "needs_mapping",
+  "reproduction_status": "blocked_needs_mapping",
+  "source_files": {
+    "transcript_file": "raw-data/inspiration/Analyzing Great Lakes Fish in R.txt",
+    "code_file": "data-screencasts/2021_06_08_great_lakes_fish.Rmd"
+  },
+  "source_exists": {
+    "transcript": true,
+    "code": true
+  },
+  "data_source": "TidyTuesday 2021-06-08",
+  "analysis_intent": "Explore distributions, group differences, and notable patterns in Great Lakes Fish through cleaning, summarization, and visualization",
+  "analysis_type": "EDA",
+  "pattern_signature": "load_inspect_reshape_trend_compare_visualize",
+  "required_packages": [
+    "forecast",
+    "lubridate",
+    "scales",
+    "sweep",
+    "tidytuesdayR",
+    "tidyverse",
+    "timetk"
+  ],
+  "features": {
+    "ggplot": true,
+    "joins": false,
+    "reshape": true,
+    "text_analysis": false,
+    "modeling": false,
+    "predictive": false,
+    "scraping": false,
+    "maps": false,
+    "time": true,
+    "simulation": false,
+    "multi_table": true
+  },
+  "local_data_files": [
+    "tidytuesday/data/2021/2021-06-08/commercial.xls",
+    "tidytuesday/data/2021/2021-06-08/fishing.csv",
+    "tidytuesday/data/2021/2021-06-08/stocked.csv"
+  ],
+  "reference_files": [
+    "tidytuesday/data/2021/2021-06-08/fishing.csv",
+    "tidytuesday/data/2021/2021-06-08/pic1.png",
+    "tidytuesday/data/2021/2021-06-08/pic2.png",
+    "tidytuesday/data/2021/2021-06-08/readme.md",
+    "tidytuesday/data/2021/2021-06-08/stocked.csv",
+    "tidytuesday/data/2021/2021-06-08/commercial.xls"
+  ],
+  "external_dependencies": [],
+  "execution_notes": [
+    "local TidyTuesday files were matched, so you can use `load_tidyweek_data()` and avoid a GitHub PAT"
+  ]
+}

@@ -1,0 +1,167 @@
+/* TheDataShrink — TidyTuesday companion stylesheet */
+
+:root {
+  --ds-navy:    #0f2b46;
+  --ds-teal:    #1a7fa0;
+  --ds-light:   #e8f4f8;
+  --ds-accent:  #f4a300;
+  --ds-text:    #1c2b36;
+  --ds-muted:   #6b8898;
+  --ds-border:  #cde3ec;
+  --ds-code-bg: #f0f7fa;
+  --ds-hour1:   #1a7fa0;
+  --ds-hour2:   #0f2b46;
+  --ds-hour3:   #8b2fc9;
+}
+
+/* ── Base ── */
+body {
+  font-family: "Inter", "Segoe UI", system-ui, sans-serif;
+  color: var(--ds-text);
+  background: #ffffff;
+  line-height: 1.65;
+  font-size: 1rem;
+}
+
+h1, h2, h3, h4 {
+  font-weight: 700;
+  color: var(--ds-navy);
+  letter-spacing: -0.01em;
+}
+
+h1 { font-size: 2rem; border-bottom: 3px solid var(--ds-teal); padding-bottom: .4rem; }
+h2 { font-size: 1.45rem; margin-top: 2.5rem; }
+h3 { font-size: 1.15rem; color: var(--ds-teal); margin-top: 1.8rem; }
+
+a { color: var(--ds-teal); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+/* ── Hour markers (H2 level) ── */
+h2:has(+ *) {
+  position: relative;
+  padding-left: 1.1rem;
+}
+
+/* Hour 1 / Hour 2 / Hour 3 accent bars */
+h2[id*="hour-1"], h2[id*="hour1"] { border-left: 5px solid var(--ds-hour1); padding-left: 0.8rem; color: var(--ds-hour1); }
+h2[id*="hour-2"], h2[id*="hour2"] { border-left: 5px solid var(--ds-hour2); padding-left: 0.8rem; color: var(--ds-hour2); }
+h2[id*="hour-3"], h2[id*="hour3"] { border-left: 5px solid var(--ds-hour3); padding-left: 0.8rem; color: var(--ds-hour3); }
+
+/* ── Navbar brand strip ── */
+.navbar {
+  background: var(--ds-navy) !important;
+  border-bottom: 3px solid var(--ds-teal);
+}
+.navbar-brand { color: var(--ds-accent) !important; font-weight: 800; font-size: 1.15rem; }
+.navbar .nav-link { color: #c8dde6 !important; }
+.navbar .nav-link:hover { color: var(--ds-accent) !important; }
+
+/* ── Sidebar TOC ── */
+#quarto-sidebar {
+  background: var(--ds-light);
+  border-right: 1px solid var(--ds-border);
+}
+.sidebar-item-text { font-size: 0.87rem; color: var(--ds-muted); }
+.sidebar-item-text:hover, .active .sidebar-item-text { color: var(--ds-teal); font-weight: 600; }
+
+/* ── Callout boxes ── */
+.callout {
+  border-radius: 6px;
+  border-left-width: 5px;
+  margin: 1.4rem 0;
+}
+.callout-note   { border-left-color: var(--ds-teal);   background: #e8f4f8; }
+.callout-tip    { border-left-color: #2ebd59;           background: #e8f8ed; }
+.callout-warning{ border-left-color: var(--ds-accent);  background: #fdf5e0; }
+.callout-important { border-left-color: #c0392b;        background: #fdecea; }
+
+.callout-title {
+  font-weight: 700;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+/* ── Code blocks ── */
+pre, code {
+  font-family: "JetBrains Mono", "Cascadia Code", "Fira Code", monospace;
+  font-size: 0.88rem;
+}
+pre {
+  background: var(--ds-code-bg);
+  border: 1px solid var(--ds-border);
+  border-radius: 6px;
+  padding: 1rem 1.2rem;
+}
+code.sourceCode { background: transparent; }
+
+/* Code fold toggle */
+.code-fold-btn { color: var(--ds-teal); font-size: 0.82rem; }
+
+/* ── Episode header card ── */
+.episode-card {
+  background: var(--ds-light);
+  border: 1px solid var(--ds-border);
+  border-radius: 8px;
+  padding: 1.2rem 1.5rem;
+  margin-bottom: 1.8rem;
+}
+.episode-card .badge {
+  background: var(--ds-teal);
+  color: white;
+  font-size: 0.75rem;
+  padding: .25rem .6rem;
+  border-radius: 4px;
+  font-weight: 600;
+}
+
+/* ── Stage labels ── */
+.stage-label {
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--ds-muted);
+  letter-spacing: 0.06em;
+  margin-bottom: 0.3rem;
+}
+
+/* ── Index page cards ── */
+.tt-card {
+  border: 1px solid var(--ds-border);
+  border-radius: 8px;
+  padding: 1rem 1.2rem;
+  margin-bottom: 1rem;
+  transition: box-shadow 0.15s;
+}
+.tt-card:hover { box-shadow: 0 2px 12px rgba(26,127,160,0.15); }
+.tt-card h4 { margin: 0 0 .3rem; font-size: 1rem; }
+.tt-card .meta { font-size: 0.82rem; color: var(--ds-muted); }
+
+/* ── YouTube companion watermark ── */
+.yt-companion {
+  display: inline-block;
+  background: #ff0000;
+  color: white;
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: .15rem .5rem;
+  border-radius: 3px;
+  letter-spacing: 0.03em;
+  vertical-align: middle;
+}
+
+/* ── Footer ── */
+.page-footer {
+  border-top: 1px solid var(--ds-border);
+  color: var(--ds-muted);
+  font-size: 0.82rem;
+  padding-top: 1rem;
+  margin-top: 3rem;
+}
+
+/* ── Print / screen share friendly ── */
+@media print {
+  .sidebar, #quarto-sidebar, .navbar { display: none !important; }
+  body { font-size: 11pt; }
+  pre  { border: 1px solid #ccc; page-break-inside: avoid; }
+}

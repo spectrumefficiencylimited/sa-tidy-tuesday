@@ -1,6 +1,7 @@
 ---
 title: "Super QMD: Analyzing penguins in R"
 subtitle: "Cognition-first blueprint built from the episode guide and KER"
+author: "Andrei Stoian"
 format:
   html:
     theme: flatly
@@ -50,7 +51,7 @@ Predict or estimate outcomes in penguins using cleaned features, exploratory ana
 
 ## Transcript Preview
 
-Analyzing penguins in R David Robinson 15.9k subscribers 106 Share Save Clip 3,832 views Streamed live on 29 Jul 2020 Tidy Tuesday R Screencasts I'll analyze a dataset on penguins in R, without looking at the dataset in advance. The dataset comes from the Tidy Tuesday project: https://github.com/rfordatascience/ti... Search in video 0:03 hi i'm dave robinson and welcome to another one of my screencasts where i'll be using rnr studio to analyze data i've 0:10 never seen before as usual the data comes from the thai t...
+Analyzing penguins in R 15.9k subscribers 106 Share Save Clip 3,832 views Streamed live on 29 Jul 2020 Tidy Tuesday R Screencasts I'll analyze a dataset on penguins in R, without looking at the dataset in advance. The dataset comes from the Tidy Tuesday project: https://github.com/rfordatascience/ti... Search in video 0:03 hi i'm dave robinson and welcome to another one of my screencasts where i'll be using rnr studio to analyze data i've 0:10 never seen before as usual the data comes from the thai t...
 
 ## Cognitive Signature
 
@@ -193,7 +194,7 @@ Trigger:
 # Source assets: tidytuesday/data/2020/2020-07-28/penguins.csv, tidytuesday/data/2020/2020-07-28/penguins_raw.csv
 # Suggested verbs: mutate(), separate_rows(), pivot_longer(), left_join(), unnest()
 # analysis_tbl <- raw_tbl %>%
-#   ...
+# ...
 ```
 ## Stage 4: Compare
 
@@ -218,9 +219,9 @@ Additional guidance:
 
 # Summarize the comparison that best answers the question.
 # comparison_tbl <- analysis_tbl %>%
-#   group_by(...) %>%
-#   summarise(...) %>%
-#   arrange(desc(...))
+# group_by(...) %>%
+# summarise(...) %>%
+# arrange(desc(...))
 ```
 ## Stage 5: Visualize
 
@@ -245,8 +246,8 @@ Additional guidance:
 
 # Turn the comparison table into one clear communication plot.
 # ggplot(comparison_tbl, aes(...)) +
-#   geom_col() +
-#   labs(title = ..., subtitle = ...)
+# geom_col() +
+# labs(title = ..., subtitle = ...)
 ```
 ## Stage 6: Reflect
 

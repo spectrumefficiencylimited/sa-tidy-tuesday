@@ -1,6 +1,7 @@
 ---
 title: "Super QMD: Analyzing The Languages of the World in R"
 subtitle: "Cognition-first blueprint built from the episode guide and KER"
+author: "Andrei Stoian"
 format:
   html:
     theme: flatly
@@ -50,7 +51,7 @@ Explore and compare language patterns in The Languages of the World using tokeni
 
 ## Transcript Preview
 
-Analyzing The Languages of the World in R David Robinson 15.9k subscribers 72 Share Save Clip 4,521 views Streamed live on 2025-12-23 Tidy Tuesday R Screencasts I'll analyze a dataset about the languages of the world without looking at the dataset in advance. The dataset comes from the Tidy Tuesday ...
+Analyzing The Languages of the World in R 15.9k subscribers 72 Share Save Clip 4,521 views Streamed live on 2025-12-23 Tidy Tuesday R Screencasts I'll analyze a dataset about the languages of the world without looking at the dataset in advance. The dataset comes from the Tidy Tuesday ...
 
 ## Cognitive Signature
 
@@ -94,9 +95,9 @@ source("R/screencast_helpers.R")
 tuesdata <- load_tidyweek_data("2025-12-23")
 names(tuesdata)
 
-endangered_status <- tuesdata$endangered_status  # or read from local path
-families <- tuesdata$families  # or read from local path
-languages <- tuesdata$languages  # or read from local path
+endangered_status <- tuesdata$endangered_status # or read from local path
+families <- tuesdata$families # or read from local path
+languages <- tuesdata$languages # or read from local path
 ```
 
 ## Thought -> Code -> Data Bridge
@@ -202,7 +203,7 @@ Trigger:
 # Source assets: tidytuesday/data/2025/2025-12-23/endangered_status.csv, tidytuesday/data/2025/2025-12-23/families.csv, tidytuesday/data/2025/2025-12-23/languages.csv
 # Suggested verbs: mutate(), separate_rows(), pivot_longer(), left_join(), unnest()
 # analysis_tbl <- raw_tbl %>%
-#   ...
+# ...
 ```
 ## Stage 4: Compare
 
@@ -227,10 +228,10 @@ Additional guidance:
 
 # Summarize the comparison that best answers the question.
 # comparison_tbl <- analysis_tbl %>%
-#   count(category_col, sort = TRUE)   # or
-#   group_by(group_col) %>%
-#   summarise(metric = mean(value_col, na.rm = TRUE)) %>%
-#   arrange(desc(metric))
+# count(category_col, sort = TRUE) # or
+# group_by(group_col) %>%
+# summarise(metric = mean(value_col, na.rm = TRUE)) %>%
+# arrange(desc(metric))
 ```
 ## Stage 5: Visualize
 
@@ -255,13 +256,13 @@ Additional guidance:
 
 # Turn the comparison table into one clear communication plot.
 # ggplot(comparison_tbl, aes(x = fct_reorder(category, metric), y = metric)) +
-#   geom_col() +
-#   coord_flip() +
-#   labs(
-#     title = "...",
-#     subtitle = "Source: TidyTuesday 2025-12-23",
-#     x = NULL, y = NULL
-#   )
+# geom_col() +
+# coord_flip() +
+# labs(
+# title = "...",
+# subtitle = "Source: TidyTuesday 2025-12-23",
+# x = NULL, y = NULL
+# )
 ```
 ## Stage 6: Reflect
 
@@ -311,14 +312,14 @@ Trigger: unnest_tokens / tidytext workflow
 library(tidytext)
 
 tokens_tbl <- analysis_tbl |>
-  unnest_tokens(word, text_col) |>
-  anti_join(stop_words, by = "word") |>
-  count(id, word, sort = TRUE)
+ unnest_tokens(word, text_col) |>
+ anti_join(stop_words, by = "word") |>
+ count(id, word, sort = TRUE)
 
 # tf-idf
 tokens_tbl |>
-  bind_tf_idf(word, id, n) |>
-  arrange(desc(tf_idf))
+ bind_tf_idf(word, id, n) |>
+ arrange(desc(tf_idf))
 ```
 
 ### Stage 8: Discriminative Vocabulary
@@ -339,15 +340,15 @@ Trigger: bind_log_odds or bind_tf_idf
 library(tidylo)
 
 tokens_tbl |>
-  bind_log_odds(id, word, n) |>
-  group_by(id) |>
-  slice_max(log_odds_weighted, n = 10) |>
-  ggplot(aes(log_odds_weighted, fct_reorder(word, log_odds_weighted), fill = id)) +
-  geom_col(show.legend = FALSE) +
-  facet_wrap(~ id, scales = "free_y") +
-  labs(title = "Most characteristic words per group",
-       subtitle = "Log-odds weighted",
-       x = "Log-odds", y = NULL)
+ bind_log_odds(id, word, n) |>
+ group_by(id) |>
+ slice_max(log_odds_weighted, n = 10) |>
+ ggplot(aes(log_odds_weighted, fct_reorder(word, log_odds_weighted), fill = id)) +
+ geom_col(show.legend = FALSE) +
+ facet_wrap(~ id, scales = "free_y") +
+ labs(title = "Most characteristic words per group",
+ subtitle = "Log-odds weighted",
+ x = "Log-odds", y = NULL)
 ```
 
 ---
@@ -370,20 +371,20 @@ Trigger: lm() + broom::tidy() + coefficient plot
 #| eval: false
 
 model_tbl <- analysis_tbl |>
-  mutate(across(where(is.character), as.factor))
+ mutate(across(where(is.character), as.factor))
 
 model_fit <- lm(latitude ~ id + status_code + latitude + longitude, data = model_tbl)
 
 broom::tidy(model_fit, conf.int = TRUE) |>
-  filter(term != "(Intercept)") |>
-  mutate(term = fct_reorder(term, estimate)) |>
-  ggplot(aes(estimate, term,
-             xmin = conf.low, xmax = conf.high)) +
-  geom_pointrange() +
-  geom_vline(xintercept = 0, linetype = "dashed") +
-  labs(title = "What predicts latitude?",
-       subtitle = "Linear model coefficients (95% CI)",
-       x = "Estimate", y = NULL)
+ filter(term != "(Intercept)") |>
+ mutate(term = fct_reorder(term, estimate)) |>
+ ggplot(aes(estimate, term,
+ xmin = conf.low, xmax = conf.high)) +
+ geom_pointrange() +
+ geom_vline(xintercept = 0, linetype = "dashed") +
+ labs(title = "What predicts latitude?",
+ subtitle = "Linear model coefficients (95% CI)",
+ x = "Estimate", y = NULL)
 ```
 
 ### Stage 10: Residuals
@@ -404,15 +405,15 @@ Trigger: broom::augment() + geom_point(.resid) + geom_text_repel
 augmented_tbl <- broom::augment(model_fit, data = model_tbl)
 
 ggplot(augmented_tbl, aes(.fitted, .resid, label = id)) +
-  geom_point(alpha = 0.4) +
-  geom_smooth(method = "loess", se = FALSE, colour = "steelblue") +
-  geom_hline(yintercept = 0, linetype = "dashed") +
-  geom_text_repel(
-    data = filter(augmented_tbl, abs(.resid) > quantile(abs(.resid), 0.95)),
-    size = 3, max.overlaps = 15
-  ) +
-  labs(title = "Residuals: who over- or underperforms the model?",
-       x = "Fitted latitude", y = "Residual")
+ geom_point(alpha = 0.4) +
+ geom_smooth(method = "loess", se = FALSE, colour = "steelblue") +
+ geom_hline(yintercept = 0, linetype = "dashed") +
+ geom_text_repel(
+ data = filter(augmented_tbl, abs(.resid) > quantile(abs(.resid), 0.95)),
+ size = 3, max.overlaps = 15
+ ) +
+ labs(title = "Residuals: who over- or underperforms the model?",
+ x = "Fitted latitude", y = "Residual")
 ```
 
 ### Stage 11: Final Communication Chart
@@ -431,32 +432,32 @@ Trigger: After residuals and model are stable, step back and pick the clearest o
 #| eval: false
 
 final_tbl <- analysis_tbl |>
-  group_by(id) |>
-  summarise(
-    median_latitude = median(latitude, na.rm = TRUE),
-    n = n(),
-    .groups = "drop"
-  ) |>
-  filter(n >= 5) |>
-  mutate(id = fct_reorder(id, median_latitude))
+ group_by(id) |>
+ summarise(
+ median_latitude = median(latitude, na.rm = TRUE),
+ n = n(),
+ .groups = "drop"
+ ) |>
+ filter(n >= 5) |>
+ mutate(id = fct_reorder(id, median_latitude))
 
 ggplot(final_tbl,
-       aes(x = id, y = median_latitude,
-           fill = median_latitude)) +
-  geom_col(show.legend = FALSE) +
-  scale_fill_gradient2(
-    low = "tomato", mid = "gray90", high = "steelblue",
-    midpoint = median(analysis_tbl$latitude, na.rm = TRUE)
-  ) +
-  coord_flip() +
-  labs(
-    title    = "The Languages of the World: latitude by id",
-    subtitle = "Median per group | colour = above/below overall median",
-    caption  = "Source: TidyTuesday 2025-12-23",
-    x = NULL, y = "Median latitude"
-  ) +
-  theme_minimal(base_size = 13) +
-  theme(plot.title = element_text(face = "bold"))
+ aes(x = id, y = median_latitude,
+ fill = median_latitude)) +
+ geom_col(show.legend = FALSE) +
+ scale_fill_gradient2(
+ low = "tomato", mid = "gray90", high = "steelblue",
+ midpoint = median(analysis_tbl$latitude, na.rm = TRUE)
+ ) +
+ coord_flip() +
+ labs(
+ title = "The Languages of the World: latitude by id",
+ subtitle = "Median per group | colour = above/below overall median",
+ caption = "Source: TidyTuesday 2025-12-23",
+ x = NULL, y = "Median latitude"
+ ) +
+ theme_minimal(base_size = 13) +
+ theme(plot.title = element_text(face = "bold"))
 ```
 
 ### Stage 12: Knowledge Extraction
@@ -475,16 +476,16 @@ Trigger: End of episode — write the function stub before closing the session
 #| eval: false
 
 # Pattern: load -> inspect -> join ->
-#          multi-axis compare -> outlier detection -> model -> residuals -> final chart
+# multi-axis compare -> outlier detection -> model -> residuals -> final chart
 
 # Candidate helper:
 # compare_groups_by_outcome <- function(data, group_col, outcome_col,
-#                                        secondary_group = NULL,
-#                                        model = TRUE) {
-#   # 1. group_by + summarise
-#   # 2. residual calculation
-#   # 3. optional lm + broom::tidy
-#   # 4. ggplot output
+# secondary_group = NULL,
+# model = TRUE) {
+# # 1. group_by + summarise
+# # 2. residual calculation
+# # 3. optional lm + broom::tidy
+# # 4. ggplot output
 # }
 ```
 

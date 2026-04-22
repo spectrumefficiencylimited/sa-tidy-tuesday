@@ -1,6 +1,7 @@
 ---
 title: "Super QMD: Analyzing caribou locations in R"
 subtitle: "Cognition-first blueprint built from the episode guide and KER"
+author: "Andrei Stoian"
 format:
   html:
     theme: flatly
@@ -34,23 +35,32 @@ The point is to preserve not only the code path, but the author's cognition:
 
 ## Episode Snapshot
 
-- `queue_position`: `15`
-- `function_name`: `caribou_locations`
-- `analysis_type`: `EDA`
-- `pattern_signature`: `load_inspect_map_trend_compare_visualize`
-- `data_source`: TidyTuesday 2020-06-23 dataset
-- `reproduction_status`: `ready_local`
-
 ::: {.callout-note}
 ## Analysis Intent
 Explore geographic and temporal variation in caribou locations through joins, summarization, and mapping
 :::
 
+| Field | Value |
+|---|---|
+| Queue | #15 |
+| Function | `caribou_locations` |
+| Analysis type | EDA |
+| Data source | TidyTuesday 2020-06-23 dataset |
+| Status | `ready_local` |
+
+**Packages:** `geosphere`, `lubridate`, `sf`, `tidyverse`
+
+**Features:** ggplot, maps, time
+
+**Execution notes:**
+- interactive `View()` calls are present and should be skipped or replaced in automated runs
+- local TidyTuesday files were matched, so you can use `load_tidyweek_data()` and avoid a GitHub PAT
+
+**Analytical pattern:** `load_inspect_map_trend_compare_visualize`
 
 
-## Transcript Preview
 
-Analyzing caribou locations in R David Robinson 15.9k subscribers 62 Share Save Clip 2,766 views Streamed live on 24 Jun 2020 Tidy Tuesday R Screencasts I'll analyze a dataset on caribou locations in R, without looking at the dataset in advance. The dataset comes from the Tidy Tuesday project: https://github.com/rfordatascience/ti... Search in video 0:03 hi I'm Dave Robinson and welcome to another one of my screencast where I'll 0:08 be using our in our studio to analyze data I've never seen before as usual the dat...
+
 
 ## Cognitive Signature
 
@@ -105,6 +115,23 @@ locations <- tuesdata$locations
 - `T6 | Compare | Summarize group differences, rates, rankings, or trajectories to surface the main story in the data. | Grouped summaries and comparative plots`
 - `T7 | Visualize | Translate the analytical result into geographic views to reveal regional variation and outliers. | Spatial joins or mapping code`
 - `T8 | Reflect | Identify reusable workflow pieces that can transfer to future datasets with a similar shape or question. | End-state of the analysis pattern`
+```{r}
+#| label: thought_execution_log
+#| eval: false
+
+# Fill in your `finding` after completing each stage.
+thought_log <- tibble::tribble(
+  ~step,  ~move,        ~finding,
+  "T1", "Context", "",
+  "T2", "Inspect", "",
+  "T6", "Compare", "",
+  "T7", "Visualize", "",
+  "T8", "Reflect", "",
+)
+thought_log
+```
+
+
 
 ### Code Mapping Table
 
@@ -191,9 +218,9 @@ Trigger:
 
 # Summarize the comparison that best answers the question.
 # comparison_tbl <- analysis_tbl %>%
-#   group_by(...) %>%
-#   summarise(...) %>%
-#   arrange(desc(...))
+# group_by(...) %>%
+# summarise(...) %>%
+# arrange(desc(...))
 ```
 ## Stage 4: Visualize
 
@@ -218,8 +245,8 @@ Additional guidance:
 
 # Turn the comparison table into one clear communication plot.
 # ggplot(comparison_tbl, aes(...)) +
-#   geom_col() +
-#   labs(title = ..., subtitle = ...)
+# geom_col() +
+# labs(title = ..., subtitle = ...)
 ```
 ## Stage 5: Reflect
 

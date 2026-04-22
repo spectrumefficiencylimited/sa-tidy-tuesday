@@ -1,0 +1,60 @@
+{
+  "queue_position": 349,
+  "folder_name": "349_cocktail_recipes",
+  "transcript_title": "Analyzing cocktail recipes in R",
+  "function_name": "cocktail_recipes",
+  "ker_status": "extracted",
+  "reproduction_status": "ready_local",
+  "source_files": {
+    "transcript_file": "raw-data/inspiration/Analyzing cocktail recipes in R.txt",
+    "code_file": "data-screencasts/cocktails.Rmd"
+  },
+  "source_exists": {
+    "transcript": true,
+    "code": true
+  },
+  "data_source": "TidyTuesday 2020-05-26 dataset",
+  "analysis_intent": "Explore and compare language patterns in cocktail recipes using tokenization, grouped counts, and discriminative text analysis",
+  "analysis_type": "EDA",
+  "pattern_signature": "load_inspect_tokenize_compare_visualize",
+  "required_packages": [
+    "ggraph",
+    "ggrepel",
+    "igraph",
+    "scales",
+    "tidytext",
+    "tidytuesdayR",
+    "tidyverse",
+    "widyr"
+  ],
+  "features": {
+    "ggplot": true,
+    "joins": false,
+    "reshape": false,
+    "text_analysis": true,
+    "modeling": false,
+    "predictive": false,
+    "scraping": false,
+    "maps": false,
+    "time": false,
+    "simulation": false,
+    "multi_table": false
+  },
+  "local_data_files": [
+    "tidytuesday/data/2020/2020-05-26/all_drinks.csv",
+    "tidytuesday/data/2020/2020-05-26/boston_cocktails.csv",
+    "tidytuesday/data/2020/2020-05-26/cocktails.csv",
+    "tidytuesday/data/2020/2020-05-26/mr-boston-flattened.csv"
+  ],
+  "reference_files": [
+    "tidytuesday/data/2020/2020-05-26/boston_cocktails.csv",
+    "tidytuesday/data/2020/2020-05-26/cocktails.csv",
+    "tidytuesday/data/2020/2020-05-26/mr-boston-flattened.csv",
+    "tidytuesday/data/2020/2020-05-26/readme.md",
+    "tidytuesday/data/2020/2020-05-26/all_drinks.csv"
+  ],
+  "external_dependencies": [],
+  "execution_notes": [
+    "local TidyTuesday files were matched, so you can use `load_tidyweek_data()` and avoid a GitHub PAT"
+  ]
+}

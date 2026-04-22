@@ -1,0 +1,52 @@
+{
+  "queue_position": 373,
+  "folder_name": "373_ratings_scripts_from_office",
+  "transcript_title": "Analyzing ratings and scripts from The Office in R",
+  "function_name": "ratings_scripts_from_office",
+  "ker_status": "extracted",
+  "reproduction_status": "ready_local",
+  "source_files": {
+    "transcript_file": "raw-data/inspiration/Analyzing ratings and scripts from The Office in R.txt",
+    "code_file": "data-screencasts/office-transcripts.Rmd"
+  },
+  "source_exists": {
+    "transcript": true,
+    "code": true
+  },
+  "data_source": "TidyTuesday 2020-03-17 source files",
+  "analysis_intent": "Predict or estimate outcomes in ratings and scripts from The Office using cleaned features, exploratory analysis, and model evaluation",
+  "analysis_type": "Predictive",
+  "pattern_signature": "load_inspect_reshape_join_tokenize_model_evaluate_visualize",
+  "required_packages": [
+    "broom",
+    "ggrepel",
+    "glmnet",
+    "schrute",
+    "tidytext",
+    "tidyverse"
+  ],
+  "features": {
+    "ggplot": true,
+    "joins": true,
+    "reshape": true,
+    "text_analysis": true,
+    "modeling": true,
+    "predictive": true,
+    "scraping": false,
+    "maps": false,
+    "time": false,
+    "simulation": false,
+    "multi_table": false
+  },
+  "local_data_files": [
+    "tidytuesday/data/2020/2020-03-17/office_ratings.csv"
+  ],
+  "reference_files": [
+    "tidytuesday/data/2020/2020-03-17/readme.md"
+  ],
+  "external_dependencies": [],
+  "execution_notes": [
+    "interactive `View()` calls are present and should be skipped or replaced in automated runs",
+    "local TidyTuesday files were matched, so you can use `load_tidyweek_data()` and avoid a GitHub PAT"
+  ]
+}

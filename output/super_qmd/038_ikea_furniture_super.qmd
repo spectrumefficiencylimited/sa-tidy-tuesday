@@ -1,6 +1,7 @@
 ---
 title: "Super QMD: Analyzing IKEA furniture in R"
 subtitle: "Cognition-first blueprint built from the episode guide and KER"
+author: "Andrei Stoian"
 format:
   html:
     theme: flatly
@@ -50,7 +51,7 @@ Explore, explain, and model patterns in IKEA furniture using engineered features
 
 ## Transcript Preview
 
-Analyzing IKEA furniture in R David Robinson 15.9k subscribers 145 Share Save Clip 5,530 views Streamed live on 4 Nov 2020 Tidy Tuesday R Screencasts I'll analyze a dataset about the IKEA furniture, without looking at the dataset in advance. The dataset comes from the Tidy Tuesday project: https://github.com/rfordatascience/ti... Code: https://github.com/dgrtwo/data-screen... Timestamped annotations of specific tricks, tips and tools used: https://github.com/dgrtwo/data-screen... Introduction 0:08 hi I'm Dave Robin...
+Analyzing IKEA furniture in R 15.9k subscribers 145 Share Save Clip 5,530 views Streamed live on 4 Nov 2020 Tidy Tuesday R Screencasts I'll analyze a dataset about the IKEA furniture, without looking at the dataset in advance. The dataset comes from the Tidy Tuesday project: https://github.com/rfordatascience/ti... Code: https://github.com/dgrtwo/data-screen... Timestamped annotations of specific tricks, tips and tools used: https://github.com/dgrtwo/data-screen... Introduction 0:08 hi I'm Dave Robin...
 
 ## Cognitive Signature
 
@@ -192,9 +193,9 @@ Additional guidance:
 
 # Summarize the comparison that best answers the question.
 # comparison_tbl <- analysis_tbl %>%
-#   group_by(...) %>%
-#   summarise(...) %>%
-#   arrange(desc(...))
+# group_by(...) %>%
+# summarise(...) %>%
+# arrange(desc(...))
 ```
 ## Stage 4: Visualize
 
@@ -219,8 +220,8 @@ Additional guidance:
 
 # Turn the comparison table into one clear communication plot.
 # ggplot(comparison_tbl, aes(...)) +
-#   geom_col() +
-#   labs(title = ..., subtitle = ...)
+# geom_col() +
+# labs(title = ..., subtitle = ...)
 ```
 ## Stage 5: Reflect
 

@@ -1,0 +1,52 @@
+{
+  "queue_position": 6,
+  "folder_name": "006_bob_ross_paintings",
+  "transcript_title": "Analyzing Bob Ross paintings in R",
+  "function_name": "bob_ross_paintings",
+  "ker_status": "extracted",
+  "reproduction_status": "ready_local",
+  "source_files": {
+    "transcript_file": "raw-data/inspiration/Analyzing Bob Ross paintings in R.txt",
+    "code_file": "data-screencasts/bob-ross.Rmd"
+  },
+  "source_exists": {
+    "transcript": true,
+    "code": true
+  },
+  "data_source": "TidyTuesday 2019-08-06 source files",
+  "analysis_intent": "Explore and compare language patterns in Bob Ross paintings using tokenization, grouped counts, and discriminative text analysis",
+  "analysis_type": "EDA",
+  "pattern_signature": "load_inspect_reshape_tokenize_compare_visualize",
+  "required_packages": [
+    "broom",
+    "ggraph",
+    "igraph",
+    "reshape2",
+    "tidytext",
+    "tidyverse",
+    "widyr"
+  ],
+  "features": {
+    "ggplot": true,
+    "joins": false,
+    "reshape": true,
+    "text_analysis": true,
+    "modeling": false,
+    "predictive": false,
+    "scraping": false,
+    "maps": false,
+    "time": false,
+    "simulation": false,
+    "multi_table": false
+  },
+  "local_data_files": [
+    "tidytuesday/data/2019/2019-08-06/bob-ross.csv"
+  ],
+  "reference_files": [
+    "tidytuesday/data/2019/2019-08-06/readme.md"
+  ],
+  "external_dependencies": [],
+  "execution_notes": [
+    "local TidyTuesday files were matched, so you can use `load_tidyweek_data()` and avoid a GitHub PAT"
+  ]
+}

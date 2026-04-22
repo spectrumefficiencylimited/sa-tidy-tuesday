@@ -1,0 +1,47 @@
+{
+  "queue_position": 360,
+  "folder_name": "360_franchise_revenue",
+  "transcript_title": "Analyzing franchise revenue in R",
+  "function_name": "franchise_revenue",
+  "ker_status": "extracted",
+  "reproduction_status": "ready_local",
+  "source_files": {
+    "transcript_file": "raw-data/inspiration/Analyzing franchise revenue in R.txt",
+    "code_file": "data-screencasts/media-franchises.Rmd"
+  },
+  "source_exists": {
+    "transcript": true,
+    "code": true
+  },
+  "data_source": "TidyTuesday 2019-07-02 source files",
+  "analysis_intent": "Explore distributions, group differences, and notable patterns in franchise revenue through cleaning, summarization, and visualization",
+  "analysis_type": "EDA",
+  "pattern_signature": "load_inspect_join_compare_visualize",
+  "required_packages": [
+    "glue",
+    "tidyverse"
+  ],
+  "features": {
+    "ggplot": true,
+    "joins": true,
+    "reshape": false,
+    "text_analysis": false,
+    "modeling": false,
+    "predictive": false,
+    "scraping": false,
+    "maps": false,
+    "time": false,
+    "simulation": false,
+    "multi_table": false
+  },
+  "local_data_files": [
+    "tidytuesday/data/2019/2019-07-02/media_franchises.csv"
+  ],
+  "reference_files": [
+    "tidytuesday/data/2019/2019-07-02/readme.md"
+  ],
+  "external_dependencies": [],
+  "execution_notes": [
+    "local TidyTuesday files were matched, so you can use `load_tidyweek_data()` and avoid a GitHub PAT"
+  ]
+}

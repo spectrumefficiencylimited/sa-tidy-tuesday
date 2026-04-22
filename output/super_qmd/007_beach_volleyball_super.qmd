@@ -1,6 +1,7 @@
 ---
 title: "Super QMD: Analyzing beach volleyball in R"
 subtitle: "Cognition-first blueprint built from the episode guide and KER"
+author: "Andrei Stoian"
 format:
   html:
     theme: flatly
@@ -34,23 +35,32 @@ The point is to preserve not only the code path, but the author's cognition:
 
 ## Episode Snapshot
 
-- `queue_position`: `7`
-- `function_name`: `beach_volleyball`
-- `analysis_type`: `Modeling`
-- `pattern_signature`: `load_inspect_reshape_join_trend_model_evaluate_visualize`
-- `data_source`: TidyTuesday 2020-05-19 dataset
-- `reproduction_status`: `ready_local`
-
 ::: {.callout-note}
 ## Analysis Intent
 Explore, explain, and model patterns in beach volleyball using engineered features and comparative summaries
 :::
 
+| Field | Value |
+|---|---|
+| Queue | #7 |
+| Function | `beach_volleyball` |
+| Analysis type | Modeling |
+| Data source | TidyTuesday 2020-05-19 dataset |
+| Status | `ready_local` |
+
+**Packages:** `lubridate`, `scales`, `tidyverse`
+
+**Features:** ggplot, joins, reshape, modeling, time
+
+**Execution notes:**
+- interactive `View()` calls are present and should be skipped or replaced in automated runs
+- local TidyTuesday files were matched, so you can use `load_tidyweek_data()` and avoid a GitHub PAT
+
+**Analytical pattern:** `load_inspect_reshape_join_trend_model_evaluate_visualize`
 
 
-## Transcript Preview
 
-Analyzing beach volleyball in R David Robinson 15.9k subscribers 88 Share Save Clip 3,671 views Streamed live on 20 May 2020 Tidy Tuesday R Screencasts I'll analyze a dataset on beach volleyball matches in R, without looking at the dataset in advance. The dataset comes from the Tidy Tuesday project: https://github.com/rfordatascience/ti... Introduction 0:05 hi I'm Dave Robinson and welcome to another one of my screencast where I'll 0:10 be using our in our studio to analyze data I've never seen before as usual the...
+
 
 ## Cognitive Signature
 
@@ -104,6 +114,24 @@ vb_matches <- tuesdata$vb_matches
 - `T6 | Compare | Move from descriptive patterns into statistical or predictive modeling once the feature space is ready. | Modeling functions and evaluation code`
 - `T7 | Visualize | Turn the cleaned summaries into interpretable visual comparisons and iterate toward the clearest view. | ggplot workflow`
 - `T8 | Reflect | Identify reusable workflow pieces that can transfer to future datasets with a similar shape or question. | End-state of the analysis pattern`
+```{r}
+#| label: thought_execution_log
+#| eval: false
+
+# Fill in your `finding` after completing each stage.
+thought_log <- tibble::tribble(
+  ~step,  ~move,        ~finding,
+  "T1", "Context", "",
+  "T2", "Inspect", "",
+  "T4", "Transform", "",
+  "T6", "Compare", "",
+  "T7", "Visualize", "",
+  "T8", "Reflect", "",
+)
+thought_log
+```
+
+
 
 ### Code Mapping Table
 
@@ -193,7 +221,7 @@ Trigger:
 # Source assets: tidytuesday/data/2020/2020-05-19/vb_matches.csv
 # Suggested verbs: mutate(), separate_rows(), pivot_longer(), left_join(), unnest()
 # analysis_tbl <- raw_tbl %>%
-#   ...
+# ...
 ```
 ## Stage 4: Compare
 
@@ -218,9 +246,9 @@ Additional guidance:
 
 # Summarize the comparison that best answers the question.
 # comparison_tbl <- analysis_tbl %>%
-#   group_by(...) %>%
-#   summarise(...) %>%
-#   arrange(desc(...))
+# group_by(...) %>%
+# summarise(...) %>%
+# arrange(desc(...))
 ```
 ## Stage 5: Visualize
 
@@ -245,8 +273,8 @@ Additional guidance:
 
 # Turn the comparison table into one clear communication plot.
 # ggplot(comparison_tbl, aes(...)) +
-#   geom_col() +
-#   labs(title = ..., subtitle = ...)
+# geom_col() +
+# labs(title = ..., subtitle = ...)
 ```
 ## Stage 6: Reflect
 

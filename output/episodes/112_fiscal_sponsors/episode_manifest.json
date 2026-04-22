@@ -1,0 +1,38 @@
+{
+  "queue_position": 112,
+  "folder_name": "112_fiscal_sponsors",
+  "transcript_title": "Analyzing Fiscal Sponsors in R",
+  "function_name": "fiscal_sponsors",
+  "ker_status": "needs_mapping",
+  "reproduction_status": "blocked_needs_mapping",
+  "source_files": {
+    "transcript_file": "raw-data/inspiration/Analyzing Fiscal Sponsors in R.txt",
+    "code_file": ""
+  },
+  "source_exists": {
+    "transcript": true,
+    "code": false
+  },
+  "data_source": "TidyTuesday 2024-03-12",
+  "analysis_intent": "Explore distributions, group differences, and notable patterns in Fiscal Sponsors through cleaning, summarization, and visualization",
+  "analysis_type": "EDA",
+  "pattern_signature": "load_inspect_compare",
+  "required_packages": [],
+  "features": {
+    "ggplot": false,
+    "joins": false,
+    "reshape": false,
+    "text_analysis": false,
+    "modeling": false,
+    "predictive": false,
+    "scraping": false,
+    "maps": false,
+    "time": false,
+    "simulation": false,
+    "multi_table": false
+  },
+  "local_data_files": [],
+  "reference_files": [],
+  "external_dependencies": [],
+  "execution_notes": []
+}

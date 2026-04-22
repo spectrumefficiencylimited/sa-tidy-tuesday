@@ -1,0 +1,38 @@
+{
+  "queue_position": 91,
+  "folder_name": "091_edible_plants_database",
+  "transcript_title": "Analyzing Edible Plants Database in R",
+  "function_name": "edible_plants_database",
+  "ker_status": "needs_mapping",
+  "reproduction_status": "blocked_needs_mapping",
+  "source_files": {
+    "transcript_file": "raw-data/inspiration/Analyzing Edible Plants Database in R.txt",
+    "code_file": ""
+  },
+  "source_exists": {
+    "transcript": true,
+    "code": false
+  },
+  "data_source": "TidyTuesday 2026-02-03",
+  "analysis_intent": "Explore distributions, group differences, and notable patterns in Edible Plants Database through cleaning, summarization, and visualization",
+  "analysis_type": "EDA",
+  "pattern_signature": "load_inspect_compare",
+  "required_packages": [],
+  "features": {
+    "ggplot": false,
+    "joins": false,
+    "reshape": false,
+    "text_analysis": false,
+    "modeling": false,
+    "predictive": false,
+    "scraping": false,
+    "maps": false,
+    "time": false,
+    "simulation": false,
+    "multi_table": false
+  },
+  "local_data_files": [],
+  "reference_files": [],
+  "external_dependencies": [],
+  "execution_notes": []
+}

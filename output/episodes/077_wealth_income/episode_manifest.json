@@ -4,7 +4,7 @@
   "transcript_title": "Analyzing wealth and income in R",
   "function_name": "wealth_income",
   "ker_status": "extracted",
-  "reproduction_status": "needs_external_sources",
+  "reproduction_status": "ready_local",
   "source_files": {
     "transcript_file": "raw-data/inspiration/Analyzing wealth and income in R.txt",
     "code_file": "data-screencasts/2021_05_18_salary_survey.Rmd"
@@ -38,12 +38,19 @@
     "simulation": true,
     "multi_table": false
   },
-  "local_data_files": [],
-  "reference_files": [],
-  "external_dependencies": [
-    "tidytuesdayR::tt_load is used and no local TidyTuesday files were matched"
+  "local_data_files": [
+    "tidytuesday/data/2021/2021-05-18/Ask A Manager Salary Survey 2021 (Responses) - Form Responses 1.csv",
+    "tidytuesday/data/2021/2021-05-18/survey.csv"
   ],
+  "reference_files": [
+    "tidytuesday/data/2021/2021-05-18/pic1.png",
+    "tidytuesday/data/2021/2021-05-18/pic2.png",
+    "tidytuesday/data/2021/2021-05-18/readme.md",
+    "tidytuesday/data/2021/2021-05-18/survey.csv",
+    "tidytuesday/data/2021/2021-05-18/Ask A Manager Salary Survey 2021 (Responses) - Form Responses 1.csv"
+  ],
+  "external_dependencies": [],
   "execution_notes": [
-    "this episode depends on `tidytuesdayR::tt_load()`, so set `GITHUB_PAT` if GitHub rate limits appear"
+    "local TidyTuesday files were matched, so you can use `load_tidyweek_data()` and avoid a GitHub PAT"
   ]
 }

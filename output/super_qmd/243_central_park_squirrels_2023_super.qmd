@@ -1,6 +1,7 @@
 ---
 title: "Super QMD: Analyzing Central Park Squirrels 2023 in R"
 subtitle: "Cognition-first blueprint built from the episode guide and KER"
+author: "Andrei Stoian"
 format:
   html:
     theme: flatly
@@ -50,7 +51,7 @@ Explore distributions, group differences, and notable patterns in Central Park S
 
 ## Transcript Preview
 
-Analyzing Central Park Squirrels 2023 in R David Robinson 15.9k subscribers 72 Share Save Clip 4,521 views Streamed live on 2023-05-23 Tidy Tuesday R Screencasts I'll analyze a dataset about central park squirrels 2023 without looking at the dataset in advance. The dataset comes from the Tidy Tuesda...
+Analyzing Central Park Squirrels 2023 in R 15.9k subscribers 72 Share Save Clip 4,521 views Streamed live on 2023-05-23 Tidy Tuesday R Screencasts I'll analyze a dataset about central park squirrels 2023 without looking at the dataset in advance. The dataset comes from the Tidy Tuesda...
 
 ## Cognitive Signature
 
@@ -91,7 +92,7 @@ source("R/screencast_helpers.R")
 tuesdata <- load_tidyweek_data("2023-05-23")
 names(tuesdata)
 
-squirrel_data <- tuesdata$squirrel_data  # or read from local path
+squirrel_data <- tuesdata$squirrel_data # or read from local path
 ```
 
 ## Thought -> Code -> Data Bridge
@@ -195,7 +196,7 @@ Trigger:
 # Source assets: tidytuesday/data/2023/2023-05-23/squirrel_data.csv
 # Suggested verbs: mutate(), separate_rows(), pivot_longer(), left_join(), unnest()
 # analysis_tbl <- raw_tbl %>%
-#   ...
+# ...
 ```
 ## Stage 4: Compare
 
@@ -220,10 +221,10 @@ Additional guidance:
 
 # Summarize the comparison that best answers the question.
 # comparison_tbl <- analysis_tbl %>%
-#   count(category_col, sort = TRUE)   # or
-#   group_by(group_col) %>%
-#   summarise(metric = mean(value_col, na.rm = TRUE)) %>%
-#   arrange(desc(metric))
+# count(category_col, sort = TRUE) # or
+# group_by(group_col) %>%
+# summarise(metric = mean(value_col, na.rm = TRUE)) %>%
+# arrange(desc(metric))
 ```
 ## Stage 5: Visualize
 
@@ -248,13 +249,13 @@ Additional guidance:
 
 # Turn the comparison table into one clear communication plot.
 # ggplot(comparison_tbl, aes(x = fct_reorder(category, metric), y = metric)) +
-#   geom_col() +
-#   coord_flip() +
-#   labs(
-#     title = "...",
-#     subtitle = "Source: TidyTuesday 2023-05-23",
-#     x = NULL, y = NULL
-#   )
+# geom_col() +
+# coord_flip() +
+# labs(
+# title = "...",
+# subtitle = "Source: TidyTuesday 2023-05-23",
+# x = NULL, y = NULL
+# )
 ```
 ## Stage 6: Reflect
 
@@ -303,25 +304,25 @@ Trigger: pivot_longer + filter(value == TRUE)
 #| eval: false
 
 tags_long <- analysis_tbl |>
-  pivot_longer(
-    cols = where(is.logical),
-    names_to  = "tag",
-    values_to = "has_tag"
-  ) |>
-  filter(has_tag == TRUE)
+ pivot_longer(
+ cols = where(is.logical),
+ names_to = "tag",
+ values_to = "has_tag"
+ ) |>
+ filter(has_tag == TRUE)
 
 # now compare metric by tag
 tags_long |>
-  group_by(tag) |>
-  summarise(
-    n          = n(),
-    median_X = median(X, na.rm = TRUE)
-  ) |>
-  arrange(desc(median_X)) |>
-  ggplot(aes(median_X, fct_reorder(tag, median_X))) +
-  geom_col() +
-  labs(title = "How does each tag relate to X?",
-       x = "Median X", y = "Tag")
+ group_by(tag) |>
+ summarise(
+ n = n(),
+ median_X = median(X, na.rm = TRUE)
+ ) |>
+ arrange(desc(median_X)) |>
+ ggplot(aes(median_X, fct_reorder(tag, median_X))) +
+ geom_col() +
+ labs(title = "How does each tag relate to X?",
+ x = "Median X", y = "Tag")
 ```
 
 
@@ -341,20 +342,20 @@ Trigger: group_by(cat1, cat2) + summarise + facet_wrap
 #| eval: false
 
 cross_tbl <- analysis_tbl |>
-  group_by(Hectare, Shift) |>
-  summarise(
-    n      = n(),
-    median = median(X, na.rm = TRUE),
-    .groups = "drop"
-  ) |>
-  filter(n >= 3)
+ group_by(Hectare, Shift) |>
+ summarise(
+ n = n(),
+ median = median(X, na.rm = TRUE),
+ .groups = "drop"
+ ) |>
+ filter(n >= 3)
 
 ggplot(cross_tbl, aes(x = fct_reorder(Hectare, median), y = median, fill = Shift)) +
-  geom_col(position = "dodge") +
-  coord_flip() +
-  facet_wrap(~ Shift, scales = "free_x") +
-  labs(title = "Central Park Squirrels 2023: X by Hectare and Shift",
-       x = NULL, y = "Median X")
+ geom_col(position = "dodge") +
+ coord_flip() +
+ facet_wrap(~ Shift, scales = "free_x") +
+ labs(title = "Central Park Squirrels 2023: X by Hectare and Shift",
+ x = NULL, y = "Median X")
 ```
 
 ### Stage 9: Outlier Investigation
@@ -373,27 +374,27 @@ Trigger: group_by + mutate(residual = value - group_median) + slice_max(abs(resi
 #| eval: false
 
 residual_tbl <- analysis_tbl |>
-  group_by(Hectare) |>
-  mutate(
-    group_median = median(X, na.rm = TRUE),
-    residual     = X - group_median
-  ) |>
-  ungroup() |>
-  arrange(desc(abs(residual)))
+ group_by(Hectare) |>
+ mutate(
+ group_median = median(X, na.rm = TRUE),
+ residual = X - group_median
+ ) |>
+ ungroup() |>
+ arrange(desc(abs(residual)))
 
 # Label the top outliers
 library(ggrepel)
 
 ggplot(residual_tbl,
-       aes(x = group_median, y = X, label = Hectare)) +
-  geom_point(alpha = 0.4) +
-  geom_text_repel(
-    data = slice_max(residual_tbl, abs(residual), n = 15),
-    size = 3, max.overlaps = 20
-  ) +
-  geom_abline(slope = 1, intercept = 0, linetype = "dashed") +
-  labs(title = "Who over- or underperforms their group median?",
-       x = "Group median X", y = "Observed X")
+ aes(x = group_median, y = X, label = Hectare)) +
+ geom_point(alpha = 0.4) +
+ geom_text_repel(
+ data = slice_max(residual_tbl, abs(residual), n = 15),
+ size = 3, max.overlaps = 20
+ ) +
+ geom_abline(slope = 1, intercept = 0, linetype = "dashed") +
+ labs(title = "Who over- or underperforms their group median?",
+ x = "Group median X", y = "Observed X")
 ```
 
 ### Stage 10: Correlation Structure
@@ -412,13 +413,13 @@ Trigger: geom_point + geom_smooth(method = "lm") + color by group
 #| eval: false
 
 ggplot(analysis_tbl,
-       aes(x = Y, y = X, colour = Hectare)) +
-  geom_point(alpha = 0.5) +
-  geom_smooth(method = "lm", se = FALSE) +
-  scale_colour_viridis_d(end = 0.85) +
-  labs(title = "Relationship between X and Y",
-       subtitle = "Coloured by Hectare",
-       x = "Y", y = "X")
+ aes(x = Y, y = X, colour = Hectare)) +
+ geom_point(alpha = 0.5) +
+ geom_smooth(method = "lm", se = FALSE) +
+ scale_colour_viridis_d(end = 0.85) +
+ labs(title = "Relationship between X and Y",
+ subtitle = "Coloured by Hectare",
+ x = "Y", y = "X")
 ```
 
 ---
@@ -441,20 +442,20 @@ Trigger: lm() + broom::tidy() + coefficient plot
 #| eval: false
 
 model_tbl <- analysis_tbl |>
-  mutate(across(where(is.character), as.factor))
+ mutate(across(where(is.character), as.factor))
 
 model_fit <- lm(X ~ Hectare + Shift + X + Y, data = model_tbl)
 
 broom::tidy(model_fit, conf.int = TRUE) |>
-  filter(term != "(Intercept)") |>
-  mutate(term = fct_reorder(term, estimate)) |>
-  ggplot(aes(estimate, term,
-             xmin = conf.low, xmax = conf.high)) +
-  geom_pointrange() +
-  geom_vline(xintercept = 0, linetype = "dashed") +
-  labs(title = "What predicts X?",
-       subtitle = "Linear model coefficients (95% CI)",
-       x = "Estimate", y = NULL)
+ filter(term != "(Intercept)") |>
+ mutate(term = fct_reorder(term, estimate)) |>
+ ggplot(aes(estimate, term,
+ xmin = conf.low, xmax = conf.high)) +
+ geom_pointrange() +
+ geom_vline(xintercept = 0, linetype = "dashed") +
+ labs(title = "What predicts X?",
+ subtitle = "Linear model coefficients (95% CI)",
+ x = "Estimate", y = NULL)
 ```
 
 ### Stage 12: Residuals
@@ -475,15 +476,15 @@ Trigger: broom::augment() + geom_point(.resid) + geom_text_repel
 augmented_tbl <- broom::augment(model_fit, data = model_tbl)
 
 ggplot(augmented_tbl, aes(.fitted, .resid, label = Hectare)) +
-  geom_point(alpha = 0.4) +
-  geom_smooth(method = "loess", se = FALSE, colour = "steelblue") +
-  geom_hline(yintercept = 0, linetype = "dashed") +
-  geom_text_repel(
-    data = filter(augmented_tbl, abs(.resid) > quantile(abs(.resid), 0.95)),
-    size = 3, max.overlaps = 15
-  ) +
-  labs(title = "Residuals: who over- or underperforms the model?",
-       x = "Fitted X", y = "Residual")
+ geom_point(alpha = 0.4) +
+ geom_smooth(method = "loess", se = FALSE, colour = "steelblue") +
+ geom_hline(yintercept = 0, linetype = "dashed") +
+ geom_text_repel(
+ data = filter(augmented_tbl, abs(.resid) > quantile(abs(.resid), 0.95)),
+ size = 3, max.overlaps = 15
+ ) +
+ labs(title = "Residuals: who over- or underperforms the model?",
+ x = "Fitted X", y = "Residual")
 ```
 
 ### Stage 13: Final Communication Chart
@@ -502,32 +503,32 @@ Trigger: After residuals and model are stable, step back and pick the clearest o
 #| eval: false
 
 final_tbl <- analysis_tbl |>
-  group_by(Hectare) |>
-  summarise(
-    median_X = median(X, na.rm = TRUE),
-    n = n(),
-    .groups = "drop"
-  ) |>
-  filter(n >= 5) |>
-  mutate(Hectare = fct_reorder(Hectare, median_X))
+ group_by(Hectare) |>
+ summarise(
+ median_X = median(X, na.rm = TRUE),
+ n = n(),
+ .groups = "drop"
+ ) |>
+ filter(n >= 5) |>
+ mutate(Hectare = fct_reorder(Hectare, median_X))
 
 ggplot(final_tbl,
-       aes(x = Hectare, y = median_X,
-           fill = median_X)) +
-  geom_col(show.legend = FALSE) +
-  scale_fill_gradient2(
-    low = "tomato", mid = "gray90", high = "steelblue",
-    midpoint = median(analysis_tbl$X, na.rm = TRUE)
-  ) +
-  coord_flip() +
-  labs(
-    title    = "Central Park Squirrels 2023: X by Hectare",
-    subtitle = "Median per group | colour = above/below overall median",
-    caption  = "Source: TidyTuesday 2023-05-23",
-    x = NULL, y = "Median X"
-  ) +
-  theme_minimal(base_size = 13) +
-  theme(plot.title = element_text(face = "bold"))
+ aes(x = Hectare, y = median_X,
+ fill = median_X)) +
+ geom_col(show.legend = FALSE) +
+ scale_fill_gradient2(
+ low = "tomato", mid = "gray90", high = "steelblue",
+ midpoint = median(analysis_tbl$X, na.rm = TRUE)
+ ) +
+ coord_flip() +
+ labs(
+ title = "Central Park Squirrels 2023: X by Hectare",
+ subtitle = "Median per group | colour = above/below overall median",
+ caption = "Source: TidyTuesday 2023-05-23",
+ x = NULL, y = "Median X"
+ ) +
+ theme_minimal(base_size = 13) +
+ theme(plot.title = element_text(face = "bold"))
 ```
 
 ### Stage 14: Knowledge Extraction
@@ -546,16 +547,16 @@ Trigger: End of episode — write the function stub before closing the session
 #| eval: false
 
 # Pattern: load -> inspect -> pivot_flags -> join ->
-#          multi-axis compare -> outlier detection -> model -> residuals -> final chart
+# multi-axis compare -> outlier detection -> model -> residuals -> final chart
 
 # Candidate helper:
 # compare_groups_by_outcome <- function(data, group_col, outcome_col,
-#                                        secondary_group = NULL,
-#                                        model = TRUE) {
-#   # 1. group_by + summarise
-#   # 2. residual calculation
-#   # 3. optional lm + broom::tidy
-#   # 4. ggplot output
+# secondary_group = NULL,
+# model = TRUE) {
+# # 1. group_by + summarise
+# # 2. residual calculation
+# # 3. optional lm + broom::tidy
+# # 4. ggplot output
 # }
 ```
 

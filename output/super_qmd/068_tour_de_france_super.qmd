@@ -1,6 +1,7 @@
 ---
 title: "Super QMD: Analyzing Tour de France data in R"
 subtitle: "Cognition-first blueprint built from the episode guide and KER"
+author: "Andrei Stoian"
 format:
   html:
     theme: flatly
@@ -50,7 +51,7 @@ Explore and compare language patterns in Tour de France using tokenization, grou
 
 ## Transcript Preview
 
-Analyzing Tour de France data in R David Robinson 15.9k subscribers 124 Share Save Clip 4,266 views Streamed live on 8 Apr 2020 Tidy Tuesday R Screencasts I'll analyze a dataset on the Tour de France competition in R, without looking at the data in advance. For the first time (and just as an experiment), I'll be analyzing the dataset as a live stream instead of prerecording it. The dataset comes from the Tidy Tuesday project: https://github.com/rfordatascience/ti... Transcript Search in video 0:05 hi everyone I'm D...
+Analyzing Tour de France data in R 15.9k subscribers 124 Share Save Clip 4,266 views Streamed live on 8 Apr 2020 Tidy Tuesday R Screencasts I'll analyze a dataset on the Tour de France competition in R, without looking at the data in advance. For the first time (and just as an experiment), I'll be analyzing the dataset as a live stream instead of prerecording it. The dataset comes from the Tidy Tuesday project: https://github.com/rfordatascience/ti... Transcript Search in video 0:05 hi everyone I'm D...
 
 ## Cognitive Signature
 
@@ -204,7 +205,7 @@ Trigger:
 # Source assets: tidytuesday/data/2020/2020-04-07/stage_data.csv, tidytuesday/data/2020/2020-04-07/tdf_stages.csv, tidytuesday/data/2020/2020-04-07/tdf_winners.csv
 # Suggested verbs: mutate(), separate_rows(), pivot_longer(), left_join(), unnest()
 # analysis_tbl <- raw_tbl %>%
-#   ...
+# ...
 ```
 ## Stage 4: Compare
 
@@ -230,9 +231,9 @@ Additional guidance:
 
 # Summarize the comparison that best answers the question.
 # comparison_tbl <- analysis_tbl %>%
-#   group_by(...) %>%
-#   summarise(...) %>%
-#   arrange(desc(...))
+# group_by(...) %>%
+# summarise(...) %>%
+# arrange(desc(...))
 ```
 ## Stage 5: Compare
 
@@ -258,9 +259,9 @@ Additional guidance:
 
 # Summarize the comparison that best answers the question.
 # comparison_tbl <- analysis_tbl %>%
-#   group_by(...) %>%
-#   summarise(...) %>%
-#   arrange(desc(...))
+# group_by(...) %>%
+# summarise(...) %>%
+# arrange(desc(...))
 ```
 ## Stage 6: Visualize
 
@@ -285,8 +286,8 @@ Additional guidance:
 
 # Turn the comparison table into one clear communication plot.
 # ggplot(comparison_tbl, aes(...)) +
-#   geom_col() +
-#   labs(title = ..., subtitle = ...)
+# geom_col() +
+# labs(title = ..., subtitle = ...)
 ```
 ## Stage 7: Reflect
 

@@ -4,7 +4,7 @@
   "transcript_title": "Analyzing water access points in R",
   "function_name": "water_access_points",
   "ker_status": "extracted",
-  "reproduction_status": "needs_external_sources",
+  "reproduction_status": "ready_local",
   "source_files": {
     "transcript_file": "raw-data/inspiration/Analyzing water access points in R.txt",
     "code_file": "data-screencasts/2021_05_04_water_access.Rmd"
@@ -39,13 +39,17 @@
     "simulation": false,
     "multi_table": false
   },
-  "local_data_files": [],
-  "reference_files": [],
-  "external_dependencies": [
-    "tidytuesdayR::tt_load is used and no local TidyTuesday files were matched"
+  "local_data_files": [
+    "tidytuesday/data/2021/2021-05-04/water.csv"
   ],
+  "reference_files": [
+    "tidytuesday/data/2021/2021-05-04/pic1.png",
+    "tidytuesday/data/2021/2021-05-04/pic2.png",
+    "tidytuesday/data/2021/2021-05-04/readme.md"
+  ],
+  "external_dependencies": [],
   "execution_notes": [
     "interactive `View()` calls are present and should be skipped or replaced in automated runs",
-    "this episode depends on `tidytuesdayR::tt_load()`, so set `GITHUB_PAT` if GitHub rate limits appear"
+    "local TidyTuesday files were matched, so you can use `load_tidyweek_data()` and avoid a GitHub PAT"
   ]
 }

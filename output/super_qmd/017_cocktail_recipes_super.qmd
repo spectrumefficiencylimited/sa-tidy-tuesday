@@ -1,6 +1,7 @@
 ---
 title: "Super QMD: Analyzing cocktail recipes in R"
 subtitle: "Cognition-first blueprint built from the episode guide and KER"
+author: "Andrei Stoian"
 format:
   html:
     theme: flatly
@@ -34,23 +35,31 @@ The point is to preserve not only the code path, but the author's cognition:
 
 ## Episode Snapshot
 
-- `queue_position`: `17`
-- `function_name`: `cocktail_recipes`
-- `analysis_type`: `EDA`
-- `pattern_signature`: `load_inspect_tokenize_compare_visualize`
-- `data_source`: TidyTuesday 2020-05-26 dataset
-- `reproduction_status`: `ready_local`
-
 ::: {.callout-note}
 ## Analysis Intent
 Explore and compare language patterns in cocktail recipes using tokenization, grouped counts, and discriminative text analysis
 :::
 
+| Field | Value |
+|---|---|
+| Queue | #17 |
+| Function | `cocktail_recipes` |
+| Analysis type | EDA |
+| Data source | TidyTuesday 2020-05-26 dataset |
+| Status | `ready_local` |
+
+**Packages:** `ggraph`, `ggrepel`, `igraph`, `scales`, `tidytext`, `tidytuesdayR`, `tidyverse`, `widyr`
+
+**Features:** ggplot, text_analysis
+
+**Execution notes:**
+- local TidyTuesday files were matched, so you can use `load_tidyweek_data()` and avoid a GitHub PAT
+
+**Analytical pattern:** `load_inspect_tokenize_compare_visualize`
 
 
-## Transcript Preview
 
-Analyzing cocktail recipes in R David Robinson 15.9k subscribers 155 Share Save Clip 4,790 views Streamed live on 27 May 2020 Tidy Tuesday R Screencasts I'll analyze a dataset on cocktail recipes in R, without looking at the dataset in advance. The dataset comes from the Tidy Tuesday project: https://github.com/rfordatascience/ti... Introduction 0:04 hi I'm Dave Robinson and welcome to another one of my screencast well be 0:10 using our to analyze data I've never seen before as usual the data comes from the tie 0:1...
+
 
 ## Cognitive Signature
 
@@ -109,6 +118,24 @@ mr_boston <- tuesdata$boston_cocktails
 - `T6 | Compare | Summarize group differences, rates, rankings, or trajectories to surface the main story in the data. | Grouped summaries and comparative plots`
 - `T7 | Visualize | Turn the cleaned summaries into interpretable visual comparisons and iterate toward the clearest view. | ggplot workflow`
 - `T8 | Reflect | Identify reusable workflow pieces that can transfer to future datasets with a similar shape or question. | End-state of the analysis pattern`
+```{r}
+#| label: thought_execution_log
+#| eval: false
+
+# Fill in your `finding` after completing each stage.
+thought_log <- tibble::tribble(
+  ~step,  ~move,        ~finding,
+  "T1", "Context", "",
+  "T2", "Inspect", "",
+  "T5", "Compare", "",
+  "T6", "Compare", "",
+  "T7", "Visualize", "",
+  "T8", "Reflect", "",
+)
+thought_log
+```
+
+
 
 ### Code Mapping Table
 
@@ -198,9 +225,9 @@ Additional guidance:
 
 # Summarize the comparison that best answers the question.
 # comparison_tbl <- analysis_tbl %>%
-#   group_by(...) %>%
-#   summarise(...) %>%
-#   arrange(desc(...))
+# group_by(...) %>%
+# summarise(...) %>%
+# arrange(desc(...))
 ```
 ## Stage 4: Compare
 
@@ -225,9 +252,9 @@ Additional guidance:
 
 # Summarize the comparison that best answers the question.
 # comparison_tbl <- analysis_tbl %>%
-#   group_by(...) %>%
-#   summarise(...) %>%
-#   arrange(desc(...))
+# group_by(...) %>%
+# summarise(...) %>%
+# arrange(desc(...))
 ```
 ## Stage 5: Visualize
 
@@ -250,8 +277,8 @@ Trigger:
 
 # Turn the comparison table into one clear communication plot.
 # ggplot(comparison_tbl, aes(...)) +
-#   geom_col() +
-#   labs(title = ..., subtitle = ...)
+# geom_col() +
+# labs(title = ..., subtitle = ...)
 ```
 ## Stage 6: Reflect
 

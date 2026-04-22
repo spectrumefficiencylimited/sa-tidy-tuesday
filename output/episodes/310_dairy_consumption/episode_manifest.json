@@ -1,0 +1,58 @@
+{
+  "queue_position": 310,
+  "folder_name": "310_dairy_consumption",
+  "transcript_title": "Analyzing US dairy consumption in R",
+  "function_name": "dairy_consumption",
+  "ker_status": "extracted",
+  "reproduction_status": "ready_local",
+  "source_files": {
+    "transcript_file": "raw-data/inspiration/Analyzing US dairy consumption in R.txt",
+    "code_file": "data-screencasts/us-dairy.Rmd"
+  },
+  "source_exists": {
+    "transcript": true,
+    "code": true
+  },
+  "data_source": "TidyTuesday 2019-01-29 source files",
+  "analysis_intent": "Explore distributions, group differences, and notable patterns in US dairy consumption through cleaning, summarization, and visualization",
+  "analysis_type": "EDA",
+  "pattern_signature": "load_inspect_reshape_trend_simulate_compare_visualize",
+  "required_packages": [
+    "lubridate",
+    "sweep",
+    "tidyverse",
+    "timetk"
+  ],
+  "features": {
+    "ggplot": true,
+    "joins": false,
+    "reshape": true,
+    "text_analysis": false,
+    "modeling": false,
+    "predictive": false,
+    "scraping": false,
+    "maps": false,
+    "time": true,
+    "simulation": true,
+    "multi_table": false
+  },
+  "local_data_files": [
+    "tidytuesday/data/2019/2019-01-29/clean_cheese.csv",
+    "tidytuesday/data/2019/2019-01-29/fluid_milk_sales.csv",
+    "tidytuesday/data/2019/2019-01-29/milk_products_facts.csv",
+    "tidytuesday/data/2019/2019-01-29/milkcow_facts.csv",
+    "tidytuesday/data/2019/2019-01-29/state_milk_production.csv"
+  ],
+  "reference_files": [
+    "tidytuesday/data/2019/2019-01-29/fluid_milk_sales.csv",
+    "tidytuesday/data/2019/2019-01-29/milk_products_facts.csv",
+    "tidytuesday/data/2019/2019-01-29/milkcow_facts.csv",
+    "tidytuesday/data/2019/2019-01-29/readme.md",
+    "tidytuesday/data/2019/2019-01-29/state_milk_production.csv",
+    "tidytuesday/data/2019/2019-01-29/clean_cheese.csv"
+  ],
+  "external_dependencies": [],
+  "execution_notes": [
+    "local TidyTuesday files were matched, so you can use `load_tidyweek_data()` and avoid a GitHub PAT"
+  ]
+}

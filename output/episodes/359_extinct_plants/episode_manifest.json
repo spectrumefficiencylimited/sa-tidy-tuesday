@@ -1,0 +1,60 @@
+{
+  "queue_position": 359,
+  "folder_name": "359_extinct_plants",
+  "transcript_title": "Analyzing extinct plants in R",
+  "function_name": "extinct_plants",
+  "ker_status": "extracted",
+  "reproduction_status": "ready_with_external_steps",
+  "source_files": {
+    "transcript_file": "raw-data/inspiration/Analyzing extinct plants in R.txt",
+    "code_file": "data-screencasts/2020_08_18_extinct_plants.Rmd"
+  },
+  "source_exists": {
+    "transcript": true,
+    "code": true
+  },
+  "data_source": "TidyTuesday 2020-08-18 dataset",
+  "analysis_intent": "Explore and compare language patterns in extinct plants using tokenization, grouped counts, and discriminative text analysis",
+  "analysis_type": "EDA",
+  "pattern_signature": "load_inspect_scrape_join_tokenize_trend_compare_visualize",
+  "required_packages": [
+    "rvest",
+    "scales",
+    "tidytext",
+    "tidytuesdayR",
+    "tidyverse"
+  ],
+  "features": {
+    "ggplot": true,
+    "joins": true,
+    "reshape": false,
+    "text_analysis": true,
+    "modeling": false,
+    "predictive": false,
+    "scraping": true,
+    "maps": false,
+    "time": true,
+    "simulation": false,
+    "multi_table": true
+  },
+  "local_data_files": [
+    "tidytuesday/data/2020/2020-08-18/actions.csv",
+    "tidytuesday/data/2020/2020-08-18/plants.csv",
+    "tidytuesday/data/2020/2020-08-18/threats.csv"
+  ],
+  "reference_files": [
+    "tidytuesday/data/2020/2020-08-18/pic1.png",
+    "tidytuesday/data/2020/2020-08-18/pic2.png",
+    "tidytuesday/data/2020/2020-08-18/plants.csv",
+    "tidytuesday/data/2020/2020-08-18/readme.md",
+    "tidytuesday/data/2020/2020-08-18/threats.csv",
+    "tidytuesday/data/2020/2020-08-18/actions.csv"
+  ],
+  "external_dependencies": [
+    "web scraping or remote API logic detected"
+  ],
+  "execution_notes": [
+    "interactive `View()` calls are present and should be skipped or replaced in automated runs",
+    "local TidyTuesday files were matched, so you can use `load_tidyweek_data()` and avoid a GitHub PAT"
+  ]
+}

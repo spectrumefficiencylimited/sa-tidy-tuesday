@@ -1,0 +1,58 @@
+{
+  "queue_position": 25,
+  "folder_name": "025_australian_animal_outcomes",
+  "transcript_title": "Analyzing Australian animal outcomes in R",
+  "function_name": "australian_animal_outcomes",
+  "ker_status": "extracted",
+  "reproduction_status": "ready_with_external_steps",
+  "source_files": {
+    "transcript_file": "raw-data/inspiration/Analyzing Australian animal outcomes in R.txt",
+    "code_file": "data-screencasts/australian-animal-outcomes.Rmd"
+  },
+  "source_exists": {
+    "transcript": true,
+    "code": true
+  },
+  "data_source": "TidyTuesday 2020-07-21 dataset",
+  "analysis_intent": "Explore geographic and temporal variation in Australian animal outcomes through joins, summarization, and mapping",
+  "analysis_type": "EDA",
+  "pattern_signature": "load_inspect_scrape_reshape_join_map_trend_compare_visualize",
+  "required_packages": [
+    "gganimate",
+    "rvest",
+    "scales",
+    "sf",
+    "tidytuesdayR",
+    "tidyverse"
+  ],
+  "features": {
+    "ggplot": true,
+    "joins": true,
+    "reshape": true,
+    "text_analysis": false,
+    "modeling": false,
+    "predictive": false,
+    "scraping": true,
+    "maps": true,
+    "time": true,
+    "simulation": false,
+    "multi_table": false
+  },
+  "local_data_files": [
+    "tidytuesday/data/2020/2020-07-21/animal_complaints.csv",
+    "tidytuesday/data/2020/2020-07-21/animal_outcomes.csv",
+    "tidytuesday/data/2020/2020-07-21/brisbane_complaints.csv"
+  ],
+  "reference_files": [
+    "tidytuesday/data/2020/2020-07-21/animal_outcomes.csv",
+    "tidytuesday/data/2020/2020-07-21/brisbane_complaints.csv",
+    "tidytuesday/data/2020/2020-07-21/readme.md",
+    "tidytuesday/data/2020/2020-07-21/animal_complaints.csv"
+  ],
+  "external_dependencies": [
+    "web scraping or remote API logic detected"
+  ],
+  "execution_notes": [
+    "local TidyTuesday files were matched, so you can use `load_tidyweek_data()` and avoid a GitHub PAT"
+  ]
+}

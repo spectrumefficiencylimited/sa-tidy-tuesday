@@ -1,0 +1,38 @@
+{
+  "queue_position": 228,
+  "folder_name": "228_repair_cafes_worldwide",
+  "transcript_title": "Analyzing Repair Cafes Worldwide in R",
+  "function_name": "repair_cafes_worldwide",
+  "ker_status": "needs_mapping",
+  "reproduction_status": "blocked_needs_mapping",
+  "source_files": {
+    "transcript_file": "raw-data/inspiration/Analyzing Repair Cafes Worldwide in R.txt",
+    "code_file": ""
+  },
+  "source_exists": {
+    "transcript": true,
+    "code": false
+  },
+  "data_source": "TidyTuesday 2026-04-07",
+  "analysis_intent": "Explore distributions, group differences, and notable patterns in Repair Cafes Worldwide through cleaning, summarization, and visualization",
+  "analysis_type": "EDA",
+  "pattern_signature": "load_inspect_compare",
+  "required_packages": [],
+  "features": {
+    "ggplot": false,
+    "joins": false,
+    "reshape": false,
+    "text_analysis": false,
+    "modeling": false,
+    "predictive": false,
+    "scraping": false,
+    "maps": false,
+    "time": false,
+    "simulation": false,
+    "multi_table": false
+  },
+  "local_data_files": [],
+  "reference_files": [],
+  "external_dependencies": [],
+  "execution_notes": []
+}

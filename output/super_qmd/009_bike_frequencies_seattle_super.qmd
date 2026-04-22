@@ -1,6 +1,7 @@
 ---
 title: "Super QMD: Analyzing bike frequencies in Seattle in R"
 subtitle: "Cognition-first blueprint built from the episode guide and KER"
+author: "Andrei Stoian"
 format:
   html:
     theme: flatly
@@ -34,23 +35,31 @@ The point is to preserve not only the code path, but the author's cognition:
 
 ## Episode Snapshot
 
-- `queue_position`: `9`
-- `function_name`: `bike_frequencies_seattle`
-- `analysis_type`: `EDA`
-- `pattern_signature`: `load_inspect_reshape_trend_compare_visualize`
-- `data_source`: TidyTuesday 2019-04-02 source files
-- `reproduction_status`: `ready_local`
-
 ::: {.callout-note}
 ## Analysis Intent
 Explore distributions, group differences, and notable patterns in bike frequencies in Seattle through cleaning, summarization, and visualization
 :::
 
+| Field | Value |
+|---|---|
+| Queue | #9 |
+| Function | `bike_frequencies_seattle` |
+| Analysis type | EDA |
+| Data source | TidyTuesday 2019-04-02 source files |
+| Status | `ready_local` |
+
+**Packages:** `lubridate`, `scales`, `tidyverse`
+
+**Features:** ggplot, reshape, time
+
+**Execution notes:**
+- local TidyTuesday files were matched, so you can use `load_tidyweek_data()` and avoid a GitHub PAT
+
+**Analytical pattern:** `load_inspect_reshape_trend_compare_visualize`
 
 
-## Transcript Preview
 
-bike frequencies in Seattle David Robinson 15.9k subscribers 67 Share Save Clip 2,193 views 6 Apr 2019 Tidy Tuesday R Screencasts I analyze a dataset of bike counters in Seattle as an example of exploratory data analysis in R, performed without looking at the data in advance. I use visualizations to discover which direction Seattle residents typically commute in, and therefore which are likely north or south of major commercial areas. The dataset comes thanks to the #tidytuesday project: https://github.com/rfordata...
+
 
 ## Cognitive Signature
 
@@ -101,6 +110,24 @@ names(tuesdata)
 - `T6 | Compare | Summarize group differences, rates, rankings, or trajectories to surface the main story in the data. | Grouped summaries and comparative plots`
 - `T7 | Visualize | Turn the cleaned summaries into interpretable visual comparisons and iterate toward the clearest view. | ggplot workflow`
 - `T8 | Reflect | Identify reusable workflow pieces that can transfer to future datasets with a similar shape or question. | End-state of the analysis pattern`
+```{r}
+#| label: thought_execution_log
+#| eval: false
+
+# Fill in your `finding` after completing each stage.
+thought_log <- tibble::tribble(
+  ~step,  ~move,        ~finding,
+  "T1", "Context", "",
+  "T2", "Inspect", "",
+  "T4", "Transform", "",
+  "T6", "Compare", "",
+  "T7", "Visualize", "",
+  "T8", "Reflect", "",
+)
+thought_log
+```
+
+
 
 ### Code Mapping Table
 
@@ -190,7 +217,7 @@ Trigger:
 # Source assets: tidytuesday/data/2019/2019-04-02/bike_traffic.csv
 # Suggested verbs: mutate(), separate_rows(), pivot_longer(), left_join(), unnest()
 # analysis_tbl <- raw_tbl %>%
-#   ...
+# ...
 ```
 ## Stage 4: Compare
 
@@ -213,9 +240,9 @@ Trigger:
 
 # Summarize the comparison that best answers the question.
 # comparison_tbl <- analysis_tbl %>%
-#   group_by(...) %>%
-#   summarise(...) %>%
-#   arrange(desc(...))
+# group_by(...) %>%
+# summarise(...) %>%
+# arrange(desc(...))
 ```
 ## Stage 5: Visualize
 
@@ -240,8 +267,8 @@ Additional guidance:
 
 # Turn the comparison table into one clear communication plot.
 # ggplot(comparison_tbl, aes(...)) +
-#   geom_col() +
-#   labs(title = ..., subtitle = ...)
+# geom_col() +
+# labs(title = ..., subtitle = ...)
 ```
 ## Stage 6: Reflect
 

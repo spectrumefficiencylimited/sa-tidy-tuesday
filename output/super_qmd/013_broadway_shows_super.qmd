@@ -1,6 +1,7 @@
 ---
 title: "Super QMD: Analyzing Broadway shows in R"
 subtitle: "Cognition-first blueprint built from the episode guide and KER"
+author: "Andrei Stoian"
 format:
   html:
     theme: flatly
@@ -34,23 +35,31 @@ The point is to preserve not only the code path, but the author's cognition:
 
 ## Episode Snapshot
 
-- `queue_position`: `13`
-- `function_name`: `broadway_shows`
-- `analysis_type`: `EDA`
-- `pattern_signature`: `load_inspect_trend_compare_visualize`
-- `data_source`: TidyTuesday 2020-04-28 dataset
-- `reproduction_status`: `ready_local`
-
 ::: {.callout-note}
 ## Analysis Intent
 Explore distributions, group differences, and notable patterns in Broadway shows through cleaning, summarization, and visualization
 :::
 
+| Field | Value |
+|---|---|
+| Queue | #13 |
+| Function | `broadway_shows` |
+| Analysis type | EDA |
+| Data source | TidyTuesday 2020-04-28 dataset |
+| Status | `ready_local` |
+
+**Packages:** `scales`, `shinymetrics`, `tidymetrics`, `tidyverse`
+
+**Features:** ggplot, time
+
+**Execution notes:**
+- local TidyTuesday files were matched, so you can use `load_tidyweek_data()` and avoid a GitHub PAT
+
+**Analytical pattern:** `load_inspect_trend_compare_visualize`
 
 
-## Transcript Preview
 
-Analyzing Broadway shows in R David Robinson 15.9k subscribers 103 Share Save Clip 2,906 views Streamed live on 29 Apr 2020 Tidy Tuesday R Screencasts I'll analyze a dataset on Broadway shows in R, without looking at the data in advance. I'll be analyzing the dataset as a live stream instead of prerecording it. The dataset comes from the Tidy Tuesday project: https://github.com/rfordatascience/ti... Search in video Introduction 0:06 hi everyone I'm Dave Robinson and welcome to another live screencast where 0:12 I'l...
+
 
 ## Cognitive Signature
 
@@ -104,6 +113,23 @@ grosses <- tuesdata$grosses
 - `T6 | Compare | Summarize group differences, rates, rankings, or trajectories to surface the main story in the data. | Grouped summaries and comparative plots`
 - `T7 | Visualize | Turn the cleaned summaries into interpretable visual comparisons and iterate toward the clearest view. | ggplot workflow`
 - `T8 | Reflect | Identify reusable workflow pieces that can transfer to future datasets with a similar shape or question. | End-state of the analysis pattern`
+```{r}
+#| label: thought_execution_log
+#| eval: false
+
+# Fill in your `finding` after completing each stage.
+thought_log <- tibble::tribble(
+  ~step,  ~move,        ~finding,
+  "T1", "Context", "",
+  "T2", "Inspect", "",
+  "T6", "Compare", "",
+  "T7", "Visualize", "",
+  "T8", "Reflect", "",
+)
+thought_log
+```
+
+
 
 ### Code Mapping Table
 
@@ -190,9 +216,9 @@ Trigger:
 
 # Summarize the comparison that best answers the question.
 # comparison_tbl <- analysis_tbl %>%
-#   group_by(...) %>%
-#   summarise(...) %>%
-#   arrange(desc(...))
+# group_by(...) %>%
+# summarise(...) %>%
+# arrange(desc(...))
 ```
 ## Stage 4: Visualize
 
@@ -217,8 +243,8 @@ Additional guidance:
 
 # Turn the comparison table into one clear communication plot.
 # ggplot(comparison_tbl, aes(...)) +
-#   geom_col() +
-#   labs(title = ..., subtitle = ...)
+# geom_col() +
+# labs(title = ..., subtitle = ...)
 ```
 ## Stage 5: Reflect
 

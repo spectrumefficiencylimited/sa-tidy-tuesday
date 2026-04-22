@@ -295,79 +295,6 @@ Adaptation Plan:
 - `5 | compare_group_vocabulary | Tokenize the new corpus and compare terms across groups or documents`
 - `8 | plot_comparative_story | Choose the clearest visual comparison once the analytical table is ready`
 
-### `predicting_horror_movie_ratings`
-
-- `transcript_title`: Analyzing and predicting horror movie ratings in R
-- `transcript_file`: `raw-data/inspiration/Analyzing and predicting horror movie ratings in R.txt`
-- `code_file`: `data-screencasts/horror-movie-ratings.Rmd`
-- `data_source`: TidyTuesday 2019-10-22 source files
-- `analysis_intent`: Predict or estimate outcomes in horror movie ratings using cleaned features, exploratory analysis, and model evaluation
-- `analysis_type`: Predictive
-- `pattern_signature`: `load_inspect_reshape_join_tokenize_trend_model_evaluate_visualize`
-- `adaptation_hint`: Reuse for tabular datasets with a clear outcome column, engineered features, and model evaluation needs
-- `ker_status`: extracted
-
-Thought Process Map:
-
-- `T1 | Context | Frame the episode as exploratory analysis of horror movie ratings with limited advance knowledge of the data. | Transcript title and opening context`
-- `T2 | Inspect | Load the data, inspect table shape, and identify the main entities, measures, and comparison axes. | Initial data load and early counts or prints`
-- `T4 | Transform | Reshape fields, standardize column meanings, and join supporting tables to create analysis-ready records. | Join and reshaping operations in the Rmd`
-- `T5 | Compare | Tokenize text, remove noise terms, and compare vocabulary across groups or documents. | tidytext workflow in the episode`
-- `T6 | Compare | Move from descriptive patterns into statistical or predictive modeling once the feature space is ready. | Modeling functions and evaluation code`
-- `T7 | Visualize | Turn the cleaned summaries into interpretable visual comparisons and iterate toward the clearest view. | ggplot workflow`
-- `T8 | Reflect | Identify reusable workflow pieces that can transfer to future datasets with a similar shape or question. | End-state of the analysis pattern`
-
-Code Mapping Table:
-
-- `T1 | Data load and inspection | read_csv, count | Establish source shape, units, and comparison candidates`
-- `T4 | Structuring and enrichment | gather, separate_rows, unnest | Convert messy inputs into analysis-ready tables`
-- `T5 | Text comparison | unnest_tokens, anti_join | Identify terms that distinguish groups or documents`
-- `T6 | Modeling and evaluation | lm, glm, fit, predict | Test explanatory or predictive relationships after EDA`
-- `T7 | Visualization | ggplot, geom_col, geom_point, geom_line | Communicate the core result visually`
-
-Data Transformation Flow:
-
-- `Raw | Imported source tables or files | Load source data into tibbles or lists | Raw episode objects | Establish the starting analysis surface`
-- `Raw -> Clean | Raw source tables | Rename, reshape, unnest, and join supporting data | Analysis-ready rows with consistent keys | Standardize the schema before comparison`
-- `Clean -> Analytical | Clean text corpus | Tokenize text, remove stop words, and count terms by group | Term-frequency comparison tables | Surface language differences and signatures`
-- `Analytical -> Visual | Summary or model outputs | Reorder factors and prepare plotting fields | Plot-ready table | Turn the analytical result into an interpretable chart`
-
-Reusable Patterns:
-
-- `inspect_source_schema | Inspect source tables, field meanings, and likely comparison axes | Raw dataset or dataset list | Initial analysis plan | Y`
-- `reshape_analysis_inputs | Convert wide or nested source fields into normalized long-form records | Raw tabular fields | Tidy analysis table | Y`
-- `join_context_tables | Enrich the main table with lookup or metadata tables | Primary data plus keys | Context-enriched analysis table | Y`
-- `compare_group_vocabulary | Tokenize text and compute grouped term distinctiveness | Text, grouping variable, document or entity ids | Ranked term comparison tables | Y`
-- `build_predictive_or_explanatory_model | Move from cleaned features to fitted models and evaluation outputs | Feature table and outcome field | Model object and diagnostics | Y`
-- `plot_comparative_story | Reorder entities and visualize the main comparison cleanly | Summary table or model output | Communication-ready plot | Y`
-
-Function Candidates:
-
-- `reshape_episode_inputs(data, ...)`
-- `join_episode_context(primary_data, lookup_data, by)`
-- `prepare_text_tokens(data, text_column)`
-- `compare_group_vocabulary(data, group_col, term_col, count_col = 'n')`
-- `build_predictive_pipeline(data, formula, ...)`
-- `evaluate_episode_model(model, test_data, outcome_col)`
-- `plot_comparative_story(data, x_col, y_col, group_col = NULL)`
-
-Episode Signature:
-
-- `analysis_intent`: Predict or estimate outcomes in horror movie ratings using cleaned features, exploratory analysis, and model evaluation
-- `analysis_type`: Predictive
-- `primary_techniques`: schema inspection, grouped summaries, reshaping, table joins, tokenization, term comparison, modeling, time-aware comparison, visualization
-- `data_complexity_level`: medium-high
-- `reusable_difficulty_score`: 4
-
-Adaptation Plan:
-
-- `1 | inspect_source_schema | Start by mapping entities, measures, and likely comparison axes before transforming anything`
-- `3 | reshape_analysis_inputs | Normalize wide, nested, or repeated fields into one analysis-ready row structure`
-- `4 | join_context_tables | Enrich the main analysis table with keys, metadata, or auxiliary measurements`
-- `5 | compare_group_vocabulary | Tokenize the new corpus and compare terms across groups or documents`
-- `6 | build_predictive_or_explanatory_model | Fit and evaluate a baseline model after the core feature engineering is stable`
-- `8 | plot_comparative_story | Choose the clearest visual comparison once the analytical table is ready`
-
 ### `animal_crossing`
 
 - `transcript_title`: Analyzing Animal Crossing in R
@@ -435,61 +362,6 @@ Adaptation Plan:
 - `3 | reshape_analysis_inputs | Normalize wide, nested, or repeated fields into one analysis-ready row structure`
 - `4 | join_context_tables | Enrich the main analysis table with keys, metadata, or auxiliary measurements`
 - `5 | compare_group_vocabulary | Tokenize the new corpus and compare terms across groups or documents`
-- `8 | plot_comparative_story | Choose the clearest visual comparison once the analytical table is ready`
-
-### `art_collections`
-
-- `transcript_title`: Analyzing art collections in R
-- `transcript_file`: `raw-data/inspiration/Analyzing art collections in R.txt`
-- `code_file`: `data-screencasts/2021_01_12_tate_art.Rmd`
-- `data_source`: TidyTuesday 2021-01-12 dataset
-- `analysis_intent`: Explore distributions, group differences, and notable patterns in art collections through cleaning, summarization, and visualization
-- `analysis_type`: EDA
-- `pattern_signature`: `load_inspect_trend_compare_visualize`
-- `adaptation_hint`: Reuse for exploratory datasets that need schema inspection, grouped summaries, and visualization-first storytelling
-- `ker_status`: extracted
-
-Thought Process Map:
-
-- `T1 | Context | Frame the episode as exploratory analysis of art collections with limited advance knowledge of the data. | Transcript title and opening context`
-- `T2 | Inspect | Load the data, inspect table shape, and identify the main entities, measures, and comparison axes. | Initial data load and early counts or prints`
-- `T6 | Compare | Summarize group differences, rates, rankings, or trajectories to surface the main story in the data. | Grouped summaries and comparative plots`
-- `T7 | Visualize | Turn the cleaned summaries into interpretable visual comparisons and iterate toward the clearest view. | ggplot workflow`
-- `T8 | Reflect | Identify reusable workflow pieces that can transfer to future datasets with a similar shape or question. | End-state of the analysis pattern`
-
-Code Mapping Table:
-
-- `T1 | Data load and inspection | tt_load, count, glimpse | Establish source shape, units, and comparison candidates`
-- `T6 | Group comparison | group_by, summarize, count, mutate | Compare categories, time periods, or entities`
-- `T7 | Visualization | ggplot, geom_col, geom_point, geom_line, facet_wrap | Communicate the core result visually`
-
-Data Transformation Flow:
-
-- `Raw | Imported source tables or files | Load source data into tibbles or lists | Raw episode objects | Establish the starting analysis surface`
-- `Raw -> Clean | Raw source tables | Filter, rename, and derive analysis columns | Cleaned table | Make the data comparable and plot-ready`
-- `Clean -> Analytical | Cleaned table | Group, summarize, rank, or compare entities | Summary tables or rate calculations | Surface the core analytical story`
-- `Analytical -> Visual | Summary or model outputs | Reorder factors and prepare plotting fields | Plot-ready table | Turn the analytical result into an interpretable chart`
-
-Reusable Patterns:
-
-- `inspect_source_schema | Inspect source tables, field meanings, and likely comparison axes | Raw dataset or dataset list | Initial analysis plan | Y`
-- `plot_comparative_story | Reorder entities and visualize the main comparison cleanly | Summary table or model output | Communication-ready plot | Y`
-
-Function Candidates:
-
-- `plot_comparative_story(data, x_col, y_col, group_col = NULL)`
-
-Episode Signature:
-
-- `analysis_intent`: Explore distributions, group differences, and notable patterns in art collections through cleaning, summarization, and visualization
-- `analysis_type`: EDA
-- `primary_techniques`: schema inspection, grouped summaries, time-aware comparison, visualization
-- `data_complexity_level`: low-medium
-- `reusable_difficulty_score`: 2
-
-Adaptation Plan:
-
-- `1 | inspect_source_schema | Start by mapping entities, measures, and likely comparison axes before transforming anything`
 - `8 | plot_comparative_story | Choose the clearest visual comparison once the analytical table is ready`
 
 ### `australian_animal_outcomes`
@@ -564,6 +436,1805 @@ Adaptation Plan:
 - `3 | reshape_analysis_inputs | Normalize wide, nested, or repeated fields into one analysis-ready row structure`
 - `4 | join_context_tables | Enrich the main analysis table with keys, metadata, or auxiliary measurements`
 - `7 | prepare_geographic_summary | Aggregate to the geographic unit available in the new dataset and rebuild the map join`
+- `8 | plot_comparative_story | Choose the clearest visual comparison once the analytical table is ready`
+
+### `bob_ross_paintings`
+
+- `transcript_title`: Analyzing Bob Ross paintings in R
+- `transcript_file`: `raw-data/inspiration/Analyzing Bob Ross paintings in R.txt`
+- `code_file`: `data-screencasts/bob-ross.Rmd`
+- `data_source`: TidyTuesday 2019-08-06 source files
+- `analysis_intent`: Explore and compare language patterns in Bob Ross paintings using tokenization, grouped counts, and discriminative text analysis
+- `analysis_type`: EDA
+- `pattern_signature`: `load_inspect_reshape_tokenize_compare_visualize`
+- `adaptation_hint`: Reuse for grouped text corpora that need tokenization, term comparison, and context-aware vocabulary analysis
+- `ker_status`: extracted
+
+Thought Process Map:
+
+- `T1 | Context | Frame the episode as exploratory analysis of Bob Ross paintings with limited advance knowledge of the data. | Transcript title and opening context`
+- `T2 | Inspect | Load the data, inspect table shape, and identify the main entities, measures, and comparison axes. | Initial data load and early counts or prints`
+- `T4 | Transform | Reshape fields, standardize column meanings, and join supporting tables to create analysis-ready records. | Join and reshaping operations in the Rmd`
+- `T5 | Compare | Tokenize text, remove noise terms, and compare vocabulary across groups or documents. | tidytext workflow in the episode`
+- `T6 | Compare | Summarize group differences, rates, rankings, or trajectories to surface the main story in the data. | Grouped summaries and comparative plots`
+- `T7 | Visualize | Turn the cleaned summaries into interpretable visual comparisons and iterate toward the clearest view. | ggplot workflow`
+- `T8 | Reflect | Identify reusable workflow pieces that can transfer to future datasets with a similar shape or question. | End-state of the analysis pattern`
+
+Code Mapping Table:
+
+- `T1 | Data load and inspection | read_csv, count | Establish source shape, units, and comparison candidates`
+- `T4 | Structuring and enrichment | gather | Convert messy inputs into analysis-ready tables`
+- `T5 | Text comparison | episode-specific dplyr and ggplot verbs | Identify terms that distinguish groups or documents`
+- `T6 | Group comparison | group_by, count, mutate | Compare categories, time periods, or entities`
+- `T7 | Visualization | ggplot, geom_col, geom_point, geom_line, facet_wrap | Communicate the core result visually`
+
+Data Transformation Flow:
+
+- `Raw | Imported source tables or files | Load source data into tibbles or lists | Raw episode objects | Establish the starting analysis surface`
+- `Raw -> Clean | Raw source tables | Rename, reshape, unnest, and join supporting data | Analysis-ready rows with consistent keys | Standardize the schema before comparison`
+- `Clean -> Analytical | Clean text corpus | Tokenize text, remove stop words, and count terms by group | Term-frequency comparison tables | Surface language differences and signatures`
+- `Analytical -> Visual | Summary or model outputs | Reorder factors and prepare plotting fields | Plot-ready table | Turn the analytical result into an interpretable chart`
+
+Reusable Patterns:
+
+- `inspect_source_schema | Inspect source tables, field meanings, and likely comparison axes | Raw dataset or dataset list | Initial analysis plan | Y`
+- `reshape_analysis_inputs | Convert wide or nested source fields into normalized long-form records | Raw tabular fields | Tidy analysis table | Y`
+- `compare_group_vocabulary | Tokenize text and compute grouped term distinctiveness | Text, grouping variable, document or entity ids | Ranked term comparison tables | Y`
+- `plot_comparative_story | Reorder entities and visualize the main comparison cleanly | Summary table or model output | Communication-ready plot | Y`
+
+Function Candidates:
+
+- `reshape_episode_inputs(data, ...)`
+- `join_episode_context(primary_data, lookup_data, by)`
+- `prepare_text_tokens(data, text_column)`
+- `compare_group_vocabulary(data, group_col, term_col, count_col = 'n')`
+- `plot_comparative_story(data, x_col, y_col, group_col = NULL)`
+
+Episode Signature:
+
+- `analysis_intent`: Explore and compare language patterns in Bob Ross paintings using tokenization, grouped counts, and discriminative text analysis
+- `analysis_type`: EDA
+- `primary_techniques`: schema inspection, grouped summaries, reshaping, tokenization, term comparison, visualization
+- `data_complexity_level`: medium
+- `reusable_difficulty_score`: 3
+
+Adaptation Plan:
+
+- `1 | inspect_source_schema | Start by mapping entities, measures, and likely comparison axes before transforming anything`
+- `3 | reshape_analysis_inputs | Normalize wide, nested, or repeated fields into one analysis-ready row structure`
+- `5 | compare_group_vocabulary | Tokenize the new corpus and compare terms across groups or documents`
+- `8 | plot_comparative_story | Choose the clearest visual comparison once the analytical table is ready`
+
+### `broadway_shows`
+
+- `transcript_title`: Analyzing Broadway shows in R
+- `transcript_file`: `raw-data/inspiration/Analyzing Broadway shows in R.txt`
+- `code_file`: `data-screencasts/broadway.Rmd`
+- `data_source`: TidyTuesday 2020-04-28 dataset
+- `analysis_intent`: Explore distributions, group differences, and notable patterns in Broadway shows through cleaning, summarization, and visualization
+- `analysis_type`: EDA
+- `pattern_signature`: `load_inspect_trend_compare_visualize`
+- `adaptation_hint`: Reuse for exploratory datasets that need schema inspection, grouped summaries, and visualization-first storytelling
+- `ker_status`: extracted
+
+Thought Process Map:
+
+- `T1 | Context | Frame the episode as exploratory analysis of Broadway shows with limited advance knowledge of the data. | Transcript title and opening context`
+- `T2 | Inspect | Load the data, inspect table shape, and identify the main entities, measures, and comparison axes. | Initial data load and early counts or prints`
+- `T6 | Compare | Summarize group differences, rates, rankings, or trajectories to surface the main story in the data. | Grouped summaries and comparative plots`
+- `T7 | Visualize | Turn the cleaned summaries into interpretable visual comparisons and iterate toward the clearest view. | ggplot workflow`
+- `T8 | Reflect | Identify reusable workflow pieces that can transfer to future datasets with a similar shape or question. | End-state of the analysis pattern`
+
+Code Mapping Table:
+
+- `T1 | Data load and inspection | tt_load | Establish source shape, units, and comparison candidates`
+- `T6 | Group comparison | summarize, mutate | Compare categories, time periods, or entities`
+- `T7 | Visualization | ggplot, geom_col, geom_line | Communicate the core result visually`
+
+Data Transformation Flow:
+
+- `Raw | Imported source tables or files | Load source data into tibbles or lists | Raw episode objects | Establish the starting analysis surface`
+- `Raw -> Clean | Raw source tables | Filter, rename, and derive analysis columns | Cleaned table | Make the data comparable and plot-ready`
+- `Clean -> Analytical | Cleaned table | Group, summarize, rank, or compare entities | Summary tables or rate calculations | Surface the core analytical story`
+- `Analytical -> Visual | Summary or model outputs | Reorder factors and prepare plotting fields | Plot-ready table | Turn the analytical result into an interpretable chart`
+
+Reusable Patterns:
+
+- `inspect_source_schema | Inspect source tables, field meanings, and likely comparison axes | Raw dataset or dataset list | Initial analysis plan | Y`
+- `plot_comparative_story | Reorder entities and visualize the main comparison cleanly | Summary table or model output | Communication-ready plot | Y`
+
+Function Candidates:
+
+- `plot_comparative_story(data, x_col, y_col, group_col = NULL)`
+
+Episode Signature:
+
+- `analysis_intent`: Explore distributions, group differences, and notable patterns in Broadway shows through cleaning, summarization, and visualization
+- `analysis_type`: EDA
+- `primary_techniques`: schema inspection, grouped summaries, time-aware comparison, visualization
+- `data_complexity_level`: low-medium
+- `reusable_difficulty_score`: 2
+
+Adaptation Plan:
+
+- `1 | inspect_source_schema | Start by mapping entities, measures, and likely comparison axes before transforming anything`
+- `8 | plot_comparative_story | Choose the clearest visual comparison once the analytical table is ready`
+
+### `chopped_epiodes`
+
+- `transcript_title`: Analyzing Chopped epiodes in R
+- `transcript_file`: `raw-data/inspiration/Analyzing Chopped epiodes in R.txt`
+- `code_file`: `data-screencasts/2020_08_25_chopped.Rmd`
+- `data_source`: TidyTuesday 2020-08-25 dataset
+- `analysis_intent`: Predict or estimate outcomes in Chopped epiodes using cleaned features, exploratory analysis, and model evaluation
+- `analysis_type`: Predictive
+- `pattern_signature`: `load_inspect_reshape_join_trend_model_evaluate_visualize`
+- `adaptation_hint`: Reuse for tabular datasets with a clear outcome column, engineered features, and model evaluation needs
+- `ker_status`: extracted
+
+Thought Process Map:
+
+- `T1 | Context | Frame the episode as exploratory analysis of Chopped epiodes with limited advance knowledge of the data. | Transcript title and opening context`
+- `T2 | Inspect | Load the data, inspect table shape, and identify the main entities, measures, and comparison axes. | Initial data load and early counts or prints`
+- `T4 | Transform | Reshape fields, standardize column meanings, and join supporting tables to create analysis-ready records. | Join and reshaping operations in the Rmd`
+- `T6 | Compare | Move from descriptive patterns into statistical or predictive modeling once the feature space is ready. | Modeling functions and evaluation code`
+- `T7 | Visualize | Turn the cleaned summaries into interpretable visual comparisons and iterate toward the clearest view. | ggplot workflow`
+- `T8 | Reflect | Identify reusable workflow pieces that can transfer to future datasets with a similar shape or question. | End-state of the analysis pattern`
+
+Code Mapping Table:
+
+- `T1 | Data load and inspection | tt_load, count | Establish source shape, units, and comparison candidates`
+- `T4 | Structuring and enrichment | pivot_longer, pivot_wider, separate_rows | Convert messy inputs into analysis-ready tables`
+- `T6 | Modeling and evaluation | lm, glm, recipe, fit, predict | Test explanatory or predictive relationships after EDA`
+- `T7 | Visualization | ggplot, geom_col, geom_point, geom_line | Communicate the core result visually`
+
+Data Transformation Flow:
+
+- `Raw | Imported source tables or files | Load source data into tibbles or lists | Raw episode objects | Establish the starting analysis surface`
+- `Raw -> Clean | Raw source tables | Rename, reshape, unnest, and join supporting data | Analysis-ready rows with consistent keys | Standardize the schema before comparison`
+- `Clean -> Analytical | Feature table | Engineer predictors and fit models | Model outputs, predictions, or coefficients | Quantify relationships beyond descriptive summaries`
+- `Analytical -> Visual | Summary or model outputs | Reorder factors and prepare plotting fields | Plot-ready table | Turn the analytical result into an interpretable chart`
+
+Reusable Patterns:
+
+- `inspect_source_schema | Inspect source tables, field meanings, and likely comparison axes | Raw dataset or dataset list | Initial analysis plan | Y`
+- `reshape_analysis_inputs | Convert wide or nested source fields into normalized long-form records | Raw tabular fields | Tidy analysis table | Y`
+- `join_context_tables | Enrich the main table with lookup or metadata tables | Primary data plus keys | Context-enriched analysis table | Y`
+- `build_predictive_or_explanatory_model | Move from cleaned features to fitted models and evaluation outputs | Feature table and outcome field | Model object and diagnostics | Y`
+- `plot_comparative_story | Reorder entities and visualize the main comparison cleanly | Summary table or model output | Communication-ready plot | Y`
+
+Function Candidates:
+
+- `reshape_episode_inputs(data, ...)`
+- `join_episode_context(primary_data, lookup_data, by)`
+- `build_predictive_pipeline(data, formula, ...)`
+- `evaluate_episode_model(model, test_data, outcome_col)`
+- `plot_comparative_story(data, x_col, y_col, group_col = NULL)`
+
+Episode Signature:
+
+- `analysis_intent`: Predict or estimate outcomes in Chopped epiodes using cleaned features, exploratory analysis, and model evaluation
+- `analysis_type`: Predictive
+- `primary_techniques`: schema inspection, grouped summaries, reshaping, table joins, modeling, time-aware comparison, visualization
+- `data_complexity_level`: medium-high
+- `reusable_difficulty_score`: 4
+
+Adaptation Plan:
+
+- `1 | inspect_source_schema | Start by mapping entities, measures, and likely comparison axes before transforming anything`
+- `3 | reshape_analysis_inputs | Normalize wide, nested, or repeated fields into one analysis-ready row structure`
+- `4 | join_context_tables | Enrich the main analysis table with keys, metadata, or auxiliary measurements`
+- `6 | build_predictive_or_explanatory_model | Fit and evaluate a baseline model after the core feature engineering is stable`
+- `8 | plot_comparative_story | Choose the clearest visual comparison once the analytical table is ready`
+
+### `european_energy`
+
+- `transcript_title`: Analyzing European energy in R
+- `transcript_file`: `raw-data/inspiration/Analyzing European energy in R.txt`
+- `code_file`: `data-screencasts/2020_08_04_europe_energy.Rmd`
+- `data_source`: TidyTuesday 2020-08-04 dataset
+- `analysis_intent`: Explore and compare language patterns in European energy using tokenization, grouped counts, and discriminative text analysis
+- `analysis_type`: EDA
+- `pattern_signature`: `load_inspect_reshape_tokenize_trend_compare_visualize`
+- `adaptation_hint`: Reuse for grouped text corpora that need tokenization, term comparison, and context-aware vocabulary analysis
+- `ker_status`: extracted
+
+Thought Process Map:
+
+- `T1 | Context | Frame the episode as exploratory analysis of European energy with limited advance knowledge of the data. | Transcript title and opening context`
+- `T2 | Inspect | Load the data, inspect table shape, and identify the main entities, measures, and comparison axes. | Initial data load and early counts or prints`
+- `T4 | Transform | Reshape fields, standardize column meanings, and join supporting tables to create analysis-ready records. | Join and reshaping operations in the Rmd`
+- `T5 | Compare | Tokenize text, remove noise terms, and compare vocabulary across groups or documents. | tidytext workflow in the episode`
+- `T6 | Compare | Summarize group differences, rates, rankings, or trajectories to surface the main story in the data. | Grouped summaries and comparative plots`
+- `T7 | Visualize | Turn the cleaned summaries into interpretable visual comparisons and iterate toward the clearest view. | ggplot workflow`
+- `T8 | Reflect | Identify reusable workflow pieces that can transfer to future datasets with a similar shape or question. | End-state of the analysis pattern`
+
+Code Mapping Table:
+
+- `T1 | Data load and inspection | tt_load, count | Establish source shape, units, and comparison candidates`
+- `T4 | Structuring and enrichment | pivot_longer | Convert messy inputs into analysis-ready tables`
+- `T5 | Text comparison | episode-specific dplyr and ggplot verbs | Identify terms that distinguish groups or documents`
+- `T6 | Group comparison | group_by, summarize, count, mutate | Compare categories, time periods, or entities`
+- `T7 | Visualization | ggplot, geom_col, geom_point, geom_line, facet_wrap | Communicate the core result visually`
+
+Data Transformation Flow:
+
+- `Raw | Imported source tables or files | Load source data into tibbles or lists | Raw episode objects | Establish the starting analysis surface`
+- `Raw -> Clean | Raw source tables | Rename, reshape, unnest, and join supporting data | Analysis-ready rows with consistent keys | Standardize the schema before comparison`
+- `Clean -> Analytical | Clean text corpus | Tokenize text, remove stop words, and count terms by group | Term-frequency comparison tables | Surface language differences and signatures`
+- `Analytical -> Visual | Summary or model outputs | Reorder factors and prepare plotting fields | Plot-ready table | Turn the analytical result into an interpretable chart`
+
+Reusable Patterns:
+
+- `inspect_source_schema | Inspect source tables, field meanings, and likely comparison axes | Raw dataset or dataset list | Initial analysis plan | Y`
+- `reshape_analysis_inputs | Convert wide or nested source fields into normalized long-form records | Raw tabular fields | Tidy analysis table | Y`
+- `compare_group_vocabulary | Tokenize text and compute grouped term distinctiveness | Text, grouping variable, document or entity ids | Ranked term comparison tables | Y`
+- `plot_comparative_story | Reorder entities and visualize the main comparison cleanly | Summary table or model output | Communication-ready plot | Y`
+
+Function Candidates:
+
+- `reshape_episode_inputs(data, ...)`
+- `join_episode_context(primary_data, lookup_data, by)`
+- `prepare_text_tokens(data, text_column)`
+- `compare_group_vocabulary(data, group_col, term_col, count_col = 'n')`
+- `plot_comparative_story(data, x_col, y_col, group_col = NULL)`
+
+Episode Signature:
+
+- `analysis_intent`: Explore and compare language patterns in European energy using tokenization, grouped counts, and discriminative text analysis
+- `analysis_type`: EDA
+- `primary_techniques`: schema inspection, grouped summaries, reshaping, tokenization, term comparison, time-aware comparison, visualization
+- `data_complexity_level`: medium-high
+- `reusable_difficulty_score`: 4
+
+Adaptation Plan:
+
+- `1 | inspect_source_schema | Start by mapping entities, measures, and likely comparison axes before transforming anything`
+- `3 | reshape_analysis_inputs | Normalize wide, nested, or repeated fields into one analysis-ready row structure`
+- `5 | compare_group_vocabulary | Tokenize the new corpus and compare terms across groups or documents`
+- `8 | plot_comparative_story | Choose the clearest visual comparison once the analytical table is ready`
+
+### `friends_transcripts`
+
+- `transcript_title`: Analyzing Friends transcripts in R
+- `transcript_file`: `raw-data/inspiration/Analyzing Friends transcripts in R.txt`
+- `code_file`: `data-screencasts/2020_09_08_friends.Rmd`
+- `data_source`: TidyTuesday 2020-09-08 dataset
+- `analysis_intent`: Explore and compare language patterns in Friends transcripts using tokenization, grouped counts, and discriminative text analysis
+- `analysis_type`: Modeling
+- `pattern_signature`: `load_inspect_reshape_join_tokenize_trend_model_evaluate_visualize`
+- `adaptation_hint`: Reuse for grouped text corpora that need tokenization, term comparison, and context-aware vocabulary analysis
+- `ker_status`: extracted
+
+Thought Process Map:
+
+- `T1 | Context | Frame the episode as exploratory analysis of Friends transcripts with limited advance knowledge of the data. | Transcript title and opening context`
+- `T2 | Inspect | Load the data, inspect table shape, and identify the main entities, measures, and comparison axes. | Initial data load and early counts or prints`
+- `T4 | Transform | Reshape fields, standardize column meanings, and join supporting tables to create analysis-ready records. | Join and reshaping operations in the Rmd`
+- `T5 | Compare | Tokenize text, remove noise terms, and compare vocabulary across groups or documents. | tidytext workflow in the episode`
+- `T6 | Compare | Move from descriptive patterns into statistical or predictive modeling once the feature space is ready. | Modeling functions and evaluation code`
+- `T7 | Visualize | Turn the cleaned summaries into interpretable visual comparisons and iterate toward the clearest view. | ggplot workflow`
+- `T8 | Reflect | Identify reusable workflow pieces that can transfer to future datasets with a similar shape or question. | End-state of the analysis pattern`
+
+Code Mapping Table:
+
+- `T1 | Data load and inspection | tt_load, count, glimpse | Establish source shape, units, and comparison candidates`
+- `T4 | Structuring and enrichment | spread, unnest, inner_join | Convert messy inputs into analysis-ready tables`
+- `T5 | Text comparison | unnest_tokens, anti_join, bind_log_odds | Identify terms that distinguish groups or documents`
+- `T6 | Modeling and evaluation | lm, predict | Test explanatory or predictive relationships after EDA`
+- `T7 | Visualization | ggplot, geom_col, geom_point, geom_line, facet_wrap | Communicate the core result visually`
+
+Data Transformation Flow:
+
+- `Raw | Imported source tables or files | Load source data into tibbles or lists | Raw episode objects | Establish the starting analysis surface`
+- `Raw -> Clean | Raw source tables | Rename, reshape, unnest, and join supporting data | Analysis-ready rows with consistent keys | Standardize the schema before comparison`
+- `Clean -> Analytical | Clean text corpus | Tokenize text, remove stop words, and count terms by group | Term-frequency comparison tables | Surface language differences and signatures`
+- `Analytical -> Visual | Summary or model outputs | Reorder factors and prepare plotting fields | Plot-ready table | Turn the analytical result into an interpretable chart`
+
+Reusable Patterns:
+
+- `inspect_source_schema | Inspect source tables, field meanings, and likely comparison axes | Raw dataset or dataset list | Initial analysis plan | Y`
+- `reshape_analysis_inputs | Convert wide or nested source fields into normalized long-form records | Raw tabular fields | Tidy analysis table | Y`
+- `join_context_tables | Enrich the main table with lookup or metadata tables | Primary data plus keys | Context-enriched analysis table | Y`
+- `compare_group_vocabulary | Tokenize text and compute grouped term distinctiveness | Text, grouping variable, document or entity ids | Ranked term comparison tables | Y`
+- `build_predictive_or_explanatory_model | Move from cleaned features to fitted models and evaluation outputs | Feature table and outcome field | Model object and diagnostics | Y`
+- `plot_comparative_story | Reorder entities and visualize the main comparison cleanly | Summary table or model output | Communication-ready plot | Y`
+
+Function Candidates:
+
+- `reshape_episode_inputs(data, ...)`
+- `join_episode_context(primary_data, lookup_data, by)`
+- `prepare_text_tokens(data, text_column)`
+- `compare_group_vocabulary(data, group_col, term_col, count_col = 'n')`
+- `build_predictive_pipeline(data, formula, ...)`
+- `evaluate_episode_model(model, test_data, outcome_col)`
+- `plot_comparative_story(data, x_col, y_col, group_col = NULL)`
+
+Episode Signature:
+
+- `analysis_intent`: Explore and compare language patterns in Friends transcripts using tokenization, grouped counts, and discriminative text analysis
+- `analysis_type`: Modeling
+- `primary_techniques`: schema inspection, grouped summaries, reshaping, table joins, tokenization, term comparison, modeling, time-aware comparison, visualization
+- `data_complexity_level`: high
+- `reusable_difficulty_score`: 5
+
+Adaptation Plan:
+
+- `1 | inspect_source_schema | Start by mapping entities, measures, and likely comparison axes before transforming anything`
+- `3 | reshape_analysis_inputs | Normalize wide, nested, or repeated fields into one analysis-ready row structure`
+- `4 | join_context_tables | Enrich the main analysis table with keys, metadata, or auxiliary measurements`
+- `5 | compare_group_vocabulary | Tokenize the new corpus and compare terms across groups or documents`
+- `6 | build_predictive_or_explanatory_model | Fit and evaluate a baseline model after the core feature engineering is stable`
+- `8 | plot_comparative_story | Choose the clearest visual comparison once the analytical table is ready`
+
+### `gdpr_violations`
+
+- `transcript_title`: Analyzing GDPR violations in R
+- `transcript_file`: `raw-data/inspiration/Analyzing GDPR violations in R.txt`
+- `code_file`: `data-screencasts/gdpr.Rmd`
+- `data_source`: TidyTuesday 2020-04-21 dataset
+- `analysis_intent`: Explore distributions, group differences, and notable patterns in GDPR violations through cleaning, summarization, and visualization
+- `analysis_type`: EDA
+- `pattern_signature`: `load_inspect_reshape_join_trend_compare_visualize`
+- `adaptation_hint`: Reuse for messy multi-table datasets that need reshaping, enrichment, and grouped summaries before plotting
+- `ker_status`: extracted
+
+Thought Process Map:
+
+- `T1 | Context | Frame the episode as exploratory analysis of GDPR violations with limited advance knowledge of the data. | Transcript title and opening context`
+- `T2 | Inspect | Load the data, inspect table shape, and identify the main entities, measures, and comparison axes. | Initial data load and early counts or prints`
+- `T4 | Transform | Reshape fields, standardize column meanings, and join supporting tables to create analysis-ready records. | Join and reshaping operations in the Rmd`
+- `T6 | Compare | Summarize group differences, rates, rankings, or trajectories to surface the main story in the data. | Grouped summaries and comparative plots`
+- `T7 | Visualize | Turn the cleaned summaries into interpretable visual comparisons and iterate toward the clearest view. | ggplot workflow`
+- `T8 | Reflect | Identify reusable workflow pieces that can transfer to future datasets with a similar shape or question. | End-state of the analysis pattern`
+
+Code Mapping Table:
+
+- `T1 | Data load and inspection | tt_load, count | Establish source shape, units, and comparison candidates`
+- `T4 | Structuring and enrichment | separate_rows, left_join | Convert messy inputs into analysis-ready tables`
+- `T6 | Group comparison | group_by, summarize, count, mutate | Compare categories, time periods, or entities`
+- `T7 | Visualization | ggplot, geom_col, geom_point | Communicate the core result visually`
+
+Data Transformation Flow:
+
+- `Raw | Imported source tables or files | Load source data into tibbles or lists | Raw episode objects | Establish the starting analysis surface`
+- `Raw -> Clean | Raw source tables | Rename, reshape, unnest, and join supporting data | Analysis-ready rows with consistent keys | Standardize the schema before comparison`
+- `Clean -> Analytical | Cleaned table | Group, summarize, rank, or compare entities | Summary tables or rate calculations | Surface the core analytical story`
+- `Analytical -> Visual | Summary or model outputs | Reorder factors and prepare plotting fields | Plot-ready table | Turn the analytical result into an interpretable chart`
+
+Reusable Patterns:
+
+- `inspect_source_schema | Inspect source tables, field meanings, and likely comparison axes | Raw dataset or dataset list | Initial analysis plan | Y`
+- `reshape_analysis_inputs | Convert wide or nested source fields into normalized long-form records | Raw tabular fields | Tidy analysis table | Y`
+- `join_context_tables | Enrich the main table with lookup or metadata tables | Primary data plus keys | Context-enriched analysis table | Y`
+- `plot_comparative_story | Reorder entities and visualize the main comparison cleanly | Summary table or model output | Communication-ready plot | Y`
+
+Function Candidates:
+
+- `reshape_episode_inputs(data, ...)`
+- `join_episode_context(primary_data, lookup_data, by)`
+- `plot_comparative_story(data, x_col, y_col, group_col = NULL)`
+
+Episode Signature:
+
+- `analysis_intent`: Explore distributions, group differences, and notable patterns in GDPR violations through cleaning, summarization, and visualization
+- `analysis_type`: EDA
+- `primary_techniques`: schema inspection, grouped summaries, reshaping, table joins, time-aware comparison, visualization
+- `data_complexity_level`: medium
+- `reusable_difficulty_score`: 3
+
+Adaptation Plan:
+
+- `1 | inspect_source_schema | Start by mapping entities, measures, and likely comparison axes before transforming anything`
+- `3 | reshape_analysis_inputs | Normalize wide, nested, or repeated fields into one analysis-ready row structure`
+- `4 | join_context_tables | Enrich the main analysis table with keys, metadata, or auxiliary measurements`
+- `8 | plot_comparative_story | Choose the clearest visual comparison once the analytical table is ready`
+
+### `global_health_spending`
+
+- `transcript_title`: Analyzing Global Health Spending in R
+- `transcript_file`: `raw-data/inspiration/Analyzing Global Health Spending in R.txt`
+- `code_file`: `data-screencasts/2026_04_21_global_health_spending.Rmd`
+- `data_source`: TidyTuesday 2026-04-21 dataset
+- `analysis_intent`: Explore distributions, group differences, and notable patterns in Global Health Spending through cleaning, summarization, and visualization
+- `analysis_type`: EDA
+- `pattern_signature`: `load_inspect_trend_compare`
+- `adaptation_hint`: Reuse for exploratory datasets that need schema inspection, grouped summaries, and visualization-first storytelling
+- `ker_status`: extracted
+
+Thought Process Map:
+
+- `T1 | Context | Frame the episode as exploratory analysis of Global Health Spending with limited advance knowledge of the data. | Transcript title and opening context`
+- `T2 | Inspect | Load the data, inspect table shape, and identify the main entities, measures, and comparison axes. | Initial data load and early counts or prints`
+- `T6 | Compare | Summarize group differences, rates, rankings, or trajectories to surface the main story in the data. | Grouped summaries and comparative plots`
+- `T7 | Visualize | Turn the cleaned summaries into interpretable visual comparisons and iterate toward the clearest view. | ggplot workflow`
+- `T8 | Reflect | Identify reusable workflow pieces that can transfer to future datasets with a similar shape or question. | End-state of the analysis pattern`
+
+Code Mapping Table:
+
+- `T1 | Data load and inspection | tt_load, glimpse | Establish source shape, units, and comparison candidates`
+- `T6 | Group comparison | episode-specific dplyr and ggplot verbs | Compare categories, time periods, or entities`
+- `T7 | Visualization | episode-specific dplyr and ggplot verbs | Communicate the core result visually`
+
+Data Transformation Flow:
+
+- `Raw | Imported source tables or files | Load source data into tibbles or lists | Raw episode objects | Establish the starting analysis surface`
+- `Raw -> Clean | Raw source tables | Filter, rename, and derive analysis columns | Cleaned table | Make the data comparable and plot-ready`
+- `Clean -> Analytical | Cleaned table | Group, summarize, rank, or compare entities | Summary tables or rate calculations | Surface the core analytical story`
+- `Analytical -> Visual | Summary or model outputs | Reorder factors and prepare plotting fields | Plot-ready table | Turn the analytical result into an interpretable chart`
+
+Reusable Patterns:
+
+- `inspect_source_schema | Inspect source tables, field meanings, and likely comparison axes | Raw dataset or dataset list | Initial analysis plan | Y`
+- `plot_comparative_story | Reorder entities and visualize the main comparison cleanly | Summary table or model output | Communication-ready plot | Y`
+
+Function Candidates:
+
+- `plot_comparative_story(data, x_col, y_col, group_col = NULL)`
+
+Episode Signature:
+
+- `analysis_intent`: Explore distributions, group differences, and notable patterns in Global Health Spending through cleaning, summarization, and visualization
+- `analysis_type`: EDA
+- `primary_techniques`: schema inspection, grouped summaries, time-aware comparison, visualization
+- `data_complexity_level`: low-medium
+- `reusable_difficulty_score`: 2
+
+Adaptation Plan:
+
+- `1 | inspect_source_schema | Start by mapping entities, measures, and likely comparison axes before transforming anything`
+- `8 | plot_comparative_story | Choose the clearest visual comparison once the analytical table is ready`
+
+### `hbcu_enrollment`
+
+- `transcript_title`: Analyzing HBCU enrollment in R
+- `transcript_file`: `raw-data/inspiration/Analyzing HBCU enrollment in R.txt`
+- `code_file`: `data-screencasts/2021_02_02_hbcu.Rmd`
+- `data_source`: TidyTuesday 2021-02-02 dataset
+- `analysis_intent`: Explore distributions, group differences, and notable patterns in HBCU enrollment through cleaning, summarization, and visualization
+- `analysis_type`: EDA
+- `pattern_signature`: `load_inspect_reshape_join_trend_compare_visualize`
+- `adaptation_hint`: Reuse for messy multi-table datasets that need reshaping, enrichment, and grouped summaries before plotting
+- `ker_status`: extracted
+
+Thought Process Map:
+
+- `T1 | Context | Frame the episode as exploratory analysis of HBCU enrollment with limited advance knowledge of the data. | Transcript title and opening context`
+- `T2 | Inspect | Load the data, inspect table shape, and identify the main entities, measures, and comparison axes. | Initial data load and early counts or prints`
+- `T4 | Transform | Reshape fields, standardize column meanings, and join supporting tables to create analysis-ready records. | Join and reshaping operations in the Rmd`
+- `T6 | Compare | Summarize group differences, rates, rankings, or trajectories to surface the main story in the data. | Grouped summaries and comparative plots`
+- `T7 | Visualize | Turn the cleaned summaries into interpretable visual comparisons and iterate toward the clearest view. | ggplot workflow`
+- `T8 | Reflect | Identify reusable workflow pieces that can transfer to future datasets with a similar shape or question. | End-state of the analysis pattern`
+
+Code Mapping Table:
+
+- `T1 | Data load and inspection | tt_load, read_excel | Establish source shape, units, and comparison candidates`
+- `T4 | Structuring and enrichment | gather, spread | Convert messy inputs into analysis-ready tables`
+- `T6 | Group comparison | group_by, mutate | Compare categories, time periods, or entities`
+- `T7 | Visualization | ggplot, geom_col, geom_line, facet_wrap | Communicate the core result visually`
+
+Data Transformation Flow:
+
+- `Raw | Imported source tables or files | Load source data into tibbles or lists | Raw episode objects | Establish the starting analysis surface`
+- `Raw -> Clean | Raw source tables | Rename, reshape, unnest, and join supporting data | Analysis-ready rows with consistent keys | Standardize the schema before comparison`
+- `Clean -> Analytical | Cleaned table | Group, summarize, rank, or compare entities | Summary tables or rate calculations | Surface the core analytical story`
+- `Analytical -> Visual | Summary or model outputs | Reorder factors and prepare plotting fields | Plot-ready table | Turn the analytical result into an interpretable chart`
+
+Reusable Patterns:
+
+- `inspect_source_schema | Inspect source tables, field meanings, and likely comparison axes | Raw dataset or dataset list | Initial analysis plan | Y`
+- `reshape_analysis_inputs | Convert wide or nested source fields into normalized long-form records | Raw tabular fields | Tidy analysis table | Y`
+- `join_context_tables | Enrich the main table with lookup or metadata tables | Primary data plus keys | Context-enriched analysis table | Y`
+- `plot_comparative_story | Reorder entities and visualize the main comparison cleanly | Summary table or model output | Communication-ready plot | Y`
+
+Function Candidates:
+
+- `reshape_episode_inputs(data, ...)`
+- `join_episode_context(primary_data, lookup_data, by)`
+- `plot_comparative_story(data, x_col, y_col, group_col = NULL)`
+
+Episode Signature:
+
+- `analysis_intent`: Explore distributions, group differences, and notable patterns in HBCU enrollment through cleaning, summarization, and visualization
+- `analysis_type`: EDA
+- `primary_techniques`: schema inspection, grouped summaries, reshaping, table joins, time-aware comparison, visualization
+- `data_complexity_level`: medium-high
+- `reusable_difficulty_score`: 4
+
+Adaptation Plan:
+
+- `1 | inspect_source_schema | Start by mapping entities, measures, and likely comparison axes before transforming anything`
+- `3 | reshape_analysis_inputs | Normalize wide, nested, or repeated fields into one analysis-ready row structure`
+- `4 | join_context_tables | Enrich the main analysis table with keys, metadata, or auxiliary measurements`
+- `8 | plot_comparative_story | Choose the clearest visual comparison once the analytical table is ready`
+
+### `ikea_furniture`
+
+- `transcript_title`: Analyzing IKEA furniture in R
+- `transcript_file`: `raw-data/inspiration/Analyzing IKEA furniture in R.txt`
+- `code_file`: `data-screencasts/2020_11_03_ikea.Rmd`
+- `data_source`: TidyTuesday 2020-11-03 dataset
+- `analysis_intent`: Explore, explain, and model patterns in IKEA furniture using engineered features and comparative summaries
+- `analysis_type`: Modeling
+- `pattern_signature`: `load_inspect_trend_model_evaluate_visualize`
+- `adaptation_hint`: Reuse for structured datasets where descriptive analysis leads into explanatory or predictive models
+- `ker_status`: extracted
+
+Thought Process Map:
+
+- `T1 | Context | Frame the episode as exploratory analysis of IKEA furniture with limited advance knowledge of the data. | Transcript title and opening context`
+- `T2 | Inspect | Load the data, inspect table shape, and identify the main entities, measures, and comparison axes. | Initial data load and early counts or prints`
+- `T6 | Compare | Move from descriptive patterns into statistical or predictive modeling once the feature space is ready. | Modeling functions and evaluation code`
+- `T7 | Visualize | Turn the cleaned summaries into interpretable visual comparisons and iterate toward the clearest view. | ggplot workflow`
+- `T8 | Reflect | Identify reusable workflow pieces that can transfer to future datasets with a similar shape or question. | End-state of the analysis pattern`
+
+Code Mapping Table:
+
+- `T1 | Data load and inspection | tt_load, count | Establish source shape, units, and comparison candidates`
+- `T6 | Modeling and evaluation | lm, predict | Test explanatory or predictive relationships after EDA`
+- `T7 | Visualization | ggplot, geom_col, geom_point | Communicate the core result visually`
+
+Data Transformation Flow:
+
+- `Raw | Imported source tables or files | Load source data into tibbles or lists | Raw episode objects | Establish the starting analysis surface`
+- `Raw -> Clean | Raw source tables | Filter, rename, and derive analysis columns | Cleaned table | Make the data comparable and plot-ready`
+- `Clean -> Analytical | Feature table | Engineer predictors and fit models | Model outputs, predictions, or coefficients | Quantify relationships beyond descriptive summaries`
+- `Analytical -> Visual | Summary or model outputs | Reorder factors and prepare plotting fields | Plot-ready table | Turn the analytical result into an interpretable chart`
+
+Reusable Patterns:
+
+- `inspect_source_schema | Inspect source tables, field meanings, and likely comparison axes | Raw dataset or dataset list | Initial analysis plan | Y`
+- `build_predictive_or_explanatory_model | Move from cleaned features to fitted models and evaluation outputs | Feature table and outcome field | Model object and diagnostics | Y`
+- `plot_comparative_story | Reorder entities and visualize the main comparison cleanly | Summary table or model output | Communication-ready plot | Y`
+
+Function Candidates:
+
+- `build_predictive_pipeline(data, formula, ...)`
+- `evaluate_episode_model(model, test_data, outcome_col)`
+- `plot_comparative_story(data, x_col, y_col, group_col = NULL)`
+
+Episode Signature:
+
+- `analysis_intent`: Explore, explain, and model patterns in IKEA furniture using engineered features and comparative summaries
+- `analysis_type`: Modeling
+- `primary_techniques`: schema inspection, grouped summaries, modeling, time-aware comparison, visualization
+- `data_complexity_level`: low-medium
+- `reusable_difficulty_score`: 2
+
+Adaptation Plan:
+
+- `1 | inspect_source_schema | Start by mapping entities, measures, and likely comparison axes before transforming anything`
+- `6 | build_predictive_or_explanatory_model | Fit and evaluate a baseline model after the core feature engineering is stable`
+- `8 | plot_comparative_story | Choose the clearest visual comparison once the analytical table is ready`
+
+### `maryland_bridges`
+
+- `transcript_title`: Analyzing Maryland bridges with R
+- `transcript_file`: `raw-data/inspiration/Analyzing Maryland bridges with R.txt`
+- `code_file`: `data-screencasts/baltimore_bridges.Rmd`
+- `data_source`: Local source files read in episode: https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2018-11-27/baltimore_bridges.csv
+- `analysis_intent`: Explore, explain, and model patterns in Maryland bridges using engineered features and comparative summaries
+- `analysis_type`: Modeling
+- `pattern_signature`: `load_inspect_model_evaluate_visualize`
+- `adaptation_hint`: Reuse for structured datasets where descriptive analysis leads into explanatory or predictive models
+- `ker_status`: extracted
+
+Thought Process Map:
+
+- `T1 | Context | Frame the episode as exploratory analysis of Maryland bridges with limited advance knowledge of the data. | Transcript title and opening context`
+- `T2 | Inspect | Load the data, inspect table shape, and identify the main entities, measures, and comparison axes. | Initial data load and early counts or prints`
+- `T6 | Compare | Move from descriptive patterns into statistical or predictive modeling once the feature space is ready. | Modeling functions and evaluation code`
+- `T7 | Visualize | Turn the cleaned summaries into interpretable visual comparisons and iterate toward the clearest view. | ggplot workflow`
+- `T8 | Reflect | Identify reusable workflow pieces that can transfer to future datasets with a similar shape or question. | End-state of the analysis pattern`
+
+Code Mapping Table:
+
+- `T1 | Data load and inspection | read_csv, count | Establish source shape, units, and comparison candidates`
+- `T6 | Modeling and evaluation | lm, glm, fit, predict | Test explanatory or predictive relationships after EDA`
+- `T7 | Visualization | ggplot, geom_col, geom_point, geom_line, facet_wrap | Communicate the core result visually`
+
+Data Transformation Flow:
+
+- `Raw | Imported source tables or files | Load source data into tibbles or lists | Raw episode objects | Establish the starting analysis surface`
+- `Raw -> Clean | Raw source tables | Filter, rename, and derive analysis columns | Cleaned table | Make the data comparable and plot-ready`
+- `Clean -> Analytical | Feature table | Engineer predictors and fit models | Model outputs, predictions, or coefficients | Quantify relationships beyond descriptive summaries`
+- `Analytical -> Visual | Summary or model outputs | Reorder factors and prepare plotting fields | Plot-ready table | Turn the analytical result into an interpretable chart`
+
+Reusable Patterns:
+
+- `inspect_source_schema | Inspect source tables, field meanings, and likely comparison axes | Raw dataset or dataset list | Initial analysis plan | Y`
+- `build_predictive_or_explanatory_model | Move from cleaned features to fitted models and evaluation outputs | Feature table and outcome field | Model object and diagnostics | Y`
+- `plot_comparative_story | Reorder entities and visualize the main comparison cleanly | Summary table or model output | Communication-ready plot | Y`
+
+Function Candidates:
+
+- `build_predictive_pipeline(data, formula, ...)`
+- `evaluate_episode_model(model, test_data, outcome_col)`
+- `plot_comparative_story(data, x_col, y_col, group_col = NULL)`
+
+Episode Signature:
+
+- `analysis_intent`: Explore, explain, and model patterns in Maryland bridges using engineered features and comparative summaries
+- `analysis_type`: Modeling
+- `primary_techniques`: schema inspection, grouped summaries, modeling, visualization
+- `data_complexity_level`: low-medium
+- `reusable_difficulty_score`: 2
+
+Adaptation Plan:
+
+- `1 | inspect_source_schema | Start by mapping entities, measures, and likely comparison axes before transforming anything`
+- `6 | build_predictive_or_explanatory_model | Fit and evaluate a baseline model after the core feature engineering is stable`
+- `8 | plot_comparative_story | Choose the clearest visual comparison once the analytical table is ready`
+
+### `medium_articles`
+
+- `transcript_title`: Analyzing Medium articles with R
+- `transcript_file`: `raw-data/inspiration/Analyzing Medium articles with R.txt`
+- `code_file`: `data-screencasts/medium-datasci.Rmd`
+- `data_source`: Local source files read in episode: https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2018-12-04/medium_datasci.csv
+- `analysis_intent`: Predict or estimate outcomes in Medium articles using cleaned features, exploratory analysis, and model evaluation
+- `analysis_type`: Predictive
+- `pattern_signature`: `load_inspect_reshape_join_tokenize_trend_model_evaluate_visualize`
+- `adaptation_hint`: Reuse for tabular datasets with a clear outcome column, engineered features, and model evaluation needs
+- `ker_status`: extracted
+
+Thought Process Map:
+
+- `T1 | Context | Frame the episode as exploratory analysis of Medium articles with limited advance knowledge of the data. | Transcript title and opening context`
+- `T2 | Inspect | Load the data, inspect table shape, and identify the main entities, measures, and comparison axes. | Initial data load and early counts or prints`
+- `T4 | Transform | Reshape fields, standardize column meanings, and join supporting tables to create analysis-ready records. | Join and reshaping operations in the Rmd`
+- `T5 | Compare | Tokenize text, remove noise terms, and compare vocabulary across groups or documents. | tidytext workflow in the episode`
+- `T6 | Compare | Move from descriptive patterns into statistical or predictive modeling once the feature space is ready. | Modeling functions and evaluation code`
+- `T7 | Visualize | Turn the cleaned summaries into interpretable visual comparisons and iterate toward the clearest view. | ggplot workflow`
+- `T8 | Reflect | Identify reusable workflow pieces that can transfer to future datasets with a similar shape or question. | End-state of the analysis pattern`
+
+Code Mapping Table:
+
+- `T1 | Data load and inspection | read_csv, count | Establish source shape, units, and comparison candidates`
+- `T4 | Structuring and enrichment | gather, unnest | Convert messy inputs into analysis-ready tables`
+- `T5 | Text comparison | unnest_tokens, anti_join | Identify terms that distinguish groups or documents`
+- `T6 | Modeling and evaluation | lm, glm, fit, predict | Test explanatory or predictive relationships after EDA`
+- `T7 | Visualization | ggplot, geom_col, geom_line | Communicate the core result visually`
+
+Data Transformation Flow:
+
+- `Raw | Imported source tables or files | Load source data into tibbles or lists | Raw episode objects | Establish the starting analysis surface`
+- `Raw -> Clean | Raw source tables | Rename, reshape, unnest, and join supporting data | Analysis-ready rows with consistent keys | Standardize the schema before comparison`
+- `Clean -> Analytical | Clean text corpus | Tokenize text, remove stop words, and count terms by group | Term-frequency comparison tables | Surface language differences and signatures`
+- `Analytical -> Visual | Summary or model outputs | Reorder factors and prepare plotting fields | Plot-ready table | Turn the analytical result into an interpretable chart`
+
+Reusable Patterns:
+
+- `inspect_source_schema | Inspect source tables, field meanings, and likely comparison axes | Raw dataset or dataset list | Initial analysis plan | Y`
+- `reshape_analysis_inputs | Convert wide or nested source fields into normalized long-form records | Raw tabular fields | Tidy analysis table | Y`
+- `join_context_tables | Enrich the main table with lookup or metadata tables | Primary data plus keys | Context-enriched analysis table | Y`
+- `compare_group_vocabulary | Tokenize text and compute grouped term distinctiveness | Text, grouping variable, document or entity ids | Ranked term comparison tables | Y`
+- `build_predictive_or_explanatory_model | Move from cleaned features to fitted models and evaluation outputs | Feature table and outcome field | Model object and diagnostics | Y`
+- `plot_comparative_story | Reorder entities and visualize the main comparison cleanly | Summary table or model output | Communication-ready plot | Y`
+
+Function Candidates:
+
+- `reshape_episode_inputs(data, ...)`
+- `join_episode_context(primary_data, lookup_data, by)`
+- `prepare_text_tokens(data, text_column)`
+- `compare_group_vocabulary(data, group_col, term_col, count_col = 'n')`
+- `build_predictive_pipeline(data, formula, ...)`
+- `evaluate_episode_model(model, test_data, outcome_col)`
+- `plot_comparative_story(data, x_col, y_col, group_col = NULL)`
+
+Episode Signature:
+
+- `analysis_intent`: Predict or estimate outcomes in Medium articles using cleaned features, exploratory analysis, and model evaluation
+- `analysis_type`: Predictive
+- `primary_techniques`: schema inspection, grouped summaries, reshaping, table joins, tokenization, term comparison, modeling, time-aware comparison, visualization
+- `data_complexity_level`: medium-high
+- `reusable_difficulty_score`: 4
+
+Adaptation Plan:
+
+- `1 | inspect_source_schema | Start by mapping entities, measures, and likely comparison axes before transforming anything`
+- `3 | reshape_analysis_inputs | Normalize wide, nested, or repeated fields into one analysis-ready row structure`
+- `4 | join_context_tables | Enrich the main analysis table with keys, metadata, or auxiliary measurements`
+- `5 | compare_group_vocabulary | Tokenize the new corpus and compare terms across groups or documents`
+- `6 | build_predictive_or_explanatory_model | Fit and evaluate a baseline model after the core feature engineering is stable`
+- `8 | plot_comparative_story | Choose the clearest visual comparison once the analytical table is ready`
+
+### `ncaa_women_s_basketball`
+
+- `transcript_title`: Analyzing NCAA Women's Basketball
+- `transcript_file`: `raw-data/inspiration/Analyzing NCAA Women's Basketball.txt`
+- `code_file`: `data-screencasts/2020_10_06_ncaa_womens_basketball.Rmd`
+- `data_source`: TidyTuesday 2020-10-06 dataset
+- `analysis_intent`: Explore distributions, group differences, and notable patterns in NCAA Women's Basketball through cleaning, summarization, and visualization
+- `analysis_type`: EDA
+- `pattern_signature`: `load_inspect_trend_compare_visualize`
+- `adaptation_hint`: Reuse for exploratory datasets that need schema inspection, grouped summaries, and visualization-first storytelling
+- `ker_status`: extracted
+
+Thought Process Map:
+
+- `T1 | Context | Frame the episode as exploratory analysis of NCAA Women's Basketball with limited advance knowledge of the data. | Transcript title and opening context`
+- `T2 | Inspect | Load the data, inspect table shape, and identify the main entities, measures, and comparison axes. | Initial data load and early counts or prints`
+- `T6 | Compare | Summarize group differences, rates, rankings, or trajectories to surface the main story in the data. | Grouped summaries and comparative plots`
+- `T7 | Visualize | Turn the cleaned summaries into interpretable visual comparisons and iterate toward the clearest view. | ggplot workflow`
+- `T8 | Reflect | Identify reusable workflow pieces that can transfer to future datasets with a similar shape or question. | End-state of the analysis pattern`
+
+Code Mapping Table:
+
+- `T1 | Data load and inspection | tt_load, count | Establish source shape, units, and comparison candidates`
+- `T6 | Group comparison | group_by, summarize, count, mutate | Compare categories, time periods, or entities`
+- `T7 | Visualization | ggplot, geom_col, geom_point, geom_line, facet_wrap | Communicate the core result visually`
+
+Data Transformation Flow:
+
+- `Raw | Imported source tables or files | Load source data into tibbles or lists | Raw episode objects | Establish the starting analysis surface`
+- `Raw -> Clean | Raw source tables | Filter, rename, and derive analysis columns | Cleaned table | Make the data comparable and plot-ready`
+- `Clean -> Analytical | Cleaned table | Group, summarize, rank, or compare entities | Summary tables or rate calculations | Surface the core analytical story`
+- `Analytical -> Visual | Summary or model outputs | Reorder factors and prepare plotting fields | Plot-ready table | Turn the analytical result into an interpretable chart`
+
+Reusable Patterns:
+
+- `inspect_source_schema | Inspect source tables, field meanings, and likely comparison axes | Raw dataset or dataset list | Initial analysis plan | Y`
+- `plot_comparative_story | Reorder entities and visualize the main comparison cleanly | Summary table or model output | Communication-ready plot | Y`
+
+Function Candidates:
+
+- `plot_comparative_story(data, x_col, y_col, group_col = NULL)`
+
+Episode Signature:
+
+- `analysis_intent`: Explore distributions, group differences, and notable patterns in NCAA Women's Basketball through cleaning, summarization, and visualization
+- `analysis_type`: EDA
+- `primary_techniques`: schema inspection, grouped summaries, time-aware comparison, visualization
+- `data_complexity_level`: low-medium
+- `reusable_difficulty_score`: 2
+
+Adaptation Plan:
+
+- `1 | inspect_source_schema | Start by mapping entities, measures, and likely comparison axes before transforming anything`
+- `8 | plot_comparative_story | Choose the clearest visual comparison once the analytical table is ready`
+
+### `nyc_restaurant_inspections`
+
+- `transcript_title`: Analyzing NYC restaurant inspections with R
+- `transcript_file`: `raw-data/inspiration/Analyzing NYC restaurant inspections with R.txt`
+- `code_file`: `data-screencasts/nyc-restaurants.Rmd`
+- `data_source`: Local source files read in episode: https://data.cityofnewyork.us/api/views/43nn-pn8j/rows.csv
+- `analysis_intent`: Explore distributions, group differences, and notable patterns in NYC restaurant inspections through cleaning, summarization, and visualization
+- `analysis_type`: EDA
+- `pattern_signature`: `load_inspect_reshape_join_trend_compare_visualize`
+- `adaptation_hint`: Reuse for messy multi-table datasets that need reshaping, enrichment, and grouped summaries before plotting
+- `ker_status`: extracted
+
+Thought Process Map:
+
+- `T1 | Context | Frame the episode as exploratory analysis of NYC restaurant inspections with limited advance knowledge of the data. | Transcript title and opening context`
+- `T2 | Inspect | Load the data, inspect table shape, and identify the main entities, measures, and comparison axes. | Initial data load and early counts or prints`
+- `T4 | Transform | Reshape fields, standardize column meanings, and join supporting tables to create analysis-ready records. | Join and reshaping operations in the Rmd`
+- `T6 | Compare | Summarize group differences, rates, rankings, or trajectories to surface the main story in the data. | Grouped summaries and comparative plots`
+- `T7 | Visualize | Turn the cleaned summaries into interpretable visual comparisons and iterate toward the clearest view. | ggplot workflow`
+- `T8 | Reflect | Identify reusable workflow pieces that can transfer to future datasets with a similar shape or question. | End-state of the analysis pattern`
+
+Code Mapping Table:
+
+- `T1 | Data load and inspection | read_csv, count | Establish source shape, units, and comparison candidates`
+- `T4 | Structuring and enrichment | unnest | Convert messy inputs into analysis-ready tables`
+- `T6 | Group comparison | group_by, summarize, count, mutate | Compare categories, time periods, or entities`
+- `T7 | Visualization | ggplot, geom_col, geom_point | Communicate the core result visually`
+
+Data Transformation Flow:
+
+- `Raw | Imported source tables or files | Load source data into tibbles or lists | Raw episode objects | Establish the starting analysis surface`
+- `Raw -> Clean | Raw source tables | Rename, reshape, unnest, and join supporting data | Analysis-ready rows with consistent keys | Standardize the schema before comparison`
+- `Clean -> Analytical | Cleaned table | Group, summarize, rank, or compare entities | Summary tables or rate calculations | Surface the core analytical story`
+- `Analytical -> Visual | Summary or model outputs | Reorder factors and prepare plotting fields | Plot-ready table | Turn the analytical result into an interpretable chart`
+
+Reusable Patterns:
+
+- `inspect_source_schema | Inspect source tables, field meanings, and likely comparison axes | Raw dataset or dataset list | Initial analysis plan | Y`
+- `reshape_analysis_inputs | Convert wide or nested source fields into normalized long-form records | Raw tabular fields | Tidy analysis table | Y`
+- `join_context_tables | Enrich the main table with lookup or metadata tables | Primary data plus keys | Context-enriched analysis table | Y`
+- `plot_comparative_story | Reorder entities and visualize the main comparison cleanly | Summary table or model output | Communication-ready plot | Y`
+
+Function Candidates:
+
+- `reshape_episode_inputs(data, ...)`
+- `join_episode_context(primary_data, lookup_data, by)`
+- `plot_comparative_story(data, x_col, y_col, group_col = NULL)`
+
+Episode Signature:
+
+- `analysis_intent`: Explore distributions, group differences, and notable patterns in NYC restaurant inspections through cleaning, summarization, and visualization
+- `analysis_type`: EDA
+- `primary_techniques`: schema inspection, grouped summaries, reshaping, table joins, time-aware comparison, visualization
+- `data_complexity_level`: medium
+- `reusable_difficulty_score`: 3
+
+Adaptation Plan:
+
+- `1 | inspect_source_schema | Start by mapping entities, measures, and likely comparison axes before transforming anything`
+- `3 | reshape_analysis_inputs | Normalize wide, nested, or repeated fields into one analysis-ready row structure`
+- `4 | join_context_tables | Enrich the main analysis table with keys, metadata, or auxiliary measurements`
+- `8 | plot_comparative_story | Choose the clearest visual comparison once the analytical table is ready`
+
+### `netflix_titles`
+
+- `transcript_title`: Analyzing Netflix titles in R
+- `transcript_file`: `raw-data/inspiration/Analyzing Netflix titles in R.txt`
+- `code_file`: `data-screencasts/2021_04_20_netflix_titles.Rmd`
+- `data_source`: TidyTuesday 2021-04-20 dataset
+- `analysis_intent`: Predict or estimate outcomes in Netflix titles using cleaned features, exploratory analysis, and model evaluation
+- `analysis_type`: Predictive
+- `pattern_signature`: `load_inspect_reshape_join_tokenize_trend_model_evaluate_visualize`
+- `adaptation_hint`: Reuse for tabular datasets with a clear outcome column, engineered features, and model evaluation needs
+- `ker_status`: extracted
+
+Thought Process Map:
+
+- `T1 | Context | Frame the episode as exploratory analysis of Netflix titles with limited advance knowledge of the data. | Transcript title and opening context`
+- `T2 | Inspect | Load the data, inspect table shape, and identify the main entities, measures, and comparison axes. | Initial data load and early counts or prints`
+- `T4 | Transform | Reshape fields, standardize column meanings, and join supporting tables to create analysis-ready records. | Join and reshaping operations in the Rmd`
+- `T5 | Compare | Tokenize text, remove noise terms, and compare vocabulary across groups or documents. | tidytext workflow in the episode`
+- `T6 | Compare | Move from descriptive patterns into statistical or predictive modeling once the feature space is ready. | Modeling functions and evaluation code`
+- `T7 | Visualize | Turn the cleaned summaries into interpretable visual comparisons and iterate toward the clearest view. | ggplot workflow`
+- `T8 | Reflect | Identify reusable workflow pieces that can transfer to future datasets with a similar shape or question. | End-state of the analysis pattern`
+
+Code Mapping Table:
+
+- `T1 | Data load and inspection | tt_load, count | Establish source shape, units, and comparison candidates`
+- `T4 | Structuring and enrichment | gather, spread, separate_rows, unnest | Convert messy inputs into analysis-ready tables`
+- `T5 | Text comparison | unnest_tokens, anti_join, bind_log_odds | Identify terms that distinguish groups or documents`
+- `T6 | Modeling and evaluation | lm, glm, fit | Test explanatory or predictive relationships after EDA`
+- `T7 | Visualization | ggplot, geom_col, geom_point, geom_line, facet_wrap | Communicate the core result visually`
+
+Data Transformation Flow:
+
+- `Raw | Imported source tables or files | Load source data into tibbles or lists | Raw episode objects | Establish the starting analysis surface`
+- `Raw -> Clean | Raw source tables | Rename, reshape, unnest, and join supporting data | Analysis-ready rows with consistent keys | Standardize the schema before comparison`
+- `Clean -> Analytical | Clean text corpus | Tokenize text, remove stop words, and count terms by group | Term-frequency comparison tables | Surface language differences and signatures`
+- `Analytical -> Visual | Summary or model outputs | Reorder factors and prepare plotting fields | Plot-ready table | Turn the analytical result into an interpretable chart`
+
+Reusable Patterns:
+
+- `inspect_source_schema | Inspect source tables, field meanings, and likely comparison axes | Raw dataset or dataset list | Initial analysis plan | Y`
+- `reshape_analysis_inputs | Convert wide or nested source fields into normalized long-form records | Raw tabular fields | Tidy analysis table | Y`
+- `join_context_tables | Enrich the main table with lookup or metadata tables | Primary data plus keys | Context-enriched analysis table | Y`
+- `compare_group_vocabulary | Tokenize text and compute grouped term distinctiveness | Text, grouping variable, document or entity ids | Ranked term comparison tables | Y`
+- `build_predictive_or_explanatory_model | Move from cleaned features to fitted models and evaluation outputs | Feature table and outcome field | Model object and diagnostics | Y`
+- `plot_comparative_story | Reorder entities and visualize the main comparison cleanly | Summary table or model output | Communication-ready plot | Y`
+
+Function Candidates:
+
+- `reshape_episode_inputs(data, ...)`
+- `join_episode_context(primary_data, lookup_data, by)`
+- `prepare_text_tokens(data, text_column)`
+- `compare_group_vocabulary(data, group_col, term_col, count_col = 'n')`
+- `build_predictive_pipeline(data, formula, ...)`
+- `evaluate_episode_model(model, test_data, outcome_col)`
+- `plot_comparative_story(data, x_col, y_col, group_col = NULL)`
+
+Episode Signature:
+
+- `analysis_intent`: Predict or estimate outcomes in Netflix titles using cleaned features, exploratory analysis, and model evaluation
+- `analysis_type`: Predictive
+- `primary_techniques`: schema inspection, grouped summaries, reshaping, table joins, tokenization, term comparison, modeling, time-aware comparison, visualization
+- `data_complexity_level`: medium-high
+- `reusable_difficulty_score`: 4
+
+Adaptation Plan:
+
+- `1 | inspect_source_schema | Start by mapping entities, measures, and likely comparison axes before transforming anything`
+- `3 | reshape_analysis_inputs | Normalize wide, nested, or repeated fields into one analysis-ready row structure`
+- `4 | join_context_tables | Enrich the main analysis table with keys, metadata, or auxiliary measurements`
+- `5 | compare_group_vocabulary | Tokenize the new corpus and compare terms across groups or documents`
+- `6 | build_predictive_or_explanatory_model | Fit and evaluate a baseline model after the core feature engineering is stable`
+- `8 | plot_comparative_story | Choose the clearest visual comparison once the analytical table is ready`
+
+### `ninja_warrior`
+
+- `transcript_title`: Analyzing Ninja Warrior in R
+- `transcript_file`: `raw-data/inspiration/Analyzing Ninja Warrior in R.txt`
+- `code_file`: `data-screencasts/2020_12_15_ninja_warrior.Rmd`
+- `data_source`: TidyTuesday 2020-12-15 dataset
+- `analysis_intent`: Explore and compare language patterns in Ninja Warrior using tokenization, grouped counts, and discriminative text analysis
+- `analysis_type`: EDA
+- `pattern_signature`: `load_inspect_tokenize_trend_compare_visualize`
+- `adaptation_hint`: Reuse for grouped text corpora that need tokenization, term comparison, and context-aware vocabulary analysis
+- `ker_status`: extracted
+
+Thought Process Map:
+
+- `T1 | Context | Frame the episode as exploratory analysis of Ninja Warrior with limited advance knowledge of the data. | Transcript title and opening context`
+- `T2 | Inspect | Load the data, inspect table shape, and identify the main entities, measures, and comparison axes. | Initial data load and early counts or prints`
+- `T5 | Compare | Tokenize text, remove noise terms, and compare vocabulary across groups or documents. | tidytext workflow in the episode`
+- `T6 | Compare | Summarize group differences, rates, rankings, or trajectories to surface the main story in the data. | Grouped summaries and comparative plots`
+- `T7 | Visualize | Turn the cleaned summaries into interpretable visual comparisons and iterate toward the clearest view. | ggplot workflow`
+- `T8 | Reflect | Identify reusable workflow pieces that can transfer to future datasets with a similar shape or question. | End-state of the analysis pattern`
+
+Code Mapping Table:
+
+- `T1 | Data load and inspection | tt_load, count, glimpse | Establish source shape, units, and comparison candidates`
+- `T5 | Text comparison | bind_log_odds | Identify terms that distinguish groups or documents`
+- `T6 | Group comparison | group_by, summarize, count, mutate | Compare categories, time periods, or entities`
+- `T7 | Visualization | ggplot, geom_col, geom_point, facet_wrap | Communicate the core result visually`
+
+Data Transformation Flow:
+
+- `Raw | Imported source tables or files | Load source data into tibbles or lists | Raw episode objects | Establish the starting analysis surface`
+- `Raw -> Clean | Raw source tables | Filter, rename, and derive analysis columns | Cleaned table | Make the data comparable and plot-ready`
+- `Clean -> Analytical | Clean text corpus | Tokenize text, remove stop words, and count terms by group | Term-frequency comparison tables | Surface language differences and signatures`
+- `Analytical -> Visual | Summary or model outputs | Reorder factors and prepare plotting fields | Plot-ready table | Turn the analytical result into an interpretable chart`
+
+Reusable Patterns:
+
+- `inspect_source_schema | Inspect source tables, field meanings, and likely comparison axes | Raw dataset or dataset list | Initial analysis plan | Y`
+- `compare_group_vocabulary | Tokenize text and compute grouped term distinctiveness | Text, grouping variable, document or entity ids | Ranked term comparison tables | Y`
+- `plot_comparative_story | Reorder entities and visualize the main comparison cleanly | Summary table or model output | Communication-ready plot | Y`
+
+Function Candidates:
+
+- `prepare_text_tokens(data, text_column)`
+- `compare_group_vocabulary(data, group_col, term_col, count_col = 'n')`
+- `plot_comparative_story(data, x_col, y_col, group_col = NULL)`
+
+Episode Signature:
+
+- `analysis_intent`: Explore and compare language patterns in Ninja Warrior using tokenization, grouped counts, and discriminative text analysis
+- `analysis_type`: EDA
+- `primary_techniques`: schema inspection, grouped summaries, tokenization, term comparison, time-aware comparison, visualization
+- `data_complexity_level`: low-medium
+- `reusable_difficulty_score`: 2
+
+Adaptation Plan:
+
+- `1 | inspect_source_schema | Start by mapping entities, measures, and likely comparison axes before transforming anything`
+- `5 | compare_group_vocabulary | Tokenize the new corpus and compare terms across groups or documents`
+- `8 | plot_comparative_story | Choose the clearest visual comparison once the analytical table is ready`
+
+### `nobel_prize_winners`
+
+- `transcript_title`: Analyzing Nobel Prize winners in R
+- `transcript_file`: `raw-data/inspiration/Analyzing Nobel Prize winners in R.txt`
+- `code_file`: `data-screencasts/nobel-prize.Rmd`
+- `data_source`: TidyTuesday 2019-05-14 source files
+- `analysis_intent`: Explore distributions, group differences, and notable patterns in Nobel Prize winners through cleaning, summarization, and visualization
+- `analysis_type`: EDA
+- `pattern_signature`: `load_inspect_join_trend_compare_visualize`
+- `adaptation_hint`: Reuse for exploratory datasets that need schema inspection, grouped summaries, and visualization-first storytelling
+- `ker_status`: extracted
+
+Thought Process Map:
+
+- `T1 | Context | Frame the episode as exploratory analysis of Nobel Prize winners with limited advance knowledge of the data. | Transcript title and opening context`
+- `T2 | Inspect | Load the data, inspect table shape, and identify the main entities, measures, and comparison axes. | Initial data load and early counts or prints`
+- `T4 | Transform | Reshape fields, standardize column meanings, and join supporting tables to create analysis-ready records. | Join and reshaping operations in the Rmd`
+- `T6 | Compare | Summarize group differences, rates, rankings, or trajectories to surface the main story in the data. | Grouped summaries and comparative plots`
+- `T7 | Visualize | Turn the cleaned summaries into interpretable visual comparisons and iterate toward the clearest view. | ggplot workflow`
+- `T8 | Reflect | Identify reusable workflow pieces that can transfer to future datasets with a similar shape or question. | End-state of the analysis pattern`
+
+Code Mapping Table:
+
+- `T1 | Data load and inspection | read_csv, count | Establish source shape, units, and comparison candidates`
+- `T4 | Structuring and enrichment | inner_join | Convert messy inputs into analysis-ready tables`
+- `T6 | Group comparison | group_by, summarize, count, mutate | Compare categories, time periods, or entities`
+- `T7 | Visualization | ggplot, geom_col, geom_line, facet_wrap | Communicate the core result visually`
+
+Data Transformation Flow:
+
+- `Raw | Imported source tables or files | Load source data into tibbles or lists | Raw episode objects | Establish the starting analysis surface`
+- `Raw -> Clean | Raw source tables | Rename, reshape, unnest, and join supporting data | Analysis-ready rows with consistent keys | Standardize the schema before comparison`
+- `Clean -> Analytical | Cleaned table | Group, summarize, rank, or compare entities | Summary tables or rate calculations | Surface the core analytical story`
+- `Analytical -> Visual | Summary or model outputs | Reorder factors and prepare plotting fields | Plot-ready table | Turn the analytical result into an interpretable chart`
+
+Reusable Patterns:
+
+- `inspect_source_schema | Inspect source tables, field meanings, and likely comparison axes | Raw dataset or dataset list | Initial analysis plan | Y`
+- `join_context_tables | Enrich the main table with lookup or metadata tables | Primary data plus keys | Context-enriched analysis table | Y`
+- `plot_comparative_story | Reorder entities and visualize the main comparison cleanly | Summary table or model output | Communication-ready plot | Y`
+
+Function Candidates:
+
+- `reshape_episode_inputs(data, ...)`
+- `join_episode_context(primary_data, lookup_data, by)`
+- `plot_comparative_story(data, x_col, y_col, group_col = NULL)`
+
+Episode Signature:
+
+- `analysis_intent`: Explore distributions, group differences, and notable patterns in Nobel Prize winners through cleaning, summarization, and visualization
+- `analysis_type`: EDA
+- `primary_techniques`: schema inspection, grouped summaries, table joins, time-aware comparison, visualization
+- `data_complexity_level`: low-medium
+- `reusable_difficulty_score`: 2
+
+Adaptation Plan:
+
+- `1 | inspect_source_schema | Start by mapping entities, measures, and likely comparison axes before transforming anything`
+- `4 | join_context_tables | Enrich the main analysis table with keys, metadata, or auxiliary measurements`
+- `8 | plot_comparative_story | Choose the clearest visual comparison once the analytical table is ready`
+
+### `simpsons_guest_stars_dialogue`
+
+- `transcript_title`: Analyzing Simpsons guest stars and dialogue in R
+- `transcript_file`: `raw-data/inspiration/Analyzing Simpsons guest stars and dialogue in R.txt`
+- `code_file`: `data-screencasts/simpsons-guests.Rmd`
+- `data_source`: TidyTuesday 2019-08-27 source files
+- `analysis_intent`: Explore and compare language patterns in Simpsons guest stars and dialogue using tokenization, grouped counts, and discriminative text analysis
+- `analysis_type`: EDA
+- `pattern_signature`: `load_inspect_reshape_join_tokenize_compare_visualize`
+- `adaptation_hint`: Reuse for grouped text corpora that need tokenization, term comparison, and context-aware vocabulary analysis
+- `ker_status`: extracted
+
+Thought Process Map:
+
+- `T1 | Context | Frame the episode as exploratory analysis of Simpsons guest stars and dialogue with limited advance knowledge of the data. | Transcript title and opening context`
+- `T2 | Inspect | Load the data, inspect table shape, and identify the main entities, measures, and comparison axes. | Initial data load and early counts or prints`
+- `T4 | Transform | Reshape fields, standardize column meanings, and join supporting tables to create analysis-ready records. | Join and reshaping operations in the Rmd`
+- `T5 | Compare | Tokenize text, remove noise terms, and compare vocabulary across groups or documents. | tidytext workflow in the episode`
+- `T6 | Compare | Summarize group differences, rates, rankings, or trajectories to surface the main story in the data. | Grouped summaries and comparative plots`
+- `T7 | Visualize | Turn the cleaned summaries into interpretable visual comparisons and iterate toward the clearest view. | ggplot workflow`
+- `T8 | Reflect | Identify reusable workflow pieces that can transfer to future datasets with a similar shape or question. | End-state of the analysis pattern`
+
+Code Mapping Table:
+
+- `T1 | Data load and inspection | read_csv, count | Establish source shape, units, and comparison candidates`
+- `T4 | Structuring and enrichment | separate_rows, unnest, inner_join | Convert messy inputs into analysis-ready tables`
+- `T5 | Text comparison | unnest_tokens, anti_join, bind_tf_idf | Identify terms that distinguish groups or documents`
+- `T6 | Group comparison | group_by, summarize, count, mutate | Compare categories, time periods, or entities`
+- `T7 | Visualization | ggplot, geom_col, facet_wrap | Communicate the core result visually`
+
+Data Transformation Flow:
+
+- `Raw | Imported source tables or files | Load source data into tibbles or lists | Raw episode objects | Establish the starting analysis surface`
+- `Raw -> Clean | Raw source tables | Rename, reshape, unnest, and join supporting data | Analysis-ready rows with consistent keys | Standardize the schema before comparison`
+- `Clean -> Analytical | Clean text corpus | Tokenize text, remove stop words, and count terms by group | Term-frequency comparison tables | Surface language differences and signatures`
+- `Analytical -> Visual | Summary or model outputs | Reorder factors and prepare plotting fields | Plot-ready table | Turn the analytical result into an interpretable chart`
+
+Reusable Patterns:
+
+- `inspect_source_schema | Inspect source tables, field meanings, and likely comparison axes | Raw dataset or dataset list | Initial analysis plan | Y`
+- `reshape_analysis_inputs | Convert wide or nested source fields into normalized long-form records | Raw tabular fields | Tidy analysis table | Y`
+- `join_context_tables | Enrich the main table with lookup or metadata tables | Primary data plus keys | Context-enriched analysis table | Y`
+- `compare_group_vocabulary | Tokenize text and compute grouped term distinctiveness | Text, grouping variable, document or entity ids | Ranked term comparison tables | Y`
+- `plot_comparative_story | Reorder entities and visualize the main comparison cleanly | Summary table or model output | Communication-ready plot | Y`
+
+Function Candidates:
+
+- `reshape_episode_inputs(data, ...)`
+- `join_episode_context(primary_data, lookup_data, by)`
+- `prepare_text_tokens(data, text_column)`
+- `compare_group_vocabulary(data, group_col, term_col, count_col = 'n')`
+- `plot_comparative_story(data, x_col, y_col, group_col = NULL)`
+
+Episode Signature:
+
+- `analysis_intent`: Explore and compare language patterns in Simpsons guest stars and dialogue using tokenization, grouped counts, and discriminative text analysis
+- `analysis_type`: EDA
+- `primary_techniques`: schema inspection, grouped summaries, reshaping, table joins, tokenization, term comparison, visualization
+- `data_complexity_level`: medium-high
+- `reusable_difficulty_score`: 4
+
+Adaptation Plan:
+
+- `1 | inspect_source_schema | Start by mapping entities, measures, and likely comparison axes before transforming anything`
+- `3 | reshape_analysis_inputs | Normalize wide, nested, or repeated fields into one analysis-ready row structure`
+- `4 | join_context_tables | Enrich the main analysis table with keys, metadata, or auxiliary measurements`
+- `5 | compare_group_vocabulary | Tokenize the new corpus and compare terms across groups or documents`
+- `8 | plot_comparative_story | Choose the clearest visual comparison once the analytical table is ready`
+
+### `super_bowl_ads`
+
+- `transcript_title`: Analyzing Super Bowl ads in R
+- `transcript_file`: `raw-data/inspiration/Analyzing Super Bowl ads in R.txt`
+- `code_file`: `data-screencasts/2021_03_02_super_bowl_ads.Rmd`
+- `data_source`: TidyTuesday 2021-03-02 dataset
+- `analysis_intent`: Explore and compare language patterns in Super Bowl ads using tokenization, grouped counts, and discriminative text analysis
+- `analysis_type`: Modeling
+- `pattern_signature`: `load_inspect_reshape_join_tokenize_trend_model_evaluate_visualize`
+- `adaptation_hint`: Reuse for grouped text corpora that need tokenization, term comparison, and context-aware vocabulary analysis
+- `ker_status`: extracted
+
+Thought Process Map:
+
+- `T1 | Context | Frame the episode as exploratory analysis of Super Bowl ads with limited advance knowledge of the data. | Transcript title and opening context`
+- `T2 | Inspect | Load the data, inspect table shape, and identify the main entities, measures, and comparison axes. | Initial data load and early counts or prints`
+- `T4 | Transform | Reshape fields, standardize column meanings, and join supporting tables to create analysis-ready records. | Join and reshaping operations in the Rmd`
+- `T5 | Compare | Tokenize text, remove noise terms, and compare vocabulary across groups or documents. | tidytext workflow in the episode`
+- `T6 | Compare | Move from descriptive patterns into statistical or predictive modeling once the feature space is ready. | Modeling functions and evaluation code`
+- `T7 | Visualize | Turn the cleaned summaries into interpretable visual comparisons and iterate toward the clearest view. | ggplot workflow`
+- `T8 | Reflect | Identify reusable workflow pieces that can transfer to future datasets with a similar shape or question. | End-state of the analysis pattern`
+
+Code Mapping Table:
+
+- `T1 | Data load and inspection | tt_load, count | Establish source shape, units, and comparison candidates`
+- `T4 | Structuring and enrichment | gather, unnest, inner_join | Convert messy inputs into analysis-ready tables`
+- `T5 | Text comparison | episode-specific dplyr and ggplot verbs | Identify terms that distinguish groups or documents`
+- `T6 | Modeling and evaluation | lm, glm | Test explanatory or predictive relationships after EDA`
+- `T7 | Visualization | ggplot, geom_col, geom_point, geom_line, facet_wrap | Communicate the core result visually`
+
+Data Transformation Flow:
+
+- `Raw | Imported source tables or files | Load source data into tibbles or lists | Raw episode objects | Establish the starting analysis surface`
+- `Raw -> Clean | Raw source tables | Rename, reshape, unnest, and join supporting data | Analysis-ready rows with consistent keys | Standardize the schema before comparison`
+- `Clean -> Analytical | Clean text corpus | Tokenize text, remove stop words, and count terms by group | Term-frequency comparison tables | Surface language differences and signatures`
+- `Analytical -> Visual | Summary or model outputs | Reorder factors and prepare plotting fields | Plot-ready table | Turn the analytical result into an interpretable chart`
+
+Reusable Patterns:
+
+- `inspect_source_schema | Inspect source tables, field meanings, and likely comparison axes | Raw dataset or dataset list | Initial analysis plan | Y`
+- `reshape_analysis_inputs | Convert wide or nested source fields into normalized long-form records | Raw tabular fields | Tidy analysis table | Y`
+- `join_context_tables | Enrich the main table with lookup or metadata tables | Primary data plus keys | Context-enriched analysis table | Y`
+- `compare_group_vocabulary | Tokenize text and compute grouped term distinctiveness | Text, grouping variable, document or entity ids | Ranked term comparison tables | Y`
+- `build_predictive_or_explanatory_model | Move from cleaned features to fitted models and evaluation outputs | Feature table and outcome field | Model object and diagnostics | Y`
+- `plot_comparative_story | Reorder entities and visualize the main comparison cleanly | Summary table or model output | Communication-ready plot | Y`
+
+Function Candidates:
+
+- `reshape_episode_inputs(data, ...)`
+- `join_episode_context(primary_data, lookup_data, by)`
+- `prepare_text_tokens(data, text_column)`
+- `compare_group_vocabulary(data, group_col, term_col, count_col = 'n')`
+- `build_predictive_pipeline(data, formula, ...)`
+- `evaluate_episode_model(model, test_data, outcome_col)`
+- `plot_comparative_story(data, x_col, y_col, group_col = NULL)`
+
+Episode Signature:
+
+- `analysis_intent`: Explore and compare language patterns in Super Bowl ads using tokenization, grouped counts, and discriminative text analysis
+- `analysis_type`: Modeling
+- `primary_techniques`: schema inspection, grouped summaries, reshaping, table joins, tokenization, term comparison, modeling, time-aware comparison, visualization
+- `data_complexity_level`: medium-high
+- `reusable_difficulty_score`: 4
+
+Adaptation Plan:
+
+- `1 | inspect_source_schema | Start by mapping entities, measures, and likely comparison axes before transforming anything`
+- `3 | reshape_analysis_inputs | Normalize wide, nested, or repeated fields into one analysis-ready row structure`
+- `4 | join_context_tables | Enrich the main analysis table with keys, metadata, or auxiliary measurements`
+- `5 | compare_group_vocabulary | Tokenize the new corpus and compare terms across groups or documents`
+- `6 | build_predictive_or_explanatory_model | Fit and evaluate a baseline model after the core feature engineering is stable`
+- `8 | plot_comparative_story | Choose the clearest visual comparison once the analytical table is ready`
+
+### `thanksgiving_dinners`
+
+- `transcript_title`: Analyzing Thanksgiving dinners in R
+- `transcript_file`: `raw-data/inspiration/Analyzing Thanksgiving dinners in R.txt`
+- `code_file`: `data-screencasts/thanksgiving.Rmd`
+- `data_source`: Local source files read in episode: https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2018-11-20/thanksgiving_meals.csv
+- `analysis_intent`: Explore distributions, group differences, and notable patterns in Thanksgiving dinners through cleaning, summarization, and visualization
+- `analysis_type`: EDA
+- `pattern_signature`: `load_inspect_reshape_join_compare_visualize`
+- `adaptation_hint`: Reuse for messy multi-table datasets that need reshaping, enrichment, and grouped summaries before plotting
+- `ker_status`: extracted
+
+Thought Process Map:
+
+- `T1 | Context | Frame the episode as exploratory analysis of Thanksgiving dinners with limited advance knowledge of the data. | Transcript title and opening context`
+- `T2 | Inspect | Load the data, inspect table shape, and identify the main entities, measures, and comparison axes. | Initial data load and early counts or prints`
+- `T4 | Transform | Reshape fields, standardize column meanings, and join supporting tables to create analysis-ready records. | Join and reshaping operations in the Rmd`
+- `T6 | Compare | Summarize group differences, rates, rankings, or trajectories to surface the main story in the data. | Grouped summaries and comparative plots`
+- `T7 | Visualize | Turn the cleaned summaries into interpretable visual comparisons and iterate toward the clearest view. | ggplot workflow`
+- `T8 | Reflect | Identify reusable workflow pieces that can transfer to future datasets with a similar shape or question. | End-state of the analysis pattern`
+
+Code Mapping Table:
+
+- `T1 | Data load and inspection | read_csv, count | Establish source shape, units, and comparison candidates`
+- `T4 | Structuring and enrichment | gather, inner_join | Convert messy inputs into analysis-ready tables`
+- `T6 | Group comparison | group_by, summarize, count, mutate | Compare categories, time periods, or entities`
+- `T7 | Visualization | ggplot, geom_col, geom_line, facet_wrap | Communicate the core result visually`
+
+Data Transformation Flow:
+
+- `Raw | Imported source tables or files | Load source data into tibbles or lists | Raw episode objects | Establish the starting analysis surface`
+- `Raw -> Clean | Raw source tables | Rename, reshape, unnest, and join supporting data | Analysis-ready rows with consistent keys | Standardize the schema before comparison`
+- `Clean -> Analytical | Cleaned table | Group, summarize, rank, or compare entities | Summary tables or rate calculations | Surface the core analytical story`
+- `Analytical -> Visual | Summary or model outputs | Reorder factors and prepare plotting fields | Plot-ready table | Turn the analytical result into an interpretable chart`
+
+Reusable Patterns:
+
+- `inspect_source_schema | Inspect source tables, field meanings, and likely comparison axes | Raw dataset or dataset list | Initial analysis plan | Y`
+- `reshape_analysis_inputs | Convert wide or nested source fields into normalized long-form records | Raw tabular fields | Tidy analysis table | Y`
+- `join_context_tables | Enrich the main table with lookup or metadata tables | Primary data plus keys | Context-enriched analysis table | Y`
+- `plot_comparative_story | Reorder entities and visualize the main comparison cleanly | Summary table or model output | Communication-ready plot | Y`
+
+Function Candidates:
+
+- `reshape_episode_inputs(data, ...)`
+- `join_episode_context(primary_data, lookup_data, by)`
+- `plot_comparative_story(data, x_col, y_col, group_col = NULL)`
+
+Episode Signature:
+
+- `analysis_intent`: Explore distributions, group differences, and notable patterns in Thanksgiving dinners through cleaning, summarization, and visualization
+- `analysis_type`: EDA
+- `primary_techniques`: schema inspection, grouped summaries, reshaping, table joins, visualization
+- `data_complexity_level`: medium
+- `reusable_difficulty_score`: 3
+
+Adaptation Plan:
+
+- `1 | inspect_source_schema | Start by mapping entities, measures, and likely comparison axes before transforming anything`
+- `3 | reshape_analysis_inputs | Normalize wide, nested, or repeated fields into one analysis-ready row structure`
+- `4 | join_context_tables | Enrich the main analysis table with keys, metadata, or auxiliary measurements`
+- `8 | plot_comparative_story | Choose the clearest visual comparison once the analytical table is ready`
+
+### `tour_de_france`
+
+- `transcript_title`: Analyzing Tour de France data in R
+- `transcript_file`: `raw-data/inspiration/Analyzing Tour de France data in R.txt`
+- `code_file`: `data-screencasts/tour-de-france.Rmd`
+- `data_source`: TidyTuesday 2020-04-07 dataset
+- `analysis_intent`: Explore and compare language patterns in Tour de France using tokenization, grouped counts, and discriminative text analysis
+- `analysis_type`: Modeling
+- `pattern_signature`: `load_inspect_join_tokenize_trend_model_evaluate_visualize`
+- `adaptation_hint`: Reuse for grouped text corpora that need tokenization, term comparison, and context-aware vocabulary analysis
+- `ker_status`: extracted
+
+Thought Process Map:
+
+- `T1 | Context | Frame the episode as exploratory analysis of Tour de France with limited advance knowledge of the data. | Transcript title and opening context`
+- `T2 | Inspect | Load the data, inspect table shape, and identify the main entities, measures, and comparison axes. | Initial data load and early counts or prints`
+- `T4 | Transform | Reshape fields, standardize column meanings, and join supporting tables to create analysis-ready records. | Join and reshaping operations in the Rmd`
+- `T5 | Compare | Tokenize text, remove noise terms, and compare vocabulary across groups or documents. | tidytext workflow in the episode`
+- `T6 | Compare | Move from descriptive patterns into statistical or predictive modeling once the feature space is ready. | Modeling functions and evaluation code`
+- `T7 | Visualize | Turn the cleaned summaries into interpretable visual comparisons and iterate toward the clearest view. | ggplot workflow`
+- `T8 | Reflect | Identify reusable workflow pieces that can transfer to future datasets with a similar shape or question. | End-state of the analysis pattern`
+
+Code Mapping Table:
+
+- `T1 | Data load and inspection | tt_load, count | Establish source shape, units, and comparison candidates`
+- `T4 | Structuring and enrichment | inner_join | Convert messy inputs into analysis-ready tables`
+- `T5 | Text comparison | episode-specific dplyr and ggplot verbs | Identify terms that distinguish groups or documents`
+- `T6 | Modeling and evaluation | fit, predict, survfit | Test explanatory or predictive relationships after EDA`
+- `T7 | Visualization | ggplot, geom_col, geom_line | Communicate the core result visually`
+
+Data Transformation Flow:
+
+- `Raw | Imported source tables or files | Load source data into tibbles or lists | Raw episode objects | Establish the starting analysis surface`
+- `Raw -> Clean | Raw source tables | Rename, reshape, unnest, and join supporting data | Analysis-ready rows with consistent keys | Standardize the schema before comparison`
+- `Clean -> Analytical | Clean text corpus | Tokenize text, remove stop words, and count terms by group | Term-frequency comparison tables | Surface language differences and signatures`
+- `Analytical -> Visual | Summary or model outputs | Reorder factors and prepare plotting fields | Plot-ready table | Turn the analytical result into an interpretable chart`
+
+Reusable Patterns:
+
+- `inspect_source_schema | Inspect source tables, field meanings, and likely comparison axes | Raw dataset or dataset list | Initial analysis plan | Y`
+- `join_context_tables | Enrich the main table with lookup or metadata tables | Primary data plus keys | Context-enriched analysis table | Y`
+- `compare_group_vocabulary | Tokenize text and compute grouped term distinctiveness | Text, grouping variable, document or entity ids | Ranked term comparison tables | Y`
+- `build_predictive_or_explanatory_model | Move from cleaned features to fitted models and evaluation outputs | Feature table and outcome field | Model object and diagnostics | Y`
+- `plot_comparative_story | Reorder entities and visualize the main comparison cleanly | Summary table or model output | Communication-ready plot | Y`
+
+Function Candidates:
+
+- `reshape_episode_inputs(data, ...)`
+- `join_episode_context(primary_data, lookup_data, by)`
+- `prepare_text_tokens(data, text_column)`
+- `compare_group_vocabulary(data, group_col, term_col, count_col = 'n')`
+- `build_predictive_pipeline(data, formula, ...)`
+- `evaluate_episode_model(model, test_data, outcome_col)`
+- `plot_comparative_story(data, x_col, y_col, group_col = NULL)`
+
+Episode Signature:
+
+- `analysis_intent`: Explore and compare language patterns in Tour de France using tokenization, grouped counts, and discriminative text analysis
+- `analysis_type`: Modeling
+- `primary_techniques`: schema inspection, grouped summaries, table joins, tokenization, term comparison, modeling, time-aware comparison, visualization
+- `data_complexity_level`: medium-high
+- `reusable_difficulty_score`: 4
+
+Adaptation Plan:
+
+- `1 | inspect_source_schema | Start by mapping entities, measures, and likely comparison axes before transforming anything`
+- `4 | join_context_tables | Enrich the main analysis table with keys, metadata, or auxiliary measurements`
+- `5 | compare_group_vocabulary | Tokenize the new corpus and compare terms across groups or documents`
+- `6 | build_predictive_or_explanatory_model | Fit and evaluate a baseline model after the core feature engineering is stable`
+- `8 | plot_comparative_story | Choose the clearest visual comparison once the analytical table is ready`
+
+### `un_votes`
+
+- `transcript_title`: Analyzing UN votes in R
+- `transcript_file`: `raw-data/inspiration/Analyzing UN votes in R.txt`
+- `code_file`: `data-screencasts/2021_03_23_un_votes.Rmd`
+- `data_source`: TidyTuesday 2021-03-23 dataset
+- `analysis_intent`: Explore and compare language patterns in UN votes using tokenization, grouped counts, and discriminative text analysis
+- `analysis_type`: EDA
+- `pattern_signature`: `load_inspect_reshape_join_tokenize_map_trend_compare_visualize`
+- `adaptation_hint`: Reuse for grouped text corpora that need tokenization, term comparison, and context-aware vocabulary analysis
+- `ker_status`: extracted
+
+Thought Process Map:
+
+- `T1 | Context | Frame the episode as exploratory analysis of UN votes with limited advance knowledge of the data. | Transcript title and opening context`
+- `T2 | Inspect | Load the data, inspect table shape, and identify the main entities, measures, and comparison axes. | Initial data load and early counts or prints`
+- `T4 | Transform | Reshape fields, standardize column meanings, and join supporting tables to create analysis-ready records. | Join and reshaping operations in the Rmd`
+- `T5 | Compare | Tokenize text, remove noise terms, and compare vocabulary across groups or documents. | tidytext workflow in the episode`
+- `T6 | Compare | Summarize group differences, rates, rankings, or trajectories to surface the main story in the data. | Grouped summaries and comparative plots`
+- `T7 | Visualize | Translate the analytical result into geographic views to reveal regional variation and outliers. | Spatial joins or mapping code`
+- `T8 | Reflect | Identify reusable workflow pieces that can transfer to future datasets with a similar shape or question. | End-state of the analysis pattern`
+
+Code Mapping Table:
+
+- `T1 | Data load and inspection | tt_load, count | Establish source shape, units, and comparison candidates`
+- `T4 | Structuring and enrichment | spread, unnest, left_join, inner_join | Convert messy inputs into analysis-ready tables`
+- `T5 | Text comparison | unnest_tokens, anti_join | Identify terms that distinguish groups or documents`
+- `T6 | Group comparison | group_by, summarize, count, mutate | Compare categories, time periods, or entities`
+- `T7 | Visualization | ggplot, geom_col, geom_point, geom_line, facet_wrap | Communicate the core result visually`
+
+Data Transformation Flow:
+
+- `Raw | Imported source tables or files | Load source data into tibbles or lists | Raw episode objects | Establish the starting analysis surface`
+- `Raw -> Clean | Raw source tables | Rename, reshape, unnest, and join supporting data | Analysis-ready rows with consistent keys | Standardize the schema before comparison`
+- `Clean -> Analytical | Clean text corpus | Tokenize text, remove stop words, and count terms by group | Term-frequency comparison tables | Surface language differences and signatures`
+- `Analytical -> Visual | Analytical summaries with geographic identifiers | Join map geometry or region lookup data | Map-ready plotting table | Display geographic variation`
+
+Reusable Patterns:
+
+- `inspect_source_schema | Inspect source tables, field meanings, and likely comparison axes | Raw dataset or dataset list | Initial analysis plan | Y`
+- `reshape_analysis_inputs | Convert wide or nested source fields into normalized long-form records | Raw tabular fields | Tidy analysis table | Y`
+- `join_context_tables | Enrich the main table with lookup or metadata tables | Primary data plus keys | Context-enriched analysis table | Y`
+- `compare_group_vocabulary | Tokenize text and compute grouped term distinctiveness | Text, grouping variable, document or entity ids | Ranked term comparison tables | Y`
+- `prepare_geographic_summary | Aggregate metrics by region and join map geometry or lookup tables | Regional metrics and identifiers | Map-ready data | Y`
+- `plot_comparative_story | Reorder entities and visualize the main comparison cleanly | Summary table or model output | Communication-ready plot | Y`
+
+Function Candidates:
+
+- `reshape_episode_inputs(data, ...)`
+- `join_episode_context(primary_data, lookup_data, by)`
+- `prepare_text_tokens(data, text_column)`
+- `compare_group_vocabulary(data, group_col, term_col, count_col = 'n')`
+- `prepare_map_summary(data, region_col, value_col)`
+- `plot_geographic_metric(map_data, value_col)`
+- `plot_comparative_story(data, x_col, y_col, group_col = NULL)`
+
+Episode Signature:
+
+- `analysis_intent`: Explore and compare language patterns in UN votes using tokenization, grouped counts, and discriminative text analysis
+- `analysis_type`: EDA
+- `primary_techniques`: schema inspection, grouped summaries, reshaping, table joins, tokenization, term comparison, mapping, time-aware comparison, visualization
+- `data_complexity_level`: high
+- `reusable_difficulty_score`: 5
+
+Adaptation Plan:
+
+- `1 | inspect_source_schema | Start by mapping entities, measures, and likely comparison axes before transforming anything`
+- `3 | reshape_analysis_inputs | Normalize wide, nested, or repeated fields into one analysis-ready row structure`
+- `4 | join_context_tables | Enrich the main analysis table with keys, metadata, or auxiliary measurements`
+- `5 | compare_group_vocabulary | Tokenize the new corpus and compare terms across groups or documents`
+- `7 | prepare_geographic_summary | Aggregate to the geographic unit available in the new dataset and rebuild the map join`
+- `8 | plot_comparative_story | Choose the clearest visual comparison once the analytical table is ready`
+
+### `dairy_consumption`
+
+- `transcript_title`: Analyzing US dairy consumption in R
+- `transcript_file`: `raw-data/inspiration/Analyzing US dairy consumption in R.txt`
+- `code_file`: `data-screencasts/us-dairy.Rmd`
+- `data_source`: TidyTuesday 2019-01-29 source files
+- `analysis_intent`: Explore distributions, group differences, and notable patterns in US dairy consumption through cleaning, summarization, and visualization
+- `analysis_type`: EDA
+- `pattern_signature`: `load_inspect_reshape_trend_simulate_compare_visualize`
+- `adaptation_hint`: Reuse for exploratory datasets that need schema inspection, grouped summaries, and visualization-first storytelling
+- `ker_status`: extracted
+
+Thought Process Map:
+
+- `T1 | Context | Frame the episode as exploratory analysis of US dairy consumption with limited advance knowledge of the data. | Transcript title and opening context`
+- `T2 | Inspect | Load the data, inspect table shape, and identify the main entities, measures, and comparison axes. | Initial data load and early counts or prints`
+- `T4 | Transform | Reshape fields, standardize column meanings, and join supporting tables to create analysis-ready records. | Join and reshaping operations in the Rmd`
+- `T6 | Compare | Summarize group differences, rates, rankings, or trajectories to surface the main story in the data. | Grouped summaries and comparative plots`
+- `T7 | Visualize | Turn the cleaned summaries into interpretable visual comparisons and iterate toward the clearest view. | ggplot workflow`
+- `T8 | Reflect | Identify reusable workflow pieces that can transfer to future datasets with a similar shape or question. | End-state of the analysis pattern`
+
+Code Mapping Table:
+
+- `T1 | Data load and inspection | read_csv | Establish source shape, units, and comparison candidates`
+- `T4 | Structuring and enrichment | gather, unnest | Convert messy inputs into analysis-ready tables`
+- `T6 | Group comparison | group_by, summarize, mutate | Compare categories, time periods, or entities`
+- `T7 | Visualization | ggplot, geom_col, geom_line, facet_wrap | Communicate the core result visually`
+
+Data Transformation Flow:
+
+- `Raw | Imported source tables or files | Load source data into tibbles or lists | Raw episode objects | Establish the starting analysis surface`
+- `Raw -> Clean | Raw source tables | Rename, reshape, unnest, and join supporting data | Analysis-ready rows with consistent keys | Standardize the schema before comparison`
+- `Clean -> Analytical | Cleaned table | Group, summarize, rank, or compare entities | Summary tables or rate calculations | Surface the core analytical story`
+- `Analytical -> Visual | Summary or model outputs | Reorder factors and prepare plotting fields | Plot-ready table | Turn the analytical result into an interpretable chart`
+
+Reusable Patterns:
+
+- `inspect_source_schema | Inspect source tables, field meanings, and likely comparison axes | Raw dataset or dataset list | Initial analysis plan | Y`
+- `reshape_analysis_inputs | Convert wide or nested source fields into normalized long-form records | Raw tabular fields | Tidy analysis table | Y`
+- `plot_comparative_story | Reorder entities and visualize the main comparison cleanly | Summary table or model output | Communication-ready plot | Y`
+
+Function Candidates:
+
+- `reshape_episode_inputs(data, ...)`
+- `join_episode_context(primary_data, lookup_data, by)`
+- `plot_comparative_story(data, x_col, y_col, group_col = NULL)`
+
+Episode Signature:
+
+- `analysis_intent`: Explore distributions, group differences, and notable patterns in US dairy consumption through cleaning, summarization, and visualization
+- `analysis_type`: EDA
+- `primary_techniques`: schema inspection, grouped summaries, reshaping, time-aware comparison, visualization
+- `data_complexity_level`: medium
+- `reusable_difficulty_score`: 3
+
+Adaptation Plan:
+
+- `1 | inspect_source_schema | Start by mapping entities, measures, and likely comparison axes before transforming anything`
+- `3 | reshape_analysis_inputs | Normalize wide, nested, or repeated fields into one analysis-ready row structure`
+- `8 | plot_comparative_story | Choose the clearest visual comparison once the analytical table is ready`
+
+### `wind`
+
+- `transcript_title`: Analyzing US wind data in R
+- `transcript_file`: `raw-data/inspiration/Analyzing US wind data in R.txt`
+- `code_file`: `data-screencasts/us-wind.Rmd`
+- `data_source`: Local source files read in episode: https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2018-11-06/us_wind.csv
+- `analysis_intent`: Explore distributions, group differences, and notable patterns in US wind through cleaning, summarization, and visualization
+- `analysis_type`: EDA
+- `pattern_signature`: `load_inspect_trend_simulate_compare_visualize`
+- `adaptation_hint`: Reuse for exploratory datasets that need schema inspection, grouped summaries, and visualization-first storytelling
+- `ker_status`: extracted
+
+Thought Process Map:
+
+- `T1 | Context | Frame the episode as exploratory analysis of US wind with limited advance knowledge of the data. | Transcript title and opening context`
+- `T2 | Inspect | Load the data, inspect table shape, and identify the main entities, measures, and comparison axes. | Initial data load and early counts or prints`
+- `T6 | Compare | Summarize group differences, rates, rankings, or trajectories to surface the main story in the data. | Grouped summaries and comparative plots`
+- `T7 | Visualize | Turn the cleaned summaries into interpretable visual comparisons and iterate toward the clearest view. | ggplot workflow`
+- `T8 | Reflect | Identify reusable workflow pieces that can transfer to future datasets with a similar shape or question. | End-state of the analysis pattern`
+
+Code Mapping Table:
+
+- `T1 | Data load and inspection | read_csv | Establish source shape, units, and comparison candidates`
+- `T6 | Group comparison | group_by, summarize, mutate | Compare categories, time periods, or entities`
+- `T7 | Visualization | ggplot, geom_point | Communicate the core result visually`
+
+Data Transformation Flow:
+
+- `Raw | Imported source tables or files | Load source data into tibbles or lists | Raw episode objects | Establish the starting analysis surface`
+- `Raw -> Clean | Raw source tables | Filter, rename, and derive analysis columns | Cleaned table | Make the data comparable and plot-ready`
+- `Clean -> Analytical | Cleaned table | Group, summarize, rank, or compare entities | Summary tables or rate calculations | Surface the core analytical story`
+- `Analytical -> Visual | Summary or model outputs | Reorder factors and prepare plotting fields | Plot-ready table | Turn the analytical result into an interpretable chart`
+
+Reusable Patterns:
+
+- `inspect_source_schema | Inspect source tables, field meanings, and likely comparison axes | Raw dataset or dataset list | Initial analysis plan | Y`
+- `plot_comparative_story | Reorder entities and visualize the main comparison cleanly | Summary table or model output | Communication-ready plot | Y`
+
+Function Candidates:
+
+- `plot_comparative_story(data, x_col, y_col, group_col = NULL)`
+
+Episode Signature:
+
+- `analysis_intent`: Explore distributions, group differences, and notable patterns in US wind through cleaning, summarization, and visualization
+- `analysis_type`: EDA
+- `primary_techniques`: schema inspection, grouped summaries, time-aware comparison, visualization
+- `data_complexity_level`: low-medium
+- `reusable_difficulty_score`: 2
+
+Adaptation Plan:
+
+- `1 | inspect_source_schema | Start by mapping entities, measures, and likely comparison axes before transforming anything`
+- `8 | plot_comparative_story | Choose the clearest visual comparison once the analytical table is ready`
+
+### `video_games`
+
+- `transcript_title`: Analyzing Video Games in R
+- `transcript_file`: `raw-data/inspiration/Analyzing Video Games in R.txt`
+- `code_file`: `data-screencasts/2021_03_16_video_games.Rmd`
+- `data_source`: TidyTuesday 2021-03-16 dataset
+- `analysis_intent`: Explore distributions, group differences, and notable patterns in Video Games through cleaning, summarization, and visualization
+- `analysis_type`: EDA
+- `pattern_signature`: `load_inspect_reshape_join_trend_compare_visualize`
+- `adaptation_hint`: Reuse for messy multi-table datasets that need reshaping, enrichment, and grouped summaries before plotting
+- `ker_status`: extracted
+
+Thought Process Map:
+
+- `T1 | Context | Frame the episode as exploratory analysis of Video Games with limited advance knowledge of the data. | Transcript title and opening context`
+- `T2 | Inspect | Load the data, inspect table shape, and identify the main entities, measures, and comparison axes. | Initial data load and early counts or prints`
+- `T4 | Transform | Reshape fields, standardize column meanings, and join supporting tables to create analysis-ready records. | Join and reshaping operations in the Rmd`
+- `T6 | Compare | Summarize group differences, rates, rankings, or trajectories to surface the main story in the data. | Grouped summaries and comparative plots`
+- `T7 | Visualize | Turn the cleaned summaries into interpretable visual comparisons and iterate toward the clearest view. | ggplot workflow`
+- `T8 | Reflect | Identify reusable workflow pieces that can transfer to future datasets with a similar shape or question. | End-state of the analysis pattern`
+
+Code Mapping Table:
+
+- `T1 | Data load and inspection | tt_load, count, glimpse | Establish source shape, units, and comparison candidates`
+- `T4 | Structuring and enrichment | pivot_wider, inner_join | Convert messy inputs into analysis-ready tables`
+- `T6 | Group comparison | group_by, summarize, count, mutate | Compare categories, time periods, or entities`
+- `T7 | Visualization | ggplot, geom_col, geom_point, geom_line, facet_wrap | Communicate the core result visually`
+
+Data Transformation Flow:
+
+- `Raw | Imported source tables or files | Load source data into tibbles or lists | Raw episode objects | Establish the starting analysis surface`
+- `Raw -> Clean | Raw source tables | Rename, reshape, unnest, and join supporting data | Analysis-ready rows with consistent keys | Standardize the schema before comparison`
+- `Clean -> Analytical | Cleaned table | Group, summarize, rank, or compare entities | Summary tables or rate calculations | Surface the core analytical story`
+- `Analytical -> Visual | Summary or model outputs | Reorder factors and prepare plotting fields | Plot-ready table | Turn the analytical result into an interpretable chart`
+
+Reusable Patterns:
+
+- `inspect_source_schema | Inspect source tables, field meanings, and likely comparison axes | Raw dataset or dataset list | Initial analysis plan | Y`
+- `reshape_analysis_inputs | Convert wide or nested source fields into normalized long-form records | Raw tabular fields | Tidy analysis table | Y`
+- `join_context_tables | Enrich the main table with lookup or metadata tables | Primary data plus keys | Context-enriched analysis table | Y`
+- `plot_comparative_story | Reorder entities and visualize the main comparison cleanly | Summary table or model output | Communication-ready plot | Y`
+
+Function Candidates:
+
+- `reshape_episode_inputs(data, ...)`
+- `join_episode_context(primary_data, lookup_data, by)`
+- `plot_comparative_story(data, x_col, y_col, group_col = NULL)`
+
+Episode Signature:
+
+- `analysis_intent`: Explore distributions, group differences, and notable patterns in Video Games through cleaning, summarization, and visualization
+- `analysis_type`: EDA
+- `primary_techniques`: schema inspection, grouped summaries, reshaping, table joins, time-aware comparison, visualization
+- `data_complexity_level`: medium
+- `reusable_difficulty_score`: 3
+
+Adaptation Plan:
+
+- `1 | inspect_source_schema | Start by mapping entities, measures, and likely comparison axes before transforming anything`
+- `3 | reshape_analysis_inputs | Normalize wide, nested, or repeated fields into one analysis-ready row structure`
+- `4 | join_context_tables | Enrich the main analysis table with keys, metadata, or auxiliary measurements`
+- `8 | plot_comparative_story | Choose the clearest visual comparison once the analytical table is ready`
+
+### `women_s_world_cup`
+
+- `transcript_title`: Analyzing Women's World Cup data in R
+- `transcript_file`: `raw-data/inspiration/Analyzing Women's World Cup data.txt`
+- `code_file`: `data-screencasts/womens-world-cup.Rmd`
+- `data_source`: TidyTuesday 2019-07-09 source files
+- `analysis_intent`: Explore distributions, group differences, and notable patterns in Women's World Cup through cleaning, summarization, and visualization
+- `analysis_type`: EDA
+- `pattern_signature`: `load_inspect_scrape_join_trend_compare_visualize`
+- `adaptation_hint`: Reuse for datasets that must be assembled from HTML or JSON sources before analysis
+- `ker_status`: extracted
+
+Thought Process Map:
+
+- `T1 | Context | Frame the episode as exploratory analysis of Women's World Cup with limited advance knowledge of the data. | Transcript title and opening context`
+- `T2 | Inspect | Load the data, inspect table shape, and identify the main entities, measures, and comparison axes. | Initial data load and early counts or prints`
+- `T3 | Transform | Acquire or supplement source data from external web pages or APIs before analysis. | Presence of scraping or external-source code`
+- `T4 | Transform | Reshape fields, standardize column meanings, and join supporting tables to create analysis-ready records. | Join and reshaping operations in the Rmd`
+- `T6 | Compare | Summarize group differences, rates, rankings, or trajectories to surface the main story in the data. | Grouped summaries and comparative plots`
+- `T7 | Visualize | Turn the cleaned summaries into interpretable visual comparisons and iterate toward the clearest view. | ggplot workflow`
+- `T8 | Reflect | Identify reusable workflow pieces that can transfer to future datasets with a similar shape or question. | End-state of the analysis pattern`
+
+Code Mapping Table:
+
+- `T1 | Data load and inspection | read_csv, read_html, count | Establish source shape, units, and comparison candidates`
+- `T3 | External acquisition | read_html, html_nodes, GET | Build or enrich the dataset before analysis`
+- `T4 | Structuring and enrichment | left_join, inner_join | Convert messy inputs into analysis-ready tables`
+- `T6 | Group comparison | group_by, summarize, count, mutate | Compare categories, time periods, or entities`
+- `T7 | Visualization | ggplot, geom_col, geom_point, facet_wrap | Communicate the core result visually`
+
+Data Transformation Flow:
+
+- `Raw | Imported source tables or files | Load source data into tibbles or lists | Raw episode objects | Establish the starting analysis surface`
+- `Raw -> Collected | External web or JSON sources | Scrape or request supplemental records | Collected reference tables | Fill gaps not available in the initial source`
+- `Raw -> Clean | Raw source tables | Rename, reshape, unnest, and join supporting data | Analysis-ready rows with consistent keys | Standardize the schema before comparison`
+- `Clean -> Analytical | Cleaned table | Group, summarize, rank, or compare entities | Summary tables or rate calculations | Surface the core analytical story`
+- `Analytical -> Visual | Summary or model outputs | Reorder factors and prepare plotting fields | Plot-ready table | Turn the analytical result into an interpretable chart`
+
+Reusable Patterns:
+
+- `inspect_source_schema | Inspect source tables, field meanings, and likely comparison axes | Raw dataset or dataset list | Initial analysis plan | Y`
+- `scrape_supporting_reference_data | Pull structured records from HTML or JSON before analysis | External source url and parsing rules | Supplemental reference table | Y`
+- `join_context_tables | Enrich the main table with lookup or metadata tables | Primary data plus keys | Context-enriched analysis table | Y`
+- `plot_comparative_story | Reorder entities and visualize the main comparison cleanly | Summary table or model output | Communication-ready plot | Y`
+
+Function Candidates:
+
+- `scrape_reference_table(url, css_selector)`
+- `collect_episode_source_records(urls, parser)`
+- `reshape_episode_inputs(data, ...)`
+- `join_episode_context(primary_data, lookup_data, by)`
+- `plot_comparative_story(data, x_col, y_col, group_col = NULL)`
+
+Episode Signature:
+
+- `analysis_intent`: Explore distributions, group differences, and notable patterns in Women's World Cup through cleaning, summarization, and visualization
+- `analysis_type`: EDA
+- `primary_techniques`: schema inspection, grouped summaries, web or API data collection, table joins, time-aware comparison, visualization
+- `data_complexity_level`: medium
+- `reusable_difficulty_score`: 3
+
+Adaptation Plan:
+
+- `1 | inspect_source_schema | Start by mapping entities, measures, and likely comparison axes before transforming anything`
+- `2 | scrape_supporting_reference_data | Rebuild any missing lookup or metadata tables from the relevant external source`
+- `4 | join_context_tables | Enrich the main analysis table with keys, metadata, or auxiliary measurements`
+- `8 | plot_comparative_story | Choose the clearest visual comparison once the analytical table is ready`
+
+### `x_men_comics`
+
+- `transcript_title`: Analyzing X-Men comics in R
+- `transcript_file`: `raw-data/inspiration/Analyzing X-Men comics in R.txt`
+- `code_file`: `data-screencasts/uncanny-xmen.Rmd`
+- `data_source`: TidyTuesday 2020-06-30 dataset
+- `analysis_intent`: Explore distributions, group differences, and notable patterns in X-Men comics through cleaning, summarization, and visualization
+- `analysis_type`: EDA
+- `pattern_signature`: `load_inspect_join_compare_visualize`
+- `adaptation_hint`: Reuse for exploratory datasets that need schema inspection, grouped summaries, and visualization-first storytelling
+- `ker_status`: extracted
+
+Thought Process Map:
+
+- `T1 | Context | Frame the episode as exploratory analysis of X-Men comics with limited advance knowledge of the data. | Transcript title and opening context`
+- `T2 | Inspect | Load the data, inspect table shape, and identify the main entities, measures, and comparison axes. | Initial data load and early counts or prints`
+- `T4 | Transform | Reshape fields, standardize column meanings, and join supporting tables to create analysis-ready records. | Join and reshaping operations in the Rmd`
+- `T6 | Compare | Summarize group differences, rates, rankings, or trajectories to surface the main story in the data. | Grouped summaries and comparative plots`
+- `T7 | Visualize | Turn the cleaned summaries into interpretable visual comparisons and iterate toward the clearest view. | ggplot workflow`
+- `T8 | Reflect | Identify reusable workflow pieces that can transfer to future datasets with a similar shape or question. | End-state of the analysis pattern`
+
+Code Mapping Table:
+
+- `T1 | Data load and inspection | tt_load | Establish source shape, units, and comparison candidates`
+- `T4 | Structuring and enrichment | left_join, inner_join | Convert messy inputs into analysis-ready tables`
+- `T6 | Group comparison | group_by, summarize, mutate | Compare categories, time periods, or entities`
+- `T7 | Visualization | ggplot, geom_col, geom_point, geom_line, facet_wrap | Communicate the core result visually`
+
+Data Transformation Flow:
+
+- `Raw | Imported source tables or files | Load source data into tibbles or lists | Raw episode objects | Establish the starting analysis surface`
+- `Raw -> Clean | Raw source tables | Rename, reshape, unnest, and join supporting data | Analysis-ready rows with consistent keys | Standardize the schema before comparison`
+- `Clean -> Analytical | Cleaned table | Group, summarize, rank, or compare entities | Summary tables or rate calculations | Surface the core analytical story`
+- `Analytical -> Visual | Summary or model outputs | Reorder factors and prepare plotting fields | Plot-ready table | Turn the analytical result into an interpretable chart`
+
+Reusable Patterns:
+
+- `inspect_source_schema | Inspect source tables, field meanings, and likely comparison axes | Raw dataset or dataset list | Initial analysis plan | Y`
+- `join_context_tables | Enrich the main table with lookup or metadata tables | Primary data plus keys | Context-enriched analysis table | Y`
+- `plot_comparative_story | Reorder entities and visualize the main comparison cleanly | Summary table or model output | Communication-ready plot | Y`
+
+Function Candidates:
+
+- `reshape_episode_inputs(data, ...)`
+- `join_episode_context(primary_data, lookup_data, by)`
+- `plot_comparative_story(data, x_col, y_col, group_col = NULL)`
+
+Episode Signature:
+
+- `analysis_intent`: Explore distributions, group differences, and notable patterns in X-Men comics through cleaning, summarization, and visualization
+- `analysis_type`: EDA
+- `primary_techniques`: schema inspection, grouped summaries, table joins, visualization
+- `data_complexity_level`: low-medium
+- `reusable_difficulty_score`: 2
+
+Adaptation Plan:
+
+- `1 | inspect_source_schema | Start by mapping entities, measures, and likely comparison axes before transforming anything`
+- `4 | join_context_tables | Enrich the main analysis table with keys, metadata, or auxiliary measurements`
+- `8 | plot_comparative_story | Choose the clearest visual comparison once the analytical table is ready`
+
+### `predicting_horror_movie_ratings`
+
+- `transcript_title`: Analyzing and predicting horror movie ratings in R
+- `transcript_file`: `raw-data/inspiration/Analyzing and predicting horror movie ratings in R.txt`
+- `code_file`: `data-screencasts/horror-movie-ratings.Rmd`
+- `data_source`: TidyTuesday 2019-10-22 source files
+- `analysis_intent`: Predict or estimate outcomes in horror movie ratings using cleaned features, exploratory analysis, and model evaluation
+- `analysis_type`: Predictive
+- `pattern_signature`: `load_inspect_reshape_join_tokenize_trend_model_evaluate_visualize`
+- `adaptation_hint`: Reuse for tabular datasets with a clear outcome column, engineered features, and model evaluation needs
+- `ker_status`: extracted
+
+Thought Process Map:
+
+- `T1 | Context | Frame the episode as exploratory analysis of horror movie ratings with limited advance knowledge of the data. | Transcript title and opening context`
+- `T2 | Inspect | Load the data, inspect table shape, and identify the main entities, measures, and comparison axes. | Initial data load and early counts or prints`
+- `T4 | Transform | Reshape fields, standardize column meanings, and join supporting tables to create analysis-ready records. | Join and reshaping operations in the Rmd`
+- `T5 | Compare | Tokenize text, remove noise terms, and compare vocabulary across groups or documents. | tidytext workflow in the episode`
+- `T6 | Compare | Move from descriptive patterns into statistical or predictive modeling once the feature space is ready. | Modeling functions and evaluation code`
+- `T7 | Visualize | Turn the cleaned summaries into interpretable visual comparisons and iterate toward the clearest view. | ggplot workflow`
+- `T8 | Reflect | Identify reusable workflow pieces that can transfer to future datasets with a similar shape or question. | End-state of the analysis pattern`
+
+Code Mapping Table:
+
+- `T1 | Data load and inspection | read_csv, count | Establish source shape, units, and comparison candidates`
+- `T4 | Structuring and enrichment | gather, separate_rows, unnest | Convert messy inputs into analysis-ready tables`
+- `T5 | Text comparison | unnest_tokens, anti_join | Identify terms that distinguish groups or documents`
+- `T6 | Modeling and evaluation | lm, glm, fit, predict | Test explanatory or predictive relationships after EDA`
+- `T7 | Visualization | ggplot, geom_col, geom_point, geom_line | Communicate the core result visually`
+
+Data Transformation Flow:
+
+- `Raw | Imported source tables or files | Load source data into tibbles or lists | Raw episode objects | Establish the starting analysis surface`
+- `Raw -> Clean | Raw source tables | Rename, reshape, unnest, and join supporting data | Analysis-ready rows with consistent keys | Standardize the schema before comparison`
+- `Clean -> Analytical | Clean text corpus | Tokenize text, remove stop words, and count terms by group | Term-frequency comparison tables | Surface language differences and signatures`
+- `Analytical -> Visual | Summary or model outputs | Reorder factors and prepare plotting fields | Plot-ready table | Turn the analytical result into an interpretable chart`
+
+Reusable Patterns:
+
+- `inspect_source_schema | Inspect source tables, field meanings, and likely comparison axes | Raw dataset or dataset list | Initial analysis plan | Y`
+- `reshape_analysis_inputs | Convert wide or nested source fields into normalized long-form records | Raw tabular fields | Tidy analysis table | Y`
+- `join_context_tables | Enrich the main table with lookup or metadata tables | Primary data plus keys | Context-enriched analysis table | Y`
+- `compare_group_vocabulary | Tokenize text and compute grouped term distinctiveness | Text, grouping variable, document or entity ids | Ranked term comparison tables | Y`
+- `build_predictive_or_explanatory_model | Move from cleaned features to fitted models and evaluation outputs | Feature table and outcome field | Model object and diagnostics | Y`
+- `plot_comparative_story | Reorder entities and visualize the main comparison cleanly | Summary table or model output | Communication-ready plot | Y`
+
+Function Candidates:
+
+- `reshape_episode_inputs(data, ...)`
+- `join_episode_context(primary_data, lookup_data, by)`
+- `prepare_text_tokens(data, text_column)`
+- `compare_group_vocabulary(data, group_col, term_col, count_col = 'n')`
+- `build_predictive_pipeline(data, formula, ...)`
+- `evaluate_episode_model(model, test_data, outcome_col)`
+- `plot_comparative_story(data, x_col, y_col, group_col = NULL)`
+
+Episode Signature:
+
+- `analysis_intent`: Predict or estimate outcomes in horror movie ratings using cleaned features, exploratory analysis, and model evaluation
+- `analysis_type`: Predictive
+- `primary_techniques`: schema inspection, grouped summaries, reshaping, table joins, tokenization, term comparison, modeling, time-aware comparison, visualization
+- `data_complexity_level`: medium-high
+- `reusable_difficulty_score`: 4
+
+Adaptation Plan:
+
+- `1 | inspect_source_schema | Start by mapping entities, measures, and likely comparison axes before transforming anything`
+- `3 | reshape_analysis_inputs | Normalize wide, nested, or repeated fields into one analysis-ready row structure`
+- `4 | join_context_tables | Enrich the main analysis table with keys, metadata, or auxiliary measurements`
+- `5 | compare_group_vocabulary | Tokenize the new corpus and compare terms across groups or documents`
+- `6 | build_predictive_or_explanatory_model | Fit and evaluate a baseline model after the core feature engineering is stable`
+- `8 | plot_comparative_story | Choose the clearest visual comparison once the analytical table is ready`
+
+### `art_collections`
+
+- `transcript_title`: Analyzing art collections in R
+- `transcript_file`: `raw-data/inspiration/Analyzing art collections in R.txt`
+- `code_file`: `data-screencasts/2021_01_12_tate_art.Rmd`
+- `data_source`: TidyTuesday 2021-01-12 dataset
+- `analysis_intent`: Explore distributions, group differences, and notable patterns in art collections through cleaning, summarization, and visualization
+- `analysis_type`: EDA
+- `pattern_signature`: `load_inspect_trend_compare_visualize`
+- `adaptation_hint`: Reuse for exploratory datasets that need schema inspection, grouped summaries, and visualization-first storytelling
+- `ker_status`: extracted
+
+Thought Process Map:
+
+- `T1 | Context | Frame the episode as exploratory analysis of art collections with limited advance knowledge of the data. | Transcript title and opening context`
+- `T2 | Inspect | Load the data, inspect table shape, and identify the main entities, measures, and comparison axes. | Initial data load and early counts or prints`
+- `T6 | Compare | Summarize group differences, rates, rankings, or trajectories to surface the main story in the data. | Grouped summaries and comparative plots`
+- `T7 | Visualize | Turn the cleaned summaries into interpretable visual comparisons and iterate toward the clearest view. | ggplot workflow`
+- `T8 | Reflect | Identify reusable workflow pieces that can transfer to future datasets with a similar shape or question. | End-state of the analysis pattern`
+
+Code Mapping Table:
+
+- `T1 | Data load and inspection | tt_load, count, glimpse | Establish source shape, units, and comparison candidates`
+- `T6 | Group comparison | group_by, summarize, count, mutate | Compare categories, time periods, or entities`
+- `T7 | Visualization | ggplot, geom_col, geom_point, geom_line, facet_wrap | Communicate the core result visually`
+
+Data Transformation Flow:
+
+- `Raw | Imported source tables or files | Load source data into tibbles or lists | Raw episode objects | Establish the starting analysis surface`
+- `Raw -> Clean | Raw source tables | Filter, rename, and derive analysis columns | Cleaned table | Make the data comparable and plot-ready`
+- `Clean -> Analytical | Cleaned table | Group, summarize, rank, or compare entities | Summary tables or rate calculations | Surface the core analytical story`
+- `Analytical -> Visual | Summary or model outputs | Reorder factors and prepare plotting fields | Plot-ready table | Turn the analytical result into an interpretable chart`
+
+Reusable Patterns:
+
+- `inspect_source_schema | Inspect source tables, field meanings, and likely comparison axes | Raw dataset or dataset list | Initial analysis plan | Y`
+- `plot_comparative_story | Reorder entities and visualize the main comparison cleanly | Summary table or model output | Communication-ready plot | Y`
+
+Function Candidates:
+
+- `plot_comparative_story(data, x_col, y_col, group_col = NULL)`
+
+Episode Signature:
+
+- `analysis_intent`: Explore distributions, group differences, and notable patterns in art collections through cleaning, summarization, and visualization
+- `analysis_type`: EDA
+- `primary_techniques`: schema inspection, grouped summaries, time-aware comparison, visualization
+- `data_complexity_level`: low-medium
+- `reusable_difficulty_score`: 2
+
+Adaptation Plan:
+
+- `1 | inspect_source_schema | Start by mapping entities, measures, and likely comparison axes before transforming anything`
 - `8 | plot_comparative_story | Choose the clearest visual comparison once the analytical table is ready`
 
 ### `beach_volleyball`
@@ -830,128 +2501,6 @@ Adaptation Plan:
 - `6 | build_predictive_or_explanatory_model | Fit and evaluate a baseline model after the core feature engineering is stable`
 - `8 | plot_comparative_story | Choose the clearest visual comparison once the analytical table is ready`
 
-### `bob_ross_paintings`
-
-- `transcript_title`: Analyzing Bob Ross paintings in R
-- `transcript_file`: `raw-data/inspiration/Analyzing Bob Ross paintings in R.txt`
-- `code_file`: `data-screencasts/bob-ross.Rmd`
-- `data_source`: TidyTuesday 2019-08-06 source files
-- `analysis_intent`: Explore and compare language patterns in Bob Ross paintings using tokenization, grouped counts, and discriminative text analysis
-- `analysis_type`: EDA
-- `pattern_signature`: `load_inspect_reshape_tokenize_compare_visualize`
-- `adaptation_hint`: Reuse for grouped text corpora that need tokenization, term comparison, and context-aware vocabulary analysis
-- `ker_status`: extracted
-
-Thought Process Map:
-
-- `T1 | Context | Frame the episode as exploratory analysis of Bob Ross paintings with limited advance knowledge of the data. | Transcript title and opening context`
-- `T2 | Inspect | Load the data, inspect table shape, and identify the main entities, measures, and comparison axes. | Initial data load and early counts or prints`
-- `T4 | Transform | Reshape fields, standardize column meanings, and join supporting tables to create analysis-ready records. | Join and reshaping operations in the Rmd`
-- `T5 | Compare | Tokenize text, remove noise terms, and compare vocabulary across groups or documents. | tidytext workflow in the episode`
-- `T6 | Compare | Summarize group differences, rates, rankings, or trajectories to surface the main story in the data. | Grouped summaries and comparative plots`
-- `T7 | Visualize | Turn the cleaned summaries into interpretable visual comparisons and iterate toward the clearest view. | ggplot workflow`
-- `T8 | Reflect | Identify reusable workflow pieces that can transfer to future datasets with a similar shape or question. | End-state of the analysis pattern`
-
-Code Mapping Table:
-
-- `T1 | Data load and inspection | read_csv, count | Establish source shape, units, and comparison candidates`
-- `T4 | Structuring and enrichment | gather | Convert messy inputs into analysis-ready tables`
-- `T5 | Text comparison | episode-specific dplyr and ggplot verbs | Identify terms that distinguish groups or documents`
-- `T6 | Group comparison | group_by, count, mutate | Compare categories, time periods, or entities`
-- `T7 | Visualization | ggplot, geom_col, geom_point, geom_line, facet_wrap | Communicate the core result visually`
-
-Data Transformation Flow:
-
-- `Raw | Imported source tables or files | Load source data into tibbles or lists | Raw episode objects | Establish the starting analysis surface`
-- `Raw -> Clean | Raw source tables | Rename, reshape, unnest, and join supporting data | Analysis-ready rows with consistent keys | Standardize the schema before comparison`
-- `Clean -> Analytical | Clean text corpus | Tokenize text, remove stop words, and count terms by group | Term-frequency comparison tables | Surface language differences and signatures`
-- `Analytical -> Visual | Summary or model outputs | Reorder factors and prepare plotting fields | Plot-ready table | Turn the analytical result into an interpretable chart`
-
-Reusable Patterns:
-
-- `inspect_source_schema | Inspect source tables, field meanings, and likely comparison axes | Raw dataset or dataset list | Initial analysis plan | Y`
-- `reshape_analysis_inputs | Convert wide or nested source fields into normalized long-form records | Raw tabular fields | Tidy analysis table | Y`
-- `compare_group_vocabulary | Tokenize text and compute grouped term distinctiveness | Text, grouping variable, document or entity ids | Ranked term comparison tables | Y`
-- `plot_comparative_story | Reorder entities and visualize the main comparison cleanly | Summary table or model output | Communication-ready plot | Y`
-
-Function Candidates:
-
-- `reshape_episode_inputs(data, ...)`
-- `join_episode_context(primary_data, lookup_data, by)`
-- `prepare_text_tokens(data, text_column)`
-- `compare_group_vocabulary(data, group_col, term_col, count_col = 'n')`
-- `plot_comparative_story(data, x_col, y_col, group_col = NULL)`
-
-Episode Signature:
-
-- `analysis_intent`: Explore and compare language patterns in Bob Ross paintings using tokenization, grouped counts, and discriminative text analysis
-- `analysis_type`: EDA
-- `primary_techniques`: schema inspection, grouped summaries, reshaping, tokenization, term comparison, visualization
-- `data_complexity_level`: medium
-- `reusable_difficulty_score`: 3
-
-Adaptation Plan:
-
-- `1 | inspect_source_schema | Start by mapping entities, measures, and likely comparison axes before transforming anything`
-- `3 | reshape_analysis_inputs | Normalize wide, nested, or repeated fields into one analysis-ready row structure`
-- `5 | compare_group_vocabulary | Tokenize the new corpus and compare terms across groups or documents`
-- `8 | plot_comparative_story | Choose the clearest visual comparison once the analytical table is ready`
-
-### `broadway_shows`
-
-- `transcript_title`: Analyzing Broadway shows in R
-- `transcript_file`: `raw-data/inspiration/Analyzing Broadway shows in R.txt`
-- `code_file`: `data-screencasts/broadway.Rmd`
-- `data_source`: TidyTuesday 2020-04-28 dataset
-- `analysis_intent`: Explore distributions, group differences, and notable patterns in Broadway shows through cleaning, summarization, and visualization
-- `analysis_type`: EDA
-- `pattern_signature`: `load_inspect_trend_compare_visualize`
-- `adaptation_hint`: Reuse for exploratory datasets that need schema inspection, grouped summaries, and visualization-first storytelling
-- `ker_status`: extracted
-
-Thought Process Map:
-
-- `T1 | Context | Frame the episode as exploratory analysis of Broadway shows with limited advance knowledge of the data. | Transcript title and opening context`
-- `T2 | Inspect | Load the data, inspect table shape, and identify the main entities, measures, and comparison axes. | Initial data load and early counts or prints`
-- `T6 | Compare | Summarize group differences, rates, rankings, or trajectories to surface the main story in the data. | Grouped summaries and comparative plots`
-- `T7 | Visualize | Turn the cleaned summaries into interpretable visual comparisons and iterate toward the clearest view. | ggplot workflow`
-- `T8 | Reflect | Identify reusable workflow pieces that can transfer to future datasets with a similar shape or question. | End-state of the analysis pattern`
-
-Code Mapping Table:
-
-- `T1 | Data load and inspection | tt_load | Establish source shape, units, and comparison candidates`
-- `T6 | Group comparison | summarize, mutate | Compare categories, time periods, or entities`
-- `T7 | Visualization | ggplot, geom_col, geom_line | Communicate the core result visually`
-
-Data Transformation Flow:
-
-- `Raw | Imported source tables or files | Load source data into tibbles or lists | Raw episode objects | Establish the starting analysis surface`
-- `Raw -> Clean | Raw source tables | Filter, rename, and derive analysis columns | Cleaned table | Make the data comparable and plot-ready`
-- `Clean -> Analytical | Cleaned table | Group, summarize, rank, or compare entities | Summary tables or rate calculations | Surface the core analytical story`
-- `Analytical -> Visual | Summary or model outputs | Reorder factors and prepare plotting fields | Plot-ready table | Turn the analytical result into an interpretable chart`
-
-Reusable Patterns:
-
-- `inspect_source_schema | Inspect source tables, field meanings, and likely comparison axes | Raw dataset or dataset list | Initial analysis plan | Y`
-- `plot_comparative_story | Reorder entities and visualize the main comparison cleanly | Summary table or model output | Communication-ready plot | Y`
-
-Function Candidates:
-
-- `plot_comparative_story(data, x_col, y_col, group_col = NULL)`
-
-Episode Signature:
-
-- `analysis_intent`: Explore distributions, group differences, and notable patterns in Broadway shows through cleaning, summarization, and visualization
-- `analysis_type`: EDA
-- `primary_techniques`: schema inspection, grouped summaries, time-aware comparison, visualization
-- `data_complexity_level`: low-medium
-- `reusable_difficulty_score`: 2
-
-Adaptation Plan:
-
-- `1 | inspect_source_schema | Start by mapping entities, measures, and likely comparison axes before transforming anything`
-- `8 | plot_comparative_story | Choose the clearest visual comparison once the analytical table is ready`
-
 ### `car_fuel_efficiency`
 
 - `transcript_title`: Analyzing car fuel efficiency in R
@@ -1074,73 +2623,6 @@ Adaptation Plan:
 
 - `1 | inspect_source_schema | Start by mapping entities, measures, and likely comparison axes before transforming anything`
 - `7 | prepare_geographic_summary | Aggregate to the geographic unit available in the new dataset and rebuild the map join`
-- `8 | plot_comparative_story | Choose the clearest visual comparison once the analytical table is ready`
-
-### `chopped_epiodes`
-
-- `transcript_title`: Analyzing Chopped epiodes in R
-- `transcript_file`: `raw-data/inspiration/Analyzing Chopped epiodes in R.txt`
-- `code_file`: `data-screencasts/2020_08_25_chopped.Rmd`
-- `data_source`: TidyTuesday 2020-08-25 dataset
-- `analysis_intent`: Predict or estimate outcomes in Chopped epiodes using cleaned features, exploratory analysis, and model evaluation
-- `analysis_type`: Predictive
-- `pattern_signature`: `load_inspect_reshape_join_trend_model_evaluate_visualize`
-- `adaptation_hint`: Reuse for tabular datasets with a clear outcome column, engineered features, and model evaluation needs
-- `ker_status`: extracted
-
-Thought Process Map:
-
-- `T1 | Context | Frame the episode as exploratory analysis of Chopped epiodes with limited advance knowledge of the data. | Transcript title and opening context`
-- `T2 | Inspect | Load the data, inspect table shape, and identify the main entities, measures, and comparison axes. | Initial data load and early counts or prints`
-- `T4 | Transform | Reshape fields, standardize column meanings, and join supporting tables to create analysis-ready records. | Join and reshaping operations in the Rmd`
-- `T6 | Compare | Move from descriptive patterns into statistical or predictive modeling once the feature space is ready. | Modeling functions and evaluation code`
-- `T7 | Visualize | Turn the cleaned summaries into interpretable visual comparisons and iterate toward the clearest view. | ggplot workflow`
-- `T8 | Reflect | Identify reusable workflow pieces that can transfer to future datasets with a similar shape or question. | End-state of the analysis pattern`
-
-Code Mapping Table:
-
-- `T1 | Data load and inspection | tt_load, count | Establish source shape, units, and comparison candidates`
-- `T4 | Structuring and enrichment | pivot_longer, pivot_wider, separate_rows | Convert messy inputs into analysis-ready tables`
-- `T6 | Modeling and evaluation | lm, glm, recipe, fit, predict | Test explanatory or predictive relationships after EDA`
-- `T7 | Visualization | ggplot, geom_col, geom_point, geom_line | Communicate the core result visually`
-
-Data Transformation Flow:
-
-- `Raw | Imported source tables or files | Load source data into tibbles or lists | Raw episode objects | Establish the starting analysis surface`
-- `Raw -> Clean | Raw source tables | Rename, reshape, unnest, and join supporting data | Analysis-ready rows with consistent keys | Standardize the schema before comparison`
-- `Clean -> Analytical | Feature table | Engineer predictors and fit models | Model outputs, predictions, or coefficients | Quantify relationships beyond descriptive summaries`
-- `Analytical -> Visual | Summary or model outputs | Reorder factors and prepare plotting fields | Plot-ready table | Turn the analytical result into an interpretable chart`
-
-Reusable Patterns:
-
-- `inspect_source_schema | Inspect source tables, field meanings, and likely comparison axes | Raw dataset or dataset list | Initial analysis plan | Y`
-- `reshape_analysis_inputs | Convert wide or nested source fields into normalized long-form records | Raw tabular fields | Tidy analysis table | Y`
-- `join_context_tables | Enrich the main table with lookup or metadata tables | Primary data plus keys | Context-enriched analysis table | Y`
-- `build_predictive_or_explanatory_model | Move from cleaned features to fitted models and evaluation outputs | Feature table and outcome field | Model object and diagnostics | Y`
-- `plot_comparative_story | Reorder entities and visualize the main comparison cleanly | Summary table or model output | Communication-ready plot | Y`
-
-Function Candidates:
-
-- `reshape_episode_inputs(data, ...)`
-- `join_episode_context(primary_data, lookup_data, by)`
-- `build_predictive_pipeline(data, formula, ...)`
-- `evaluate_episode_model(model, test_data, outcome_col)`
-- `plot_comparative_story(data, x_col, y_col, group_col = NULL)`
-
-Episode Signature:
-
-- `analysis_intent`: Predict or estimate outcomes in Chopped epiodes using cleaned features, exploratory analysis, and model evaluation
-- `analysis_type`: Predictive
-- `primary_techniques`: schema inspection, grouped summaries, reshaping, table joins, modeling, time-aware comparison, visualization
-- `data_complexity_level`: medium-high
-- `reusable_difficulty_score`: 4
-
-Adaptation Plan:
-
-- `1 | inspect_source_schema | Start by mapping entities, measures, and likely comparison axes before transforming anything`
-- `3 | reshape_analysis_inputs | Normalize wide, nested, or repeated fields into one analysis-ready row structure`
-- `4 | join_context_tables | Enrich the main analysis table with keys, metadata, or auxiliary measurements`
-- `6 | build_predictive_or_explanatory_model | Fit and evaluate a baseline model after the core feature engineering is stable`
 - `8 | plot_comparative_story | Choose the clearest visual comparison once the analytical table is ready`
 
 ### `cocktail_recipes`
@@ -1718,73 +3200,6 @@ Adaptation Plan:
 - `3 | reshape_analysis_inputs | Normalize wide, nested, or repeated fields into one analysis-ready row structure`
 - `8 | plot_comparative_story | Choose the clearest visual comparison once the analytical table is ready`
 
-### `european_energy`
-
-- `transcript_title`: Analyzing European energy in R
-- `transcript_file`: `raw-data/inspiration/Analyzing European energy in R.txt`
-- `code_file`: `data-screencasts/2020_08_04_europe_energy.Rmd`
-- `data_source`: TidyTuesday 2020-08-04 dataset
-- `analysis_intent`: Explore and compare language patterns in European energy using tokenization, grouped counts, and discriminative text analysis
-- `analysis_type`: EDA
-- `pattern_signature`: `load_inspect_reshape_tokenize_trend_compare_visualize`
-- `adaptation_hint`: Reuse for grouped text corpora that need tokenization, term comparison, and context-aware vocabulary analysis
-- `ker_status`: extracted
-
-Thought Process Map:
-
-- `T1 | Context | Frame the episode as exploratory analysis of European energy with limited advance knowledge of the data. | Transcript title and opening context`
-- `T2 | Inspect | Load the data, inspect table shape, and identify the main entities, measures, and comparison axes. | Initial data load and early counts or prints`
-- `T4 | Transform | Reshape fields, standardize column meanings, and join supporting tables to create analysis-ready records. | Join and reshaping operations in the Rmd`
-- `T5 | Compare | Tokenize text, remove noise terms, and compare vocabulary across groups or documents. | tidytext workflow in the episode`
-- `T6 | Compare | Summarize group differences, rates, rankings, or trajectories to surface the main story in the data. | Grouped summaries and comparative plots`
-- `T7 | Visualize | Turn the cleaned summaries into interpretable visual comparisons and iterate toward the clearest view. | ggplot workflow`
-- `T8 | Reflect | Identify reusable workflow pieces that can transfer to future datasets with a similar shape or question. | End-state of the analysis pattern`
-
-Code Mapping Table:
-
-- `T1 | Data load and inspection | tt_load, count | Establish source shape, units, and comparison candidates`
-- `T4 | Structuring and enrichment | pivot_longer | Convert messy inputs into analysis-ready tables`
-- `T5 | Text comparison | episode-specific dplyr and ggplot verbs | Identify terms that distinguish groups or documents`
-- `T6 | Group comparison | group_by, summarize, count, mutate | Compare categories, time periods, or entities`
-- `T7 | Visualization | ggplot, geom_col, geom_point, geom_line, facet_wrap | Communicate the core result visually`
-
-Data Transformation Flow:
-
-- `Raw | Imported source tables or files | Load source data into tibbles or lists | Raw episode objects | Establish the starting analysis surface`
-- `Raw -> Clean | Raw source tables | Rename, reshape, unnest, and join supporting data | Analysis-ready rows with consistent keys | Standardize the schema before comparison`
-- `Clean -> Analytical | Clean text corpus | Tokenize text, remove stop words, and count terms by group | Term-frequency comparison tables | Surface language differences and signatures`
-- `Analytical -> Visual | Summary or model outputs | Reorder factors and prepare plotting fields | Plot-ready table | Turn the analytical result into an interpretable chart`
-
-Reusable Patterns:
-
-- `inspect_source_schema | Inspect source tables, field meanings, and likely comparison axes | Raw dataset or dataset list | Initial analysis plan | Y`
-- `reshape_analysis_inputs | Convert wide or nested source fields into normalized long-form records | Raw tabular fields | Tidy analysis table | Y`
-- `compare_group_vocabulary | Tokenize text and compute grouped term distinctiveness | Text, grouping variable, document or entity ids | Ranked term comparison tables | Y`
-- `plot_comparative_story | Reorder entities and visualize the main comparison cleanly | Summary table or model output | Communication-ready plot | Y`
-
-Function Candidates:
-
-- `reshape_episode_inputs(data, ...)`
-- `join_episode_context(primary_data, lookup_data, by)`
-- `prepare_text_tokens(data, text_column)`
-- `compare_group_vocabulary(data, group_col, term_col, count_col = 'n')`
-- `plot_comparative_story(data, x_col, y_col, group_col = NULL)`
-
-Episode Signature:
-
-- `analysis_intent`: Explore and compare language patterns in European energy using tokenization, grouped counts, and discriminative text analysis
-- `analysis_type`: EDA
-- `primary_techniques`: schema inspection, grouped summaries, reshaping, tokenization, term comparison, time-aware comparison, visualization
-- `data_complexity_level`: medium-high
-- `reusable_difficulty_score`: 4
-
-Adaptation Plan:
-
-- `1 | inspect_source_schema | Start by mapping entities, measures, and likely comparison axes before transforming anything`
-- `3 | reshape_analysis_inputs | Normalize wide, nested, or repeated fields into one analysis-ready row structure`
-- `5 | compare_group_vocabulary | Tokenize the new corpus and compare terms across groups or documents`
-- `8 | plot_comparative_story | Choose the clearest visual comparison once the analytical table is ready`
-
 ### `exploring_beer_production`
 
 - `transcript_title`: Analyzing exploring US beer production in R
@@ -1985,142 +3400,6 @@ Adaptation Plan:
 - `4 | join_context_tables | Enrich the main analysis table with keys, metadata, or auxiliary measurements`
 - `8 | plot_comparative_story | Choose the clearest visual comparison once the analytical table is ready`
 
-### `friends_transcripts`
-
-- `transcript_title`: Analyzing Friends transcripts in R
-- `transcript_file`: `raw-data/inspiration/Analyzing Friends transcripts in R.txt`
-- `code_file`: `data-screencasts/2020_09_08_friends.Rmd`
-- `data_source`: TidyTuesday 2020-09-08 dataset
-- `analysis_intent`: Explore and compare language patterns in Friends transcripts using tokenization, grouped counts, and discriminative text analysis
-- `analysis_type`: Modeling
-- `pattern_signature`: `load_inspect_reshape_join_tokenize_trend_model_evaluate_visualize`
-- `adaptation_hint`: Reuse for grouped text corpora that need tokenization, term comparison, and context-aware vocabulary analysis
-- `ker_status`: extracted
-
-Thought Process Map:
-
-- `T1 | Context | Frame the episode as exploratory analysis of Friends transcripts with limited advance knowledge of the data. | Transcript title and opening context`
-- `T2 | Inspect | Load the data, inspect table shape, and identify the main entities, measures, and comparison axes. | Initial data load and early counts or prints`
-- `T4 | Transform | Reshape fields, standardize column meanings, and join supporting tables to create analysis-ready records. | Join and reshaping operations in the Rmd`
-- `T5 | Compare | Tokenize text, remove noise terms, and compare vocabulary across groups or documents. | tidytext workflow in the episode`
-- `T6 | Compare | Move from descriptive patterns into statistical or predictive modeling once the feature space is ready. | Modeling functions and evaluation code`
-- `T7 | Visualize | Turn the cleaned summaries into interpretable visual comparisons and iterate toward the clearest view. | ggplot workflow`
-- `T8 | Reflect | Identify reusable workflow pieces that can transfer to future datasets with a similar shape or question. | End-state of the analysis pattern`
-
-Code Mapping Table:
-
-- `T1 | Data load and inspection | tt_load, count, glimpse | Establish source shape, units, and comparison candidates`
-- `T4 | Structuring and enrichment | spread, unnest, inner_join | Convert messy inputs into analysis-ready tables`
-- `T5 | Text comparison | unnest_tokens, anti_join, bind_log_odds | Identify terms that distinguish groups or documents`
-- `T6 | Modeling and evaluation | lm, predict | Test explanatory or predictive relationships after EDA`
-- `T7 | Visualization | ggplot, geom_col, geom_point, geom_line, facet_wrap | Communicate the core result visually`
-
-Data Transformation Flow:
-
-- `Raw | Imported source tables or files | Load source data into tibbles or lists | Raw episode objects | Establish the starting analysis surface`
-- `Raw -> Clean | Raw source tables | Rename, reshape, unnest, and join supporting data | Analysis-ready rows with consistent keys | Standardize the schema before comparison`
-- `Clean -> Analytical | Clean text corpus | Tokenize text, remove stop words, and count terms by group | Term-frequency comparison tables | Surface language differences and signatures`
-- `Analytical -> Visual | Summary or model outputs | Reorder factors and prepare plotting fields | Plot-ready table | Turn the analytical result into an interpretable chart`
-
-Reusable Patterns:
-
-- `inspect_source_schema | Inspect source tables, field meanings, and likely comparison axes | Raw dataset or dataset list | Initial analysis plan | Y`
-- `reshape_analysis_inputs | Convert wide or nested source fields into normalized long-form records | Raw tabular fields | Tidy analysis table | Y`
-- `join_context_tables | Enrich the main table with lookup or metadata tables | Primary data plus keys | Context-enriched analysis table | Y`
-- `compare_group_vocabulary | Tokenize text and compute grouped term distinctiveness | Text, grouping variable, document or entity ids | Ranked term comparison tables | Y`
-- `build_predictive_or_explanatory_model | Move from cleaned features to fitted models and evaluation outputs | Feature table and outcome field | Model object and diagnostics | Y`
-- `plot_comparative_story | Reorder entities and visualize the main comparison cleanly | Summary table or model output | Communication-ready plot | Y`
-
-Function Candidates:
-
-- `reshape_episode_inputs(data, ...)`
-- `join_episode_context(primary_data, lookup_data, by)`
-- `prepare_text_tokens(data, text_column)`
-- `compare_group_vocabulary(data, group_col, term_col, count_col = 'n')`
-- `build_predictive_pipeline(data, formula, ...)`
-- `evaluate_episode_model(model, test_data, outcome_col)`
-- `plot_comparative_story(data, x_col, y_col, group_col = NULL)`
-
-Episode Signature:
-
-- `analysis_intent`: Explore and compare language patterns in Friends transcripts using tokenization, grouped counts, and discriminative text analysis
-- `analysis_type`: Modeling
-- `primary_techniques`: schema inspection, grouped summaries, reshaping, table joins, tokenization, term comparison, modeling, time-aware comparison, visualization
-- `data_complexity_level`: high
-- `reusable_difficulty_score`: 5
-
-Adaptation Plan:
-
-- `1 | inspect_source_schema | Start by mapping entities, measures, and likely comparison axes before transforming anything`
-- `3 | reshape_analysis_inputs | Normalize wide, nested, or repeated fields into one analysis-ready row structure`
-- `4 | join_context_tables | Enrich the main analysis table with keys, metadata, or auxiliary measurements`
-- `5 | compare_group_vocabulary | Tokenize the new corpus and compare terms across groups or documents`
-- `6 | build_predictive_or_explanatory_model | Fit and evaluate a baseline model after the core feature engineering is stable`
-- `8 | plot_comparative_story | Choose the clearest visual comparison once the analytical table is ready`
-
-### `gdpr_violations`
-
-- `transcript_title`: Analyzing GDPR violations in R
-- `transcript_file`: `raw-data/inspiration/Analyzing GDPR violations in R.txt`
-- `code_file`: `data-screencasts/gdpr.Rmd`
-- `data_source`: TidyTuesday 2020-04-21 dataset
-- `analysis_intent`: Explore distributions, group differences, and notable patterns in GDPR violations through cleaning, summarization, and visualization
-- `analysis_type`: EDA
-- `pattern_signature`: `load_inspect_reshape_join_trend_compare_visualize`
-- `adaptation_hint`: Reuse for messy multi-table datasets that need reshaping, enrichment, and grouped summaries before plotting
-- `ker_status`: extracted
-
-Thought Process Map:
-
-- `T1 | Context | Frame the episode as exploratory analysis of GDPR violations with limited advance knowledge of the data. | Transcript title and opening context`
-- `T2 | Inspect | Load the data, inspect table shape, and identify the main entities, measures, and comparison axes. | Initial data load and early counts or prints`
-- `T4 | Transform | Reshape fields, standardize column meanings, and join supporting tables to create analysis-ready records. | Join and reshaping operations in the Rmd`
-- `T6 | Compare | Summarize group differences, rates, rankings, or trajectories to surface the main story in the data. | Grouped summaries and comparative plots`
-- `T7 | Visualize | Turn the cleaned summaries into interpretable visual comparisons and iterate toward the clearest view. | ggplot workflow`
-- `T8 | Reflect | Identify reusable workflow pieces that can transfer to future datasets with a similar shape or question. | End-state of the analysis pattern`
-
-Code Mapping Table:
-
-- `T1 | Data load and inspection | tt_load, count | Establish source shape, units, and comparison candidates`
-- `T4 | Structuring and enrichment | separate_rows, left_join | Convert messy inputs into analysis-ready tables`
-- `T6 | Group comparison | group_by, summarize, count, mutate | Compare categories, time periods, or entities`
-- `T7 | Visualization | ggplot, geom_col, geom_point | Communicate the core result visually`
-
-Data Transformation Flow:
-
-- `Raw | Imported source tables or files | Load source data into tibbles or lists | Raw episode objects | Establish the starting analysis surface`
-- `Raw -> Clean | Raw source tables | Rename, reshape, unnest, and join supporting data | Analysis-ready rows with consistent keys | Standardize the schema before comparison`
-- `Clean -> Analytical | Cleaned table | Group, summarize, rank, or compare entities | Summary tables or rate calculations | Surface the core analytical story`
-- `Analytical -> Visual | Summary or model outputs | Reorder factors and prepare plotting fields | Plot-ready table | Turn the analytical result into an interpretable chart`
-
-Reusable Patterns:
-
-- `inspect_source_schema | Inspect source tables, field meanings, and likely comparison axes | Raw dataset or dataset list | Initial analysis plan | Y`
-- `reshape_analysis_inputs | Convert wide or nested source fields into normalized long-form records | Raw tabular fields | Tidy analysis table | Y`
-- `join_context_tables | Enrich the main table with lookup or metadata tables | Primary data plus keys | Context-enriched analysis table | Y`
-- `plot_comparative_story | Reorder entities and visualize the main comparison cleanly | Summary table or model output | Communication-ready plot | Y`
-
-Function Candidates:
-
-- `reshape_episode_inputs(data, ...)`
-- `join_episode_context(primary_data, lookup_data, by)`
-- `plot_comparative_story(data, x_col, y_col, group_col = NULL)`
-
-Episode Signature:
-
-- `analysis_intent`: Explore distributions, group differences, and notable patterns in GDPR violations through cleaning, summarization, and visualization
-- `analysis_type`: EDA
-- `primary_techniques`: schema inspection, grouped summaries, reshaping, table joins, time-aware comparison, visualization
-- `data_complexity_level`: medium
-- `reusable_difficulty_score`: 3
-
-Adaptation Plan:
-
-- `1 | inspect_source_schema | Start by mapping entities, measures, and likely comparison axes before transforming anything`
-- `3 | reshape_analysis_inputs | Normalize wide, nested, or repeated fields into one analysis-ready row structure`
-- `4 | join_context_tables | Enrich the main analysis table with keys, metadata, or auxiliary measurements`
-- `8 | plot_comparative_story | Choose the clearest visual comparison once the analytical table is ready`
-
 ### `global_crop_yields`
 
 - `transcript_title`: Analyzing global crop yields in R
@@ -2241,69 +3520,6 @@ Adaptation Plan:
 
 - `1 | inspect_source_schema | Start by mapping entities, measures, and likely comparison axes before transforming anything`
 - `3 | reshape_analysis_inputs | Normalize wide, nested, or repeated fields into one analysis-ready row structure`
-- `8 | plot_comparative_story | Choose the clearest visual comparison once the analytical table is ready`
-
-### `hbcu_enrollment`
-
-- `transcript_title`: Analyzing HBCU enrollment in R
-- `transcript_file`: `raw-data/inspiration/Analyzing HBCU enrollment in R.txt`
-- `code_file`: `data-screencasts/2021_02_02_hbcu.Rmd`
-- `data_source`: TidyTuesday 2021-02-02 dataset
-- `analysis_intent`: Explore distributions, group differences, and notable patterns in HBCU enrollment through cleaning, summarization, and visualization
-- `analysis_type`: EDA
-- `pattern_signature`: `load_inspect_reshape_join_trend_compare_visualize`
-- `adaptation_hint`: Reuse for messy multi-table datasets that need reshaping, enrichment, and grouped summaries before plotting
-- `ker_status`: extracted
-
-Thought Process Map:
-
-- `T1 | Context | Frame the episode as exploratory analysis of HBCU enrollment with limited advance knowledge of the data. | Transcript title and opening context`
-- `T2 | Inspect | Load the data, inspect table shape, and identify the main entities, measures, and comparison axes. | Initial data load and early counts or prints`
-- `T4 | Transform | Reshape fields, standardize column meanings, and join supporting tables to create analysis-ready records. | Join and reshaping operations in the Rmd`
-- `T6 | Compare | Summarize group differences, rates, rankings, or trajectories to surface the main story in the data. | Grouped summaries and comparative plots`
-- `T7 | Visualize | Turn the cleaned summaries into interpretable visual comparisons and iterate toward the clearest view. | ggplot workflow`
-- `T8 | Reflect | Identify reusable workflow pieces that can transfer to future datasets with a similar shape or question. | End-state of the analysis pattern`
-
-Code Mapping Table:
-
-- `T1 | Data load and inspection | tt_load, read_excel | Establish source shape, units, and comparison candidates`
-- `T4 | Structuring and enrichment | gather, spread | Convert messy inputs into analysis-ready tables`
-- `T6 | Group comparison | group_by, mutate | Compare categories, time periods, or entities`
-- `T7 | Visualization | ggplot, geom_col, geom_line, facet_wrap | Communicate the core result visually`
-
-Data Transformation Flow:
-
-- `Raw | Imported source tables or files | Load source data into tibbles or lists | Raw episode objects | Establish the starting analysis surface`
-- `Raw -> Clean | Raw source tables | Rename, reshape, unnest, and join supporting data | Analysis-ready rows with consistent keys | Standardize the schema before comparison`
-- `Clean -> Analytical | Cleaned table | Group, summarize, rank, or compare entities | Summary tables or rate calculations | Surface the core analytical story`
-- `Analytical -> Visual | Summary or model outputs | Reorder factors and prepare plotting fields | Plot-ready table | Turn the analytical result into an interpretable chart`
-
-Reusable Patterns:
-
-- `inspect_source_schema | Inspect source tables, field meanings, and likely comparison axes | Raw dataset or dataset list | Initial analysis plan | Y`
-- `reshape_analysis_inputs | Convert wide or nested source fields into normalized long-form records | Raw tabular fields | Tidy analysis table | Y`
-- `join_context_tables | Enrich the main table with lookup or metadata tables | Primary data plus keys | Context-enriched analysis table | Y`
-- `plot_comparative_story | Reorder entities and visualize the main comparison cleanly | Summary table or model output | Communication-ready plot | Y`
-
-Function Candidates:
-
-- `reshape_episode_inputs(data, ...)`
-- `join_episode_context(primary_data, lookup_data, by)`
-- `plot_comparative_story(data, x_col, y_col, group_col = NULL)`
-
-Episode Signature:
-
-- `analysis_intent`: Explore distributions, group differences, and notable patterns in HBCU enrollment through cleaning, summarization, and visualization
-- `analysis_type`: EDA
-- `primary_techniques`: schema inspection, grouped summaries, reshaping, table joins, time-aware comparison, visualization
-- `data_complexity_level`: medium-high
-- `reusable_difficulty_score`: 4
-
-Adaptation Plan:
-
-- `1 | inspect_source_schema | Start by mapping entities, measures, and likely comparison axes before transforming anything`
-- `3 | reshape_analysis_inputs | Normalize wide, nested, or repeated fields into one analysis-ready row structure`
-- `4 | join_context_tables | Enrich the main analysis table with keys, metadata, or auxiliary measurements`
 - `8 | plot_comparative_story | Choose the clearest visual comparison once the analytical table is ready`
 
 ### `historical_phones`
@@ -2434,65 +3650,6 @@ Adaptation Plan:
 - `3 | reshape_analysis_inputs | Normalize wide, nested, or repeated fields into one analysis-ready row structure`
 - `8 | plot_comparative_story | Choose the clearest visual comparison once the analytical table is ready`
 
-### `ikea_furniture`
-
-- `transcript_title`: Analyzing IKEA furniture in R
-- `transcript_file`: `raw-data/inspiration/Analyzing IKEA furniture in R.txt`
-- `code_file`: `data-screencasts/2020_11_03_ikea.Rmd`
-- `data_source`: TidyTuesday 2020-11-03 dataset
-- `analysis_intent`: Explore, explain, and model patterns in IKEA furniture using engineered features and comparative summaries
-- `analysis_type`: Modeling
-- `pattern_signature`: `load_inspect_trend_model_evaluate_visualize`
-- `adaptation_hint`: Reuse for structured datasets where descriptive analysis leads into explanatory or predictive models
-- `ker_status`: extracted
-
-Thought Process Map:
-
-- `T1 | Context | Frame the episode as exploratory analysis of IKEA furniture with limited advance knowledge of the data. | Transcript title and opening context`
-- `T2 | Inspect | Load the data, inspect table shape, and identify the main entities, measures, and comparison axes. | Initial data load and early counts or prints`
-- `T6 | Compare | Move from descriptive patterns into statistical or predictive modeling once the feature space is ready. | Modeling functions and evaluation code`
-- `T7 | Visualize | Turn the cleaned summaries into interpretable visual comparisons and iterate toward the clearest view. | ggplot workflow`
-- `T8 | Reflect | Identify reusable workflow pieces that can transfer to future datasets with a similar shape or question. | End-state of the analysis pattern`
-
-Code Mapping Table:
-
-- `T1 | Data load and inspection | tt_load, count | Establish source shape, units, and comparison candidates`
-- `T6 | Modeling and evaluation | lm, predict | Test explanatory or predictive relationships after EDA`
-- `T7 | Visualization | ggplot, geom_col, geom_point | Communicate the core result visually`
-
-Data Transformation Flow:
-
-- `Raw | Imported source tables or files | Load source data into tibbles or lists | Raw episode objects | Establish the starting analysis surface`
-- `Raw -> Clean | Raw source tables | Filter, rename, and derive analysis columns | Cleaned table | Make the data comparable and plot-ready`
-- `Clean -> Analytical | Feature table | Engineer predictors and fit models | Model outputs, predictions, or coefficients | Quantify relationships beyond descriptive summaries`
-- `Analytical -> Visual | Summary or model outputs | Reorder factors and prepare plotting fields | Plot-ready table | Turn the analytical result into an interpretable chart`
-
-Reusable Patterns:
-
-- `inspect_source_schema | Inspect source tables, field meanings, and likely comparison axes | Raw dataset or dataset list | Initial analysis plan | Y`
-- `build_predictive_or_explanatory_model | Move from cleaned features to fitted models and evaluation outputs | Feature table and outcome field | Model object and diagnostics | Y`
-- `plot_comparative_story | Reorder entities and visualize the main comparison cleanly | Summary table or model output | Communication-ready plot | Y`
-
-Function Candidates:
-
-- `build_predictive_pipeline(data, formula, ...)`
-- `evaluate_episode_model(model, test_data, outcome_col)`
-- `plot_comparative_story(data, x_col, y_col, group_col = NULL)`
-
-Episode Signature:
-
-- `analysis_intent`: Explore, explain, and model patterns in IKEA furniture using engineered features and comparative summaries
-- `analysis_type`: Modeling
-- `primary_techniques`: schema inspection, grouped summaries, modeling, time-aware comparison, visualization
-- `data_complexity_level`: low-medium
-- `reusable_difficulty_score`: 2
-
-Adaptation Plan:
-
-- `1 | inspect_source_schema | Start by mapping entities, measures, and likely comparison axes before transforming anything`
-- `6 | build_predictive_or_explanatory_model | Fit and evaluate a baseline model after the core feature engineering is stable`
-- `8 | plot_comparative_story | Choose the clearest visual comparison once the analytical table is ready`
-
 ### `malaria_incidence`
 
 - `transcript_title`: Analyzing malaria incidence in R
@@ -2558,451 +3715,6 @@ Adaptation Plan:
 - `3 | reshape_analysis_inputs | Normalize wide, nested, or repeated fields into one analysis-ready row structure`
 - `4 | join_context_tables | Enrich the main analysis table with keys, metadata, or auxiliary measurements`
 - `7 | prepare_geographic_summary | Aggregate to the geographic unit available in the new dataset and rebuild the map join`
-- `8 | plot_comparative_story | Choose the clearest visual comparison once the analytical table is ready`
-
-### `maryland_bridges`
-
-- `transcript_title`: Analyzing Maryland bridges with R
-- `transcript_file`: `raw-data/inspiration/Analyzing Maryland bridges with R.txt`
-- `code_file`: `data-screencasts/baltimore_bridges.Rmd`
-- `data_source`: Local source files read in episode: https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2018-11-27/baltimore_bridges.csv
-- `analysis_intent`: Explore, explain, and model patterns in Maryland bridges using engineered features and comparative summaries
-- `analysis_type`: Modeling
-- `pattern_signature`: `load_inspect_model_evaluate_visualize`
-- `adaptation_hint`: Reuse for structured datasets where descriptive analysis leads into explanatory or predictive models
-- `ker_status`: extracted
-
-Thought Process Map:
-
-- `T1 | Context | Frame the episode as exploratory analysis of Maryland bridges with limited advance knowledge of the data. | Transcript title and opening context`
-- `T2 | Inspect | Load the data, inspect table shape, and identify the main entities, measures, and comparison axes. | Initial data load and early counts or prints`
-- `T6 | Compare | Move from descriptive patterns into statistical or predictive modeling once the feature space is ready. | Modeling functions and evaluation code`
-- `T7 | Visualize | Turn the cleaned summaries into interpretable visual comparisons and iterate toward the clearest view. | ggplot workflow`
-- `T8 | Reflect | Identify reusable workflow pieces that can transfer to future datasets with a similar shape or question. | End-state of the analysis pattern`
-
-Code Mapping Table:
-
-- `T1 | Data load and inspection | read_csv, count | Establish source shape, units, and comparison candidates`
-- `T6 | Modeling and evaluation | lm, glm, fit, predict | Test explanatory or predictive relationships after EDA`
-- `T7 | Visualization | ggplot, geom_col, geom_point, geom_line, facet_wrap | Communicate the core result visually`
-
-Data Transformation Flow:
-
-- `Raw | Imported source tables or files | Load source data into tibbles or lists | Raw episode objects | Establish the starting analysis surface`
-- `Raw -> Clean | Raw source tables | Filter, rename, and derive analysis columns | Cleaned table | Make the data comparable and plot-ready`
-- `Clean -> Analytical | Feature table | Engineer predictors and fit models | Model outputs, predictions, or coefficients | Quantify relationships beyond descriptive summaries`
-- `Analytical -> Visual | Summary or model outputs | Reorder factors and prepare plotting fields | Plot-ready table | Turn the analytical result into an interpretable chart`
-
-Reusable Patterns:
-
-- `inspect_source_schema | Inspect source tables, field meanings, and likely comparison axes | Raw dataset or dataset list | Initial analysis plan | Y`
-- `build_predictive_or_explanatory_model | Move from cleaned features to fitted models and evaluation outputs | Feature table and outcome field | Model object and diagnostics | Y`
-- `plot_comparative_story | Reorder entities and visualize the main comparison cleanly | Summary table or model output | Communication-ready plot | Y`
-
-Function Candidates:
-
-- `build_predictive_pipeline(data, formula, ...)`
-- `evaluate_episode_model(model, test_data, outcome_col)`
-- `plot_comparative_story(data, x_col, y_col, group_col = NULL)`
-
-Episode Signature:
-
-- `analysis_intent`: Explore, explain, and model patterns in Maryland bridges using engineered features and comparative summaries
-- `analysis_type`: Modeling
-- `primary_techniques`: schema inspection, grouped summaries, modeling, visualization
-- `data_complexity_level`: low-medium
-- `reusable_difficulty_score`: 2
-
-Adaptation Plan:
-
-- `1 | inspect_source_schema | Start by mapping entities, measures, and likely comparison axes before transforming anything`
-- `6 | build_predictive_or_explanatory_model | Fit and evaluate a baseline model after the core feature engineering is stable`
-- `8 | plot_comparative_story | Choose the clearest visual comparison once the analytical table is ready`
-
-### `medium_articles`
-
-- `transcript_title`: Analyzing Medium articles with R
-- `transcript_file`: `raw-data/inspiration/Analyzing Medium articles with R.txt`
-- `code_file`: `data-screencasts/medium-datasci.Rmd`
-- `data_source`: Local source files read in episode: https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2018-12-04/medium_datasci.csv
-- `analysis_intent`: Predict or estimate outcomes in Medium articles using cleaned features, exploratory analysis, and model evaluation
-- `analysis_type`: Predictive
-- `pattern_signature`: `load_inspect_reshape_join_tokenize_trend_model_evaluate_visualize`
-- `adaptation_hint`: Reuse for tabular datasets with a clear outcome column, engineered features, and model evaluation needs
-- `ker_status`: extracted
-
-Thought Process Map:
-
-- `T1 | Context | Frame the episode as exploratory analysis of Medium articles with limited advance knowledge of the data. | Transcript title and opening context`
-- `T2 | Inspect | Load the data, inspect table shape, and identify the main entities, measures, and comparison axes. | Initial data load and early counts or prints`
-- `T4 | Transform | Reshape fields, standardize column meanings, and join supporting tables to create analysis-ready records. | Join and reshaping operations in the Rmd`
-- `T5 | Compare | Tokenize text, remove noise terms, and compare vocabulary across groups or documents. | tidytext workflow in the episode`
-- `T6 | Compare | Move from descriptive patterns into statistical or predictive modeling once the feature space is ready. | Modeling functions and evaluation code`
-- `T7 | Visualize | Turn the cleaned summaries into interpretable visual comparisons and iterate toward the clearest view. | ggplot workflow`
-- `T8 | Reflect | Identify reusable workflow pieces that can transfer to future datasets with a similar shape or question. | End-state of the analysis pattern`
-
-Code Mapping Table:
-
-- `T1 | Data load and inspection | read_csv, count | Establish source shape, units, and comparison candidates`
-- `T4 | Structuring and enrichment | gather, unnest | Convert messy inputs into analysis-ready tables`
-- `T5 | Text comparison | unnest_tokens, anti_join | Identify terms that distinguish groups or documents`
-- `T6 | Modeling and evaluation | lm, glm, fit, predict | Test explanatory or predictive relationships after EDA`
-- `T7 | Visualization | ggplot, geom_col, geom_line | Communicate the core result visually`
-
-Data Transformation Flow:
-
-- `Raw | Imported source tables or files | Load source data into tibbles or lists | Raw episode objects | Establish the starting analysis surface`
-- `Raw -> Clean | Raw source tables | Rename, reshape, unnest, and join supporting data | Analysis-ready rows with consistent keys | Standardize the schema before comparison`
-- `Clean -> Analytical | Clean text corpus | Tokenize text, remove stop words, and count terms by group | Term-frequency comparison tables | Surface language differences and signatures`
-- `Analytical -> Visual | Summary or model outputs | Reorder factors and prepare plotting fields | Plot-ready table | Turn the analytical result into an interpretable chart`
-
-Reusable Patterns:
-
-- `inspect_source_schema | Inspect source tables, field meanings, and likely comparison axes | Raw dataset or dataset list | Initial analysis plan | Y`
-- `reshape_analysis_inputs | Convert wide or nested source fields into normalized long-form records | Raw tabular fields | Tidy analysis table | Y`
-- `join_context_tables | Enrich the main table with lookup or metadata tables | Primary data plus keys | Context-enriched analysis table | Y`
-- `compare_group_vocabulary | Tokenize text and compute grouped term distinctiveness | Text, grouping variable, document or entity ids | Ranked term comparison tables | Y`
-- `build_predictive_or_explanatory_model | Move from cleaned features to fitted models and evaluation outputs | Feature table and outcome field | Model object and diagnostics | Y`
-- `plot_comparative_story | Reorder entities and visualize the main comparison cleanly | Summary table or model output | Communication-ready plot | Y`
-
-Function Candidates:
-
-- `reshape_episode_inputs(data, ...)`
-- `join_episode_context(primary_data, lookup_data, by)`
-- `prepare_text_tokens(data, text_column)`
-- `compare_group_vocabulary(data, group_col, term_col, count_col = 'n')`
-- `build_predictive_pipeline(data, formula, ...)`
-- `evaluate_episode_model(model, test_data, outcome_col)`
-- `plot_comparative_story(data, x_col, y_col, group_col = NULL)`
-
-Episode Signature:
-
-- `analysis_intent`: Predict or estimate outcomes in Medium articles using cleaned features, exploratory analysis, and model evaluation
-- `analysis_type`: Predictive
-- `primary_techniques`: schema inspection, grouped summaries, reshaping, table joins, tokenization, term comparison, modeling, time-aware comparison, visualization
-- `data_complexity_level`: medium-high
-- `reusable_difficulty_score`: 4
-
-Adaptation Plan:
-
-- `1 | inspect_source_schema | Start by mapping entities, measures, and likely comparison axes before transforming anything`
-- `3 | reshape_analysis_inputs | Normalize wide, nested, or repeated fields into one analysis-ready row structure`
-- `4 | join_context_tables | Enrich the main analysis table with keys, metadata, or auxiliary measurements`
-- `5 | compare_group_vocabulary | Tokenize the new corpus and compare terms across groups or documents`
-- `6 | build_predictive_or_explanatory_model | Fit and evaluate a baseline model after the core feature engineering is stable`
-- `8 | plot_comparative_story | Choose the clearest visual comparison once the analytical table is ready`
-
-### `ncaa_women_s_basketball`
-
-- `transcript_title`: Analyzing NCAA Women's Basketball
-- `transcript_file`: `raw-data/inspiration/Analyzing NCAA Women's Basketball.txt`
-- `code_file`: `data-screencasts/2020_10_06_ncaa_womens_basketball.Rmd`
-- `data_source`: TidyTuesday 2020-10-06 dataset
-- `analysis_intent`: Explore distributions, group differences, and notable patterns in NCAA Women's Basketball through cleaning, summarization, and visualization
-- `analysis_type`: EDA
-- `pattern_signature`: `load_inspect_trend_compare_visualize`
-- `adaptation_hint`: Reuse for exploratory datasets that need schema inspection, grouped summaries, and visualization-first storytelling
-- `ker_status`: extracted
-
-Thought Process Map:
-
-- `T1 | Context | Frame the episode as exploratory analysis of NCAA Women's Basketball with limited advance knowledge of the data. | Transcript title and opening context`
-- `T2 | Inspect | Load the data, inspect table shape, and identify the main entities, measures, and comparison axes. | Initial data load and early counts or prints`
-- `T6 | Compare | Summarize group differences, rates, rankings, or trajectories to surface the main story in the data. | Grouped summaries and comparative plots`
-- `T7 | Visualize | Turn the cleaned summaries into interpretable visual comparisons and iterate toward the clearest view. | ggplot workflow`
-- `T8 | Reflect | Identify reusable workflow pieces that can transfer to future datasets with a similar shape or question. | End-state of the analysis pattern`
-
-Code Mapping Table:
-
-- `T1 | Data load and inspection | tt_load, count | Establish source shape, units, and comparison candidates`
-- `T6 | Group comparison | group_by, summarize, count, mutate | Compare categories, time periods, or entities`
-- `T7 | Visualization | ggplot, geom_col, geom_point, geom_line, facet_wrap | Communicate the core result visually`
-
-Data Transformation Flow:
-
-- `Raw | Imported source tables or files | Load source data into tibbles or lists | Raw episode objects | Establish the starting analysis surface`
-- `Raw -> Clean | Raw source tables | Filter, rename, and derive analysis columns | Cleaned table | Make the data comparable and plot-ready`
-- `Clean -> Analytical | Cleaned table | Group, summarize, rank, or compare entities | Summary tables or rate calculations | Surface the core analytical story`
-- `Analytical -> Visual | Summary or model outputs | Reorder factors and prepare plotting fields | Plot-ready table | Turn the analytical result into an interpretable chart`
-
-Reusable Patterns:
-
-- `inspect_source_schema | Inspect source tables, field meanings, and likely comparison axes | Raw dataset or dataset list | Initial analysis plan | Y`
-- `plot_comparative_story | Reorder entities and visualize the main comparison cleanly | Summary table or model output | Communication-ready plot | Y`
-
-Function Candidates:
-
-- `plot_comparative_story(data, x_col, y_col, group_col = NULL)`
-
-Episode Signature:
-
-- `analysis_intent`: Explore distributions, group differences, and notable patterns in NCAA Women's Basketball through cleaning, summarization, and visualization
-- `analysis_type`: EDA
-- `primary_techniques`: schema inspection, grouped summaries, time-aware comparison, visualization
-- `data_complexity_level`: low-medium
-- `reusable_difficulty_score`: 2
-
-Adaptation Plan:
-
-- `1 | inspect_source_schema | Start by mapping entities, measures, and likely comparison axes before transforming anything`
-- `8 | plot_comparative_story | Choose the clearest visual comparison once the analytical table is ready`
-
-### `netflix_titles`
-
-- `transcript_title`: Analyzing Netflix titles in R
-- `transcript_file`: `raw-data/inspiration/Analyzing Netflix titles in R.txt`
-- `code_file`: `data-screencasts/2021_04_20_netflix_titles.Rmd`
-- `data_source`: TidyTuesday 2021-04-20 dataset
-- `analysis_intent`: Predict or estimate outcomes in Netflix titles using cleaned features, exploratory analysis, and model evaluation
-- `analysis_type`: Predictive
-- `pattern_signature`: `load_inspect_reshape_join_tokenize_trend_model_evaluate_visualize`
-- `adaptation_hint`: Reuse for tabular datasets with a clear outcome column, engineered features, and model evaluation needs
-- `ker_status`: extracted
-
-Thought Process Map:
-
-- `T1 | Context | Frame the episode as exploratory analysis of Netflix titles with limited advance knowledge of the data. | Transcript title and opening context`
-- `T2 | Inspect | Load the data, inspect table shape, and identify the main entities, measures, and comparison axes. | Initial data load and early counts or prints`
-- `T4 | Transform | Reshape fields, standardize column meanings, and join supporting tables to create analysis-ready records. | Join and reshaping operations in the Rmd`
-- `T5 | Compare | Tokenize text, remove noise terms, and compare vocabulary across groups or documents. | tidytext workflow in the episode`
-- `T6 | Compare | Move from descriptive patterns into statistical or predictive modeling once the feature space is ready. | Modeling functions and evaluation code`
-- `T7 | Visualize | Turn the cleaned summaries into interpretable visual comparisons and iterate toward the clearest view. | ggplot workflow`
-- `T8 | Reflect | Identify reusable workflow pieces that can transfer to future datasets with a similar shape or question. | End-state of the analysis pattern`
-
-Code Mapping Table:
-
-- `T1 | Data load and inspection | tt_load, count | Establish source shape, units, and comparison candidates`
-- `T4 | Structuring and enrichment | gather, spread, separate_rows, unnest | Convert messy inputs into analysis-ready tables`
-- `T5 | Text comparison | unnest_tokens, anti_join, bind_log_odds | Identify terms that distinguish groups or documents`
-- `T6 | Modeling and evaluation | lm, glm, fit | Test explanatory or predictive relationships after EDA`
-- `T7 | Visualization | ggplot, geom_col, geom_point, geom_line, facet_wrap | Communicate the core result visually`
-
-Data Transformation Flow:
-
-- `Raw | Imported source tables or files | Load source data into tibbles or lists | Raw episode objects | Establish the starting analysis surface`
-- `Raw -> Clean | Raw source tables | Rename, reshape, unnest, and join supporting data | Analysis-ready rows with consistent keys | Standardize the schema before comparison`
-- `Clean -> Analytical | Clean text corpus | Tokenize text, remove stop words, and count terms by group | Term-frequency comparison tables | Surface language differences and signatures`
-- `Analytical -> Visual | Summary or model outputs | Reorder factors and prepare plotting fields | Plot-ready table | Turn the analytical result into an interpretable chart`
-
-Reusable Patterns:
-
-- `inspect_source_schema | Inspect source tables, field meanings, and likely comparison axes | Raw dataset or dataset list | Initial analysis plan | Y`
-- `reshape_analysis_inputs | Convert wide or nested source fields into normalized long-form records | Raw tabular fields | Tidy analysis table | Y`
-- `join_context_tables | Enrich the main table with lookup or metadata tables | Primary data plus keys | Context-enriched analysis table | Y`
-- `compare_group_vocabulary | Tokenize text and compute grouped term distinctiveness | Text, grouping variable, document or entity ids | Ranked term comparison tables | Y`
-- `build_predictive_or_explanatory_model | Move from cleaned features to fitted models and evaluation outputs | Feature table and outcome field | Model object and diagnostics | Y`
-- `plot_comparative_story | Reorder entities and visualize the main comparison cleanly | Summary table or model output | Communication-ready plot | Y`
-
-Function Candidates:
-
-- `reshape_episode_inputs(data, ...)`
-- `join_episode_context(primary_data, lookup_data, by)`
-- `prepare_text_tokens(data, text_column)`
-- `compare_group_vocabulary(data, group_col, term_col, count_col = 'n')`
-- `build_predictive_pipeline(data, formula, ...)`
-- `evaluate_episode_model(model, test_data, outcome_col)`
-- `plot_comparative_story(data, x_col, y_col, group_col = NULL)`
-
-Episode Signature:
-
-- `analysis_intent`: Predict or estimate outcomes in Netflix titles using cleaned features, exploratory analysis, and model evaluation
-- `analysis_type`: Predictive
-- `primary_techniques`: schema inspection, grouped summaries, reshaping, table joins, tokenization, term comparison, modeling, time-aware comparison, visualization
-- `data_complexity_level`: medium-high
-- `reusable_difficulty_score`: 4
-
-Adaptation Plan:
-
-- `1 | inspect_source_schema | Start by mapping entities, measures, and likely comparison axes before transforming anything`
-- `3 | reshape_analysis_inputs | Normalize wide, nested, or repeated fields into one analysis-ready row structure`
-- `4 | join_context_tables | Enrich the main analysis table with keys, metadata, or auxiliary measurements`
-- `5 | compare_group_vocabulary | Tokenize the new corpus and compare terms across groups or documents`
-- `6 | build_predictive_or_explanatory_model | Fit and evaluate a baseline model after the core feature engineering is stable`
-- `8 | plot_comparative_story | Choose the clearest visual comparison once the analytical table is ready`
-
-### `ninja_warrior`
-
-- `transcript_title`: Analyzing Ninja Warrior in R
-- `transcript_file`: `raw-data/inspiration/Analyzing Ninja Warrior in R.txt`
-- `code_file`: `data-screencasts/2020_12_15_ninja_warrior.Rmd`
-- `data_source`: TidyTuesday 2020-12-15 dataset
-- `analysis_intent`: Explore and compare language patterns in Ninja Warrior using tokenization, grouped counts, and discriminative text analysis
-- `analysis_type`: EDA
-- `pattern_signature`: `load_inspect_tokenize_trend_compare_visualize`
-- `adaptation_hint`: Reuse for grouped text corpora that need tokenization, term comparison, and context-aware vocabulary analysis
-- `ker_status`: extracted
-
-Thought Process Map:
-
-- `T1 | Context | Frame the episode as exploratory analysis of Ninja Warrior with limited advance knowledge of the data. | Transcript title and opening context`
-- `T2 | Inspect | Load the data, inspect table shape, and identify the main entities, measures, and comparison axes. | Initial data load and early counts or prints`
-- `T5 | Compare | Tokenize text, remove noise terms, and compare vocabulary across groups or documents. | tidytext workflow in the episode`
-- `T6 | Compare | Summarize group differences, rates, rankings, or trajectories to surface the main story in the data. | Grouped summaries and comparative plots`
-- `T7 | Visualize | Turn the cleaned summaries into interpretable visual comparisons and iterate toward the clearest view. | ggplot workflow`
-- `T8 | Reflect | Identify reusable workflow pieces that can transfer to future datasets with a similar shape or question. | End-state of the analysis pattern`
-
-Code Mapping Table:
-
-- `T1 | Data load and inspection | tt_load, count, glimpse | Establish source shape, units, and comparison candidates`
-- `T5 | Text comparison | bind_log_odds | Identify terms that distinguish groups or documents`
-- `T6 | Group comparison | group_by, summarize, count, mutate | Compare categories, time periods, or entities`
-- `T7 | Visualization | ggplot, geom_col, geom_point, facet_wrap | Communicate the core result visually`
-
-Data Transformation Flow:
-
-- `Raw | Imported source tables or files | Load source data into tibbles or lists | Raw episode objects | Establish the starting analysis surface`
-- `Raw -> Clean | Raw source tables | Filter, rename, and derive analysis columns | Cleaned table | Make the data comparable and plot-ready`
-- `Clean -> Analytical | Clean text corpus | Tokenize text, remove stop words, and count terms by group | Term-frequency comparison tables | Surface language differences and signatures`
-- `Analytical -> Visual | Summary or model outputs | Reorder factors and prepare plotting fields | Plot-ready table | Turn the analytical result into an interpretable chart`
-
-Reusable Patterns:
-
-- `inspect_source_schema | Inspect source tables, field meanings, and likely comparison axes | Raw dataset or dataset list | Initial analysis plan | Y`
-- `compare_group_vocabulary | Tokenize text and compute grouped term distinctiveness | Text, grouping variable, document or entity ids | Ranked term comparison tables | Y`
-- `plot_comparative_story | Reorder entities and visualize the main comparison cleanly | Summary table or model output | Communication-ready plot | Y`
-
-Function Candidates:
-
-- `prepare_text_tokens(data, text_column)`
-- `compare_group_vocabulary(data, group_col, term_col, count_col = 'n')`
-- `plot_comparative_story(data, x_col, y_col, group_col = NULL)`
-
-Episode Signature:
-
-- `analysis_intent`: Explore and compare language patterns in Ninja Warrior using tokenization, grouped counts, and discriminative text analysis
-- `analysis_type`: EDA
-- `primary_techniques`: schema inspection, grouped summaries, tokenization, term comparison, time-aware comparison, visualization
-- `data_complexity_level`: low-medium
-- `reusable_difficulty_score`: 2
-
-Adaptation Plan:
-
-- `1 | inspect_source_schema | Start by mapping entities, measures, and likely comparison axes before transforming anything`
-- `5 | compare_group_vocabulary | Tokenize the new corpus and compare terms across groups or documents`
-- `8 | plot_comparative_story | Choose the clearest visual comparison once the analytical table is ready`
-
-### `nobel_prize_winners`
-
-- `transcript_title`: Analyzing Nobel Prize winners in R
-- `transcript_file`: `raw-data/inspiration/Analyzing Nobel Prize winners in R.txt`
-- `code_file`: `data-screencasts/nobel-prize.Rmd`
-- `data_source`: TidyTuesday 2019-05-14 source files
-- `analysis_intent`: Explore distributions, group differences, and notable patterns in Nobel Prize winners through cleaning, summarization, and visualization
-- `analysis_type`: EDA
-- `pattern_signature`: `load_inspect_join_trend_compare_visualize`
-- `adaptation_hint`: Reuse for exploratory datasets that need schema inspection, grouped summaries, and visualization-first storytelling
-- `ker_status`: extracted
-
-Thought Process Map:
-
-- `T1 | Context | Frame the episode as exploratory analysis of Nobel Prize winners with limited advance knowledge of the data. | Transcript title and opening context`
-- `T2 | Inspect | Load the data, inspect table shape, and identify the main entities, measures, and comparison axes. | Initial data load and early counts or prints`
-- `T4 | Transform | Reshape fields, standardize column meanings, and join supporting tables to create analysis-ready records. | Join and reshaping operations in the Rmd`
-- `T6 | Compare | Summarize group differences, rates, rankings, or trajectories to surface the main story in the data. | Grouped summaries and comparative plots`
-- `T7 | Visualize | Turn the cleaned summaries into interpretable visual comparisons and iterate toward the clearest view. | ggplot workflow`
-- `T8 | Reflect | Identify reusable workflow pieces that can transfer to future datasets with a similar shape or question. | End-state of the analysis pattern`
-
-Code Mapping Table:
-
-- `T1 | Data load and inspection | read_csv, count | Establish source shape, units, and comparison candidates`
-- `T4 | Structuring and enrichment | inner_join | Convert messy inputs into analysis-ready tables`
-- `T6 | Group comparison | group_by, summarize, count, mutate | Compare categories, time periods, or entities`
-- `T7 | Visualization | ggplot, geom_col, geom_line, facet_wrap | Communicate the core result visually`
-
-Data Transformation Flow:
-
-- `Raw | Imported source tables or files | Load source data into tibbles or lists | Raw episode objects | Establish the starting analysis surface`
-- `Raw -> Clean | Raw source tables | Rename, reshape, unnest, and join supporting data | Analysis-ready rows with consistent keys | Standardize the schema before comparison`
-- `Clean -> Analytical | Cleaned table | Group, summarize, rank, or compare entities | Summary tables or rate calculations | Surface the core analytical story`
-- `Analytical -> Visual | Summary or model outputs | Reorder factors and prepare plotting fields | Plot-ready table | Turn the analytical result into an interpretable chart`
-
-Reusable Patterns:
-
-- `inspect_source_schema | Inspect source tables, field meanings, and likely comparison axes | Raw dataset or dataset list | Initial analysis plan | Y`
-- `join_context_tables | Enrich the main table with lookup or metadata tables | Primary data plus keys | Context-enriched analysis table | Y`
-- `plot_comparative_story | Reorder entities and visualize the main comparison cleanly | Summary table or model output | Communication-ready plot | Y`
-
-Function Candidates:
-
-- `reshape_episode_inputs(data, ...)`
-- `join_episode_context(primary_data, lookup_data, by)`
-- `plot_comparative_story(data, x_col, y_col, group_col = NULL)`
-
-Episode Signature:
-
-- `analysis_intent`: Explore distributions, group differences, and notable patterns in Nobel Prize winners through cleaning, summarization, and visualization
-- `analysis_type`: EDA
-- `primary_techniques`: schema inspection, grouped summaries, table joins, time-aware comparison, visualization
-- `data_complexity_level`: low-medium
-- `reusable_difficulty_score`: 2
-
-Adaptation Plan:
-
-- `1 | inspect_source_schema | Start by mapping entities, measures, and likely comparison axes before transforming anything`
-- `4 | join_context_tables | Enrich the main analysis table with keys, metadata, or auxiliary measurements`
-- `8 | plot_comparative_story | Choose the clearest visual comparison once the analytical table is ready`
-
-### `nyc_restaurant_inspections`
-
-- `transcript_title`: Analyzing NYC restaurant inspections with R
-- `transcript_file`: `raw-data/inspiration/Analyzing NYC restaurant inspections with R.txt`
-- `code_file`: `data-screencasts/nyc-restaurants.Rmd`
-- `data_source`: Local source files read in episode: https://data.cityofnewyork.us/api/views/43nn-pn8j/rows.csv
-- `analysis_intent`: Explore distributions, group differences, and notable patterns in NYC restaurant inspections through cleaning, summarization, and visualization
-- `analysis_type`: EDA
-- `pattern_signature`: `load_inspect_reshape_join_trend_compare_visualize`
-- `adaptation_hint`: Reuse for messy multi-table datasets that need reshaping, enrichment, and grouped summaries before plotting
-- `ker_status`: extracted
-
-Thought Process Map:
-
-- `T1 | Context | Frame the episode as exploratory analysis of NYC restaurant inspections with limited advance knowledge of the data. | Transcript title and opening context`
-- `T2 | Inspect | Load the data, inspect table shape, and identify the main entities, measures, and comparison axes. | Initial data load and early counts or prints`
-- `T4 | Transform | Reshape fields, standardize column meanings, and join supporting tables to create analysis-ready records. | Join and reshaping operations in the Rmd`
-- `T6 | Compare | Summarize group differences, rates, rankings, or trajectories to surface the main story in the data. | Grouped summaries and comparative plots`
-- `T7 | Visualize | Turn the cleaned summaries into interpretable visual comparisons and iterate toward the clearest view. | ggplot workflow`
-- `T8 | Reflect | Identify reusable workflow pieces that can transfer to future datasets with a similar shape or question. | End-state of the analysis pattern`
-
-Code Mapping Table:
-
-- `T1 | Data load and inspection | read_csv, count | Establish source shape, units, and comparison candidates`
-- `T4 | Structuring and enrichment | unnest | Convert messy inputs into analysis-ready tables`
-- `T6 | Group comparison | group_by, summarize, count, mutate | Compare categories, time periods, or entities`
-- `T7 | Visualization | ggplot, geom_col, geom_point | Communicate the core result visually`
-
-Data Transformation Flow:
-
-- `Raw | Imported source tables or files | Load source data into tibbles or lists | Raw episode objects | Establish the starting analysis surface`
-- `Raw -> Clean | Raw source tables | Rename, reshape, unnest, and join supporting data | Analysis-ready rows with consistent keys | Standardize the schema before comparison`
-- `Clean -> Analytical | Cleaned table | Group, summarize, rank, or compare entities | Summary tables or rate calculations | Surface the core analytical story`
-- `Analytical -> Visual | Summary or model outputs | Reorder factors and prepare plotting fields | Plot-ready table | Turn the analytical result into an interpretable chart`
-
-Reusable Patterns:
-
-- `inspect_source_schema | Inspect source tables, field meanings, and likely comparison axes | Raw dataset or dataset list | Initial analysis plan | Y`
-- `reshape_analysis_inputs | Convert wide or nested source fields into normalized long-form records | Raw tabular fields | Tidy analysis table | Y`
-- `join_context_tables | Enrich the main table with lookup or metadata tables | Primary data plus keys | Context-enriched analysis table | Y`
-- `plot_comparative_story | Reorder entities and visualize the main comparison cleanly | Summary table or model output | Communication-ready plot | Y`
-
-Function Candidates:
-
-- `reshape_episode_inputs(data, ...)`
-- `join_episode_context(primary_data, lookup_data, by)`
-- `plot_comparative_story(data, x_col, y_col, group_col = NULL)`
-
-Episode Signature:
-
-- `analysis_intent`: Explore distributions, group differences, and notable patterns in NYC restaurant inspections through cleaning, summarization, and visualization
-- `analysis_type`: EDA
-- `primary_techniques`: schema inspection, grouped summaries, reshaping, table joins, time-aware comparison, visualization
-- `data_complexity_level`: medium
-- `reusable_difficulty_score`: 3
-
-Adaptation Plan:
-
-- `1 | inspect_source_schema | Start by mapping entities, measures, and likely comparison axes before transforming anything`
-- `3 | reshape_analysis_inputs | Normalize wide, nested, or repeated fields into one analysis-ready row structure`
-- `4 | join_context_tables | Enrich the main analysis table with keys, metadata, or auxiliary measurements`
 - `8 | plot_comparative_story | Choose the clearest visual comparison once the analytical table is ready`
 
 ### `penguins`
@@ -3466,75 +4178,6 @@ Adaptation Plan:
 - `6 | build_predictive_or_explanatory_model | Fit and evaluate a baseline model after the core feature engineering is stable`
 - `8 | plot_comparative_story | Choose the clearest visual comparison once the analytical table is ready`
 
-### `simpsons_guest_stars_dialogue`
-
-- `transcript_title`: Analyzing Simpsons guest stars and dialogue in R
-- `transcript_file`: `raw-data/inspiration/Analyzing Simpsons guest stars and dialogue in R.txt`
-- `code_file`: `data-screencasts/simpsons-guests.Rmd`
-- `data_source`: TidyTuesday 2019-08-27 source files
-- `analysis_intent`: Explore and compare language patterns in Simpsons guest stars and dialogue using tokenization, grouped counts, and discriminative text analysis
-- `analysis_type`: EDA
-- `pattern_signature`: `load_inspect_reshape_join_tokenize_compare_visualize`
-- `adaptation_hint`: Reuse for grouped text corpora that need tokenization, term comparison, and context-aware vocabulary analysis
-- `ker_status`: extracted
-
-Thought Process Map:
-
-- `T1 | Context | Frame the episode as exploratory analysis of Simpsons guest stars and dialogue with limited advance knowledge of the data. | Transcript title and opening context`
-- `T2 | Inspect | Load the data, inspect table shape, and identify the main entities, measures, and comparison axes. | Initial data load and early counts or prints`
-- `T4 | Transform | Reshape fields, standardize column meanings, and join supporting tables to create analysis-ready records. | Join and reshaping operations in the Rmd`
-- `T5 | Compare | Tokenize text, remove noise terms, and compare vocabulary across groups or documents. | tidytext workflow in the episode`
-- `T6 | Compare | Summarize group differences, rates, rankings, or trajectories to surface the main story in the data. | Grouped summaries and comparative plots`
-- `T7 | Visualize | Turn the cleaned summaries into interpretable visual comparisons and iterate toward the clearest view. | ggplot workflow`
-- `T8 | Reflect | Identify reusable workflow pieces that can transfer to future datasets with a similar shape or question. | End-state of the analysis pattern`
-
-Code Mapping Table:
-
-- `T1 | Data load and inspection | read_csv, count | Establish source shape, units, and comparison candidates`
-- `T4 | Structuring and enrichment | separate_rows, unnest, inner_join | Convert messy inputs into analysis-ready tables`
-- `T5 | Text comparison | unnest_tokens, anti_join, bind_tf_idf | Identify terms that distinguish groups or documents`
-- `T6 | Group comparison | group_by, summarize, count, mutate | Compare categories, time periods, or entities`
-- `T7 | Visualization | ggplot, geom_col, facet_wrap | Communicate the core result visually`
-
-Data Transformation Flow:
-
-- `Raw | Imported source tables or files | Load source data into tibbles or lists | Raw episode objects | Establish the starting analysis surface`
-- `Raw -> Clean | Raw source tables | Rename, reshape, unnest, and join supporting data | Analysis-ready rows with consistent keys | Standardize the schema before comparison`
-- `Clean -> Analytical | Clean text corpus | Tokenize text, remove stop words, and count terms by group | Term-frequency comparison tables | Surface language differences and signatures`
-- `Analytical -> Visual | Summary or model outputs | Reorder factors and prepare plotting fields | Plot-ready table | Turn the analytical result into an interpretable chart`
-
-Reusable Patterns:
-
-- `inspect_source_schema | Inspect source tables, field meanings, and likely comparison axes | Raw dataset or dataset list | Initial analysis plan | Y`
-- `reshape_analysis_inputs | Convert wide or nested source fields into normalized long-form records | Raw tabular fields | Tidy analysis table | Y`
-- `join_context_tables | Enrich the main table with lookup or metadata tables | Primary data plus keys | Context-enriched analysis table | Y`
-- `compare_group_vocabulary | Tokenize text and compute grouped term distinctiveness | Text, grouping variable, document or entity ids | Ranked term comparison tables | Y`
-- `plot_comparative_story | Reorder entities and visualize the main comparison cleanly | Summary table or model output | Communication-ready plot | Y`
-
-Function Candidates:
-
-- `reshape_episode_inputs(data, ...)`
-- `join_episode_context(primary_data, lookup_data, by)`
-- `prepare_text_tokens(data, text_column)`
-- `compare_group_vocabulary(data, group_col, term_col, count_col = 'n')`
-- `plot_comparative_story(data, x_col, y_col, group_col = NULL)`
-
-Episode Signature:
-
-- `analysis_intent`: Explore and compare language patterns in Simpsons guest stars and dialogue using tokenization, grouped counts, and discriminative text analysis
-- `analysis_type`: EDA
-- `primary_techniques`: schema inspection, grouped summaries, reshaping, table joins, tokenization, term comparison, visualization
-- `data_complexity_level`: medium-high
-- `reusable_difficulty_score`: 4
-
-Adaptation Plan:
-
-- `1 | inspect_source_schema | Start by mapping entities, measures, and likely comparison axes before transforming anything`
-- `3 | reshape_analysis_inputs | Normalize wide, nested, or repeated fields into one analysis-ready row structure`
-- `4 | join_context_tables | Enrich the main analysis table with keys, metadata, or auxiliary measurements`
-- `5 | compare_group_vocabulary | Tokenize the new corpus and compare terms across groups or documents`
-- `8 | plot_comparative_story | Choose the clearest visual comparison once the analytical table is ready`
-
 ### `space_launches`
 
 - `transcript_title`: Analyzing space launches in R
@@ -3659,79 +4302,6 @@ Adaptation Plan:
 - `7 | prepare_geographic_summary | Aggregate to the geographic unit available in the new dataset and rebuild the map join`
 - `8 | plot_comparative_story | Choose the clearest visual comparison once the analytical table is ready`
 
-### `super_bowl_ads`
-
-- `transcript_title`: Analyzing Super Bowl ads in R
-- `transcript_file`: `raw-data/inspiration/Analyzing Super Bowl ads in R.txt`
-- `code_file`: `data-screencasts/2021_03_02_super_bowl_ads.Rmd`
-- `data_source`: TidyTuesday 2021-03-02 dataset
-- `analysis_intent`: Explore and compare language patterns in Super Bowl ads using tokenization, grouped counts, and discriminative text analysis
-- `analysis_type`: Modeling
-- `pattern_signature`: `load_inspect_reshape_join_tokenize_trend_model_evaluate_visualize`
-- `adaptation_hint`: Reuse for grouped text corpora that need tokenization, term comparison, and context-aware vocabulary analysis
-- `ker_status`: extracted
-
-Thought Process Map:
-
-- `T1 | Context | Frame the episode as exploratory analysis of Super Bowl ads with limited advance knowledge of the data. | Transcript title and opening context`
-- `T2 | Inspect | Load the data, inspect table shape, and identify the main entities, measures, and comparison axes. | Initial data load and early counts or prints`
-- `T4 | Transform | Reshape fields, standardize column meanings, and join supporting tables to create analysis-ready records. | Join and reshaping operations in the Rmd`
-- `T5 | Compare | Tokenize text, remove noise terms, and compare vocabulary across groups or documents. | tidytext workflow in the episode`
-- `T6 | Compare | Move from descriptive patterns into statistical or predictive modeling once the feature space is ready. | Modeling functions and evaluation code`
-- `T7 | Visualize | Turn the cleaned summaries into interpretable visual comparisons and iterate toward the clearest view. | ggplot workflow`
-- `T8 | Reflect | Identify reusable workflow pieces that can transfer to future datasets with a similar shape or question. | End-state of the analysis pattern`
-
-Code Mapping Table:
-
-- `T1 | Data load and inspection | tt_load, count | Establish source shape, units, and comparison candidates`
-- `T4 | Structuring and enrichment | gather, unnest, inner_join | Convert messy inputs into analysis-ready tables`
-- `T5 | Text comparison | episode-specific dplyr and ggplot verbs | Identify terms that distinguish groups or documents`
-- `T6 | Modeling and evaluation | lm, glm | Test explanatory or predictive relationships after EDA`
-- `T7 | Visualization | ggplot, geom_col, geom_point, geom_line, facet_wrap | Communicate the core result visually`
-
-Data Transformation Flow:
-
-- `Raw | Imported source tables or files | Load source data into tibbles or lists | Raw episode objects | Establish the starting analysis surface`
-- `Raw -> Clean | Raw source tables | Rename, reshape, unnest, and join supporting data | Analysis-ready rows with consistent keys | Standardize the schema before comparison`
-- `Clean -> Analytical | Clean text corpus | Tokenize text, remove stop words, and count terms by group | Term-frequency comparison tables | Surface language differences and signatures`
-- `Analytical -> Visual | Summary or model outputs | Reorder factors and prepare plotting fields | Plot-ready table | Turn the analytical result into an interpretable chart`
-
-Reusable Patterns:
-
-- `inspect_source_schema | Inspect source tables, field meanings, and likely comparison axes | Raw dataset or dataset list | Initial analysis plan | Y`
-- `reshape_analysis_inputs | Convert wide or nested source fields into normalized long-form records | Raw tabular fields | Tidy analysis table | Y`
-- `join_context_tables | Enrich the main table with lookup or metadata tables | Primary data plus keys | Context-enriched analysis table | Y`
-- `compare_group_vocabulary | Tokenize text and compute grouped term distinctiveness | Text, grouping variable, document or entity ids | Ranked term comparison tables | Y`
-- `build_predictive_or_explanatory_model | Move from cleaned features to fitted models and evaluation outputs | Feature table and outcome field | Model object and diagnostics | Y`
-- `plot_comparative_story | Reorder entities and visualize the main comparison cleanly | Summary table or model output | Communication-ready plot | Y`
-
-Function Candidates:
-
-- `reshape_episode_inputs(data, ...)`
-- `join_episode_context(primary_data, lookup_data, by)`
-- `prepare_text_tokens(data, text_column)`
-- `compare_group_vocabulary(data, group_col, term_col, count_col = 'n')`
-- `build_predictive_pipeline(data, formula, ...)`
-- `evaluate_episode_model(model, test_data, outcome_col)`
-- `plot_comparative_story(data, x_col, y_col, group_col = NULL)`
-
-Episode Signature:
-
-- `analysis_intent`: Explore and compare language patterns in Super Bowl ads using tokenization, grouped counts, and discriminative text analysis
-- `analysis_type`: Modeling
-- `primary_techniques`: schema inspection, grouped summaries, reshaping, table joins, tokenization, term comparison, modeling, time-aware comparison, visualization
-- `data_complexity_level`: medium-high
-- `reusable_difficulty_score`: 4
-
-Adaptation Plan:
-
-- `1 | inspect_source_schema | Start by mapping entities, measures, and likely comparison axes before transforming anything`
-- `3 | reshape_analysis_inputs | Normalize wide, nested, or repeated fields into one analysis-ready row structure`
-- `4 | join_context_tables | Enrich the main analysis table with keys, metadata, or auxiliary measurements`
-- `5 | compare_group_vocabulary | Tokenize the new corpus and compare terms across groups or documents`
-- `6 | build_predictive_or_explanatory_model | Fit and evaluate a baseline model after the core feature engineering is stable`
-- `8 | plot_comparative_story | Choose the clearest visual comparison once the analytical table is ready`
-
 ### `tennis_tournaments`
 
 - `transcript_title`: Analyzing tennis tournaments in R
@@ -3785,69 +4355,6 @@ Episode Signature:
 - `analysis_intent`: Explore distributions, group differences, and notable patterns in tennis tournaments through cleaning, summarization, and visualization
 - `analysis_type`: EDA
 - `primary_techniques`: schema inspection, grouped summaries, reshaping, table joins, time-aware comparison, visualization
-- `data_complexity_level`: medium
-- `reusable_difficulty_score`: 3
-
-Adaptation Plan:
-
-- `1 | inspect_source_schema | Start by mapping entities, measures, and likely comparison axes before transforming anything`
-- `3 | reshape_analysis_inputs | Normalize wide, nested, or repeated fields into one analysis-ready row structure`
-- `4 | join_context_tables | Enrich the main analysis table with keys, metadata, or auxiliary measurements`
-- `8 | plot_comparative_story | Choose the clearest visual comparison once the analytical table is ready`
-
-### `thanksgiving_dinners`
-
-- `transcript_title`: Analyzing Thanksgiving dinners in R
-- `transcript_file`: `raw-data/inspiration/Analyzing Thanksgiving dinners in R.txt`
-- `code_file`: `data-screencasts/thanksgiving.Rmd`
-- `data_source`: Local source files read in episode: https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2018-11-20/thanksgiving_meals.csv
-- `analysis_intent`: Explore distributions, group differences, and notable patterns in Thanksgiving dinners through cleaning, summarization, and visualization
-- `analysis_type`: EDA
-- `pattern_signature`: `load_inspect_reshape_join_compare_visualize`
-- `adaptation_hint`: Reuse for messy multi-table datasets that need reshaping, enrichment, and grouped summaries before plotting
-- `ker_status`: extracted
-
-Thought Process Map:
-
-- `T1 | Context | Frame the episode as exploratory analysis of Thanksgiving dinners with limited advance knowledge of the data. | Transcript title and opening context`
-- `T2 | Inspect | Load the data, inspect table shape, and identify the main entities, measures, and comparison axes. | Initial data load and early counts or prints`
-- `T4 | Transform | Reshape fields, standardize column meanings, and join supporting tables to create analysis-ready records. | Join and reshaping operations in the Rmd`
-- `T6 | Compare | Summarize group differences, rates, rankings, or trajectories to surface the main story in the data. | Grouped summaries and comparative plots`
-- `T7 | Visualize | Turn the cleaned summaries into interpretable visual comparisons and iterate toward the clearest view. | ggplot workflow`
-- `T8 | Reflect | Identify reusable workflow pieces that can transfer to future datasets with a similar shape or question. | End-state of the analysis pattern`
-
-Code Mapping Table:
-
-- `T1 | Data load and inspection | read_csv, count | Establish source shape, units, and comparison candidates`
-- `T4 | Structuring and enrichment | gather, inner_join | Convert messy inputs into analysis-ready tables`
-- `T6 | Group comparison | group_by, summarize, count, mutate | Compare categories, time periods, or entities`
-- `T7 | Visualization | ggplot, geom_col, geom_line, facet_wrap | Communicate the core result visually`
-
-Data Transformation Flow:
-
-- `Raw | Imported source tables or files | Load source data into tibbles or lists | Raw episode objects | Establish the starting analysis surface`
-- `Raw -> Clean | Raw source tables | Rename, reshape, unnest, and join supporting data | Analysis-ready rows with consistent keys | Standardize the schema before comparison`
-- `Clean -> Analytical | Cleaned table | Group, summarize, rank, or compare entities | Summary tables or rate calculations | Surface the core analytical story`
-- `Analytical -> Visual | Summary or model outputs | Reorder factors and prepare plotting fields | Plot-ready table | Turn the analytical result into an interpretable chart`
-
-Reusable Patterns:
-
-- `inspect_source_schema | Inspect source tables, field meanings, and likely comparison axes | Raw dataset or dataset list | Initial analysis plan | Y`
-- `reshape_analysis_inputs | Convert wide or nested source fields into normalized long-form records | Raw tabular fields | Tidy analysis table | Y`
-- `join_context_tables | Enrich the main table with lookup or metadata tables | Primary data plus keys | Context-enriched analysis table | Y`
-- `plot_comparative_story | Reorder entities and visualize the main comparison cleanly | Summary table or model output | Communication-ready plot | Y`
-
-Function Candidates:
-
-- `reshape_episode_inputs(data, ...)`
-- `join_episode_context(primary_data, lookup_data, by)`
-- `plot_comparative_story(data, x_col, y_col, group_col = NULL)`
-
-Episode Signature:
-
-- `analysis_intent`: Explore distributions, group differences, and notable patterns in Thanksgiving dinners through cleaning, summarization, and visualization
-- `analysis_type`: EDA
-- `primary_techniques`: schema inspection, grouped summaries, reshaping, table joins, visualization
 - `data_complexity_level`: medium
 - `reusable_difficulty_score`: 3
 
@@ -3992,73 +4499,6 @@ Adaptation Plan:
 - `3 | reshape_analysis_inputs | Normalize wide, nested, or repeated fields into one analysis-ready row structure`
 - `8 | plot_comparative_story | Choose the clearest visual comparison once the analytical table is ready`
 
-### `golden_age_television`
-
-- `transcript_title`: Analyzing the golden age of television in R
-- `transcript_file`: `raw-data/inspiration/Analyzing the golden age of television in R.txt`
-- `code_file`: `data-screencasts/golden-age-tv.Rmd`
-- `data_source`: TidyTuesday 2019-01-08 source files
-- `analysis_intent`: Explore, explain, and model patterns in the golden age of television using engineered features and comparative summaries
-- `analysis_type`: Modeling
-- `pattern_signature`: `load_inspect_reshape_join_trend_model_evaluate_visualize`
-- `adaptation_hint`: Reuse for structured datasets where descriptive analysis leads into explanatory or predictive models
-- `ker_status`: extracted
-
-Thought Process Map:
-
-- `T1 | Context | Frame the episode as exploratory analysis of the golden age of television with limited advance knowledge of the data. | Transcript title and opening context`
-- `T2 | Inspect | Load the data, inspect table shape, and identify the main entities, measures, and comparison axes. | Initial data load and early counts or prints`
-- `T4 | Transform | Reshape fields, standardize column meanings, and join supporting tables to create analysis-ready records. | Join and reshaping operations in the Rmd`
-- `T6 | Compare | Move from descriptive patterns into statistical or predictive modeling once the feature space is ready. | Modeling functions and evaluation code`
-- `T7 | Visualize | Turn the cleaned summaries into interpretable visual comparisons and iterate toward the clearest view. | ggplot workflow`
-- `T8 | Reflect | Identify reusable workflow pieces that can transfer to future datasets with a similar shape or question. | End-state of the analysis pattern`
-
-Code Mapping Table:
-
-- `T1 | Data load and inspection | read_csv, count | Establish source shape, units, and comparison candidates`
-- `T4 | Structuring and enrichment | gather, spread, inner_join | Convert messy inputs into analysis-ready tables`
-- `T6 | Modeling and evaluation | lm, glm, fit, predict | Test explanatory or predictive relationships after EDA`
-- `T7 | Visualization | ggplot, geom_point, geom_line, facet_wrap | Communicate the core result visually`
-
-Data Transformation Flow:
-
-- `Raw | Imported source tables or files | Load source data into tibbles or lists | Raw episode objects | Establish the starting analysis surface`
-- `Raw -> Clean | Raw source tables | Rename, reshape, unnest, and join supporting data | Analysis-ready rows with consistent keys | Standardize the schema before comparison`
-- `Clean -> Analytical | Feature table | Engineer predictors and fit models | Model outputs, predictions, or coefficients | Quantify relationships beyond descriptive summaries`
-- `Analytical -> Visual | Summary or model outputs | Reorder factors and prepare plotting fields | Plot-ready table | Turn the analytical result into an interpretable chart`
-
-Reusable Patterns:
-
-- `inspect_source_schema | Inspect source tables, field meanings, and likely comparison axes | Raw dataset or dataset list | Initial analysis plan | Y`
-- `reshape_analysis_inputs | Convert wide or nested source fields into normalized long-form records | Raw tabular fields | Tidy analysis table | Y`
-- `join_context_tables | Enrich the main table with lookup or metadata tables | Primary data plus keys | Context-enriched analysis table | Y`
-- `build_predictive_or_explanatory_model | Move from cleaned features to fitted models and evaluation outputs | Feature table and outcome field | Model object and diagnostics | Y`
-- `plot_comparative_story | Reorder entities and visualize the main comparison cleanly | Summary table or model output | Communication-ready plot | Y`
-
-Function Candidates:
-
-- `reshape_episode_inputs(data, ...)`
-- `join_episode_context(primary_data, lookup_data, by)`
-- `build_predictive_pipeline(data, formula, ...)`
-- `evaluate_episode_model(model, test_data, outcome_col)`
-- `plot_comparative_story(data, x_col, y_col, group_col = NULL)`
-
-Episode Signature:
-
-- `analysis_intent`: Explore, explain, and model patterns in the golden age of television using engineered features and comparative summaries
-- `analysis_type`: Modeling
-- `primary_techniques`: schema inspection, grouped summaries, reshaping, table joins, modeling, time-aware comparison, visualization
-- `data_complexity_level`: medium-high
-- `reusable_difficulty_score`: 4
-
-Adaptation Plan:
-
-- `1 | inspect_source_schema | Start by mapping entities, measures, and likely comparison axes before transforming anything`
-- `3 | reshape_analysis_inputs | Normalize wide, nested, or repeated fields into one analysis-ready row structure`
-- `4 | join_context_tables | Enrich the main analysis table with keys, metadata, or auxiliary measurements`
-- `6 | build_predictive_or_explanatory_model | Fit and evaluate a baseline model after the core feature engineering is stable`
-- `8 | plot_comparative_story | Choose the clearest visual comparison once the analytical table is ready`
-
 ### `great_american_beer_festival`
 
 - `transcript_title`: Analyzing the Great American Beer Festival
@@ -4199,6 +4639,73 @@ Adaptation Plan:
 - `7 | prepare_geographic_summary | Aggregate to the geographic unit available in the new dataset and rebuild the map join`
 - `8 | plot_comparative_story | Choose the clearest visual comparison once the analytical table is ready`
 
+### `golden_age_television`
+
+- `transcript_title`: Analyzing the golden age of television in R
+- `transcript_file`: `raw-data/inspiration/Analyzing the golden age of television in R.txt`
+- `code_file`: `data-screencasts/golden-age-tv.Rmd`
+- `data_source`: TidyTuesday 2019-01-08 source files
+- `analysis_intent`: Explore, explain, and model patterns in the golden age of television using engineered features and comparative summaries
+- `analysis_type`: Modeling
+- `pattern_signature`: `load_inspect_reshape_join_trend_model_evaluate_visualize`
+- `adaptation_hint`: Reuse for structured datasets where descriptive analysis leads into explanatory or predictive models
+- `ker_status`: extracted
+
+Thought Process Map:
+
+- `T1 | Context | Frame the episode as exploratory analysis of the golden age of television with limited advance knowledge of the data. | Transcript title and opening context`
+- `T2 | Inspect | Load the data, inspect table shape, and identify the main entities, measures, and comparison axes. | Initial data load and early counts or prints`
+- `T4 | Transform | Reshape fields, standardize column meanings, and join supporting tables to create analysis-ready records. | Join and reshaping operations in the Rmd`
+- `T6 | Compare | Move from descriptive patterns into statistical or predictive modeling once the feature space is ready. | Modeling functions and evaluation code`
+- `T7 | Visualize | Turn the cleaned summaries into interpretable visual comparisons and iterate toward the clearest view. | ggplot workflow`
+- `T8 | Reflect | Identify reusable workflow pieces that can transfer to future datasets with a similar shape or question. | End-state of the analysis pattern`
+
+Code Mapping Table:
+
+- `T1 | Data load and inspection | read_csv, count | Establish source shape, units, and comparison candidates`
+- `T4 | Structuring and enrichment | gather, spread, inner_join | Convert messy inputs into analysis-ready tables`
+- `T6 | Modeling and evaluation | lm, glm, fit, predict | Test explanatory or predictive relationships after EDA`
+- `T7 | Visualization | ggplot, geom_point, geom_line, facet_wrap | Communicate the core result visually`
+
+Data Transformation Flow:
+
+- `Raw | Imported source tables or files | Load source data into tibbles or lists | Raw episode objects | Establish the starting analysis surface`
+- `Raw -> Clean | Raw source tables | Rename, reshape, unnest, and join supporting data | Analysis-ready rows with consistent keys | Standardize the schema before comparison`
+- `Clean -> Analytical | Feature table | Engineer predictors and fit models | Model outputs, predictions, or coefficients | Quantify relationships beyond descriptive summaries`
+- `Analytical -> Visual | Summary or model outputs | Reorder factors and prepare plotting fields | Plot-ready table | Turn the analytical result into an interpretable chart`
+
+Reusable Patterns:
+
+- `inspect_source_schema | Inspect source tables, field meanings, and likely comparison axes | Raw dataset or dataset list | Initial analysis plan | Y`
+- `reshape_analysis_inputs | Convert wide or nested source fields into normalized long-form records | Raw tabular fields | Tidy analysis table | Y`
+- `join_context_tables | Enrich the main table with lookup or metadata tables | Primary data plus keys | Context-enriched analysis table | Y`
+- `build_predictive_or_explanatory_model | Move from cleaned features to fitted models and evaluation outputs | Feature table and outcome field | Model object and diagnostics | Y`
+- `plot_comparative_story | Reorder entities and visualize the main comparison cleanly | Summary table or model output | Communication-ready plot | Y`
+
+Function Candidates:
+
+- `reshape_episode_inputs(data, ...)`
+- `join_episode_context(primary_data, lookup_data, by)`
+- `build_predictive_pipeline(data, formula, ...)`
+- `evaluate_episode_model(model, test_data, outcome_col)`
+- `plot_comparative_story(data, x_col, y_col, group_col = NULL)`
+
+Episode Signature:
+
+- `analysis_intent`: Explore, explain, and model patterns in the golden age of television using engineered features and comparative summaries
+- `analysis_type`: Modeling
+- `primary_techniques`: schema inspection, grouped summaries, reshaping, table joins, modeling, time-aware comparison, visualization
+- `data_complexity_level`: medium-high
+- `reusable_difficulty_score`: 4
+
+Adaptation Plan:
+
+- `1 | inspect_source_schema | Start by mapping entities, measures, and likely comparison axes before transforming anything`
+- `3 | reshape_analysis_inputs | Normalize wide, nested, or repeated fields into one analysis-ready row structure`
+- `4 | join_context_tables | Enrich the main analysis table with keys, metadata, or auxiliary measurements`
+- `6 | build_predictive_or_explanatory_model | Fit and evaluate a baseline model after the core feature engineering is stable`
+- `8 | plot_comparative_story | Choose the clearest visual comparison once the analytical table is ready`
+
 ### `tidying_phds`
 
 - `transcript_title`: Analyzing tidying and analyzing US PhDs in R
@@ -4334,77 +4841,6 @@ Adaptation Plan:
 - `5 | compare_group_vocabulary | Tokenize the new corpus and compare terms across groups or documents`
 - `8 | plot_comparative_story | Choose the clearest visual comparison once the analytical table is ready`
 
-### `tour_de_france`
-
-- `transcript_title`: Analyzing Tour de France data in R
-- `transcript_file`: `raw-data/inspiration/Analyzing Tour de France data in R.txt`
-- `code_file`: `data-screencasts/tour-de-france.Rmd`
-- `data_source`: TidyTuesday 2020-04-07 dataset
-- `analysis_intent`: Explore and compare language patterns in Tour de France using tokenization, grouped counts, and discriminative text analysis
-- `analysis_type`: Modeling
-- `pattern_signature`: `load_inspect_join_tokenize_trend_model_evaluate_visualize`
-- `adaptation_hint`: Reuse for grouped text corpora that need tokenization, term comparison, and context-aware vocabulary analysis
-- `ker_status`: extracted
-
-Thought Process Map:
-
-- `T1 | Context | Frame the episode as exploratory analysis of Tour de France with limited advance knowledge of the data. | Transcript title and opening context`
-- `T2 | Inspect | Load the data, inspect table shape, and identify the main entities, measures, and comparison axes. | Initial data load and early counts or prints`
-- `T4 | Transform | Reshape fields, standardize column meanings, and join supporting tables to create analysis-ready records. | Join and reshaping operations in the Rmd`
-- `T5 | Compare | Tokenize text, remove noise terms, and compare vocabulary across groups or documents. | tidytext workflow in the episode`
-- `T6 | Compare | Move from descriptive patterns into statistical or predictive modeling once the feature space is ready. | Modeling functions and evaluation code`
-- `T7 | Visualize | Turn the cleaned summaries into interpretable visual comparisons and iterate toward the clearest view. | ggplot workflow`
-- `T8 | Reflect | Identify reusable workflow pieces that can transfer to future datasets with a similar shape or question. | End-state of the analysis pattern`
-
-Code Mapping Table:
-
-- `T1 | Data load and inspection | tt_load, count | Establish source shape, units, and comparison candidates`
-- `T4 | Structuring and enrichment | inner_join | Convert messy inputs into analysis-ready tables`
-- `T5 | Text comparison | episode-specific dplyr and ggplot verbs | Identify terms that distinguish groups or documents`
-- `T6 | Modeling and evaluation | fit, predict, survfit | Test explanatory or predictive relationships after EDA`
-- `T7 | Visualization | ggplot, geom_col, geom_line | Communicate the core result visually`
-
-Data Transformation Flow:
-
-- `Raw | Imported source tables or files | Load source data into tibbles or lists | Raw episode objects | Establish the starting analysis surface`
-- `Raw -> Clean | Raw source tables | Rename, reshape, unnest, and join supporting data | Analysis-ready rows with consistent keys | Standardize the schema before comparison`
-- `Clean -> Analytical | Clean text corpus | Tokenize text, remove stop words, and count terms by group | Term-frequency comparison tables | Surface language differences and signatures`
-- `Analytical -> Visual | Summary or model outputs | Reorder factors and prepare plotting fields | Plot-ready table | Turn the analytical result into an interpretable chart`
-
-Reusable Patterns:
-
-- `inspect_source_schema | Inspect source tables, field meanings, and likely comparison axes | Raw dataset or dataset list | Initial analysis plan | Y`
-- `join_context_tables | Enrich the main table with lookup or metadata tables | Primary data plus keys | Context-enriched analysis table | Y`
-- `compare_group_vocabulary | Tokenize text and compute grouped term distinctiveness | Text, grouping variable, document or entity ids | Ranked term comparison tables | Y`
-- `build_predictive_or_explanatory_model | Move from cleaned features to fitted models and evaluation outputs | Feature table and outcome field | Model object and diagnostics | Y`
-- `plot_comparative_story | Reorder entities and visualize the main comparison cleanly | Summary table or model output | Communication-ready plot | Y`
-
-Function Candidates:
-
-- `reshape_episode_inputs(data, ...)`
-- `join_episode_context(primary_data, lookup_data, by)`
-- `prepare_text_tokens(data, text_column)`
-- `compare_group_vocabulary(data, group_col, term_col, count_col = 'n')`
-- `build_predictive_pipeline(data, formula, ...)`
-- `evaluate_episode_model(model, test_data, outcome_col)`
-- `plot_comparative_story(data, x_col, y_col, group_col = NULL)`
-
-Episode Signature:
-
-- `analysis_intent`: Explore and compare language patterns in Tour de France using tokenization, grouped counts, and discriminative text analysis
-- `analysis_type`: Modeling
-- `primary_techniques`: schema inspection, grouped summaries, table joins, tokenization, term comparison, modeling, time-aware comparison, visualization
-- `data_complexity_level`: medium-high
-- `reusable_difficulty_score`: 4
-
-Adaptation Plan:
-
-- `1 | inspect_source_schema | Start by mapping entities, measures, and likely comparison axes before transforming anything`
-- `4 | join_context_tables | Enrich the main analysis table with keys, metadata, or auxiliary measurements`
-- `5 | compare_group_vocabulary | Tokenize the new corpus and compare terms across groups or documents`
-- `6 | build_predictive_or_explanatory_model | Fit and evaluate a baseline model after the core feature engineering is stable`
-- `8 | plot_comparative_story | Choose the clearest visual comparison once the analytical table is ready`
-
 ### `train_delays_france`
 
 - `transcript_title`: Analyzing train delays in France in R
@@ -4513,258 +4949,6 @@ Episode Signature:
 Adaptation Plan:
 
 - `1 | inspect_source_schema | Start by mapping entities, measures, and likely comparison axes before transforming anything`
-- `8 | plot_comparative_story | Choose the clearest visual comparison once the analytical table is ready`
-
-### `un_votes`
-
-- `transcript_title`: Analyzing UN votes in R
-- `transcript_file`: `raw-data/inspiration/Analyzing UN votes in R.txt`
-- `code_file`: `data-screencasts/2021_03_23_un_votes.Rmd`
-- `data_source`: TidyTuesday 2021-03-23 dataset
-- `analysis_intent`: Explore and compare language patterns in UN votes using tokenization, grouped counts, and discriminative text analysis
-- `analysis_type`: EDA
-- `pattern_signature`: `load_inspect_reshape_join_tokenize_map_trend_compare_visualize`
-- `adaptation_hint`: Reuse for grouped text corpora that need tokenization, term comparison, and context-aware vocabulary analysis
-- `ker_status`: extracted
-
-Thought Process Map:
-
-- `T1 | Context | Frame the episode as exploratory analysis of UN votes with limited advance knowledge of the data. | Transcript title and opening context`
-- `T2 | Inspect | Load the data, inspect table shape, and identify the main entities, measures, and comparison axes. | Initial data load and early counts or prints`
-- `T4 | Transform | Reshape fields, standardize column meanings, and join supporting tables to create analysis-ready records. | Join and reshaping operations in the Rmd`
-- `T5 | Compare | Tokenize text, remove noise terms, and compare vocabulary across groups or documents. | tidytext workflow in the episode`
-- `T6 | Compare | Summarize group differences, rates, rankings, or trajectories to surface the main story in the data. | Grouped summaries and comparative plots`
-- `T7 | Visualize | Translate the analytical result into geographic views to reveal regional variation and outliers. | Spatial joins or mapping code`
-- `T8 | Reflect | Identify reusable workflow pieces that can transfer to future datasets with a similar shape or question. | End-state of the analysis pattern`
-
-Code Mapping Table:
-
-- `T1 | Data load and inspection | tt_load, count | Establish source shape, units, and comparison candidates`
-- `T4 | Structuring and enrichment | spread, unnest, left_join, inner_join | Convert messy inputs into analysis-ready tables`
-- `T5 | Text comparison | unnest_tokens, anti_join | Identify terms that distinguish groups or documents`
-- `T6 | Group comparison | group_by, summarize, count, mutate | Compare categories, time periods, or entities`
-- `T7 | Visualization | ggplot, geom_col, geom_point, geom_line, facet_wrap | Communicate the core result visually`
-
-Data Transformation Flow:
-
-- `Raw | Imported source tables or files | Load source data into tibbles or lists | Raw episode objects | Establish the starting analysis surface`
-- `Raw -> Clean | Raw source tables | Rename, reshape, unnest, and join supporting data | Analysis-ready rows with consistent keys | Standardize the schema before comparison`
-- `Clean -> Analytical | Clean text corpus | Tokenize text, remove stop words, and count terms by group | Term-frequency comparison tables | Surface language differences and signatures`
-- `Analytical -> Visual | Analytical summaries with geographic identifiers | Join map geometry or region lookup data | Map-ready plotting table | Display geographic variation`
-
-Reusable Patterns:
-
-- `inspect_source_schema | Inspect source tables, field meanings, and likely comparison axes | Raw dataset or dataset list | Initial analysis plan | Y`
-- `reshape_analysis_inputs | Convert wide or nested source fields into normalized long-form records | Raw tabular fields | Tidy analysis table | Y`
-- `join_context_tables | Enrich the main table with lookup or metadata tables | Primary data plus keys | Context-enriched analysis table | Y`
-- `compare_group_vocabulary | Tokenize text and compute grouped term distinctiveness | Text, grouping variable, document or entity ids | Ranked term comparison tables | Y`
-- `prepare_geographic_summary | Aggregate metrics by region and join map geometry or lookup tables | Regional metrics and identifiers | Map-ready data | Y`
-- `plot_comparative_story | Reorder entities and visualize the main comparison cleanly | Summary table or model output | Communication-ready plot | Y`
-
-Function Candidates:
-
-- `reshape_episode_inputs(data, ...)`
-- `join_episode_context(primary_data, lookup_data, by)`
-- `prepare_text_tokens(data, text_column)`
-- `compare_group_vocabulary(data, group_col, term_col, count_col = 'n')`
-- `prepare_map_summary(data, region_col, value_col)`
-- `plot_geographic_metric(map_data, value_col)`
-- `plot_comparative_story(data, x_col, y_col, group_col = NULL)`
-
-Episode Signature:
-
-- `analysis_intent`: Explore and compare language patterns in UN votes using tokenization, grouped counts, and discriminative text analysis
-- `analysis_type`: EDA
-- `primary_techniques`: schema inspection, grouped summaries, reshaping, table joins, tokenization, term comparison, mapping, time-aware comparison, visualization
-- `data_complexity_level`: high
-- `reusable_difficulty_score`: 5
-
-Adaptation Plan:
-
-- `1 | inspect_source_schema | Start by mapping entities, measures, and likely comparison axes before transforming anything`
-- `3 | reshape_analysis_inputs | Normalize wide, nested, or repeated fields into one analysis-ready row structure`
-- `4 | join_context_tables | Enrich the main analysis table with keys, metadata, or auxiliary measurements`
-- `5 | compare_group_vocabulary | Tokenize the new corpus and compare terms across groups or documents`
-- `7 | prepare_geographic_summary | Aggregate to the geographic unit available in the new dataset and rebuild the map join`
-- `8 | plot_comparative_story | Choose the clearest visual comparison once the analytical table is ready`
-
-### `dairy_consumption`
-
-- `transcript_title`: Analyzing US dairy consumption in R
-- `transcript_file`: `raw-data/inspiration/Analyzing US dairy consumption in R.txt`
-- `code_file`: `data-screencasts/us-dairy.Rmd`
-- `data_source`: TidyTuesday 2019-01-29 source files
-- `analysis_intent`: Explore distributions, group differences, and notable patterns in US dairy consumption through cleaning, summarization, and visualization
-- `analysis_type`: EDA
-- `pattern_signature`: `load_inspect_reshape_trend_simulate_compare_visualize`
-- `adaptation_hint`: Reuse for exploratory datasets that need schema inspection, grouped summaries, and visualization-first storytelling
-- `ker_status`: extracted
-
-Thought Process Map:
-
-- `T1 | Context | Frame the episode as exploratory analysis of US dairy consumption with limited advance knowledge of the data. | Transcript title and opening context`
-- `T2 | Inspect | Load the data, inspect table shape, and identify the main entities, measures, and comparison axes. | Initial data load and early counts or prints`
-- `T4 | Transform | Reshape fields, standardize column meanings, and join supporting tables to create analysis-ready records. | Join and reshaping operations in the Rmd`
-- `T6 | Compare | Summarize group differences, rates, rankings, or trajectories to surface the main story in the data. | Grouped summaries and comparative plots`
-- `T7 | Visualize | Turn the cleaned summaries into interpretable visual comparisons and iterate toward the clearest view. | ggplot workflow`
-- `T8 | Reflect | Identify reusable workflow pieces that can transfer to future datasets with a similar shape or question. | End-state of the analysis pattern`
-
-Code Mapping Table:
-
-- `T1 | Data load and inspection | read_csv | Establish source shape, units, and comparison candidates`
-- `T4 | Structuring and enrichment | gather, unnest | Convert messy inputs into analysis-ready tables`
-- `T6 | Group comparison | group_by, summarize, mutate | Compare categories, time periods, or entities`
-- `T7 | Visualization | ggplot, geom_col, geom_line, facet_wrap | Communicate the core result visually`
-
-Data Transformation Flow:
-
-- `Raw | Imported source tables or files | Load source data into tibbles or lists | Raw episode objects | Establish the starting analysis surface`
-- `Raw -> Clean | Raw source tables | Rename, reshape, unnest, and join supporting data | Analysis-ready rows with consistent keys | Standardize the schema before comparison`
-- `Clean -> Analytical | Cleaned table | Group, summarize, rank, or compare entities | Summary tables or rate calculations | Surface the core analytical story`
-- `Analytical -> Visual | Summary or model outputs | Reorder factors and prepare plotting fields | Plot-ready table | Turn the analytical result into an interpretable chart`
-
-Reusable Patterns:
-
-- `inspect_source_schema | Inspect source tables, field meanings, and likely comparison axes | Raw dataset or dataset list | Initial analysis plan | Y`
-- `reshape_analysis_inputs | Convert wide or nested source fields into normalized long-form records | Raw tabular fields | Tidy analysis table | Y`
-- `plot_comparative_story | Reorder entities and visualize the main comparison cleanly | Summary table or model output | Communication-ready plot | Y`
-
-Function Candidates:
-
-- `reshape_episode_inputs(data, ...)`
-- `join_episode_context(primary_data, lookup_data, by)`
-- `plot_comparative_story(data, x_col, y_col, group_col = NULL)`
-
-Episode Signature:
-
-- `analysis_intent`: Explore distributions, group differences, and notable patterns in US dairy consumption through cleaning, summarization, and visualization
-- `analysis_type`: EDA
-- `primary_techniques`: schema inspection, grouped summaries, reshaping, time-aware comparison, visualization
-- `data_complexity_level`: medium
-- `reusable_difficulty_score`: 3
-
-Adaptation Plan:
-
-- `1 | inspect_source_schema | Start by mapping entities, measures, and likely comparison axes before transforming anything`
-- `3 | reshape_analysis_inputs | Normalize wide, nested, or repeated fields into one analysis-ready row structure`
-- `8 | plot_comparative_story | Choose the clearest visual comparison once the analytical table is ready`
-
-### `wind`
-
-- `transcript_title`: Analyzing US wind data in R
-- `transcript_file`: `raw-data/inspiration/Analyzing US wind data in R.txt`
-- `code_file`: `data-screencasts/us-wind.Rmd`
-- `data_source`: Local source files read in episode: https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2018-11-06/us_wind.csv
-- `analysis_intent`: Explore distributions, group differences, and notable patterns in US wind through cleaning, summarization, and visualization
-- `analysis_type`: EDA
-- `pattern_signature`: `load_inspect_trend_simulate_compare_visualize`
-- `adaptation_hint`: Reuse for exploratory datasets that need schema inspection, grouped summaries, and visualization-first storytelling
-- `ker_status`: extracted
-
-Thought Process Map:
-
-- `T1 | Context | Frame the episode as exploratory analysis of US wind with limited advance knowledge of the data. | Transcript title and opening context`
-- `T2 | Inspect | Load the data, inspect table shape, and identify the main entities, measures, and comparison axes. | Initial data load and early counts or prints`
-- `T6 | Compare | Summarize group differences, rates, rankings, or trajectories to surface the main story in the data. | Grouped summaries and comparative plots`
-- `T7 | Visualize | Turn the cleaned summaries into interpretable visual comparisons and iterate toward the clearest view. | ggplot workflow`
-- `T8 | Reflect | Identify reusable workflow pieces that can transfer to future datasets with a similar shape or question. | End-state of the analysis pattern`
-
-Code Mapping Table:
-
-- `T1 | Data load and inspection | read_csv | Establish source shape, units, and comparison candidates`
-- `T6 | Group comparison | group_by, summarize, mutate | Compare categories, time periods, or entities`
-- `T7 | Visualization | ggplot, geom_point | Communicate the core result visually`
-
-Data Transformation Flow:
-
-- `Raw | Imported source tables or files | Load source data into tibbles or lists | Raw episode objects | Establish the starting analysis surface`
-- `Raw -> Clean | Raw source tables | Filter, rename, and derive analysis columns | Cleaned table | Make the data comparable and plot-ready`
-- `Clean -> Analytical | Cleaned table | Group, summarize, rank, or compare entities | Summary tables or rate calculations | Surface the core analytical story`
-- `Analytical -> Visual | Summary or model outputs | Reorder factors and prepare plotting fields | Plot-ready table | Turn the analytical result into an interpretable chart`
-
-Reusable Patterns:
-
-- `inspect_source_schema | Inspect source tables, field meanings, and likely comparison axes | Raw dataset or dataset list | Initial analysis plan | Y`
-- `plot_comparative_story | Reorder entities and visualize the main comparison cleanly | Summary table or model output | Communication-ready plot | Y`
-
-Function Candidates:
-
-- `plot_comparative_story(data, x_col, y_col, group_col = NULL)`
-
-Episode Signature:
-
-- `analysis_intent`: Explore distributions, group differences, and notable patterns in US wind through cleaning, summarization, and visualization
-- `analysis_type`: EDA
-- `primary_techniques`: schema inspection, grouped summaries, time-aware comparison, visualization
-- `data_complexity_level`: low-medium
-- `reusable_difficulty_score`: 2
-
-Adaptation Plan:
-
-- `1 | inspect_source_schema | Start by mapping entities, measures, and likely comparison axes before transforming anything`
-- `8 | plot_comparative_story | Choose the clearest visual comparison once the analytical table is ready`
-
-### `video_games`
-
-- `transcript_title`: Analyzing Video Games in R
-- `transcript_file`: `raw-data/inspiration/Analyzing Video Games in R.txt`
-- `code_file`: `data-screencasts/2021_03_16_video_games.Rmd`
-- `data_source`: TidyTuesday 2021-03-16 dataset
-- `analysis_intent`: Explore distributions, group differences, and notable patterns in Video Games through cleaning, summarization, and visualization
-- `analysis_type`: EDA
-- `pattern_signature`: `load_inspect_reshape_join_trend_compare_visualize`
-- `adaptation_hint`: Reuse for messy multi-table datasets that need reshaping, enrichment, and grouped summaries before plotting
-- `ker_status`: extracted
-
-Thought Process Map:
-
-- `T1 | Context | Frame the episode as exploratory analysis of Video Games with limited advance knowledge of the data. | Transcript title and opening context`
-- `T2 | Inspect | Load the data, inspect table shape, and identify the main entities, measures, and comparison axes. | Initial data load and early counts or prints`
-- `T4 | Transform | Reshape fields, standardize column meanings, and join supporting tables to create analysis-ready records. | Join and reshaping operations in the Rmd`
-- `T6 | Compare | Summarize group differences, rates, rankings, or trajectories to surface the main story in the data. | Grouped summaries and comparative plots`
-- `T7 | Visualize | Turn the cleaned summaries into interpretable visual comparisons and iterate toward the clearest view. | ggplot workflow`
-- `T8 | Reflect | Identify reusable workflow pieces that can transfer to future datasets with a similar shape or question. | End-state of the analysis pattern`
-
-Code Mapping Table:
-
-- `T1 | Data load and inspection | tt_load, count, glimpse | Establish source shape, units, and comparison candidates`
-- `T4 | Structuring and enrichment | pivot_wider, inner_join | Convert messy inputs into analysis-ready tables`
-- `T6 | Group comparison | group_by, summarize, count, mutate | Compare categories, time periods, or entities`
-- `T7 | Visualization | ggplot, geom_col, geom_point, geom_line, facet_wrap | Communicate the core result visually`
-
-Data Transformation Flow:
-
-- `Raw | Imported source tables or files | Load source data into tibbles or lists | Raw episode objects | Establish the starting analysis surface`
-- `Raw -> Clean | Raw source tables | Rename, reshape, unnest, and join supporting data | Analysis-ready rows with consistent keys | Standardize the schema before comparison`
-- `Clean -> Analytical | Cleaned table | Group, summarize, rank, or compare entities | Summary tables or rate calculations | Surface the core analytical story`
-- `Analytical -> Visual | Summary or model outputs | Reorder factors and prepare plotting fields | Plot-ready table | Turn the analytical result into an interpretable chart`
-
-Reusable Patterns:
-
-- `inspect_source_schema | Inspect source tables, field meanings, and likely comparison axes | Raw dataset or dataset list | Initial analysis plan | Y`
-- `reshape_analysis_inputs | Convert wide or nested source fields into normalized long-form records | Raw tabular fields | Tidy analysis table | Y`
-- `join_context_tables | Enrich the main table with lookup or metadata tables | Primary data plus keys | Context-enriched analysis table | Y`
-- `plot_comparative_story | Reorder entities and visualize the main comparison cleanly | Summary table or model output | Communication-ready plot | Y`
-
-Function Candidates:
-
-- `reshape_episode_inputs(data, ...)`
-- `join_episode_context(primary_data, lookup_data, by)`
-- `plot_comparative_story(data, x_col, y_col, group_col = NULL)`
-
-Episode Signature:
-
-- `analysis_intent`: Explore distributions, group differences, and notable patterns in Video Games through cleaning, summarization, and visualization
-- `analysis_type`: EDA
-- `primary_techniques`: schema inspection, grouped summaries, reshaping, table joins, time-aware comparison, visualization
-- `data_complexity_level`: medium
-- `reusable_difficulty_score`: 3
-
-Adaptation Plan:
-
-- `1 | inspect_source_schema | Start by mapping entities, measures, and likely comparison axes before transforming anything`
-- `3 | reshape_analysis_inputs | Normalize wide, nested, or repeated fields into one analysis-ready row structure`
-- `4 | join_context_tables | Enrich the main analysis table with keys, metadata, or auxiliary measurements`
 - `8 | plot_comparative_story | Choose the clearest visual comparison once the analytical table is ready`
 
 ### `volcano_eruptions`
@@ -4946,135 +5130,6 @@ Adaptation Plan:
 
 - `1 | inspect_source_schema | Start by mapping entities, measures, and likely comparison axes before transforming anything`
 - `6 | build_predictive_or_explanatory_model | Fit and evaluate a baseline model after the core feature engineering is stable`
-- `8 | plot_comparative_story | Choose the clearest visual comparison once the analytical table is ready`
-
-### `women_s_world_cup`
-
-- `transcript_title`: Analyzing Women's World Cup data in R
-- `transcript_file`: `raw-data/inspiration/Analyzing Women's World Cup data.txt`
-- `code_file`: `data-screencasts/womens-world-cup.Rmd`
-- `data_source`: TidyTuesday 2019-07-09 source files
-- `analysis_intent`: Explore distributions, group differences, and notable patterns in Women's World Cup through cleaning, summarization, and visualization
-- `analysis_type`: EDA
-- `pattern_signature`: `load_inspect_scrape_join_trend_compare_visualize`
-- `adaptation_hint`: Reuse for datasets that must be assembled from HTML or JSON sources before analysis
-- `ker_status`: extracted
-
-Thought Process Map:
-
-- `T1 | Context | Frame the episode as exploratory analysis of Women's World Cup with limited advance knowledge of the data. | Transcript title and opening context`
-- `T2 | Inspect | Load the data, inspect table shape, and identify the main entities, measures, and comparison axes. | Initial data load and early counts or prints`
-- `T3 | Transform | Acquire or supplement source data from external web pages or APIs before analysis. | Presence of scraping or external-source code`
-- `T4 | Transform | Reshape fields, standardize column meanings, and join supporting tables to create analysis-ready records. | Join and reshaping operations in the Rmd`
-- `T6 | Compare | Summarize group differences, rates, rankings, or trajectories to surface the main story in the data. | Grouped summaries and comparative plots`
-- `T7 | Visualize | Turn the cleaned summaries into interpretable visual comparisons and iterate toward the clearest view. | ggplot workflow`
-- `T8 | Reflect | Identify reusable workflow pieces that can transfer to future datasets with a similar shape or question. | End-state of the analysis pattern`
-
-Code Mapping Table:
-
-- `T1 | Data load and inspection | read_csv, read_html, count | Establish source shape, units, and comparison candidates`
-- `T3 | External acquisition | read_html, html_nodes, GET | Build or enrich the dataset before analysis`
-- `T4 | Structuring and enrichment | left_join, inner_join | Convert messy inputs into analysis-ready tables`
-- `T6 | Group comparison | group_by, summarize, count, mutate | Compare categories, time periods, or entities`
-- `T7 | Visualization | ggplot, geom_col, geom_point, facet_wrap | Communicate the core result visually`
-
-Data Transformation Flow:
-
-- `Raw | Imported source tables or files | Load source data into tibbles or lists | Raw episode objects | Establish the starting analysis surface`
-- `Raw -> Collected | External web or JSON sources | Scrape or request supplemental records | Collected reference tables | Fill gaps not available in the initial source`
-- `Raw -> Clean | Raw source tables | Rename, reshape, unnest, and join supporting data | Analysis-ready rows with consistent keys | Standardize the schema before comparison`
-- `Clean -> Analytical | Cleaned table | Group, summarize, rank, or compare entities | Summary tables or rate calculations | Surface the core analytical story`
-- `Analytical -> Visual | Summary or model outputs | Reorder factors and prepare plotting fields | Plot-ready table | Turn the analytical result into an interpretable chart`
-
-Reusable Patterns:
-
-- `inspect_source_schema | Inspect source tables, field meanings, and likely comparison axes | Raw dataset or dataset list | Initial analysis plan | Y`
-- `scrape_supporting_reference_data | Pull structured records from HTML or JSON before analysis | External source url and parsing rules | Supplemental reference table | Y`
-- `join_context_tables | Enrich the main table with lookup or metadata tables | Primary data plus keys | Context-enriched analysis table | Y`
-- `plot_comparative_story | Reorder entities and visualize the main comparison cleanly | Summary table or model output | Communication-ready plot | Y`
-
-Function Candidates:
-
-- `scrape_reference_table(url, css_selector)`
-- `collect_episode_source_records(urls, parser)`
-- `reshape_episode_inputs(data, ...)`
-- `join_episode_context(primary_data, lookup_data, by)`
-- `plot_comparative_story(data, x_col, y_col, group_col = NULL)`
-
-Episode Signature:
-
-- `analysis_intent`: Explore distributions, group differences, and notable patterns in Women's World Cup through cleaning, summarization, and visualization
-- `analysis_type`: EDA
-- `primary_techniques`: schema inspection, grouped summaries, web or API data collection, table joins, time-aware comparison, visualization
-- `data_complexity_level`: medium
-- `reusable_difficulty_score`: 3
-
-Adaptation Plan:
-
-- `1 | inspect_source_schema | Start by mapping entities, measures, and likely comparison axes before transforming anything`
-- `2 | scrape_supporting_reference_data | Rebuild any missing lookup or metadata tables from the relevant external source`
-- `4 | join_context_tables | Enrich the main analysis table with keys, metadata, or auxiliary measurements`
-- `8 | plot_comparative_story | Choose the clearest visual comparison once the analytical table is ready`
-
-### `x_men_comics`
-
-- `transcript_title`: Analyzing X-Men comics in R
-- `transcript_file`: `raw-data/inspiration/Analyzing X-Men comics in R.txt`
-- `code_file`: `data-screencasts/uncanny-xmen.Rmd`
-- `data_source`: TidyTuesday 2020-06-30 dataset
-- `analysis_intent`: Explore distributions, group differences, and notable patterns in X-Men comics through cleaning, summarization, and visualization
-- `analysis_type`: EDA
-- `pattern_signature`: `load_inspect_join_compare_visualize`
-- `adaptation_hint`: Reuse for exploratory datasets that need schema inspection, grouped summaries, and visualization-first storytelling
-- `ker_status`: extracted
-
-Thought Process Map:
-
-- `T1 | Context | Frame the episode as exploratory analysis of X-Men comics with limited advance knowledge of the data. | Transcript title and opening context`
-- `T2 | Inspect | Load the data, inspect table shape, and identify the main entities, measures, and comparison axes. | Initial data load and early counts or prints`
-- `T4 | Transform | Reshape fields, standardize column meanings, and join supporting tables to create analysis-ready records. | Join and reshaping operations in the Rmd`
-- `T6 | Compare | Summarize group differences, rates, rankings, or trajectories to surface the main story in the data. | Grouped summaries and comparative plots`
-- `T7 | Visualize | Turn the cleaned summaries into interpretable visual comparisons and iterate toward the clearest view. | ggplot workflow`
-- `T8 | Reflect | Identify reusable workflow pieces that can transfer to future datasets with a similar shape or question. | End-state of the analysis pattern`
-
-Code Mapping Table:
-
-- `T1 | Data load and inspection | tt_load | Establish source shape, units, and comparison candidates`
-- `T4 | Structuring and enrichment | left_join, inner_join | Convert messy inputs into analysis-ready tables`
-- `T6 | Group comparison | group_by, summarize, mutate | Compare categories, time periods, or entities`
-- `T7 | Visualization | ggplot, geom_col, geom_point, geom_line, facet_wrap | Communicate the core result visually`
-
-Data Transformation Flow:
-
-- `Raw | Imported source tables or files | Load source data into tibbles or lists | Raw episode objects | Establish the starting analysis surface`
-- `Raw -> Clean | Raw source tables | Rename, reshape, unnest, and join supporting data | Analysis-ready rows with consistent keys | Standardize the schema before comparison`
-- `Clean -> Analytical | Cleaned table | Group, summarize, rank, or compare entities | Summary tables or rate calculations | Surface the core analytical story`
-- `Analytical -> Visual | Summary or model outputs | Reorder factors and prepare plotting fields | Plot-ready table | Turn the analytical result into an interpretable chart`
-
-Reusable Patterns:
-
-- `inspect_source_schema | Inspect source tables, field meanings, and likely comparison axes | Raw dataset or dataset list | Initial analysis plan | Y`
-- `join_context_tables | Enrich the main table with lookup or metadata tables | Primary data plus keys | Context-enriched analysis table | Y`
-- `plot_comparative_story | Reorder entities and visualize the main comparison cleanly | Summary table or model output | Communication-ready plot | Y`
-
-Function Candidates:
-
-- `reshape_episode_inputs(data, ...)`
-- `join_episode_context(primary_data, lookup_data, by)`
-- `plot_comparative_story(data, x_col, y_col, group_col = NULL)`
-
-Episode Signature:
-
-- `analysis_intent`: Explore distributions, group differences, and notable patterns in X-Men comics through cleaning, summarization, and visualization
-- `analysis_type`: EDA
-- `primary_techniques`: schema inspection, grouped summaries, table joins, visualization
-- `data_complexity_level`: low-medium
-- `reusable_difficulty_score`: 2
-
-Adaptation Plan:
-
-- `1 | inspect_source_schema | Start by mapping entities, measures, and likely comparison axes before transforming anything`
-- `4 | join_context_tables | Enrich the main analysis table with keys, metadata, or auxiliary measurements`
 - `8 | plot_comparative_story | Choose the clearest visual comparison once the analytical table is ready`
 
 ### `analyzng_scraping_ramen_reviews`

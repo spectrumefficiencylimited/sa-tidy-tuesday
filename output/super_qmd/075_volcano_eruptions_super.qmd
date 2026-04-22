@@ -1,6 +1,7 @@
 ---
 title: "Super QMD: Analyzing volcano eruptions in R"
 subtitle: "Cognition-first blueprint built from the episode guide and KER"
+author: "Andrei Stoian"
 format:
   html:
     theme: flatly
@@ -50,7 +51,7 @@ Explore distributions, group differences, and notable patterns in volcano erupti
 
 ## Transcript Preview
 
-Analyzing volcano eruptions in R David Robinson 15.9k subscribers 113 Share Save Clip 3,462 views Streamed live on 13 May 2020 Tidy Tuesday R Screencasts I'll analyze a dataset on volcano eruptions in R, without looking at the dataset in advance. The dataset comes from the Tidy Tuesday project: https://github.com/rfordatascience/ti... Transcript Search in video 0:06 hi I'm Dave Robinson and welcome to another screencast where I'll be using 0:11 our and our studio to analyze data I've never seen before as usual the...
+Analyzing volcano eruptions in R 15.9k subscribers 113 Share Save Clip 3,462 views Streamed live on 13 May 2020 Tidy Tuesday R Screencasts I'll analyze a dataset on volcano eruptions in R, without looking at the dataset in advance. The dataset comes from the Tidy Tuesday project: https://github.com/rfordatascience/ti... Transcript Search in video 0:06 hi I'm Dave Robinson and welcome to another screencast where I'll be using 0:11 our and our studio to analyze data I've never seen before as usual the...
 
 ## Cognitive Signature
 
@@ -200,7 +201,7 @@ Trigger:
 # Source assets: tidytuesday/data/2020/2020-05-12/eruptions.csv, tidytuesday/data/2020/2020-05-12/events.csv, tidytuesday/data/2020/2020-05-12/sulfur.csv
 # Suggested verbs: mutate(), separate_rows(), pivot_longer(), left_join(), unnest()
 # analysis_tbl <- raw_tbl %>%
-#   ...
+# ...
 ```
 ## Stage 4: Compare
 
@@ -223,9 +224,9 @@ Trigger:
 
 # Summarize the comparison that best answers the question.
 # comparison_tbl <- analysis_tbl %>%
-#   group_by(...) %>%
-#   summarise(...) %>%
-#   arrange(desc(...))
+# group_by(...) %>%
+# summarise(...) %>%
+# arrange(desc(...))
 ```
 ## Stage 5: Visualize
 
@@ -250,8 +251,8 @@ Additional guidance:
 
 # Turn the comparison table into one clear communication plot.
 # ggplot(comparison_tbl, aes(...)) +
-#   geom_col() +
-#   labs(title = ..., subtitle = ...)
+# geom_col() +
+# labs(title = ..., subtitle = ...)
 ```
 ## Stage 6: Reflect
 

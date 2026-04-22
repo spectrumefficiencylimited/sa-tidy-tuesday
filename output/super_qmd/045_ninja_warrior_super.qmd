@@ -1,6 +1,7 @@
 ---
 title: "Super QMD: Analyzing Ninja Warrior in R"
 subtitle: "Cognition-first blueprint built from the episode guide and KER"
+author: "Andrei Stoian"
 format:
   html:
     theme: flatly
@@ -50,7 +51,7 @@ Explore and compare language patterns in Ninja Warrior using tokenization, group
 
 ## Transcript Preview
 
-Analyzing Ninja Warrior in R David Robinson 15.9k subscribers 64 Share Save Clip 2,077 views Streamed live on 16 Dec 2020 Tidy Tuesday R Screencasts I'll analyze a dataset about the Ninja Warrior obstacle course TV series, without looking at the dataset in advance. The dataset comes from the Tidy Tuesday project: https://github.com/rfordatascience/ti... Code: https://github.com/dgrtwo/data-screen... Timestamped annotations of specific tricks, tips and tools used: https://github.com/dgrtwo/data-screen...Introduction...
+Analyzing Ninja Warrior in R 15.9k subscribers 64 Share Save Clip 2,077 views Streamed live on 16 Dec 2020 Tidy Tuesday R Screencasts I'll analyze a dataset about the Ninja Warrior obstacle course TV series, without looking at the dataset in advance. The dataset comes from the Tidy Tuesday project: https://github.com/rfordatascience/ti... Code: https://github.com/dgrtwo/data-screen... Timestamped annotations of specific tricks, tips and tools used: https://github.com/dgrtwo/data-screen...Introduction...
 
 ## Cognitive Signature
 
@@ -194,9 +195,9 @@ Additional guidance:
 
 # Summarize the comparison that best answers the question.
 # comparison_tbl <- analysis_tbl %>%
-#   group_by(...) %>%
-#   summarise(...) %>%
-#   arrange(desc(...))
+# group_by(...) %>%
+# summarise(...) %>%
+# arrange(desc(...))
 ```
 ## Stage 4: Compare
 
@@ -221,9 +222,9 @@ Additional guidance:
 
 # Summarize the comparison that best answers the question.
 # comparison_tbl <- analysis_tbl %>%
-#   group_by(...) %>%
-#   summarise(...) %>%
-#   arrange(desc(...))
+# group_by(...) %>%
+# summarise(...) %>%
+# arrange(desc(...))
 ```
 ## Stage 5: Visualize
 
@@ -248,8 +249,8 @@ Additional guidance:
 
 # Turn the comparison table into one clear communication plot.
 # ggplot(comparison_tbl, aes(...)) +
-#   geom_col() +
-#   labs(title = ..., subtitle = ...)
+# geom_col() +
+# labs(title = ..., subtitle = ...)
 ```
 ## Stage 6: Reflect
 

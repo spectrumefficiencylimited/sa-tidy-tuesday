@@ -1,6 +1,7 @@
 ---
 title: "Super QMD: Analyzing HBCU enrollment in R"
 subtitle: "Cognition-first blueprint built from the episode guide and KER"
+author: "Andrei Stoian"
 format:
   html:
     theme: flatly
@@ -50,7 +51,7 @@ Explore distributions, group differences, and notable patterns in HBCU enrollmen
 
 ## Transcript Preview
 
-Analyzing HBCU enrollment in R David Robinson 15.9k subscribers 74 Share Save Clip 2,759 views Streamed live on 3 Feb 2021 Tidy Tuesday R Screencasts I'll analyze a dataset about enrollment in historically Black colleges & universities (HCBUs), without looking at the dataset in advance. The dataset comes from the Tidy Tuesday project: https://github.com/rfordatascience/ti... Code: https://github.com/dgrtwo/data-screen... Timestamped annotations of specific tricks, tips and tools used: https://github.com/dgrtwo/data...
+Analyzing HBCU enrollment in R 15.9k subscribers 74 Share Save Clip 2,759 views Streamed live on 3 Feb 2021 Tidy Tuesday R Screencasts I'll analyze a dataset about enrollment in historically Black colleges & universities (HCBUs), without looking at the dataset in advance. The dataset comes from the Tidy Tuesday project: https://github.com/rfordatascience/ti... Code: https://github.com/dgrtwo/data-screen... Timestamped annotations of specific tricks, tips and tools used: https://github.com/dgrtwo/data...
 
 ## Cognitive Signature
 
@@ -199,7 +200,7 @@ Trigger:
 # Source assets: tidytuesday/data/2021/2021-02-02/104.10.xlsx, tidytuesday/data/2021/2021-02-02/bach_students.csv, tidytuesday/data/2021/2021-02-02/female_bach_students.csv
 # Suggested verbs: mutate(), separate_rows(), pivot_longer(), left_join(), unnest()
 # analysis_tbl <- raw_tbl %>%
-#   ...
+# ...
 ```
 ## Stage 4: Compare
 
@@ -222,9 +223,9 @@ Trigger:
 
 # Summarize the comparison that best answers the question.
 # comparison_tbl <- analysis_tbl %>%
-#   group_by(...) %>%
-#   summarise(...) %>%
-#   arrange(desc(...))
+# group_by(...) %>%
+# summarise(...) %>%
+# arrange(desc(...))
 ```
 ## Stage 5: Visualize
 
@@ -249,8 +250,8 @@ Additional guidance:
 
 # Turn the comparison table into one clear communication plot.
 # ggplot(comparison_tbl, aes(...)) +
-#   geom_col() +
-#   labs(title = ..., subtitle = ...)
+# geom_col() +
+# labs(title = ..., subtitle = ...)
 ```
 ## Stage 6: Reflect
 

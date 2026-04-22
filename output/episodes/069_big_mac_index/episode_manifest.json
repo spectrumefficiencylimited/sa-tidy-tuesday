@@ -1,0 +1,54 @@
+{
+  "queue_position": 69,
+  "folder_name": "069_big_mac_index",
+  "transcript_title": "Analyzing the Big Mac index in R",
+  "function_name": "big_mac_index",
+  "ker_status": "extracted",
+  "reproduction_status": "ready_local",
+  "source_files": {
+    "transcript_file": "raw-data/inspiration/Analyzing the Big Mac index in R.txt",
+    "code_file": "data-screencasts/2020_12_22_big_mac_index.Rmd"
+  },
+  "source_exists": {
+    "transcript": true,
+    "code": true
+  },
+  "data_source": "TidyTuesday 2020-12-22 dataset",
+  "analysis_intent": "Explore distributions, group differences, and notable patterns in the Big Mac index through cleaning, summarization, and visualization",
+  "analysis_type": "EDA",
+  "pattern_signature": "load_inspect_reshape_trend_compare_visualize",
+  "required_packages": [
+    "gganimate",
+    "ggrepel",
+    "scales",
+    "tidytuesdayR",
+    "tidyverse",
+    "widyr"
+  ],
+  "features": {
+    "ggplot": true,
+    "joins": false,
+    "reshape": true,
+    "text_analysis": false,
+    "modeling": false,
+    "predictive": false,
+    "scraping": false,
+    "maps": false,
+    "time": true,
+    "simulation": false,
+    "multi_table": false
+  },
+  "local_data_files": [
+    "tidytuesday/data/2020/2020-12-22/big-mac.csv"
+  ],
+  "reference_files": [
+    "tidytuesday/data/2020/2020-12-22/pic1.png",
+    "tidytuesday/data/2020/2020-12-22/pic2.png",
+    "tidytuesday/data/2020/2020-12-22/readme.md"
+  ],
+  "external_dependencies": [],
+  "execution_notes": [
+    "interactive `View()` calls are present and should be skipped or replaced in automated runs",
+    "local TidyTuesday files were matched, so you can use `load_tidyweek_data()` and avoid a GitHub PAT"
+  ]
+}

@@ -1,6 +1,7 @@
 ---
 title: "Super QMD: Analyzing NZ Bird of the Year in R"
 subtitle: "Cognition-first blueprint built from the episode guide and KER"
+author: "Andrei Stoian"
 format:
   html:
     theme: flatly
@@ -50,7 +51,7 @@ Explore distributions, group differences, and notable patterns in NZ Bird of the
 
 ## Transcript Preview
 
-Analyzing NZ Bird of the Year in R David Robinson 15.9k subscribers 72 Share Save Clip 4,521 views Streamed live on 2019-11-19 Tidy Tuesday R Screencasts I'll analyze a dataset about nz bird of the year without looking at the dataset in advance. The dataset comes from the Tidy Tuesday project: https...
+Analyzing NZ Bird of the Year in R 15.9k subscribers 72 Share Save Clip 4,521 views Streamed live on 2019-11-19 Tidy Tuesday R Screencasts I'll analyze a dataset about nz bird of the year without looking at the dataset in advance. The dataset comes from the Tidy Tuesday project: https...
 
 ## Cognitive Signature
 
@@ -92,8 +93,8 @@ source("R/screencast_helpers.R")
 tuesdata <- load_tidyweek_data("2019-11-19")
 names(tuesdata)
 
-BOTY_votes_2019 <- tuesdata$BOTY_votes_2019  # or read from local path
-nz_bird <- tuesdata$nz_bird  # or read from local path
+BOTY_votes_2019 <- tuesdata$BOTY_votes_2019 # or read from local path
+nz_bird <- tuesdata$nz_bird # or read from local path
 ```
 
 ## Thought -> Code -> Data Bridge
@@ -197,7 +198,7 @@ Trigger:
 # Source assets: tidytuesday/data/2019/2019-11-19/BOTY-votes-2019.csv, tidytuesday/data/2019/2019-11-19/nz_bird.csv
 # Suggested verbs: mutate(), separate_rows(), pivot_longer(), left_join(), unnest()
 # analysis_tbl <- raw_tbl %>%
-#   ...
+# ...
 ```
 ## Stage 4: Compare
 
@@ -222,10 +223,10 @@ Additional guidance:
 
 # Summarize the comparison that best answers the question.
 # comparison_tbl <- analysis_tbl %>%
-#   count(category_col, sort = TRUE)   # or
-#   group_by(group_col) %>%
-#   summarise(metric = mean(value_col, na.rm = TRUE)) %>%
-#   arrange(desc(metric))
+# count(category_col, sort = TRUE) # or
+# group_by(group_col) %>%
+# summarise(metric = mean(value_col, na.rm = TRUE)) %>%
+# arrange(desc(metric))
 ```
 ## Stage 5: Visualize
 
@@ -250,13 +251,13 @@ Additional guidance:
 
 # Turn the comparison table into one clear communication plot.
 # ggplot(comparison_tbl, aes(x = fct_reorder(category, metric), y = metric)) +
-#   geom_col() +
-#   coord_flip() +
-#   labs(
-#     title = "...",
-#     subtitle = "Source: TidyTuesday 2019-11-19",
-#     x = NULL, y = NULL
-#   )
+# geom_col() +
+# coord_flip() +
+# labs(
+# title = "...",
+# subtitle = "Source: TidyTuesday 2019-11-19",
+# x = NULL, y = NULL
+# )
 ```
 ## Stage 6: Reflect
 
@@ -306,20 +307,20 @@ Trigger: group_by(cat1, cat2) + summarise + facet_wrap
 #| eval: false
 
 cross_tbl <- analysis_tbl |>
-  group_by(vote_rank, bird_breed) |>
-  summarise(
-    n      = n(),
-    median = median(hour, na.rm = TRUE),
-    .groups = "drop"
-  ) |>
-  filter(n >= 3)
+ group_by(vote_rank, bird_breed) |>
+ summarise(
+ n = n(),
+ median = median(hour, na.rm = TRUE),
+ .groups = "drop"
+ ) |>
+ filter(n >= 3)
 
 ggplot(cross_tbl, aes(x = fct_reorder(vote_rank, median), y = median, fill = bird_breed)) +
-  geom_col(position = "dodge") +
-  coord_flip() +
-  facet_wrap(~ bird_breed, scales = "free_x") +
-  labs(title = "NZ Bird of the Year: hour by vote_rank and bird_breed",
-       x = NULL, y = "Median hour")
+ geom_col(position = "dodge") +
+ coord_flip() +
+ facet_wrap(~ bird_breed, scales = "free_x") +
+ labs(title = "NZ Bird of the Year: hour by vote_rank and bird_breed",
+ x = NULL, y = "Median hour")
 ```
 
 ### Stage 8: Outlier Investigation
@@ -338,27 +339,27 @@ Trigger: group_by + mutate(residual = value - group_median) + slice_max(abs(resi
 #| eval: false
 
 residual_tbl <- analysis_tbl |>
-  group_by(vote_rank) |>
-  mutate(
-    group_median = median(hour, na.rm = TRUE),
-    residual     = hour - group_median
-  ) |>
-  ungroup() |>
-  arrange(desc(abs(residual)))
+ group_by(vote_rank) |>
+ mutate(
+ group_median = median(hour, na.rm = TRUE),
+ residual = hour - group_median
+ ) |>
+ ungroup() |>
+ arrange(desc(abs(residual)))
 
 # Label the top outliers
 library(ggrepel)
 
 ggplot(residual_tbl,
-       aes(x = group_median, y = hour, label = vote_rank)) +
-  geom_point(alpha = 0.4) +
-  geom_text_repel(
-    data = slice_max(residual_tbl, abs(residual), n = 15),
-    size = 3, max.overlaps = 20
-  ) +
-  geom_abline(slope = 1, intercept = 0, linetype = "dashed") +
-  labs(title = "Who over- or underperforms their group median?",
-       x = "Group median hour", y = "Observed hour")
+ aes(x = group_median, y = hour, label = vote_rank)) +
+ geom_point(alpha = 0.4) +
+ geom_text_repel(
+ data = slice_max(residual_tbl, abs(residual), n = 15),
+ size = 3, max.overlaps = 20
+ ) +
+ geom_abline(slope = 1, intercept = 0, linetype = "dashed") +
+ labs(title = "Who over- or underperforms their group median?",
+ x = "Group median hour", y = "Observed hour")
 ```
 
 ### Stage 9: Correlation Structure
@@ -377,13 +378,13 @@ Trigger: geom_point + geom_smooth(method = "lm") + color by group
 #| eval: false
 
 ggplot(analysis_tbl,
-       aes(x = hour, y = hour, colour = vote_rank)) +
-  geom_point(alpha = 0.5) +
-  geom_smooth(method = "lm", se = FALSE) +
-  scale_colour_viridis_d(end = 0.85) +
-  labs(title = "Relationship between hour and hour",
-       subtitle = "Coloured by vote_rank",
-       x = "hour", y = "hour")
+ aes(x = hour, y = hour, colour = vote_rank)) +
+ geom_point(alpha = 0.5) +
+ geom_smooth(method = "lm", se = FALSE) +
+ scale_colour_viridis_d(end = 0.85) +
+ labs(title = "Relationship between hour and hour",
+ subtitle = "Coloured by vote_rank",
+ x = "hour", y = "hour")
 ```
 
 ---
@@ -406,20 +407,20 @@ Trigger: lm() + broom::tidy() + coefficient plot
 #| eval: false
 
 model_tbl <- analysis_tbl |>
-  mutate(across(where(is.character), as.factor))
+ mutate(across(where(is.character), as.factor))
 
 model_fit <- lm(hour ~ vote_rank + bird_breed + hour, data = model_tbl)
 
 broom::tidy(model_fit, conf.int = TRUE) |>
-  filter(term != "(Intercept)") |>
-  mutate(term = fct_reorder(term, estimate)) |>
-  ggplot(aes(estimate, term,
-             xmin = conf.low, xmax = conf.high)) +
-  geom_pointrange() +
-  geom_vline(xintercept = 0, linetype = "dashed") +
-  labs(title = "What predicts hour?",
-       subtitle = "Linear model coefficients (95% CI)",
-       x = "Estimate", y = NULL)
+ filter(term != "(Intercept)") |>
+ mutate(term = fct_reorder(term, estimate)) |>
+ ggplot(aes(estimate, term,
+ xmin = conf.low, xmax = conf.high)) +
+ geom_pointrange() +
+ geom_vline(xintercept = 0, linetype = "dashed") +
+ labs(title = "What predicts hour?",
+ subtitle = "Linear model coefficients (95% CI)",
+ x = "Estimate", y = NULL)
 ```
 
 ### Stage 11: Residuals
@@ -440,15 +441,15 @@ Trigger: broom::augment() + geom_point(.resid) + geom_text_repel
 augmented_tbl <- broom::augment(model_fit, data = model_tbl)
 
 ggplot(augmented_tbl, aes(.fitted, .resid, label = vote_rank)) +
-  geom_point(alpha = 0.4) +
-  geom_smooth(method = "loess", se = FALSE, colour = "steelblue") +
-  geom_hline(yintercept = 0, linetype = "dashed") +
-  geom_text_repel(
-    data = filter(augmented_tbl, abs(.resid) > quantile(abs(.resid), 0.95)),
-    size = 3, max.overlaps = 15
-  ) +
-  labs(title = "Residuals: who over- or underperforms the model?",
-       x = "Fitted hour", y = "Residual")
+ geom_point(alpha = 0.4) +
+ geom_smooth(method = "loess", se = FALSE, colour = "steelblue") +
+ geom_hline(yintercept = 0, linetype = "dashed") +
+ geom_text_repel(
+ data = filter(augmented_tbl, abs(.resid) > quantile(abs(.resid), 0.95)),
+ size = 3, max.overlaps = 15
+ ) +
+ labs(title = "Residuals: who over- or underperforms the model?",
+ x = "Fitted hour", y = "Residual")
 ```
 
 ### Stage 12: Final Communication Chart
@@ -467,32 +468,32 @@ Trigger: After residuals and model are stable, step back and pick the clearest o
 #| eval: false
 
 final_tbl <- analysis_tbl |>
-  group_by(vote_rank) |>
-  summarise(
-    median_hour = median(hour, na.rm = TRUE),
-    n = n(),
-    .groups = "drop"
-  ) |>
-  filter(n >= 5) |>
-  mutate(vote_rank = fct_reorder(vote_rank, median_hour))
+ group_by(vote_rank) |>
+ summarise(
+ median_hour = median(hour, na.rm = TRUE),
+ n = n(),
+ .groups = "drop"
+ ) |>
+ filter(n >= 5) |>
+ mutate(vote_rank = fct_reorder(vote_rank, median_hour))
 
 ggplot(final_tbl,
-       aes(x = vote_rank, y = median_hour,
-           fill = median_hour)) +
-  geom_col(show.legend = FALSE) +
-  scale_fill_gradient2(
-    low = "tomato", mid = "gray90", high = "steelblue",
-    midpoint = median(analysis_tbl$hour, na.rm = TRUE)
-  ) +
-  coord_flip() +
-  labs(
-    title    = "NZ Bird of the Year: hour by vote_rank",
-    subtitle = "Median per group | colour = above/below overall median",
-    caption  = "Source: TidyTuesday 2019-11-19",
-    x = NULL, y = "Median hour"
-  ) +
-  theme_minimal(base_size = 13) +
-  theme(plot.title = element_text(face = "bold"))
+ aes(x = vote_rank, y = median_hour,
+ fill = median_hour)) +
+ geom_col(show.legend = FALSE) +
+ scale_fill_gradient2(
+ low = "tomato", mid = "gray90", high = "steelblue",
+ midpoint = median(analysis_tbl$hour, na.rm = TRUE)
+ ) +
+ coord_flip() +
+ labs(
+ title = "NZ Bird of the Year: hour by vote_rank",
+ subtitle = "Median per group | colour = above/below overall median",
+ caption = "Source: TidyTuesday 2019-11-19",
+ x = NULL, y = "Median hour"
+ ) +
+ theme_minimal(base_size = 13) +
+ theme(plot.title = element_text(face = "bold"))
 ```
 
 ### Stage 13: Knowledge Extraction
@@ -511,16 +512,16 @@ Trigger: End of episode — write the function stub before closing the session
 #| eval: false
 
 # Pattern: load -> inspect -> join ->
-#          multi-axis compare -> outlier detection -> model -> residuals -> final chart
+# multi-axis compare -> outlier detection -> model -> residuals -> final chart
 
 # Candidate helper:
 # compare_groups_by_outcome <- function(data, group_col, outcome_col,
-#                                        secondary_group = NULL,
-#                                        model = TRUE) {
-#   # 1. group_by + summarise
-#   # 2. residual calculation
-#   # 3. optional lm + broom::tidy
-#   # 4. ggplot output
+# secondary_group = NULL,
+# model = TRUE) {
+# # 1. group_by + summarise
+# # 2. residual calculation
+# # 3. optional lm + broom::tidy
+# # 4. ggplot output
 # }
 ```
 

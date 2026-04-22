@@ -1,0 +1,58 @@
+{
+  "queue_position": 3,
+  "folder_name": "003_animal_crossing",
+  "transcript_title": "Analyzing Animal Crossing in R",
+  "function_name": "animal_crossing",
+  "ker_status": "extracted",
+  "reproduction_status": "ready_local",
+  "source_files": {
+    "transcript_file": "raw-data/inspiration/Analyzing Animal Crossing in R.txt",
+    "code_file": "data-screencasts/animal-crossing.Rmd"
+  },
+  "source_exists": {
+    "transcript": true,
+    "code": true
+  },
+  "data_source": "TidyTuesday 2020-05-05 source files",
+  "analysis_intent": "Explore and compare language patterns in Animal Crossing using tokenization, grouped counts, and discriminative text analysis",
+  "analysis_type": "EDA",
+  "pattern_signature": "load_inspect_reshape_join_tokenize_trend_compare_visualize",
+  "required_packages": [
+    "lubridate",
+    "stm",
+    "tidytext",
+    "tidyverse",
+    "widyr"
+  ],
+  "features": {
+    "ggplot": true,
+    "joins": true,
+    "reshape": true,
+    "text_analysis": true,
+    "modeling": false,
+    "predictive": false,
+    "scraping": false,
+    "maps": false,
+    "time": true,
+    "simulation": false,
+    "multi_table": false
+  },
+  "local_data_files": [
+    "tidytuesday/data/2020/2020-05-05/critic.tsv",
+    "tidytuesday/data/2020/2020-05-05/items.csv",
+    "tidytuesday/data/2020/2020-05-05/user_reviews.tsv",
+    "tidytuesday/data/2020/2020-05-05/villagers.csv"
+  ],
+  "reference_files": [
+    "tidytuesday/data/2020/2020-05-05/items.csv",
+    "tidytuesday/data/2020/2020-05-05/readme.md",
+    "tidytuesday/data/2020/2020-05-05/user_reviews.tsv",
+    "tidytuesday/data/2020/2020-05-05/villagers.csv",
+    "tidytuesday/data/2020/2020-05-05/critic.tsv"
+  ],
+  "external_dependencies": [],
+  "execution_notes": [
+    "interactive `View()` calls are present and should be skipped or replaced in automated runs",
+    "local TidyTuesday files were matched, so you can use `load_tidyweek_data()` and avoid a GitHub PAT"
+  ]
+}

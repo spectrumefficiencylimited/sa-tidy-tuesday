@@ -1,6 +1,7 @@
 ---
 title: "Super QMD: Analyzing X-Men comics in R"
 subtitle: "Cognition-first blueprint built from the episode guide and KER"
+author: "Andrei Stoian"
 format:
   html:
     theme: flatly
@@ -50,7 +51,7 @@ Explore distributions, group differences, and notable patterns in X-Men comics t
 
 ## Transcript Preview
 
-Analyzing X-Men comics in R David Robinson 15.9k subscribers 77 Share Save Clip 2,929 views Streamed live on 1 Jul 2020 Tidy Tuesday R Screencasts I'll analyze a dataset on the Chris Claremont run on Uncanny X-Men comics in R, without looking at the dataset in advance. The dataset comes from the Tidy Tuesday project: https://github.com/rfordatascience/ti... 0:03 hi I'm Dave Robinson and welcome to another screencast where I'll be using 0:09 our and our studio to analyze data I've never seen before and as usual this...
+Analyzing X-Men comics in R 15.9k subscribers 77 Share Save Clip 2,929 views Streamed live on 1 Jul 2020 Tidy Tuesday R Screencasts I'll analyze a dataset on the Chris Claremont run on Uncanny X-Men comics in R, without looking at the dataset in advance. The dataset comes from the Tidy Tuesday project: https://github.com/rfordatascience/ti... 0:03 hi I'm Dave Robinson and welcome to another screencast where I'll be using 0:09 our and our studio to analyze data I've never seen before and as usual this...
 
 ## Cognitive Signature
 
@@ -196,7 +197,7 @@ Trigger:
 # Source assets: tidytuesday/data/2020/2020-06-30/character_visualization.csv, tidytuesday/data/2020/2020-06-30/characters.csv, tidytuesday/data/2020/2020-06-30/comic_bechdel.csv
 # Suggested verbs: mutate(), separate_rows(), pivot_longer(), left_join(), unnest()
 # analysis_tbl <- raw_tbl %>%
-#   ...
+# ...
 ```
 ## Stage 4: Compare
 
@@ -219,9 +220,9 @@ Trigger:
 
 # Summarize the comparison that best answers the question.
 # comparison_tbl <- analysis_tbl %>%
-#   group_by(...) %>%
-#   summarise(...) %>%
-#   arrange(desc(...))
+# group_by(...) %>%
+# summarise(...) %>%
+# arrange(desc(...))
 ```
 ## Stage 5: Visualize
 
@@ -244,8 +245,8 @@ Trigger:
 
 # Turn the comparison table into one clear communication plot.
 # ggplot(comparison_tbl, aes(...)) +
-#   geom_col() +
-#   labs(title = ..., subtitle = ...)
+# geom_col() +
+# labs(title = ..., subtitle = ...)
 ```
 ## Stage 6: Reflect
 

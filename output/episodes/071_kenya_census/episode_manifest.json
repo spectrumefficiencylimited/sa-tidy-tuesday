@@ -1,0 +1,59 @@
+{
+  "queue_position": 71,
+  "folder_name": "071_kenya_census",
+  "transcript_title": "Analyzing the Kenya census in R",
+  "function_name": "kenya_census",
+  "ker_status": "extracted",
+  "reproduction_status": "ready_local",
+  "source_files": {
+    "transcript_file": "raw-data/inspiration/Analyzing the Kenya census in R.txt",
+    "code_file": "data-screencasts/2021_01_19_kenya_census.Rmd"
+  },
+  "source_exists": {
+    "transcript": true,
+    "code": true
+  },
+  "data_source": "TidyTuesday 2021-01-19 dataset",
+  "analysis_intent": "Explore geographic and temporal variation in the Kenya census through joins, summarization, and mapping",
+  "analysis_type": "EDA",
+  "pattern_signature": "load_inspect_reshape_join_map_trend_compare_visualize",
+  "required_packages": [
+    "ggthemes",
+    "janitor",
+    "rKenyaCensus",
+    "scales",
+    "sf",
+    "tidytuesdayR",
+    "tidyverse"
+  ],
+  "features": {
+    "ggplot": true,
+    "joins": true,
+    "reshape": true,
+    "text_analysis": false,
+    "modeling": false,
+    "predictive": false,
+    "scraping": false,
+    "maps": true,
+    "time": true,
+    "simulation": false,
+    "multi_table": true
+  },
+  "local_data_files": [
+    "tidytuesday/data/2021/2021-01-19/crops.csv",
+    "tidytuesday/data/2021/2021-01-19/gender.csv",
+    "tidytuesday/data/2021/2021-01-19/households.csv"
+  ],
+  "reference_files": [
+    "tidytuesday/data/2021/2021-01-19/gender.csv",
+    "tidytuesday/data/2021/2021-01-19/households.csv",
+    "tidytuesday/data/2021/2021-01-19/pic1.png",
+    "tidytuesday/data/2021/2021-01-19/pic2.png",
+    "tidytuesday/data/2021/2021-01-19/readme.md",
+    "tidytuesday/data/2021/2021-01-19/crops.csv"
+  ],
+  "external_dependencies": [],
+  "execution_notes": [
+    "local TidyTuesday files were matched, so you can use `load_tidyweek_data()` and avoid a GitHub PAT"
+  ]
+}

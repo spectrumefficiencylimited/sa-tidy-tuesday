@@ -1,6 +1,7 @@
 ---
 title: "Super QMD: Analyzing Formula 1 Races in R"
 subtitle: "Cognition-first blueprint built from the episode guide and KER"
+author: "Andrei Stoian"
 format:
   html:
     theme: flatly
@@ -50,7 +51,7 @@ Explore distributions, group differences, and notable patterns in Formula 1 Race
 
 ## Transcript Preview
 
-Analyzing Formula 1 Races in R David Robinson 15.9k subscribers 72 Share Save Clip 4,521 views Streamed live on 2021-09-07 Tidy Tuesday R Screencasts I'll analyze a dataset about formula 1 races without looking at the dataset in advance. The dataset comes from the Tidy Tuesday project: https://githu...
+Analyzing Formula 1 Races in R 15.9k subscribers 72 Share Save Clip 4,521 views Streamed live on 2021-09-07 Tidy Tuesday R Screencasts I'll analyze a dataset about formula 1 races without looking at the dataset in advance. The dataset comes from the Tidy Tuesday project: https://githu...
 
 ## Cognitive Signature
 
@@ -103,10 +104,10 @@ source("R/screencast_helpers.R")
 tuesdata <- load_tidyweek_data("2021-09-07")
 names(tuesdata)
 
-circuits <- tuesdata$circuits  # or read from local path
-constructor_results <- tuesdata$constructor_results  # or read from local path
-constructor_standings <- tuesdata$constructor_standings  # or read from local path
-constructors <- tuesdata$constructors  # or read from local path
+circuits <- tuesdata$circuits # or read from local path
+constructor_results <- tuesdata$constructor_results # or read from local path
+constructor_standings <- tuesdata$constructor_standings # or read from local path
+constructors <- tuesdata$constructors # or read from local path
 ```
 
 ## Thought -> Code -> Data Bridge
@@ -210,7 +211,7 @@ Trigger:
 # Source assets: tidytuesday/data/2021/2021-09-07/circuits.csv, tidytuesday/data/2021/2021-09-07/constructor_results.csv, tidytuesday/data/2021/2021-09-07/constructor_standings.csv, tidytuesday/data/2021/2021-09-07/constructors.csv, tidytuesday/data/2021/2021-09-07/driver_standings.csv, tidytuesday/data/2021/2021-09-07/drivers.csv, tidytuesday/data/2021/2021-09-07/lap_times.csv, tidytuesday/data/2021/2021-09-07/pit_stops.csv, tidytuesday/data/2021/2021-09-07/qualifying.csv, tidytuesday/data/2021/2021-09-07/races.csv, tidytuesday/data/2021/2021-09-07/results.csv, tidytuesday/data/2021/2021-09-07/seasons.csv, tidytuesday/data/2021/2021-09-07/status.csv
 # Suggested verbs: mutate(), separate_rows(), pivot_longer(), left_join(), unnest()
 # analysis_tbl <- raw_tbl %>%
-#   ...
+# ...
 ```
 ## Stage 4: Compare
 
@@ -235,10 +236,10 @@ Additional guidance:
 
 # Summarize the comparison that best answers the question.
 # comparison_tbl <- analysis_tbl %>%
-#   count(category_col, sort = TRUE)   # or
-#   group_by(group_col) %>%
-#   summarise(metric = mean(value_col, na.rm = TRUE)) %>%
-#   arrange(desc(metric))
+# count(category_col, sort = TRUE) # or
+# group_by(group_col) %>%
+# summarise(metric = mean(value_col, na.rm = TRUE)) %>%
+# arrange(desc(metric))
 ```
 ## Stage 5: Visualize
 
@@ -263,13 +264,13 @@ Additional guidance:
 
 # Turn the comparison table into one clear communication plot.
 # ggplot(comparison_tbl, aes(x = fct_reorder(category, metric), y = metric)) +
-#   geom_col() +
-#   coord_flip() +
-#   labs(
-#     title = "...",
-#     subtitle = "Source: TidyTuesday 2021-09-07",
-#     x = NULL, y = NULL
-#   )
+# geom_col() +
+# coord_flip() +
+# labs(
+# title = "...",
+# subtitle = "Source: TidyTuesday 2021-09-07",
+# x = NULL, y = NULL
+# )
 ```
 ## Stage 6: Reflect
 
@@ -319,20 +320,20 @@ Trigger: group_by(cat1, cat2) + summarise + facet_wrap
 #| eval: false
 
 cross_tbl <- analysis_tbl |>
-  group_by(category, group) |>
-  summarise(
-    n      = n(),
-    median = median(circuitId, na.rm = TRUE),
-    .groups = "drop"
-  ) |>
-  filter(n >= 3)
+ group_by(category, group) |>
+ summarise(
+ n = n(),
+ median = median(circuitId, na.rm = TRUE),
+ .groups = "drop"
+ ) |>
+ filter(n >= 3)
 
 ggplot(cross_tbl, aes(x = fct_reorder(category, median), y = median, fill = group)) +
-  geom_col(position = "dodge") +
-  coord_flip() +
-  facet_wrap(~ group, scales = "free_x") +
-  labs(title = "Formula 1 Races: circuitId by category and group",
-       x = NULL, y = "Median circuitId")
+ geom_col(position = "dodge") +
+ coord_flip() +
+ facet_wrap(~ group, scales = "free_x") +
+ labs(title = "Formula 1 Races: circuitId by category and group",
+ x = NULL, y = "Median circuitId")
 ```
 
 ### Stage 8: Outlier Investigation
@@ -351,27 +352,27 @@ Trigger: group_by + mutate(residual = value - group_median) + slice_max(abs(resi
 #| eval: false
 
 residual_tbl <- analysis_tbl |>
-  group_by(category) |>
-  mutate(
-    group_median = median(circuitId, na.rm = TRUE),
-    residual     = circuitId - group_median
-  ) |>
-  ungroup() |>
-  arrange(desc(abs(residual)))
+ group_by(category) |>
+ mutate(
+ group_median = median(circuitId, na.rm = TRUE),
+ residual = circuitId - group_median
+ ) |>
+ ungroup() |>
+ arrange(desc(abs(residual)))
 
 # Label the top outliers
 library(ggrepel)
 
 ggplot(residual_tbl,
-       aes(x = group_median, y = circuitId, label = category)) +
-  geom_point(alpha = 0.4) +
-  geom_text_repel(
-    data = slice_max(residual_tbl, abs(residual), n = 15),
-    size = 3, max.overlaps = 20
-  ) +
-  geom_abline(slope = 1, intercept = 0, linetype = "dashed") +
-  labs(title = "Who over- or underperforms their group median?",
-       x = "Group median circuitId", y = "Observed circuitId")
+ aes(x = group_median, y = circuitId, label = category)) +
+ geom_point(alpha = 0.4) +
+ geom_text_repel(
+ data = slice_max(residual_tbl, abs(residual), n = 15),
+ size = 3, max.overlaps = 20
+ ) +
+ geom_abline(slope = 1, intercept = 0, linetype = "dashed") +
+ labs(title = "Who over- or underperforms their group median?",
+ x = "Group median circuitId", y = "Observed circuitId")
 ```
 
 ### Stage 9: Correlation Structure
@@ -390,13 +391,13 @@ Trigger: geom_point + geom_smooth(method = "lm") + color by group
 #| eval: false
 
 ggplot(analysis_tbl,
-       aes(x = alt, y = circuitId, colour = category)) +
-  geom_point(alpha = 0.5) +
-  geom_smooth(method = "lm", se = FALSE) +
-  scale_colour_viridis_d(end = 0.85) +
-  labs(title = "Relationship between circuitId and alt",
-       subtitle = "Coloured by category",
-       x = "alt", y = "circuitId")
+ aes(x = alt, y = circuitId, colour = category)) +
+ geom_point(alpha = 0.5) +
+ geom_smooth(method = "lm", se = FALSE) +
+ scale_colour_viridis_d(end = 0.85) +
+ labs(title = "Relationship between circuitId and alt",
+ subtitle = "Coloured by category",
+ x = "alt", y = "circuitId")
 ```
 
 ---
@@ -419,20 +420,20 @@ Trigger: lm() + broom::tidy() + coefficient plot
 #| eval: false
 
 model_tbl <- analysis_tbl |>
-  mutate(across(where(is.character), as.factor))
+ mutate(across(where(is.character), as.factor))
 
 model_fit <- lm(circuitId ~ circuitId + alt, data = model_tbl)
 
 broom::tidy(model_fit, conf.int = TRUE) |>
-  filter(term != "(Intercept)") |>
-  mutate(term = fct_reorder(term, estimate)) |>
-  ggplot(aes(estimate, term,
-             xmin = conf.low, xmax = conf.high)) +
-  geom_pointrange() +
-  geom_vline(xintercept = 0, linetype = "dashed") +
-  labs(title = "What predicts circuitId?",
-       subtitle = "Linear model coefficients (95% CI)",
-       x = "Estimate", y = NULL)
+ filter(term != "(Intercept)") |>
+ mutate(term = fct_reorder(term, estimate)) |>
+ ggplot(aes(estimate, term,
+ xmin = conf.low, xmax = conf.high)) +
+ geom_pointrange() +
+ geom_vline(xintercept = 0, linetype = "dashed") +
+ labs(title = "What predicts circuitId?",
+ subtitle = "Linear model coefficients (95% CI)",
+ x = "Estimate", y = NULL)
 ```
 
 ### Stage 11: Residuals
@@ -453,15 +454,15 @@ Trigger: broom::augment() + geom_point(.resid) + geom_text_repel
 augmented_tbl <- broom::augment(model_fit, data = model_tbl)
 
 ggplot(augmented_tbl, aes(.fitted, .resid, label = category)) +
-  geom_point(alpha = 0.4) +
-  geom_smooth(method = "loess", se = FALSE, colour = "steelblue") +
-  geom_hline(yintercept = 0, linetype = "dashed") +
-  geom_text_repel(
-    data = filter(augmented_tbl, abs(.resid) > quantile(abs(.resid), 0.95)),
-    size = 3, max.overlaps = 15
-  ) +
-  labs(title = "Residuals: who over- or underperforms the model?",
-       x = "Fitted circuitId", y = "Residual")
+ geom_point(alpha = 0.4) +
+ geom_smooth(method = "loess", se = FALSE, colour = "steelblue") +
+ geom_hline(yintercept = 0, linetype = "dashed") +
+ geom_text_repel(
+ data = filter(augmented_tbl, abs(.resid) > quantile(abs(.resid), 0.95)),
+ size = 3, max.overlaps = 15
+ ) +
+ labs(title = "Residuals: who over- or underperforms the model?",
+ x = "Fitted circuitId", y = "Residual")
 ```
 
 ### Stage 12: Final Communication Chart
@@ -480,32 +481,32 @@ Trigger: After residuals and model are stable, step back and pick the clearest o
 #| eval: false
 
 final_tbl <- analysis_tbl |>
-  group_by(category) |>
-  summarise(
-    median_circuitId = median(circuitId, na.rm = TRUE),
-    n = n(),
-    .groups = "drop"
-  ) |>
-  filter(n >= 5) |>
-  mutate(category = fct_reorder(category, median_circuitId))
+ group_by(category) |>
+ summarise(
+ median_circuitId = median(circuitId, na.rm = TRUE),
+ n = n(),
+ .groups = "drop"
+ ) |>
+ filter(n >= 5) |>
+ mutate(category = fct_reorder(category, median_circuitId))
 
 ggplot(final_tbl,
-       aes(x = category, y = median_circuitId,
-           fill = median_circuitId)) +
-  geom_col(show.legend = FALSE) +
-  scale_fill_gradient2(
-    low = "tomato", mid = "gray90", high = "steelblue",
-    midpoint = median(analysis_tbl$circuitId, na.rm = TRUE)
-  ) +
-  coord_flip() +
-  labs(
-    title    = "Formula 1 Races: circuitId by category",
-    subtitle = "Median per group | colour = above/below overall median",
-    caption  = "Source: TidyTuesday 2021-09-07",
-    x = NULL, y = "Median circuitId"
-  ) +
-  theme_minimal(base_size = 13) +
-  theme(plot.title = element_text(face = "bold"))
+ aes(x = category, y = median_circuitId,
+ fill = median_circuitId)) +
+ geom_col(show.legend = FALSE) +
+ scale_fill_gradient2(
+ low = "tomato", mid = "gray90", high = "steelblue",
+ midpoint = median(analysis_tbl$circuitId, na.rm = TRUE)
+ ) +
+ coord_flip() +
+ labs(
+ title = "Formula 1 Races: circuitId by category",
+ subtitle = "Median per group | colour = above/below overall median",
+ caption = "Source: TidyTuesday 2021-09-07",
+ x = NULL, y = "Median circuitId"
+ ) +
+ theme_minimal(base_size = 13) +
+ theme(plot.title = element_text(face = "bold"))
 ```
 
 ### Stage 13: Knowledge Extraction
@@ -524,16 +525,16 @@ Trigger: End of episode — write the function stub before closing the session
 #| eval: false
 
 # Pattern: load -> inspect -> join ->
-#          multi-axis compare -> outlier detection -> model -> residuals -> final chart
+# multi-axis compare -> outlier detection -> model -> residuals -> final chart
 
 # Candidate helper:
 # compare_groups_by_outcome <- function(data, group_col, outcome_col,
-#                                        secondary_group = NULL,
-#                                        model = TRUE) {
-#   # 1. group_by + summarise
-#   # 2. residual calculation
-#   # 3. optional lm + broom::tidy
-#   # 4. ggplot output
+# secondary_group = NULL,
+# model = TRUE) {
+# # 1. group_by + summarise
+# # 2. residual calculation
+# # 3. optional lm + broom::tidy
+# # 4. ggplot output
 # }
 ```
 
