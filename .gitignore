@@ -3,6 +3,10 @@ tidytuesday/data/
 
 # Screencast code (original author's work)
 data-screencasts/
+data-screencasts-dgrtwo/
+
+# TidyTuesday full repo
+tidytuesday/
 
 # Raw data / transcripts
 raw-data/
