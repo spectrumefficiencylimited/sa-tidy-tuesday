@@ -5368,3 +5368,256 @@ Adaptation Plan:
 - Document new helper functions and the episode patterns they support.
 - Identify repeated helper functions and move them into shared R code.
 - Keep the KER and prompt pack aligned as the control table evolves.
+
+---
+
+# PRODUCTION KNOWLEDGE REGISTER — ndexr.io Console
+
+Source: `/home/ubuntu/console/src/r/` — production R/Shiny codebase
+Date: 2026-04-17
+
+This section captures production patterns that complement the TidyTuesday analytical knowledge.
+The analytical track teaches HOW to explore data. The production track teaches HOW to ship it.
+
+---
+
+## PKR-001: Multi-Tenant Shiny Architecture
+
+### Thought Process Map
+**Question:** How do you serve multiple apps from a single Shiny process?
+**Answer:** Subdomain-based routing via HTTP_HOST header inspection.
+
+### Pattern
+```r
+# sites_base.r — registry pattern
+.SITE_REGISTRY <- list()
+add_site <- function(host, ui_fn, server_fn) {
+  .SITE_REGISTRY[[host]] <<- list(ui = ui_fn, server = server_fn)
+}
+
+# In app.r — dispatch
+host <- session$request$HTTP_HOST
+site <- .SITE_REGISTRY[[host]]
+site$ui(id, data)
+```
+
+### Data Transformation Flow
+```
+HTTP request → nginx (SSL termination) → Shiny container
+  → session$request$HTTP_HOST → registry lookup → module dispatch
+  → module renders UI + server within ns() isolation
+```
+
+### Reusable Pattern
+Any Shiny app can serve multiple "sites" from one codebase. Each site is a box module
+with ui_ and server_ exports. The router is a named list keyed by hostname.
+
+### WORKS WHEN
+- Each subdomain maps to exactly one ui/server pair
+- nginx passes the Host header correctly
+
+### FAILS WHEN
+- Direct IP access (no Host header)
+- New subdomain not registered in the registry
+
+---
+
+## PKR-002: inputs/inputs.r — The Shared Utility Surface
+
+### Thought Process Map
+**Question:** How do you avoid duplicating Bootstrap patterns across 50+ R modules?
+**Answer:** Centralize into one file (inputs.r) that every module imports.
+
+### Pattern
+```r
+# In any module:
+box::use(../inputs/inputs)
+
+# Use helpers:
+inputs$setDefault(value, fallback)
+inputs$actionButton(ns("btn"), "Click", class = "btn btn-primary")
+inputs$field("Label", inputs$txt(ns, "field", value = ""), class = "col-md-6")
+inputs$pan("Loading...")
+inputs$modal_transition("Please wait")
+```
+
+### Key Decisions
+- `setDefault()` replaces ALL null-coalesce patterns (no %||%, no if/else)
+- `actionButton()` always adds `action-button` class (raw tags$button breaks Shiny binding)
+- Form helpers (txt, sel, num) use `form-control-sm` by default (saves screen space)
+- `create_tabset_panel(sidebar=TRUE)` — only ONE level of sidebar allowed
+
+### Reusable Pattern
+Every production Shiny app benefits from a single utility file that wraps:
+- Null handling
+- Form controls (with consistent sizing)
+- Modals (loading, error, info)
+- Notifications (toast)
+- Layout builders (tabs, cards, accordions)
+
+### WORKS WHEN
+- Entire team uses the same helpers consistently
+- Helpers are Bootstrap-aligned (no custom CSS needed)
+
+### FAILS WHEN
+- Helper grows to cover edge cases that should be inline
+- Helper only used once (inline it or delete it)
+
+---
+
+## PKR-003: State Management (Storr + Postgres)
+
+### Thought Process Map
+**Question:** How do you persist arbitrary R objects per-user across sessions?
+**Answer:** Dual storage: storr_dbi (serialized R objects) + Postgres (relational).
+
+### Pattern
+```r
+# Store arbitrary R object by key:
+state$store_state(ns_common_store_user("rbox_init"), reactiveValuesToList(input))
+
+# Retrieve:
+saved <- state$get_state(ns_common_store_user("rbox_init"))
+# Returns list() on error (never crashes)
+
+# Relational (login tracking):
+postgres$table_create_or_upsert(
+  data.frame(email = user$email, status = "active"),
+  where_cols = "email"
+)
+```
+
+### Data Transformation Flow
+```
+User action → reactiveValuesToList(input) → JSON serialization
+  → storr_dbi INSERT (key = ns_common_store_user("module_name"))
+  → Postgres table (tblData/tblKeys)
+
+Next session → storr_dbi GET → deserialize → populate input defaults
+```
+
+### WORKS WHEN
+- Need to remember form state, preferences, or config across sessions
+- Per-user isolation via namespace keys
+
+### FAILS WHEN
+- Object too large for serialization
+- Namespace key collision (always use ns_common_store_user)
+
+---
+
+## PKR-004: AWS Client Factory (Reticulate + Boto3)
+
+### Thought Process Map
+**Question:** How does an R app talk to AWS services?
+**Answer:** Python boto3 via reticulate, with per-user credentials from secret store.
+
+### Pattern
+```r
+# Create client with user's stored credentials:
+ec2 <- client$client("ec2", ns_common_store_user = data$ns_common_store_user)
+
+# Use it like Python boto3:
+instances <- ec2$describe_instances()
+keypairs <- ec2$describe_key_pairs()
+
+# For services that need specific regions:
+route53 <- client$client("route53domains", ns_common_store_user = ns, region = "us-east-1")
+```
+
+### Key Decision
+R doesn't have a production-grade AWS SDK. Using reticulate + boto3 gives full AWS coverage
+without maintaining R wrappers for every service.
+
+### WORKS WHEN
+- reticulate Python env is configured with boto3
+- User has stored AWS credentials via the secrets module
+
+### FAILS WHEN
+- Python env not initialized
+- Credentials expired or missing
+- Wrong region for region-specific services
+
+---
+
+## PKR-005: Authentication Flow (Google OAuth + Cognito)
+
+### Thought Process Map
+**Question:** How do you authenticate users in a deployed Shiny app?
+**Answer:** Google OAuth 2.0 code flow (deployed) or AWS Cognito (interactive/local).
+
+### Pattern
+```r
+# Deployed path (login_user.r → login_auth):
+# 1. Check cookies for existing session
+# 2. If no cookie: redirect to Google OAuth
+# 3. Exchange auth code for access token
+# 4. Fetch userinfo from Google API
+# 5. Store user JSON in cookie (30-min TTL)
+# 6. Call login_processing() for post-auth setup
+
+# Post-auth (login_processing.r):
+# 1. Log login event to Postgres
+# 2. Set up per-user namespace (shiny$NS(email))
+# 3. Fetch AWS resources (EC2, SG, keypairs, Route53)
+# 4. Check Stripe subscription status
+# 5. Determine admin flag
+# 6. Return enriched session object
+```
+
+### WORKS WHEN
+- App is behind nginx with HTTPS
+- .googauth credentials file present
+- Google OAuth redirect URIs configured correctly
+
+### FAILS WHEN
+- redirect_uri mismatch between Google console and app
+- Cookie domain/path mismatch
+- Cognito path: login_user() missing box::use import (currently broken)
+
+---
+
+## PKR-006: Docker Deploy Pipeline
+
+### Thought Process Map
+**Question:** How do you deploy changes to a live R/Shiny app?
+**Answer:** Docker Compose build + scale pattern.
+
+### Pattern
+```bash
+cd /home/ubuntu/console
+
+# Full deploy:
+npm run build          # docker compose build (all services)
+npm run down           # docker compose down
+npm run up             # docker compose up -d
+npm run scale:console  # docker compose scale console=10
+
+# Or all at once:
+npm run build && npm run down && npm run up && npm run scale:console
+```
+
+### Data Transformation Flow
+```
+Code change → docker compose build (Dockerfile: rocker/verse + renv::restore())
+  → new image with updated R code
+  → docker compose down (stop old containers)
+  → docker compose up -d (start new containers)
+  → docker compose scale console=10 (10 instances behind nginx)
+  → nginx upstream auto-discovers new containers
+```
+
+### Key Decision
+renv.lock is copied into the Docker image. Package installation happens at build time,
+not runtime. This makes container startup fast and reproducible.
+
+### WORKS WHEN
+- renv.lock is up to date (renv::snapshot() before build)
+- System deps declared in Dockerfile (libpq, libxml2, gdal, etc.)
+
+### FAILS WHEN
+- renv.lock out of sync with actual imports
+- System library missing for a new R package
+- Git pull fails (SSH key issue) — skip pull, build from local
+
+---

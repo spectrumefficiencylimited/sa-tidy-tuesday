@@ -34,5 +34,59 @@
   "local_data_files": [],
   "reference_files": [],
   "external_dependencies": [],
-  "execution_notes": []
+  "execution_notes": [],
+  "atomic_concepts": [
+    "grouped_summary_ggplot"
+  ],
+  "fails_when": [
+    "dataset has no natural grouping variable — comparisons become meaningless",
+    "column names are unstable across TidyTuesday editions (re-check schema each year)"
+  ],
+  "works_when": [
+    "dataset has clear categorical + numeric columns for grouped comparisons",
+    "question is exploratory — no strong prior hypothesis"
+  ],
+  "hour_architecture": {
+    "h1_eda": {
+      "status": "pending",
+      "qmd": "h1_eda_billboard_hot_100_number_ones.qmd",
+      "steps": [
+        "Load data with load_tidyweek_data()",
+        "Inspect schema and types",
+        "Identify main grouping + metric columns",
+        "Build 3-4 core ggplot charts telling the main story",
+        "Write 150-word narrative summary"
+      ]
+    },
+    "h2_modeling": {
+      "status": "pending",
+      "qmd": "h2_modeling_billboard_hot_100_number_ones.qmd",
+      "steps": [
+        "Fit linear model on main numeric outcome",
+        "Compute bootstrap confidence intervals for key estimates",
+        "Test for interaction effects between top 2 grouping vars",
+        "Summarise effect sizes with broom::tidy()"
+      ]
+    },
+    "h3_communicate": {
+      "status": "pending",
+      "qmd": "h3_communicate_billboard_hot_100_number_ones.qmd",
+      "steps": [
+        "Quarto doc: billboard_hot_100_number_ones_report.qmd with params for data year",
+        "Hero chart: single best visualisation at 1200×628 (social media ratio)",
+        "Instagram carousel: 5 slides (hook → data → insight → method → CTA)",
+        "YouTube thumbnail text + chapter timestamps",
+        "Shiny widget or Observable/D3 for one interactive element",
+        "TheDataShrink™ post template: title, 3 bullets, hashtags, link to episode page"
+      ],
+      "channels": [
+        "youtube",
+        "instagram",
+        "facebook",
+        "website"
+      ],
+      "brand": "TheDataShrink™"
+    }
+  },
+  "brand": "TheDataShrink™"
 }

@@ -1,0 +1,139 @@
+---
+title: "Hour 1 — EDA: Analyzing Thanksgiving dinners in R"
+subtitle: "Reproduce + extend David Robinson's original analysis | TheDataShrink™"
+author: "TheDataShrink™"
+date: today
+format:
+  html:
+    theme: flatly
+    toc: true
+    toc-depth: 3
+    code-fold: show
+    code-summary: "Show code"
+    number-sections: true
+    embed-resources: true
+execute:
+  echo: true
+  warning: false
+  message: false
+editor: visual
+---
+
+::: {.callout-tip}
+## TheDataShrink™ — Data stories worth sharing.
+Episode: `thanksgiving_dinners` | [All episodes](https://thedatashrink.com.au/tidytuesday) | [YouTube](#) | [Instagram](#)
+:::
+
+
+::: {.callout-note collapse="true"}
+## Atomic Concepts (DataX Index)
+These reusable concepts are demonstrated in this episode. See `CONCEPT_INDEX.md`.
+
+- `grouped_summary_ggplot`
+- `multi_table_join`
+- `pivot_reshape`
+:::
+
+
+::: {.callout-warning collapse="true"}
+## FAILS WHEN (DataX Stage 5)
+- dataset has no natural grouping variable — comparisons become meaningless
+- column names are unstable across TidyTuesday editions (re-check schema each year)
+- join key has trailing whitespace or case inconsistency — produces unexpected NAs
+:::
+
+::: {.callout-important collapse="true"}
+## WORKS WHEN (DataX Stage 5)
+- dataset has clear categorical + numeric columns for grouped comparisons
+- question is exploratory — no strong prior hypothesis
+:::
+
+
+## Episode Context
+
+- **Original:** `Analyzing Thanksgiving dinners in R`
+- **Analysis type:** `EDA`
+- **Pattern:** `load_inspect_reshape_join_compare_visualize`
+- **Data:** Local source files read in episode: https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2018-11-20/thanksgiving_meals.csv
+- **Hour 1 goal:** Reproduce David's core story, then extend with one new angle
+
+::: {.callout-note collapse="true"}
+## Original Transcript (preview)
+```
+
+```
+:::
+
+## Hour 1 Checklist
+- [ ] Load data with load_tidyweek_data()
+- [ ] Inspect schema and types
+- [ ] Identify main grouping + metric columns
+- [ ] Reshape from wide to long
+- [ ] Join tables on shared key
+- [ ] Build 3-4 core ggplot charts telling the main story
+- [ ] Write 150-word narrative summary
+
+## Setup
+
+```{r}
+#| label: setup
+#| eval: false
+library(ebbr)
+library(ggraph)
+library(here)
+library(igraph)
+library(tidyverse)
+library(widyr)
+```
+
+## Load Data
+
+```{r}
+#| label: load-data
+#| eval: false
+tt <- tidytuesdayR::tt_load("2018-11-20")
+```
+
+## Schema Inspection
+
+```{r}
+#| label: inspect
+#| eval: false
+# What columns do we have? What are the types? What is the grain?
+glimpse(YOUR_DATA_HERE)
+skimr::skim(YOUR_DATA_HERE)
+```
+
+## Core EDA
+
+> Reproduce David's 3-4 key charts here. Follow the pattern_signature:
+> `load_inspect_reshape_join_compare_visualize`
+
+```{r}
+#| label: eda-core
+#| eval: false
+# YOUR EDA CODE HERE
+# Follow the episode_source.R in this folder as your scaffold
+```
+
+## Extension: One New Angle
+
+- Enrich with a population denominator to produce per-capita rates
+
+```{r}
+#| label: eda-extension
+#| eval: false
+# YOUR EXTENSION CODE HERE
+```
+
+## Hour 1 Narrative
+
+> Write 150 words: what does the data show? One sentence per chart.
+> This becomes the YouTube intro and Instagram carousel slide 2.
+
+*[Write narrative here]*
+
+## Next Steps
+
+- Hour 2: `h2_modeling_thanksgiving_dinners.qmd` — go deeper with a model
+- Hour 3: `h3_communicate_thanksgiving_dinners.qmd` — publish to TheDataShrink™

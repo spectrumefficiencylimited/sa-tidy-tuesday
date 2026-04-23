@@ -1,0 +1,113 @@
+---
+title: "Hour 2 — Modeling: Analyzing deforestation in R"
+subtitle: "Go deeper with statistics and models | TheDataShrink™"
+author: "TheDataShrink™"
+date: today
+format:
+  html:
+    theme: cosmo
+    toc: true
+    toc-depth: 3
+    code-fold: show
+    code-summary: "Show code"
+    number-sections: true
+    embed-resources: true
+execute:
+  echo: true
+  warning: false
+  message: false
+editor: visual
+---
+
+::: {.callout-tip}
+## TheDataShrink™ — Data stories worth sharing.
+Episode: `deforestation` | [All episodes](https://thedatashrink.com.au/tidytuesday) | [YouTube](#) | [Instagram](#)
+:::
+
+
+::: {.callout-note collapse="true"}
+## Atomic Concepts (DataX Index)
+These reusable concepts are demonstrated in this episode. See `CONCEPT_INDEX.md`.
+
+- `geospatial_choropleth`
+- `grouped_summary_ggplot`
+- `multi_table_join`
+- `pivot_reshape`
+- `time_series_trend`
+- `tokenization_pipeline`
+:::
+
+
+::: {.callout-warning collapse="true"}
+## FAILS WHEN (DataX Stage 5)
+- dataset has no natural grouping variable — comparisons become meaningless
+- column names are unstable across TidyTuesday editions (re-check schema each year)
+- region name spelling differs between data and shapefile — silent dropped rows
+- text is multilingual without language detection
+- join key has trailing whitespace or case inconsistency — produces unexpected NAs
+- irregular time intervals inflate or deflate apparent trends
+:::
+
+::: {.callout-important collapse="true"}
+## WORKS WHEN (DataX Stage 5)
+- dataset has clear categorical + numeric columns for grouped comparisons
+- question is exploratory — no strong prior hypothesis
+- geographic column can be matched to a standard ISO/FIPS shapefile without fuzzy joins
+- text is long-form English and benefits from word-level decomposition
+- time dimension is regular and spans multiple periods with meaningful change
+:::
+
+
+## Episode Context
+
+- **Analysis type:** `EDA` — this shapes the modeling approach below
+- **Pattern:** `load_inspect_reshape_join_tokenize_map_trend_compare_visualize`
+- **Hour 2 goal:** Go deeper than David went in the original screencast
+
+## Hour 2 Checklist
+- [ ] TF-IDF or log-odds group comparison
+- [ ] LDA / STM topic model (if corpus large enough)
+- [ ] Bigram network graph with ggraph
+- [ ] Sentiment arc if temporal dimension present
+
+
+## TF-IDF Comparison
+
+```{r}
+#| label: tfidf
+#| eval: false
+library(tidytext)
+# bind_tf_idf() on grouped token counts
+```
+
+## Log-Odds Ratio
+
+```{r}
+#| label: log-odds
+#| eval: false
+library(tidylo)
+# bind_log_odds() for statistically grounded group comparison
+```
+
+## Topic Model (optional)
+
+```{r}
+#| label: topic-model
+#| eval: false
+library(stm)
+# Fit STM / LDA if corpus is large enough
+# k = 5-10 topics, display top terms per topic
+```
+
+
+## Model Story
+
+> What does the model reveal that raw EDA couldn't?
+> One paragraph for the YouTube "deep dive" section.
+
+*[Write model narrative here]*
+
+## Cross-Reference
+
+- [← Hour 1 EDA](h1_eda_deforestation.qmd)
+- [Hour 3 Communicate →](h3_communicate_deforestation.qmd)

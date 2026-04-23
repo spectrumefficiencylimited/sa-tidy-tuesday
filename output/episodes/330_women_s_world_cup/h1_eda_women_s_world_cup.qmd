@@ -1,0 +1,148 @@
+---
+title: "Hour 1 — EDA: Analyzing Women's World Cup data in R"
+subtitle: "Reproduce + extend David Robinson's original analysis | TheDataShrink™"
+author: "TheDataShrink™"
+date: today
+format:
+  html:
+    theme: flatly
+    toc: true
+    toc-depth: 3
+    code-fold: show
+    code-summary: "Show code"
+    number-sections: true
+    embed-resources: true
+execute:
+  echo: true
+  warning: false
+  message: false
+editor: visual
+---
+
+::: {.callout-tip}
+## TheDataShrink™ — Data stories worth sharing.
+Episode: `women_s_world_cup` | [All episodes](https://thedatashrink.com.au/tidytuesday) | [YouTube](#) | [Instagram](#)
+:::
+
+
+::: {.callout-note collapse="true"}
+## Atomic Concepts (DataX Index)
+These reusable concepts are demonstrated in this episode. See `CONCEPT_INDEX.md`.
+
+- `grouped_summary_ggplot`
+- `multi_table_join`
+- `time_series_trend`
+- `web_scraping_rvest`
+:::
+
+
+::: {.callout-warning collapse="true"}
+## FAILS WHEN (DataX Stage 5)
+- dataset has no natural grouping variable — comparisons become meaningless
+- column names are unstable across TidyTuesday editions (re-check schema each year)
+- source HTML structure changes — selector-based scraping breaks silently
+- join key has trailing whitespace or case inconsistency — produces unexpected NAs
+- irregular time intervals inflate or deflate apparent trends
+:::
+
+::: {.callout-important collapse="true"}
+## WORKS WHEN (DataX Stage 5)
+- dataset has clear categorical + numeric columns for grouped comparisons
+- question is exploratory — no strong prior hypothesis
+- supplemental context is unavailable in the flat file and worth the scraping overhead
+- time dimension is regular and spans multiple periods with meaningful change
+:::
+
+
+## Episode Context
+
+- **Original:** `Analyzing Women's World Cup data in R`
+- **Analysis type:** `EDA`
+- **Pattern:** `load_inspect_scrape_join_trend_compare_visualize`
+- **Data:** TidyTuesday 2019-07-09 source files
+- **Hour 1 goal:** Reproduce David's core story, then extend with one new angle
+
+::: {.callout-note collapse="true"}
+## Original Transcript (preview)
+```
+
+```
+:::
+
+## Hour 1 Checklist
+- [ ] Load data with load_tidyweek_data()
+- [ ] Inspect schema and types
+- [ ] Identify main grouping + metric columns
+- [ ] Scrape supplemental reference table
+- [ ] Join tables on shared key
+- [ ] Build 3-4 core ggplot charts telling the main story
+- [ ] Write 150-word narrative summary
+
+## Setup
+
+```{r}
+#| label: setup
+#| eval: false
+library(StatsBombR)
+library(gganimate)
+library(ggthemes)
+library(here)
+library(rvest)
+library(tidyverse)
+```
+
+## Load Data
+
+```{r}
+#| label: load-data
+#| eval: false
+# Local TidyTuesday data
+codes <- read_csv(here::here("tidytuesday/data/2019/2019-07-09/codes.csv"))
+squads <- read_csv(here::here("tidytuesday/data/2019/2019-07-09/squads.csv"))
+wwc_outcomes <- read_csv(here::here("tidytuesday/data/2019/2019-07-09/wwc_outcomes.csv"))
+```
+
+## Schema Inspection
+
+```{r}
+#| label: inspect
+#| eval: false
+# What columns do we have? What are the types? What is the grain?
+glimpse(YOUR_DATA_HERE)
+skimr::skim(YOUR_DATA_HERE)
+```
+
+## Core EDA
+
+> Reproduce David's 3-4 key charts here. Follow the pattern_signature:
+> `load_inspect_scrape_join_trend_compare_visualize`
+
+```{r}
+#| label: eda-core
+#| eval: false
+# YOUR EDA CODE HERE
+# Follow the episode_source.R in this folder as your scaffold
+```
+
+## Extension: One New Angle
+
+- Add a rolling 12-month average to smooth the trend line
+- Enrich with a population denominator to produce per-capita rates
+
+```{r}
+#| label: eda-extension
+#| eval: false
+# YOUR EXTENSION CODE HERE
+```
+
+## Hour 1 Narrative
+
+> Write 150 words: what does the data show? One sentence per chart.
+> This becomes the YouTube intro and Instagram carousel slide 2.
+
+*[Write narrative here]*
+
+## Next Steps
+
+- Hour 2: `h2_modeling_women_s_world_cup.qmd` — go deeper with a model
+- Hour 3: `h3_communicate_women_s_world_cup.qmd` — publish to TheDataShrink™

@@ -1,0 +1,109 @@
+---
+title: "Hour 2 — Modeling: Analyzing Women's World Cup data in R"
+subtitle: "Go deeper with statistics and models | TheDataShrink™"
+author: "TheDataShrink™"
+date: today
+format:
+  html:
+    theme: cosmo
+    toc: true
+    toc-depth: 3
+    code-fold: show
+    code-summary: "Show code"
+    number-sections: true
+    embed-resources: true
+execute:
+  echo: true
+  warning: false
+  message: false
+editor: visual
+---
+
+::: {.callout-tip}
+## TheDataShrink™ — Data stories worth sharing.
+Episode: `women_s_world_cup` | [All episodes](https://thedatashrink.com.au/tidytuesday) | [YouTube](#) | [Instagram](#)
+:::
+
+
+::: {.callout-note collapse="true"}
+## Atomic Concepts (DataX Index)
+These reusable concepts are demonstrated in this episode. See `CONCEPT_INDEX.md`.
+
+- `grouped_summary_ggplot`
+- `multi_table_join`
+- `time_series_trend`
+- `web_scraping_rvest`
+:::
+
+
+::: {.callout-warning collapse="true"}
+## FAILS WHEN (DataX Stage 5)
+- dataset has no natural grouping variable — comparisons become meaningless
+- column names are unstable across TidyTuesday editions (re-check schema each year)
+- source HTML structure changes — selector-based scraping breaks silently
+- join key has trailing whitespace or case inconsistency — produces unexpected NAs
+- irregular time intervals inflate or deflate apparent trends
+:::
+
+::: {.callout-important collapse="true"}
+## WORKS WHEN (DataX Stage 5)
+- dataset has clear categorical + numeric columns for grouped comparisons
+- question is exploratory — no strong prior hypothesis
+- supplemental context is unavailable in the flat file and worth the scraping overhead
+- time dimension is regular and spans multiple periods with meaningful change
+:::
+
+
+## Episode Context
+
+- **Analysis type:** `EDA` — this shapes the modeling approach below
+- **Pattern:** `load_inspect_scrape_join_trend_compare_visualize`
+- **Hour 2 goal:** Go deeper than David went in the original screencast
+
+## Hour 2 Checklist
+- [ ] Fit linear model on main numeric outcome
+- [ ] Compute bootstrap confidence intervals for key estimates
+- [ ] Test for interaction effects between top 2 grouping vars
+- [ ] Summarise effect sizes with broom::tidy()
+
+
+## Statistical Model
+
+```{r}
+#| label: model
+#| eval: false
+# Fit linear model on main numeric outcome
+# Use broom::tidy() + broom::glance() for clean output
+```
+
+## Bootstrap Confidence Intervals
+
+```{r}
+#| label: bootstrap
+#| eval: false
+library(rsample)
+# boot <- bootstraps(data, times = 1000)
+# Calculate statistic of interest, extract CI
+```
+
+## Interaction Effects
+
+```{r}
+#| label: interaction
+#| eval: false
+# Test top 2 grouping variable interactions
+# Plot with interaction plots or faceted model output
+```
+
+
+## Model Story
+
+> What does the model reveal that raw EDA couldn't?
+> One paragraph for the YouTube "deep dive" section.
+
+*[Write model narrative here]*
+
+## Cross-Reference
+
+- [← Hour 1 EDA](h1_eda_women_s_world_cup.qmd)
+- [Hour 3 Communicate →](h3_communicate_women_s_world_cup.qmd)

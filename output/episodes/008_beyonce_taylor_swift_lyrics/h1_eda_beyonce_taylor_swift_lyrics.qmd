@@ -19,30 +19,32 @@ execute:
 editor: visual
 ---
 
-::: {.callout-tip}
+::: callout-tip
 ## TheDataShrink™ — Data stories worth sharing.
+
 Episode 008 · Text Analysis · [CONCEPT_INDEX.md](../../../CONCEPT_INDEX.md)
 :::
 
 ::: {.callout-note collapse="true"}
 ## Atomic Concepts in this episode
-`tokenization_pipeline` · `tf_idf_comparison` · `log_odds_ratio` · `multi_table_join` ·
-`pivot_reshape` · `fct_reorder_stat` · `reorder_within_facets` ·
-`grouped_summary_ggplot` · `scales_axis_labels` · `theme_set_global`
+
+`tokenization_pipeline` · `tf_idf_comparison` · `log_odds_ratio` · `multi_table_join` · `pivot_reshape` · `fct_reorder_stat` · `reorder_within_facets` · `grouped_summary_ggplot` · `scales_axis_labels` · `theme_set_global`
 :::
 
 ::: {.callout-warning collapse="true"}
 ## FAILS WHEN
-- Text is multilingual without language detection
-- Groups are not mutually exclusive (a song appears in both corpora)
-- Stopword list doesn't match the domain (lyrics use "ah", "uh" as meaningful filler)
+
+-   Text is multilingual without language detection
+-   Groups are not mutually exclusive (a song appears in both corpora)
+-   Stopword list doesn't match the domain (lyrics use "ah", "uh" as meaningful filler)
 :::
 
 ::: {.callout-important collapse="true"}
 ## WORKS WHEN
-- Two clearly distinct groups with long-form text
-- Question is exploratory — what makes each voice unique?
-- Audience recognises the artists (context amplifies insight)
+
+-   Two clearly distinct groups with long-form text
+-   Question is exploratory — what makes each voice unique?
+-   Audience recognises the artists (context amplifies insight)
 :::
 
 ## Setup
@@ -226,9 +228,8 @@ by_artist_word |>
 
 ## Extension 1 — Vocabulary richness by album (type-token ratio)
 
-::: {.callout-note}
-David stopped at word contrast. Here we ask: *which albums use the richest vocabulary?*
-Type-token ratio (unique words ÷ total words) measures lexical diversity.
+::: callout-note
+David stopped at word contrast. Here we ask: *which albums use the richest vocabulary?* Type-token ratio (unique words ÷ total words) measures lexical diversity.
 :::
 
 ```{r vocab-richness}
@@ -301,18 +302,12 @@ shared_words |>
 
 > **Beyoncé vs Taylor Swift — what the data shows**
 >
-> Taylor Swift's vocabulary shifts dramatically album-to-album: *folklore* uses raw, literary
-> language while *1989* leans on pop signifiers. TF-IDF makes each album's voice visible in
-> one chart — a reusable pattern for any multi-group text corpus.
+> Taylor Swift's vocabulary shifts dramatically album-to-album: *folklore* uses raw, literary language while *1989* leans on pop signifiers. TF-IDF makes each album's voice visible in one chart — a reusable pattern for any multi-group text corpus.
 >
-> The head-to-head log-odds contrast is the hero insight: Beyoncé's most distinctive words
-> reflect Black cultural celebration (slay, halo), while Taylor Swift's are narrative and
-> relationship-focused (fearless, romeo, speak).
+> The head-to-head log-odds contrast is the hero insight: Beyoncé's most distinctive words reflect Black cultural celebration (slay, halo), while Taylor Swift's are narrative and relationship-focused (fearless, romeo, speak).
 >
-> The vocabulary richness extension surfaces a surprise: *folklore* and *evermore* score highest
-> on type-token ratio, confirming that Taylor's indie/alternative era used more linguistically
-> diverse language than her earlier pop albums. This is one chart David didn't make.
+> The vocabulary richness extension surfaces a surprise: *folklore* and *evermore* score highest on type-token ratio, confirming that Taylor's indie/alternative era used more linguistically diverse language than her earlier pop albums. This is one chart David didn't make.
 
----
+------------------------------------------------------------------------
 
 **→ [Hour 2: Modeling](h2_modeling_beyonce_taylor_swift_lyrics.qmd)** — LASSO artist prediction + sentiment arc across albums

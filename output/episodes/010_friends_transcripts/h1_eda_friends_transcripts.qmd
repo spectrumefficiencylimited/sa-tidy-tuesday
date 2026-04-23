@@ -1,0 +1,154 @@
+---
+title: "Hour 1 — EDA: Analyzing Friends transcripts in R"
+subtitle: "Reproduce + extend David Robinson's original analysis | TheDataShrink™"
+author: "TheDataShrink™"
+date: today
+format:
+  html:
+    theme: flatly
+    toc: true
+    toc-depth: 3
+    code-fold: show
+    code-summary: "Show code"
+    number-sections: true
+    embed-resources: true
+execute:
+  echo: true
+  warning: false
+  message: false
+editor: visual
+---
+
+::: {.callout-tip}
+## TheDataShrink™ — Data stories worth sharing.
+Episode: `friends_transcripts` | [All episodes](https://thedatashrink.com.au/tidytuesday) | [YouTube](#) | [Instagram](#)
+:::
+
+
+::: {.callout-note collapse="true"}
+## Atomic Concepts (DataX Index)
+These reusable concepts are demonstrated in this episode. See `CONCEPT_INDEX.md`.
+
+- `cross_validation_tidymodels`
+- `grouped_summary_ggplot`
+- `multi_table_join`
+- `pivot_reshape`
+- `time_series_trend`
+- `tokenization_pipeline`
+:::
+
+
+::: {.callout-warning collapse="true"}
+## FAILS WHEN (DataX Stage 5)
+- outcome column is missing or near-zero variance
+- training set is too small for the number of predictors
+- text is multilingual without language detection
+- join key has trailing whitespace or case inconsistency — produces unexpected NAs
+- irregular time intervals inflate or deflate apparent trends
+:::
+
+::: {.callout-important collapse="true"}
+## WORKS WHEN (DataX Stage 5)
+- outcome column is clearly defined and has sufficient variance
+- features can be engineered from existing columns without external joins
+- text is long-form English and benefits from word-level decomposition
+- time dimension is regular and spans multiple periods with meaningful change
+:::
+
+
+## Episode Context
+
+- **Original:** `Analyzing Friends transcripts in R`
+- **Analysis type:** `Modeling`
+- **Pattern:** `load_inspect_reshape_join_tokenize_trend_model_evaluate_visualize`
+- **Data:** TidyTuesday 2020-09-08 dataset
+- **Hour 1 goal:** Reproduce David's core story, then extend with one new angle
+
+::: {.callout-note collapse="true"}
+## Original Transcript (preview)
+```
+
+```
+:::
+
+## Hour 1 Checklist
+- [ ] Load data with load_tidyweek_data()
+- [ ] Inspect schema and types
+- [ ] Identify main grouping + metric columns
+- [ ] Reshape from wide to long
+- [ ] Join tables on shared key
+- [ ] Tokenize text, remove stopwords, compute frequencies
+- [ ] Build 3-4 core ggplot charts telling the main story
+- [ ] Write 150-word narrative summary
+
+## Setup
+
+```{r}
+#| label: setup
+#| eval: false
+library(glue)
+library(here)
+library(scales)
+library(tidylo)
+library(tidytext)
+library(tidytuesdayR)
+library(tidyverse)
+library(widyr)
+```
+
+## Load Data
+
+```{r}
+#| label: load-data
+#| eval: false
+# Local TidyTuesday data
+friends <- read_csv(here::here("tidytuesday/data/2020/2020-09-08/friends.csv"))
+friends_emotions <- read_csv(here::here("tidytuesday/data/2020/2020-09-08/friends_emotions.csv"))
+friends_info <- read_csv(here::here("tidytuesday/data/2020/2020-09-08/friends_info.csv"))
+```
+
+## Schema Inspection
+
+```{r}
+#| label: inspect
+#| eval: false
+# What columns do we have? What are the types? What is the grain?
+glimpse(YOUR_DATA_HERE)
+skimr::skim(YOUR_DATA_HERE)
+```
+
+## Core EDA
+
+> Reproduce David's 3-4 key charts here. Follow the pattern_signature:
+> `load_inspect_reshape_join_tokenize_trend_model_evaluate_visualize`
+
+```{r}
+#| label: eda-core
+#| eval: false
+# YOUR EDA CODE HERE
+# Follow the episode_source.R in this folder as your scaffold
+```
+
+## Extension: One New Angle
+
+- Add a rolling 12-month average to smooth the trend line
+- Compute log-odds ratio between the two largest groups
+- Enrich with a population denominator to produce per-capita rates
+
+```{r}
+#| label: eda-extension
+#| eval: false
+# YOUR EXTENSION CODE HERE
+```
+
+## Hour 1 Narrative
+
+> Write 150 words: what does the data show? One sentence per chart.
+> This becomes the YouTube intro and Instagram carousel slide 2.
+
+*[Write narrative here]*
+
+## Next Steps
+
+- Hour 2: `h2_modeling_friends_transcripts.qmd` — go deeper with a model
+- Hour 3: `h3_communicate_friends_transcripts.qmd` — publish to TheDataShrink™

@@ -20,12 +20,11 @@ execute:
 editor: visual
 ---
 
-
-::: {.callout-tip}
+::: callout-tip
 ## TheDataShrink™ — Data stories worth sharing.
+
 Episode 001 · Hour 3 · [← Hour 1 EDA](h1_eda_african_american_achievements.qmd) · [← Hour 2 Modeling](h2_modeling_african_american_achievements.qmd)
 :::
-
 
 ## Setup
 
@@ -49,13 +48,12 @@ firsts <- read_csv("/Users/stoiana/sa-tidy-tuesday/tidytuesday/data/2020/2020-06
 science <- read_csv("/Users/stoiana/sa-tidy-tuesday/tidytuesday/data/2020/2020-06-09/science.csv", show_col_types = FALSE)
 ```
 
----
+------------------------------------------------------------------------
 
 ## Hero chart (1200 × 628 — social media ratio)
 
-::: {.callout-note}
-The single best chart from the analysis. Sized for YouTube thumbnail, Facebook header,
-and Twitter/X card. Saved as `hero_african_american_achievements.png`.
+::: callout-note
+The single best chart from the analysis. Sized for YouTube thumbnail, Facebook header, and Twitter/X card. Saved as `hero_african_american_achievements.png`.
 :::
 
 ```{r hero-chart}
@@ -74,7 +72,7 @@ and Twitter/X card. Saved as `hero_african_american_achievements.png`.
 cat("Hero chart: copy best ggplot from h1 here and uncomment ggsave\n")
 ```
 
----
+------------------------------------------------------------------------
 
 ## Instagram carousel (5 slides)
 
@@ -145,11 +143,11 @@ ggplot() +
   theme_void() + coord_fixed()
 ```
 
----
+------------------------------------------------------------------------
 
 ## YouTube chapter timestamps
 
-```
+```         
 0:00   Intro — Analyzing African-American achievements in R
 1:30   Load the data
 4:00   First look — key distributions
@@ -162,13 +160,13 @@ ggplot() +
 55:00  Next week on TheDataShrink™
 ```
 
----
+------------------------------------------------------------------------
 
 ## Social media copy
 
 ### Facebook / LinkedIn post
 
-```
+```         
 Analyzing African-American achievements in R — what does the data show?
 
 We explored this week's #TidyTuesday dataset in R.
@@ -188,7 +186,7 @@ Full walkthrough (3 hours of R code, charts, and commentary):
 
 ### Instagram caption
 
-```
+```         
 Explore distributions, group differences, and notable patterns in African-American achievements through cleaning, summarization, and visualization
 
 Swipe to see how data science reveals the patterns 📊
@@ -201,7 +199,7 @@ Full analysis + R code → link in bio
 
 ### YouTube description
 
-```
+```         
 In this episode of TheDataShrink™, we explore:
 Analyzing African-American achievements in R
 
@@ -220,7 +218,7 @@ Chapters: [see timestamps in description]
 #RStats #TidyTuesday #DataScience
 ```
 
----
+------------------------------------------------------------------------
 
 ## Render all three hours
 
@@ -234,6 +232,6 @@ cat("  quarto render h2_modeling_african_american_achievements.qmd\n")
 cat("  quarto render h3_communicate_african_american_achievements.qmd\n")
 ```
 
----
+------------------------------------------------------------------------
 
 *TheDataShrink™ — thedatashrink.com.au — Weekly data stories in R*

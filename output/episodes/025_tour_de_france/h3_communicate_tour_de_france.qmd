@@ -1,0 +1,126 @@
+---
+title: "Hour 3 — Communicate: Analyzing Tour de France data in R"
+subtitle: "From analysis to publication | TheDataShrink™"
+author: "TheDataShrink™"
+date: today
+format:
+  html:
+    theme: litera
+    toc: true
+    toc-depth: 3
+    code-fold: show
+    code-summary: "Show code"
+    number-sections: true
+    embed-resources: true
+execute:
+  echo: true
+  warning: false
+  message: false
+editor: visual
+---
+
+::: {.callout-tip}
+## TheDataShrink™ — Data stories worth sharing.
+Episode: `tour_de_france` | [All episodes](https://thedatashrink.com.au/tidytuesday) | [YouTube](#) | [Instagram](#)
+:::
+
+
+## Publication Goal
+
+Turn the EDA + modeling work into content publishable under **TheDataShrink™**:
+
+| Channel | Format | Goal |
+|---------|--------|------|
+| YouTube | 15-20 min video | Full walkthrough, show code |
+| Instagram | 5-slide carousel | Hook → Data → Insight → Method → CTA |
+| Facebook | Text post + hero chart | 3 bullet insights + link |
+| Website | Quarto HTML page | Embedded interactive, SEO-optimised |
+
+## Hour 3 Checklist
+- [ ] Quarto doc: tour_de_france_report.qmd with params for data year
+- [ ] Hero chart: single best visualisation at 1200×628 (social media ratio)
+- [ ] Instagram carousel: 5 slides (hook → data → insight → method → CTA)
+- [ ] YouTube thumbnail text + chapter timestamps
+- [ ] Shiny widget or Observable/D3 for one interactive element
+- [ ] TheDataShrink™ post template: title, 3 bullets, hashtags, link to episode page
+
+## Hero Chart (1200×628)
+
+> The single best chart from Hour 1 or 2, sized for social sharing.
+
+```{r}
+#| label: hero-chart
+#| eval: false
+#| fig-width: 12.5
+#| fig-height: 6.54
+# YOUR HERO CHART CODE HERE
+# Save with ggsave("hero_tour_de_france.png", width = 12.5, height = 6.54, dpi = 150)
+```
+
+## Instagram Carousel Copy
+
+**Slide 1 — Hook**
+> "What does TidyTuesday 2020-04-07 dataset tell us? 🧵"
+
+**Slide 2 — Data**
+> [Key finding #1 in one sentence]
+
+**Slide 3 — Insight**
+> [The surprising thing the data revealed]
+
+**Slide 4 — Method**
+> "Built in R with tidyverse + [main packages]. Code at https://thedatashrink.com.au"
+
+**Slide 5 — CTA**
+> "Full analysis on YouTube 👆 Follow @thedatashrink for weekly data stories"
+
+## YouTube Chapter Timestamps
+
+```
+0:00 Intro — What question are we asking?
+2:00 Load the data
+5:00 EDA — Key patterns
+12:00 Modeling — Going deeper
+18:00 What does this mean?
+20:00 Wrap up + next week
+```
+
+## Interactive Element (Shiny / Observable)
+
+```{r}
+#| label: interactive
+#| eval: false
+library(shiny)
+# OR: use ojs_define() + Observable JS for zero-server interactivity
+
+# Minimal Shiny: one selectInput to filter by group, one reactive ggplot
+# Embed in Quarto with: shiny::shinyApp(ui, server)
+```
+
+## SEO Metadata
+
+```yaml
+# Add to Quarto YAML for the published page:
+description: "Analyzing Tour de France data in R — a TheDataShrink™ data story"
+keywords: ["R", "TidyTuesday", "data science", "Modeling", "tidyverse"]
+image: "hero_tour_de_france.png"
+```
+
+## Facebook Post Template
+
+```
+📊 Analyzing Tour de France data in R
+
+[Finding 1 in one sentence]
+[Finding 2 in one sentence]
+[Finding 3 in one sentence]
+
+Full analysis + code: https://thedatashrink.com.au/tidytuesday/tour_de_france
+
+#DataScience #RStats #TidyTuesday #TheDataShrink
+```
+
+## Cross-Reference
+
+- [← Hour 1 EDA](h1_eda_tour_de_france.qmd)
+- [← Hour 2 Modeling](h2_modeling_tour_de_france.qmd)
