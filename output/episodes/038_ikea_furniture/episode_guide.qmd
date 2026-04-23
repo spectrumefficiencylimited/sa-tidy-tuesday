@@ -1,16 +1,17 @@
 ---
 title: "Reproduction Guide: Analyzing IKEA furniture in R"
 subtitle: "Ordered episode output built from the control table and KER"
+author: "Andrei Stoian"
 format:
-  html:
-    theme: flatly
-    toc: true
-    toc-depth: 2
-    code-fold: show
+ html:
+ theme: flatly
+ toc: true
+ toc-depth: 2
+ code-fold: show
 execute:
-  echo: false
-  warning: false
-  message: false
+ echo: false
+ warning: false
+ message: false
 ---
 
 ## Episode Snapshot
@@ -35,7 +36,7 @@ Explore, explain, and model patterns in IKEA furniture using engineered features
 
 ## Transcript Preview
 
-Analyzing IKEA furniture in R David Robinson 15.9k subscribers 145 Share Save Clip 5,530 views Streamed live on 4 Nov 2020 Tidy Tuesday R Screencasts I'll analyze a dataset about the IKEA furniture, without looking at the dataset in advance. The dataset comes from the Tidy Tuesday project: https://github.com/rfordatascience/ti... Code: https://github.com/dgrtwo/data-screen... Timestamped annotations of specific tricks, tips and tools used: https:...
+Analyzing IKEA furniture in R 15.9k subscribers 145 Share Save Clip 5,530 views Streamed live on 4 Nov 2020 Tidy Tuesday R Screencasts I'll analyze a dataset about the IKEA furniture, without looking at the dataset in advance. The dataset comes from the Tidy Tuesday project: https://github.com/rfordatascience/ti... Code: https://github.com/dgrtwo/data-screen... Timestamped annotations of specific tricks, tips and tools used: https:...
 
 ## Required Packages
 

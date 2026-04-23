@@ -1,6 +1,7 @@
 ---
 title: "Super QMD: Analyzing Lemurs in R"
 subtitle: "Cognition-first blueprint built from the episode guide and KER"
+author: "Andrei Stoian"
 format:
   html:
     theme: flatly
@@ -34,23 +35,24 @@ The point is to preserve not only the code path, but the author's cognition:
 
 ## Episode Snapshot
 
-- `queue_position`: `156`
-- `function_name`: `lemurs`
-- `analysis_type`: `EDA`
-- `pattern_signature`: `load_inspect_recode_summarize_trend_compare_visualize`
-- `data_source`: TidyTuesday 2021-08-24
-- `reproduction_status`: `needs_mapping`
-
 ::: {.callout-note}
 ## Analysis Intent
 Explore distributions, group differences, and notable patterns in Lemurs through cleaning, summarization, and visualization
 :::
 
+| Field | Value |
+|---|---|
+| Queue | #156 |
+| Function | `lemurs` |
+| Analysis type | EDA |
+| Data source | TidyTuesday 2021-08-24 |
+| Status | `needs_mapping` |
+
+**Analytical pattern:** `load_inspect_recode_summarize_trend_compare_visualize`
 
 
-## Transcript Preview
 
-Analyzing Lemurs in R David Robinson 15.9k subscribers 72 Share Save Clip 4,521 views Streamed live on 2021-08-24 Tidy Tuesday R Screencasts I'll analyze a dataset about lemurs without looking at the dataset in advance. The dataset comes from the Tidy Tuesday project: https://github.com/rfordatascie...
+
 
 ## Cognitive Signature
 
@@ -92,8 +94,8 @@ source("R/screencast_helpers.R")
 tuesdata <- load_tidyweek_data("2021-08-24")
 names(tuesdata)
 
-lemur_data <- tuesdata$lemur_data  # or read from local path
-taxonomy <- tuesdata$taxonomy  # or read from local path
+lemur_data <- tuesdata$lemur_data # or read from local path
+taxonomy <- tuesdata$taxonomy # or read from local path
 ```
 
 ## Thought -> Code -> Data Bridge
@@ -107,6 +109,25 @@ taxonomy <- tuesdata$taxonomy  # or read from local path
 - `T6 | Compare | Summarize groups in a way that reveals differences, rankings, or trends. | group_by + summarise + arrange pattern`
 - `T7 | Visualize | Turn the cleaned summaries into interpretable visual comparisons and iterate toward the clearest view. | ggplot workflow`
 - `T8 | Reflect | Identify reusable workflow pieces that can transfer to future datasets with a similar shape or question. | End-state of the analysis pattern`
+
+```{r}
+#| label: thought_execution_log
+#| eval: false
+
+# Fill in `finding` after completing each stage.
+thought_log <- tibble::tribble(
+  ~step,  ~move,        ~finding,
+  "T1", "Context", "",
+  "T2", "Inspect", "",
+  "T3", "Transform", "",
+  "T4", "Trend", "",
+  "T6", "Compare", "",
+  "T7", "Visualize", "",
+  "T8", "Reflect", "",
+)
+thought_log
+```
+
 
 ### Code Mapping Table
 
@@ -197,7 +218,7 @@ Trigger:
 # Source assets: tidytuesday/data/2021/2021-08-24/lemur_data.csv, tidytuesday/data/2021/2021-08-24/taxonomy.csv
 # Suggested verbs: mutate(), separate_rows(), pivot_longer(), left_join(), unnest()
 # analysis_tbl <- raw_tbl %>%
-#   ...
+# ...
 ```
 ## Stage 4: Compare
 
@@ -222,10 +243,10 @@ Additional guidance:
 
 # Summarize the comparison that best answers the question.
 # comparison_tbl <- analysis_tbl %>%
-#   count(category_col, sort = TRUE)   # or
-#   group_by(group_col) %>%
-#   summarise(metric = mean(value_col, na.rm = TRUE)) %>%
-#   arrange(desc(metric))
+# count(category_col, sort = TRUE) # or
+# group_by(group_col) %>%
+# summarise(metric = mean(value_col, na.rm = TRUE)) %>%
+# arrange(desc(metric))
 ```
 ## Stage 5: Visualize
 
@@ -250,13 +271,13 @@ Additional guidance:
 
 # Turn the comparison table into one clear communication plot.
 # ggplot(comparison_tbl, aes(x = fct_reorder(category, metric), y = metric)) +
-#   geom_col() +
-#   coord_flip() +
-#   labs(
-#     title = "...",
-#     subtitle = "Source: TidyTuesday 2021-08-24",
-#     x = NULL, y = NULL
-#   )
+# geom_col() +
+# coord_flip() +
+# labs(
+# title = "...",
+# subtitle = "Source: TidyTuesday 2021-08-24",
+# x = NULL, y = NULL
+# )
 ```
 ## Stage 6: Reflect
 
@@ -306,20 +327,20 @@ Trigger: group_by(cat1, cat2) + summarise + facet_wrap
 #| eval: false
 
 cross_tbl <- analysis_tbl |>
-  group_by(taxon, dlc_id) |>
-  summarise(
-    n      = n(),
-    median = median(dob, na.rm = TRUE),
-    .groups = "drop"
-  ) |>
-  filter(n >= 3)
+ group_by(taxon, dlc_id) |>
+ summarise(
+ n = n(),
+ median = median(dob, na.rm = TRUE),
+ .groups = "drop"
+ ) |>
+ filter(n >= 3)
 
 ggplot(cross_tbl, aes(x = fct_reorder(taxon, median), y = median, fill = dlc_id)) +
-  geom_col(position = "dodge") +
-  coord_flip() +
-  facet_wrap(~ dlc_id, scales = "free_x") +
-  labs(title = "Lemurs: dob by taxon and dlc_id",
-       x = NULL, y = "Median dob")
+ geom_col(position = "dodge") +
+ coord_flip() +
+ facet_wrap(~ dlc_id, scales = "free_x") +
+ labs(title = "Lemurs: dob by taxon and dlc_id",
+ x = NULL, y = "Median dob")
 ```
 
 ### Stage 8: Outlier Investigation
@@ -338,27 +359,27 @@ Trigger: group_by + mutate(residual = value - group_median) + slice_max(abs(resi
 #| eval: false
 
 residual_tbl <- analysis_tbl |>
-  group_by(taxon) |>
-  mutate(
-    group_median = median(dob, na.rm = TRUE),
-    residual     = dob - group_median
-  ) |>
-  ungroup() |>
-  arrange(desc(abs(residual)))
+ group_by(taxon) |>
+ mutate(
+ group_median = median(dob, na.rm = TRUE),
+ residual = dob - group_median
+ ) |>
+ ungroup() |>
+ arrange(desc(abs(residual)))
 
 # Label the top outliers
 library(ggrepel)
 
 ggplot(residual_tbl,
-       aes(x = group_median, y = dob, label = taxon)) +
-  geom_point(alpha = 0.4) +
-  geom_text_repel(
-    data = slice_max(residual_tbl, abs(residual), n = 15),
-    size = 3, max.overlaps = 20
-  ) +
-  geom_abline(slope = 1, intercept = 0, linetype = "dashed") +
-  labs(title = "Who over- or underperforms their group median?",
-       x = "Group median dob", y = "Observed dob")
+ aes(x = group_median, y = dob, label = taxon)) +
+ geom_point(alpha = 0.4) +
+ geom_text_repel(
+ data = slice_max(residual_tbl, abs(residual), n = 15),
+ size = 3, max.overlaps = 20
+ ) +
+ geom_abline(slope = 1, intercept = 0, linetype = "dashed") +
+ labs(title = "Who over- or underperforms their group median?",
+ x = "Group median dob", y = "Observed dob")
 ```
 
 ### Stage 9: Correlation Structure
@@ -377,13 +398,13 @@ Trigger: geom_point + geom_smooth(method = "lm") + color by group
 #| eval: false
 
 ggplot(analysis_tbl,
-       aes(x = birth_month, y = dob, colour = taxon)) +
-  geom_point(alpha = 0.5) +
-  geom_smooth(method = "lm", se = FALSE) +
-  scale_colour_viridis_d(end = 0.85) +
-  labs(title = "Relationship between dob and birth_month",
-       subtitle = "Coloured by taxon",
-       x = "birth_month", y = "dob")
+ aes(x = birth_month, y = dob, colour = taxon)) +
+ geom_point(alpha = 0.5) +
+ geom_smooth(method = "lm", se = FALSE) +
+ scale_colour_viridis_d(end = 0.85) +
+ labs(title = "Relationship between dob and birth_month",
+ subtitle = "Coloured by taxon",
+ x = "birth_month", y = "dob")
 ```
 
 ---
@@ -406,20 +427,20 @@ Trigger: lm() + broom::tidy() + coefficient plot
 #| eval: false
 
 model_tbl <- analysis_tbl |>
-  mutate(across(where(is.character), as.factor))
+ mutate(across(where(is.character), as.factor))
 
 model_fit <- lm(dob ~ taxon + dlc_id + dob + birth_month, data = model_tbl)
 
 broom::tidy(model_fit, conf.int = TRUE) |>
-  filter(term != "(Intercept)") |>
-  mutate(term = fct_reorder(term, estimate)) |>
-  ggplot(aes(estimate, term,
-             xmin = conf.low, xmax = conf.high)) +
-  geom_pointrange() +
-  geom_vline(xintercept = 0, linetype = "dashed") +
-  labs(title = "What predicts dob?",
-       subtitle = "Linear model coefficients (95% CI)",
-       x = "Estimate", y = NULL)
+ filter(term != "(Intercept)") |>
+ mutate(term = fct_reorder(term, estimate)) |>
+ ggplot(aes(estimate, term,
+ xmin = conf.low, xmax = conf.high)) +
+ geom_pointrange() +
+ geom_vline(xintercept = 0, linetype = "dashed") +
+ labs(title = "What predicts dob?",
+ subtitle = "Linear model coefficients (95% CI)",
+ x = "Estimate", y = NULL)
 ```
 
 ### Stage 11: Residuals
@@ -440,15 +461,15 @@ Trigger: broom::augment() + geom_point(.resid) + geom_text_repel
 augmented_tbl <- broom::augment(model_fit, data = model_tbl)
 
 ggplot(augmented_tbl, aes(.fitted, .resid, label = taxon)) +
-  geom_point(alpha = 0.4) +
-  geom_smooth(method = "loess", se = FALSE, colour = "steelblue") +
-  geom_hline(yintercept = 0, linetype = "dashed") +
-  geom_text_repel(
-    data = filter(augmented_tbl, abs(.resid) > quantile(abs(.resid), 0.95)),
-    size = 3, max.overlaps = 15
-  ) +
-  labs(title = "Residuals: who over- or underperforms the model?",
-       x = "Fitted dob", y = "Residual")
+ geom_point(alpha = 0.4) +
+ geom_smooth(method = "loess", se = FALSE, colour = "steelblue") +
+ geom_hline(yintercept = 0, linetype = "dashed") +
+ geom_text_repel(
+ data = filter(augmented_tbl, abs(.resid) > quantile(abs(.resid), 0.95)),
+ size = 3, max.overlaps = 15
+ ) +
+ labs(title = "Residuals: who over- or underperforms the model?",
+ x = "Fitted dob", y = "Residual")
 ```
 
 ### Stage 12: Final Communication Chart
@@ -467,32 +488,32 @@ Trigger: After residuals and model are stable, step back and pick the clearest o
 #| eval: false
 
 final_tbl <- analysis_tbl |>
-  group_by(taxon) |>
-  summarise(
-    median_dob = median(dob, na.rm = TRUE),
-    n = n(),
-    .groups = "drop"
-  ) |>
-  filter(n >= 5) |>
-  mutate(taxon = fct_reorder(taxon, median_dob))
+ group_by(taxon) |>
+ summarise(
+ median_dob = median(dob, na.rm = TRUE),
+ n = n(),
+ .groups = "drop"
+ ) |>
+ filter(n >= 5) |>
+ mutate(taxon = fct_reorder(taxon, median_dob))
 
 ggplot(final_tbl,
-       aes(x = taxon, y = median_dob,
-           fill = median_dob)) +
-  geom_col(show.legend = FALSE) +
-  scale_fill_gradient2(
-    low = "tomato", mid = "gray90", high = "steelblue",
-    midpoint = median(analysis_tbl$dob, na.rm = TRUE)
-  ) +
-  coord_flip() +
-  labs(
-    title    = "Lemurs: dob by taxon",
-    subtitle = "Median per group | colour = above/below overall median",
-    caption  = "Source: TidyTuesday 2021-08-24",
-    x = NULL, y = "Median dob"
-  ) +
-  theme_minimal(base_size = 13) +
-  theme(plot.title = element_text(face = "bold"))
+ aes(x = taxon, y = median_dob,
+ fill = median_dob)) +
+ geom_col(show.legend = FALSE) +
+ scale_fill_gradient2(
+ low = "tomato", mid = "gray90", high = "steelblue",
+ midpoint = median(analysis_tbl$dob, na.rm = TRUE)
+ ) +
+ coord_flip() +
+ labs(
+ title = "Lemurs: dob by taxon",
+ subtitle = "Median per group | colour = above/below overall median",
+ caption = "Source: TidyTuesday 2021-08-24",
+ x = NULL, y = "Median dob"
+ ) +
+ theme_minimal(base_size = 13) +
+ theme(plot.title = element_text(face = "bold"))
 ```
 
 ### Stage 13: Knowledge Extraction
@@ -511,16 +532,16 @@ Trigger: End of episode — write the function stub before closing the session
 #| eval: false
 
 # Pattern: load -> inspect -> join ->
-#          multi-axis compare -> outlier detection -> model -> residuals -> final chart
+# multi-axis compare -> outlier detection -> model -> residuals -> final chart
 
 # Candidate helper:
 # compare_groups_by_outcome <- function(data, group_col, outcome_col,
-#                                        secondary_group = NULL,
-#                                        model = TRUE) {
-#   # 1. group_by + summarise
-#   # 2. residual calculation
-#   # 3. optional lm + broom::tidy
-#   # 4. ggplot output
+# secondary_group = NULL,
+# model = TRUE) {
+# # 1. group_by + summarise
+# # 2. residual calculation
+# # 3. optional lm + broom::tidy
+# # 4. ggplot output
 # }
 ```
 

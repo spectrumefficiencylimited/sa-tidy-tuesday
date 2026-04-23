@@ -1,0 +1,43 @@
+{
+  "queue_position": 28,
+  "folder_name": "028_wind",
+  "transcript_title": "Analyzing US wind data in R",
+  "function_name": "wind",
+  "ker_status": "extracted",
+  "reproduction_status": "needs_external_sources",
+  "source_files": {
+    "transcript_file": "raw-data/inspiration/Analyzing US wind data in R.txt",
+    "code_file": "data-screencasts/us-wind.Rmd"
+  },
+  "source_exists": {
+    "transcript": true,
+    "code": true
+  },
+  "data_source": "Local source files read in episode: https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2018-11-06/us_wind.csv",
+  "analysis_intent": "Explore distributions, group differences, and notable patterns in US wind through cleaning, summarization, and visualization",
+  "analysis_type": "EDA",
+  "pattern_signature": "load_inspect_trend_simulate_compare_visualize",
+  "required_packages": [
+    "gganimate",
+    "tidyverse"
+  ],
+  "features": {
+    "ggplot": true,
+    "joins": false,
+    "reshape": false,
+    "text_analysis": false,
+    "modeling": false,
+    "predictive": false,
+    "scraping": false,
+    "maps": false,
+    "time": true,
+    "simulation": true,
+    "multi_table": false
+  },
+  "local_data_files": [],
+  "reference_files": [],
+  "external_dependencies": [
+    "remote file or API download detected in code"
+  ],
+  "execution_notes": []
+}

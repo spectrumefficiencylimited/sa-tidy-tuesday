@@ -1,0 +1,208 @@
+# Auto-generated from the episode R Markdown file.
+# This script preserves code chunks in source order for reproducibility checks.
+
+# ---- setup ----
+
+knitr::opts_chunk$set(echo = TRUE)
+
+library(tidyverse)
+library(tidytuesdayR)
+library(scales)
+theme_set(theme_light())
+
+# ---- Load ----
+
+tt <- tt_load("2020-11-10")
+
+mobile <- tt$mobile %>%
+  rename(subscriptions = mobile_subs) %>%
+  mutate(type = "Mobile")
+
+landline <- tt$landline %>%
+  rename(subscriptions = landline_subs) %>%
+  mutate(type = "Landline")
+
+phones <- bind_rows(mobile, landline) %>%
+  rename(country = entity)
+
+phones
+
+# ---- chunk_03 ----
+phones %>%
+  filter(country == "Sudan") %>%
+  ggplot(aes(year, subscriptions, color = type)) +
+  geom_line()
+
+summarize_subscriptions <- . %>%
+  filter(!is.na(subscriptions)) %>%
+  summarize(avg_subscriptions = mean(subscriptions),
+            median_subscriptions = median(subscriptions),
+            q25 = quantile(subscriptions, .25),
+            q75 = quantile(subscriptions, .75))
+
+phones %>%
+  filter(!is.na(subscriptions)) %>%
+  group_by(year, continent, type) %>%
+  summarize_subscriptions() %>%
+  ggplot(aes(year,
+             avg_subscriptions,
+             color = type)) +
+  geom_line() +
+  geom_ribbon(aes(ymin = q25, ymax = q75), alpha = .25) +
+  facet_wrap(~ continent) +
+  labs(x = "Year",
+       y = "Median subscriptions per person",
+       color = "",
+       title = "How do mobile and landline adoption differ between continents?",
+       subtitle = "Ribbon shows the 25th-75th percentile range")
+
+# ---- chunk_04 ----
+library(WDI)
+
+country_incomes <- WDI(indicator = c(gdp_per_capita = "NY.GDP.PCAP.PP.KD",
+                                     pop = "SP.POP.TOTL"),
+                       start = 2005, end = 2005, extra = TRUE) %>%
+  as_tibble() %>%
+  select(code = iso3c, income, gdp_per_capita, pop) %>%
+  filter(!is.na(income)) %>%
+  mutate(income = fct_relevel(income, "Low income", "Lower middle income", "Upper middle income"))
+
+by_year_income <- phones %>%
+  inner_join(country_incomes, by = "code") %>%
+  group_by(year, income, type) %>%
+  summarize_subscriptions()
+
+by_year_income %>%
+  ggplot(aes(year,
+             median_subscriptions,
+             color = type)) +
+  geom_line() +
+  geom_ribbon(aes(ymin = q25, ymax = q75), alpha = .25) +
+  facet_wrap(~ income) +
+  labs(x = "Year",
+       y = "Median subscriptions per person",
+       color = "",
+       title = "How do mobile and landline adoption differ between income categories?",
+       subtitle = "Ribbon shows the 25th-75th percentile range")
+
+by_year_income %>%
+  mutate(income = fct_rev(income)) %>%
+  ggplot(aes(year,
+             median_subscriptions,
+             color = income)) +
+  geom_line() +
+  facet_wrap(~ type, ncol = 1) +
+  labs(y = "Median subscriptions / 100 people", color = "Income")
+
+# ---- chunk_05 ----
+mobile %>%
+  inner_join(landline %>% select(code, year, total_pop, gdp_per_cap),
+             by = c("code", "year"),
+             suffix = c("_mobile", "_landline")) %>%
+  ggplot(aes(total_pop_mobile, total_pop_landline)) +
+  geom_point() +
+  geom_abline(color = "red")
+
+# ---- chunk_06 ----
+country_sizes <- phones %>%
+  group_by(country) %>%
+  summarize(avg_population = mean(total_pop, na.rm = TRUE)) %>%
+  arrange(desc(avg_population))
+
+phones %>%
+  semi_join(country_sizes %>% top_n(50, avg_population), by = "country") %>%
+  ggplot(aes(year,
+             subscriptions,
+             color = type,
+             group = interaction(type, country))) +
+  geom_line() +
+  facet_wrap(~ continent) +
+  geom_hline(yintercept = 50, lty = 2) +
+  labs(color = "")
+
+countries_summarized <- phones %>%
+  filter(!is.na(subscriptions)) %>%
+  select(-total_pop, gdp_per_cap) %>%
+  pivot_wider(names_from = type, values_from = subscriptions) %>%
+  group_by(continent, country, code) %>%
+  summarize(year_past_50_mobile = na_if(min(year[Mobile >= 50]), Inf),
+            peak_landline = max(Landline, na.rm = TRUE),
+            peak_mobile = max(Mobile),
+            n_mobile = sum(!is.na(Mobile))) %>%
+  ungroup() %>%
+  inner_join(country_incomes, by = "code") %>%
+  filter(n_mobile >= 25) %>%
+  arrange(desc(year_past_50_mobile))
+
+countries_summarized %>%
+  ggplot(aes(gdp_per_capita,
+             year_past_50_mobile,
+             color = continent,
+             size = pop)) +
+  geom_point() +
+  scale_x_log10(labels = dollar) +
+  labs(x = "GDP per capita (in 2005)",
+       y = "Year mobile subscriptions passed 50/100 people")
+
+countries_summarized %>%
+  filter(!is.na(gdp_per_capita)) %>%
+  ggplot(aes(gdp_per_capita,
+             peak_landline,
+             color = continent,
+             size = pop)) +
+  geom_point() +
+  scale_x_log10(labels = dollar) +
+  labs(x = "GDP per capita (in 2005)",
+       y = "Peak landline") +
+  facet_wrap(~ continent) +
+  theme(legend.position = "none")
+
+countries_summarized %>%
+  filter(continent == "Africa") %>%
+  arrange(desc(gdp_per_capita)) %>%
+  View()
+
+# ---- chunk_07 ----
+library(fuzzyjoin)
+
+world_map_mobile <- map_data("world") %>%
+  as_tibble() %>%
+  regex_left_join(maps::iso3166, c(region = "mapname")) %>%
+  left_join(mobile, by = c(a3 = "code"))
+
+library(gganimate)
+
+world_map_mobile %>%
+  ggplot(aes(long, lat, group = group, fill = subscriptions)) +
+  geom_polygon() +
+  transition_manual(year) +
+  coord_fixed(1.5) +
+  scale_fill_gradient2(low = "blue", high = "red",
+                       midpoint = 30) +
+  ggthemes::theme_map() +
+  labs(fill = "# of subscriptions")
+
+# ---- chunk_08 ----
+phones %>%
+  arrange(desc(subscriptions)) %>%
+  View()
+
+# ---- Readme ----
+
+tt
+
+# ---- Glimpse ----
+
+tt %>% 
+  map(glimpse)
+
+# ---- Wrangle ----
+
+# ---- Visualize ----
+
+# ---- chunk_13 ----
+
+# This will save your most recent plot
+ggsave(
+  filename = "My TidyTuesday Plot.png",
+  device = "png")

@@ -1,16 +1,17 @@
 ---
 title: "Reproduction Guide: Analyzing the Bechdel test in R"
 subtitle: "Ordered episode output built from the control table and KER"
+author: "Andrei Stoian"
 format:
-  html:
-    theme: flatly
-    toc: true
-    toc-depth: 2
-    code-fold: show
+ html:
+ theme: flatly
+ toc: true
+ toc-depth: 2
+ code-fold: show
 execute:
-  echo: false
-  warning: false
-  message: false
+ echo: false
+ warning: false
+ message: false
 ---
 
 ## Episode Snapshot
@@ -35,7 +36,7 @@ Predict or estimate outcomes in the Bechdel test using cleaned features, explora
 
 ## Transcript Preview
 
-Analyzing the Bechdel test in R David Robinson 15.9k subscribers 67 Share Save Clip 2,139 views Streamed live on 10 Mar 2021 Tidy Tuesday R Screencasts I'll analyze a dataset about the Bechdel test for gender representation, without looking at the dataset in advance. The dataset comes from the Tidy Tuesday project: https://github.com/rfordatascience/ti... Code: https://github.com/dgrtwo/data-screen... Timestamped annotations of specific tricks, t...
+Analyzing the Bechdel test in R 15.9k subscribers 67 Share Save Clip 2,139 views Streamed live on 10 Mar 2021 Tidy Tuesday R Screencasts I'll analyze a dataset about the Bechdel test for gender representation, without looking at the dataset in advance. The dataset comes from the Tidy Tuesday project: https://github.com/rfordatascience/ti... Code: https://github.com/dgrtwo/data-screen... Timestamped annotations of specific tricks, t...
 
 ## Required Packages
 

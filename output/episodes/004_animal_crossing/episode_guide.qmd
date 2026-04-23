@@ -1,16 +1,17 @@
 ---
 title: "Reproduction Guide: Analyzing Animal Crossing in R"
 subtitle: "Ordered episode output built from the control table and KER"
+author: "Andrei Stoian"
 format:
-  html:
-    theme: flatly
-    toc: true
-    toc-depth: 2
-    code-fold: show
+ html:
+ theme: flatly
+ toc: true
+ toc-depth: 2
+ code-fold: show
 execute:
-  echo: false
-  warning: false
-  message: false
+ echo: false
+ warning: false
+ message: false
 ---
 
 ## Episode Snapshot
@@ -35,7 +36,7 @@ Explore and compare language patterns in Animal Crossing using tokenization, gro
 
 ## Transcript Preview
 
-Analyzing Animal Crossing in R David Robinson 15.9k subscribers 105 Share Save Clip 3,817 views Streamed live on 6 May 2020 Tidy Tuesday R Screencasts I'll analyze a dataset on the popular game Animal Crossing, performed without looking at the data in advance (or knowing much of anything about Animal Crossing!) The dataset comes from the Tidy Tuesday project: https://github.com/rfordatascience/ti... Transcript Search in video 0:04 hi i'm dave rob...
+Analyzing Animal Crossing in R 15.9k subscribers 105 Share Save Clip 3,817 views Streamed live on 6 May 2020 Tidy Tuesday R Screencasts I'll analyze a dataset on the popular game Animal Crossing, performed without looking at the data in advance (or knowing much of anything about Animal Crossing!) The dataset comes from the Tidy Tuesday project: https://github.com/rfordatascience/ti... Transcript Search in video 0:04 hi i'm dave rob...
 
 ## Required Packages
 

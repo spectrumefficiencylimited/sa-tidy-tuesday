@@ -322,6 +322,7 @@ Trigger:
     return f"""---
 title: "Super QMD: {title}"
 subtitle: "Cognition-first blueprint built from the episode guide and KER"
+author: "Andrei Stoian"
 format:
   html:
     theme: flatly

@@ -1,6 +1,7 @@
 ---
 title: "Super QMD: Analyzing African-American achievements in R"
 subtitle: "Cognition-first blueprint built from the episode guide and KER"
+author: "Andrei Stoian"
 format:
   html:
     theme: flatly
@@ -20,26 +21,26 @@ editor: visual
 
 This super QMD is the bridge between:
 
--   the reproduction artifact in `output/episodes/001_african_american_achievements/episode_guide.qmd`
--   the KER entry for `african_american_achievements`
--   a final guided analysis document like `bechdel_ker_guided_analysis.qmd`
+- the reproduction artifact in `output/episodes/001_african_american_achievements/episode_guide.qmd`
+- the KER entry for `african_american_achievements`
+- a final guided analysis document like `bechdel_ker_guided_analysis.qmd`
 
 The point is to preserve not only the code path, but the author's cognition:
 
--   what question gets asked first
--   how the dataset is inspected
--   when transformation happens
--   why one comparison is chosen before another
--   which pieces should become reusable helpers
+- what question gets asked first
+- how the dataset is inspected
+- when transformation happens
+- why one comparison is chosen before another
+- which pieces should become reusable helpers
 
 ## Episode Snapshot
 
--   `queue_position`: `1`
--   `function_name`: `african_american_achievements`
--   `analysis_type`: `EDA`
--   `pattern_signature`: `load_inspect_scrape_reshape_trend_compare_visualize`
--   `data_source`: TidyTuesday 2020-06-09 dataset
--   `reproduction_status`: `ready_with_external_steps`
+- `queue_position`: `1`
+- `function_name`: `african_american_achievements`
+- `analysis_type`: `EDA`
+- `pattern_signature`: `load_inspect_scrape_reshape_trend_compare_visualize`
+- `data_source`: TidyTuesday 2020-06-09 dataset
+- `reproduction_status`: `ready_with_external_steps`
 
 ::: callout-note
 ## Analysis Intent
@@ -47,35 +48,32 @@ The point is to preserve not only the code path, but the author's cognition:
 Explore distributions, group differences, and notable patterns in African-American achievements through cleaning, summarization, and visualization
 :::
 
-## Transcript Preview
-
-Analyzing African-American achievements in R David Robinson 15.9k subscribers 85 Share Save Clip 3,544 views Streamed live on 10 Jun 2020 Tidy Tuesday R Screencasts I'll analyze a dataset on African-American achievements in R, without looking at the dataset in advance. The dataset comes from the Tidy Tuesday project: https://github.com/rfordatascience/ti... Transcript 0:09 hi I'm Dave Robinson what would you another one my screencast so I'll be using our to analyze data 0:15 I've never seen before as usual the data...
 
 ## Cognitive Signature
 
--   Start by naming the question and the unit of analysis before choosing plots or metrics.
--   Use schema inspection to decide which table carries the main story and which tables are support tables.
--   Treat data collection as its own stage; assemble or scrape context first, then interpret.
--   Build one analysis-ready table before comparing groups so the narrative rests on a stable grain.
--   Start broad with time or trend structure when it helps explain which later comparisons are fair.
--   End with one communication-ready chart or table that carries the episode's main claim.
+- Start by naming the question and the unit of analysis before choosing plots or metrics.
+- Use schema inspection to decide which table carries the main story and which tables are support tables.
+- Treat data collection as its own stage; assemble or scrape context first, then interpret.
+- Build one analysis-ready table before comparing groups so the narrative rests on a stable grain.
+- Start broad with time or trend structure when it helps explain which later comparisons are fair.
+- End with one communication-ready chart or table that carries the episode's main claim.
 
 ## Data and Execution Context
 
 ### Local Assets
 
--   `tidytuesday/data/2020/2020-06-09/firsts.csv`
--   `tidytuesday/data/2020/2020-06-09/science.csv`
+- `tidytuesday/data/2020/2020-06-09/firsts.csv`
+- `tidytuesday/data/2020/2020-06-09/science.csv`
 
 ### Execution Notes
 
--   interactive `View()` calls are present and should be skipped or replaced in automated runs
--   htmlwidget or interactive plotting calls are present
--   local TidyTuesday files were matched, so you can use `load_tidyweek_data()` and avoid a GitHub PAT
+- interactive `View()` calls are present and should be skipped or replaced in automated runs
+- htmlwidget or interactive plotting calls are present
+- local TidyTuesday files were matched, so you can use `load_tidyweek_data()` and avoid a GitHub PAT
 
 ### External Dependencies
 
--   web scraping or remote API logic detected
+- web scraping or remote API logic detected
 
 ## Setup Scaffold
 
@@ -101,29 +99,48 @@ firsts <- tuesdata$firsts
 
 ### Thought Process Map
 
--   `T1 | Context | Frame the episode as exploratory analysis of African-American achievements with limited advance knowledge of the data. | Transcript title and opening context`
--   `T2 | Inspect | Load the data, inspect table shape, and identify the main entities, measures, and comparison axes. | Initial data load and early counts or prints`
--   `T3 | Transform | Acquire or supplement source data from external web pages or APIs before analysis. | Presence of scraping or external-source code`
--   `T4 | Transform | Reshape fields, standardize column meanings, and join supporting tables to create analysis-ready records. | Join and reshaping operations in the Rmd`
--   `T6 | Compare | Summarize group differences, rates, rankings, or trajectories to surface the main story in the data. | Grouped summaries and comparative plots`
--   `T7 | Visualize | Turn the cleaned summaries into interpretable visual comparisons and iterate toward the clearest view. | ggplot workflow`
--   `T8 | Reflect | Identify reusable workflow pieces that can transfer to future datasets with a similar shape or question. | End-state of the analysis pattern`
+- `T1 | Context | Frame the episode as exploratory analysis of African-American achievements with limited advance knowledge of the data. | Transcript title and opening context`
+- `T2 | Inspect | Load the data, inspect table shape, and identify the main entities, measures, and comparison axes. | Initial data load and early counts or prints`
+- `T3 | Transform | Acquire or supplement source data from external web pages or APIs before analysis. | Presence of scraping or external-source code`
+- `T4 | Transform | Reshape fields, standardize column meanings, and join supporting tables to create analysis-ready records. | Join and reshaping operations in the Rmd`
+- `T6 | Compare | Summarize group differences, rates, rankings, or trajectories to surface the main story in the data. | Grouped summaries and comparative plots`
+- `T7 | Visualize | Turn the cleaned summaries into interpretable visual comparisons and iterate toward the clearest view. | ggplot workflow`
+- `T8 | Reflect | Identify reusable workflow pieces that can transfer to future datasets with a similar shape or question. | End-state of the analysis pattern`
+```{r}
+#| label: thought_execution_log
+#| eval: false
+
+# Fill in your `finding` after completing each stage.
+thought_log <- tibble::tribble(
+  ~step,  ~move,        ~finding,
+  "T1", "Context", "",
+  "T2", "Inspect", "",
+  "T3", "Transform", "",
+  "T4", "Transform", "",
+  "T6", "Compare", "",
+  "T7", "Visualize", "",
+  "T8", "Reflect", "",
+)
+thought_log
+```
+
+
 
 ### Code Mapping Table
 
--   `T1 | Data load and inspection | tt_load, read_html, count | Establish source shape, units, and comparison candidates`
--   `T3 | External acquisition | read_html | Build or enrich the dataset before analysis`
--   `T4 | Structuring and enrichment | spread, separate_rows, unnest | Convert messy inputs into analysis-ready tables`
--   `T6 | Group comparison | group_by, count, mutate | Compare categories, time periods, or entities`
--   `T7 | Visualization | ggplot, geom_col, geom_point | Communicate the core result visually`
+- `T1 | Data load and inspection | tt_load, read_html, count | Establish source shape, units, and comparison candidates`
+- `T3 | External acquisition | read_html | Build or enrich the dataset before analysis`
+- `T4 | Structuring and enrichment | spread, separate_rows, unnest | Convert messy inputs into analysis-ready tables`
+- `T6 | Group comparison | group_by, count, mutate | Compare categories, time periods, or entities`
+- `T7 | Visualization | ggplot, geom_col, geom_point | Communicate the core result visually`
 
 ### Data Transformation Flow
 
--   `Raw | Imported source tables or files | Load source data into tibbles or lists | Raw episode objects | Establish the starting analysis surface`
--   `Raw -> Collected | External web or JSON sources | Scrape or request supplemental records | Collected reference tables | Fill gaps not available in the initial source`
--   `Raw -> Clean | Raw source tables | Rename, reshape, unnest, and join supporting data | Analysis-ready rows with consistent keys | Standardize the schema before comparison`
--   `Clean -> Analytical | Cleaned table | Group, summarize, rank, or compare entities | Summary tables or rate calculations | Surface the core analytical story`
--   `Analytical -> Visual | Summary or model outputs | Reorder factors and prepare plotting fields | Plot-ready table | Turn the analytical result into an interpretable chart`
+- `Raw | Imported source tables or files | Load source data into tibbles or lists | Raw episode objects | Establish the starting analysis surface`
+- `Raw -> Collected | External web or JSON sources | Scrape or request supplemental records | Collected reference tables | Fill gaps not available in the initial source`
+- `Raw -> Clean | Raw source tables | Rename, reshape, unnest, and join supporting data | Analysis-ready rows with consistent keys | Standardize the schema before comparison`
+- `Clean -> Analytical | Cleaned table | Group, summarize, rank, or compare entities | Summary tables or rate calculations | Surface the core analytical story`
+- `Analytical -> Visual | Summary or model outputs | Reorder factors and prepare plotting fields | Plot-ready table | Turn the analytical result into an interpretable chart`
 
 ## Guided Build Sequence
 
@@ -138,7 +155,7 @@ Define the analytical question, likely unit of analysis, and what would count as
 
 Trigger:
 
--   Transcript title and opening context
+- Transcript title and opening context
 :::
 
 ```{r}
@@ -163,7 +180,7 @@ Inspect shape, columns, missingness, and table roles before committing to transf
 
 Trigger:
 
--   Initial data load and early counts or prints
+- Initial data load and early counts or prints
 :::
 
 ```{r}
@@ -187,11 +204,11 @@ Reshape, join, or normalize only enough to make the next comparison possible.
 
 Trigger:
 
--   Presence of scraping or external-source code
+- Presence of scraping or external-source code
 
 Additional guidance:
 
--   Keep scraped or externally collected context separate from the main analysis table until keys are stable.
+- Keep scraped or externally collected context separate from the main analysis table until keys are stable.
 :::
 
 ```{r}
@@ -202,7 +219,7 @@ Additional guidance:
 # Source assets: tidytuesday/data/2020/2020-06-09/firsts.csv, tidytuesday/data/2020/2020-06-09/science.csv
 # Suggested verbs: mutate(), separate_rows(), pivot_longer(), left_join(), unnest()
 # analysis_tbl <- raw_tbl %>%
-#   ...
+# ...
 ```
 
 ## Stage 4: Transform
@@ -216,11 +233,11 @@ Reshape, join, or normalize only enough to make the next comparison possible.
 
 Trigger:
 
--   Join and reshaping operations in the Rmd
+- Join and reshaping operations in the Rmd
 
 Additional guidance:
 
--   Keep scraped or externally collected context separate from the main analysis table until keys are stable.
+- Keep scraped or externally collected context separate from the main analysis table until keys are stable.
 :::
 
 ```{r}
@@ -231,7 +248,7 @@ Additional guidance:
 # Source assets: tidytuesday/data/2020/2020-06-09/firsts.csv, tidytuesday/data/2020/2020-06-09/science.csv
 # Suggested verbs: mutate(), separate_rows(), pivot_longer(), left_join(), unnest()
 # analysis_tbl <- raw_tbl %>%
-#   ...
+# ...
 ```
 
 ## Stage 5: Compare
@@ -245,7 +262,7 @@ Summarize groups or entities in a way that reveals differences, rankings, or tre
 
 Trigger:
 
--   Grouped summaries and comparative plots
+- Grouped summaries and comparative plots
 :::
 
 ```{r}
@@ -254,9 +271,9 @@ Trigger:
 
 # Summarize the comparison that best answers the question.
 # comparison_tbl <- analysis_tbl %>%
-#   group_by(...) %>%
-#   summarise(...) %>%
-#   arrange(desc(...))
+# group_by(...) %>%
+# summarise(...) %>%
+# arrange(desc(...))
 ```
 
 ## Stage 6: Visualize
@@ -270,11 +287,11 @@ Choose the plot after the summary table exists, then optimize for clarity rather
 
 Trigger:
 
--   ggplot workflow
+- ggplot workflow
 
 Additional guidance:
 
--   When time is present, lead with the broad trend before showing narrower subgroup comparisons.
+- When time is present, lead with the broad trend before showing narrower subgroup comparisons.
 :::
 
 ```{r}
@@ -283,8 +300,8 @@ Additional guidance:
 
 # Turn the comparison table into one clear communication plot.
 # ggplot(comparison_tbl, aes(...)) +
-#   geom_col() +
-#   labs(title = ..., subtitle = ...)
+# geom_col() +
+# labs(title = ..., subtitle = ...)
 ```
 
 ## Stage 7: Reflect
@@ -298,7 +315,7 @@ Translate the episode-specific move into a reusable function, helper, or workflo
 
 Trigger:
 
--   End-state of the analysis pattern
+- End-state of the analysis pattern
 :::
 
 ```{r}
@@ -316,30 +333,30 @@ Trigger:
 
 ### Reusable Patterns
 
--   `inspect_source_schema | Inspect source tables, field meanings, and likely comparison axes | Raw dataset or dataset list | Initial analysis plan | Y`
--   `scrape_supporting_reference_data | Pull structured records from HTML or JSON before analysis | External source url and parsing rules | Supplemental reference table | Y`
--   `reshape_analysis_inputs | Convert wide or nested source fields into normalized long-form records | Raw tabular fields | Tidy analysis table | Y`
--   `plot_comparative_story | Reorder entities and visualize the main comparison cleanly | Summary table or model output | Communication-ready plot | Y`
+- `inspect_source_schema | Inspect source tables, field meanings, and likely comparison axes | Raw dataset or dataset list | Initial analysis plan | Y`
+- `scrape_supporting_reference_data | Pull structured records from HTML or JSON before analysis | External source url and parsing rules | Supplemental reference table | Y`
+- `reshape_analysis_inputs | Convert wide or nested source fields into normalized long-form records | Raw tabular fields | Tidy analysis table | Y`
+- `plot_comparative_story | Reorder entities and visualize the main comparison cleanly | Summary table or model output | Communication-ready plot | Y`
 
 ### Function Candidates
 
--   `scrape_reference_table(url, css_selector)`
--   `collect_episode_source_records(urls, parser)`
--   `reshape_episode_inputs(data, ...)`
--   `join_episode_context(primary_data, lookup_data, by)`
--   `plot_comparative_story(data, x_col, y_col, group_col = NULL)`
+- `scrape_reference_table(url, css_selector)`
+- `collect_episode_source_records(urls, parser)`
+- `reshape_episode_inputs(data, ...)`
+- `join_episode_context(primary_data, lookup_data, by)`
+- `plot_comparative_story(data, x_col, y_col, group_col = NULL)`
 
 ## How To Finish This Super QMD
 
-1.  Replace each scaffold chunk with the real episode-specific analysis code.
-2.  After each major result, add a short callout explaining what changed in your thinking.
-3.  Keep one broad chart early, one comparison chart in the middle, and one final communication chart at the end.
-4.  Move any repeated transformation or comparison logic into `R/screencast_helpers.R`.
-5.  Once the document reads like a guided walkthrough instead of a reproduction note, promote it into a finished KER-guided analysis.
+1. Replace each scaffold chunk with the real episode-specific analysis code.
+2. After each major result, add a short callout explaining what changed in your thinking.
+3. Keep one broad chart early, one comparison chart in the middle, and one final communication chart at the end.
+4. Move any repeated transformation or comparison logic into `R/screencast_helpers.R`.
+5. Once the document reads like a guided walkthrough instead of a reproduction note, promote it into a finished KER-guided analysis.
 
 ## Adaptation Layer
 
--   `1 | inspect_source_schema | Start by mapping entities, measures, and likely comparison axes before transforming anything`
--   `2 | scrape_supporting_reference_data | Rebuild any missing lookup or metadata tables from the relevant external source`
--   `3 | reshape_analysis_inputs | Normalize wide, nested, or repeated fields into one analysis-ready row structure`
--   `8 | plot_comparative_story | Choose the clearest visual comparison once the analytical table is ready`
+- `1 | inspect_source_schema | Start by mapping entities, measures, and likely comparison axes before transforming anything`
+- `2 | scrape_supporting_reference_data | Rebuild any missing lookup or metadata tables from the relevant external source`
+- `3 | reshape_analysis_inputs | Normalize wide, nested, or repeated fields into one analysis-ready row structure`
+- `8 | plot_comparative_story | Choose the clearest visual comparison once the analytical table is ready`

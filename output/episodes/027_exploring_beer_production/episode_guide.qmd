@@ -1,16 +1,17 @@
 ---
 title: "Reproduction Guide: Analyzing exploring US beer production in R"
 subtitle: "Ordered episode output built from the control table and KER"
+author: "Andrei Stoian"
 format:
-  html:
-    theme: flatly
-    toc: true
-    toc-depth: 2
-    code-fold: show
+ html:
+ theme: flatly
+ toc: true
+ toc-depth: 2
+ code-fold: show
 execute:
-  echo: false
-  warning: false
-  message: false
+ echo: false
+ warning: false
+ message: false
 ---
 
 ## Episode Snapshot
@@ -35,7 +36,7 @@ Explore geographic and temporal variation in exploring US beer production throug
 
 ## Transcript Preview
 
-exploring US beer production David Robinson 15.9k subscribers 128 Share Save Clip 5,070 views 2 Apr 2020 Tidy Tuesday R Screencasts I analyze a dataset of US beer production wins as an example of exploratory data analysis in R, performed without looking at the data in advance. In particular, I show how the (in-development) tidymetrics and shinymetrics packages can create interactive visualizations of metrics like ingredient usage over time. For m...
+exploring US beer production 15.9k subscribers 128 Share Save Clip 5,070 views 2 Apr 2020 Tidy Tuesday R Screencasts I analyze a dataset of US beer production wins as an example of exploratory data analysis in R, performed without looking at the data in advance. In particular, I show how the (in-development) tidymetrics and shinymetrics packages can create interactive visualizations of metrics like ingredient usage over time. For m...
 
 ## Required Packages
 

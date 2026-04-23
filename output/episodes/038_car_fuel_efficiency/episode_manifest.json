@@ -1,0 +1,48 @@
+{
+  "queue_position": 38,
+  "folder_name": "038_car_fuel_efficiency",
+  "transcript_title": "Analyzing car fuel efficiency in R",
+  "function_name": "car_fuel_efficiency",
+  "ker_status": "extracted",
+  "reproduction_status": "ready_local",
+  "source_files": {
+    "transcript_file": "raw-data/inspiration/Analyzing car fuel efficiency in R.txt",
+    "code_file": "data-screencasts/car-economy.Rmd"
+  },
+  "source_exists": {
+    "transcript": true,
+    "code": true
+  },
+  "data_source": "TidyTuesday 2019-10-15 source files",
+  "analysis_intent": "Explore, explain, and model patterns in car fuel efficiency using engineered features and comparative summaries",
+  "analysis_type": "Modeling",
+  "pattern_signature": "load_inspect_reshape_trend_model_evaluate_visualize",
+  "required_packages": [
+    "broom",
+    "splines",
+    "tidyverse"
+  ],
+  "features": {
+    "ggplot": true,
+    "joins": false,
+    "reshape": true,
+    "text_analysis": false,
+    "modeling": true,
+    "predictive": false,
+    "scraping": false,
+    "maps": false,
+    "time": true,
+    "simulation": false,
+    "multi_table": false
+  },
+  "local_data_files": [
+    "tidytuesday/data/2019/2019-10-15/big_epa_cars.csv"
+  ],
+  "reference_files": [
+    "tidytuesday/data/2019/2019-10-15/readme.md"
+  ],
+  "external_dependencies": [],
+  "execution_notes": [
+    "local TidyTuesday files were matched, so you can use `load_tidyweek_data()` and avoid a GitHub PAT"
+  ]
+}

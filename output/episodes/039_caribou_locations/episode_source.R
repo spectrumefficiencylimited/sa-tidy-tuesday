@@ -1,0 +1,169 @@
+# Auto-generated from the episode R Markdown file.
+# This script preserves code chunks in source order for reproducibility checks.
+
+# ---- setup ----
+knitr::opts_chunk$set(echo = TRUE)
+
+# ---- chunk_02 ----
+library(tidyverse)
+theme_set(theme_light())
+
+tuesdata <- tidytuesdayR::tt_load('2020-06-23')
+
+# ---- chunk_03 ----
+individuals <- tuesdata$individuals
+locations <- tuesdata$locations
+
+# ---- chunk_04 ----
+individuals %>%
+  summarize(across(sex:study_site, list(~ mean(!is.na(.)))))
+
+individuals %>%
+  filter(deploy_off_type == "dead") %>%
+  count(death_cause, sort = TRUE)
+
+# ---- chunk_05 ----
+library(sf)
+province_sf <- read_sf("~/Downloads/province")
+
+bc <- province_sf %>%
+  filter(PROV == "BC")
+
+# ---- chunk_06 ----
+individuals %>%
+  filter(deploy_on_latitude > 40) %>%
+  count(study_site, deploy_on_longitude, deploy_on_latitude, sort = TRUE) %>%
+  ggplot() +
+  # geom_sf(data = bc) +
+  # borders("world", regions = "canada") +
+  geom_point(aes(deploy_on_longitude, deploy_on_latitude,
+                 size = n,
+             color = study_site)) +
+  scale_size_continuous(guide = FALSE)
+
+# ---- chunk_07 ----
+individuals %>%
+  count(animal_id, sort = TRUE)
+
+individuals %>%
+  filter(animal_id == "MO_car150") %>%
+  View()
+
+# ---- chunk_08 ----
+locations %>%
+  ggplot(aes(longitude, latitude, color = study_site)) +
+  geom_point()
+
+# ---- chunk_09 ----
+by_animal <- locations %>%
+  group_by(animal_id, study_site) %>%
+  summarize(start = min(timestamp),
+            end = max(timestamp),
+            num_points = n()) %>%
+  ungroup() %>%
+  arrange(desc(num_points))
+
+# ---- chunk_10 ----
+library(lubridate)
+
+example_animal <- locations %>%
+  arrange(timestamp) %>%
+  filter(animal_id == sample(unique(animal_id), 1))
+
+example_animal %>%
+  mutate(quarter = as.Date(floor_date(timestamp, "quarter"))) %>%
+  ggplot(aes(longitude, latitude, color = timestamp)) +
+  geom_point(alpha = .5) +
+  geom_path(alpha = .5) +
+  facet_wrap(~ quarter) +
+  labs(title = "One caribou over time")
+
+# ---- chunk_11 ----
+library(geosphere)
+
+locations_with_gaps <- locations %>%
+  group_by(animal_id) %>%
+  mutate(last_lon = lag(longitude),
+         last_lat = lag(latitude),
+         hours = as.numeric(difftime(timestamp, lag(timestamp), unit = "hours")),
+         km = distHaversine(cbind(longitude, latitude), cbind(last_lon, last_lat)) / 1000,
+         kph = km / hours) %>%
+  ungroup()
+
+locations_with_gaps %>%
+  filter(hours <= 8) %>%
+  ggplot(aes(kph)) +
+  geom_histogram() +
+  scale_x_log10(labels = scales::comma) +
+  labs(title = "On average, how fast do caribou travel?")
+
+by_animal <- locations_with_gaps %>%
+  filter(hours <= 8,
+         hours >= .5) %>%
+  group_by(animal_id, study_site) %>%
+  summarize(start = min(timestamp),
+            end = max(timestamp),
+            num_points = n(),
+            avg_speed = mean(kph, na.rm = TRUE)) %>%
+  ungroup() %>%
+  arrange(desc(num_points)) %>%
+  filter(num_points >= 10)
+
+# ---- chunk_12 ----
+by_animal %>%
+  ggplot(aes(num_points, avg_speed)) +
+  geom_point() +
+  scale_x_log10() +
+  expand_limits(y = 0)
+
+by_animal %>%
+  arrange(desc(avg_speed))
+
+locations_with_gaps %>%
+  filter(animal_id == "QU_car107") %>%
+  mutate(quarter = as.Date(floor_date(timestamp, "quarter"))) %>%
+  ggplot(aes(longitude, latitude, color = kph)) +
+  geom_point(alpha = .5) +
+  geom_path(alpha = .5) +
+  facet_wrap(~ quarter) +
+  labs(title = "One caribou over time")
+
+locations_with_gaps %>%
+  filter(animal_id == "SC_car171") %>%
+  arrange(desc(kph)) %>%
+  View()
+
+# ---- chunk_13 ----
+locations_with_gaps %>%
+  filter(study_site != "Hart Ranges") %>%
+  filter(hours <= 8,
+         hours >= .5) %>%
+  group_by(month = month(timestamp, label = TRUE),
+           study_site) %>%
+  summarize(avg_speed = median(kph),
+            n = n()) %>%
+  ggplot(aes(month, avg_speed, group = study_site,
+             color = study_site)) +
+  geom_line() +
+  geom_point(aes(size = n)) +
+  expand_limits(y = 0) +
+  facet_wrap(~ study_site) +
+  theme(legend.position = "none") +
+  labs(title = "Seasonal trend in Caribou speed",
+       y = "Average speed (kph)")
+
+# ---- chunk_14 ----
+by_animal %>%
+  filter(num_points >= 10) %>%
+  arrange(desc(avg_speed))
+
+# ---- chunk_15 ----
+locations %>%
+  arrange(timestamp) %>%
+  group_by(animal_id) %>%
+  mutate(gap = round(difftime(timestamp, lag(timestamp), unit = "hours"))) %>%
+  ungroup() %>%
+  filter(!is.na(gap)) %>%
+  filter(gap <= 24) %>%
+  ggplot(aes(gap)) +
+  geom_histogram(binwidth = 2)

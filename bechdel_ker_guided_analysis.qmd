@@ -1,7 +1,7 @@
 ---
 title: "KER-Guided Analysis: The Bechdel Test"
 subtitle: "A from-scratch Quarto walkthrough built from the Knowledge Extraction Register"
-author: "Codex"
+author: "Andrei Stoian"
 date: today
 format:
   html:

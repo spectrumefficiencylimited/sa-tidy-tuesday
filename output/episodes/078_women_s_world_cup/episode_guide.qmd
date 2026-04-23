@@ -1,16 +1,17 @@
 ---
 title: "Reproduction Guide: Analyzing Women's World Cup data in R"
 subtitle: "Ordered episode output built from the control table and KER"
+author: "Andrei Stoian"
 format:
-  html:
-    theme: flatly
-    toc: true
-    toc-depth: 2
-    code-fold: show
+ html:
+ theme: flatly
+ toc: true
+ toc-depth: 2
+ code-fold: show
 execute:
-  echo: false
-  warning: false
-  message: false
+ echo: false
+ warning: false
+ message: false
 ---
 
 ## Episode Snapshot
@@ -35,7 +36,7 @@ Explore distributions, group differences, and notable patterns in Women's World 
 
 ## Transcript Preview
 
-analyzing Women's World Cup data David Robinson 15.9k subscribers 68 Share Save Clip 3,265 views 23 Jul 2019 Tidy Tuesday R Screencasts I analyze a dataset on Women's World Cup results since 1992 as an example of exploratory data analysis in R, performed without looking at the data in advance. I also do some exploration of a very rich dataset of soccer play-by-play statistics from StatsBomb. The data comes from the #tidytuesday project: https://g...
+analyzing Women's World Cup data 15.9k subscribers 68 Share Save Clip 3,265 views 23 Jul 2019 Tidy Tuesday R Screencasts I analyze a dataset on Women's World Cup results since 1992 as an example of exploratory data analysis in R, performed without looking at the data in advance. I also do some exploration of a very rich dataset of soccer play-by-play statistics from StatsBomb. The data comes from the #tidytuesday project: https://g...
 
 ## Required Packages
 

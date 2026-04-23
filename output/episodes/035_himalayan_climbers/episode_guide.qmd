@@ -1,16 +1,17 @@
 ---
 title: "Reproduction Guide: Analyzing Himalayan climbers in R"
 subtitle: "Ordered episode output built from the control table and KER"
+author: "Andrei Stoian"
 format:
-  html:
-    theme: flatly
-    toc: true
-    toc-depth: 2
-    code-fold: show
+ html:
+ theme: flatly
+ toc: true
+ toc-depth: 2
+ code-fold: show
 execute:
-  echo: false
-  warning: false
-  message: false
+ echo: false
+ warning: false
+ message: false
 ---
 
 ## Episode Snapshot
@@ -35,7 +36,7 @@ Explore expedition outcomes, climbing duration, and peak-level success patterns 
 
 ## Transcript Preview
 
-Analyzing Himalayan climbers in R David Robinson 15.9k subscribers 78 Share Save Clip 3,257 views Streamed live on 23 Sept 2020 Tidy Tuesday R Screencasts I'll analyze a dataset about Himalayan climbers without looking at the dataset in advance. The dataset comes from the Tidy Tuesday project: https://github.com/rfordatascience/ti... Code: https://github.com/dgrtwo/data-screen... Timestamped annotations of specific tricks, tips and tools used: ht...
+Analyzing Himalayan climbers in R 15.9k subscribers 78 Share Save Clip 3,257 views Streamed live on 23 Sept 2020 Tidy Tuesday R Screencasts I'll analyze a dataset about Himalayan climbers without looking at the dataset in advance. The dataset comes from the Tidy Tuesday project: https://github.com/rfordatascience/ti... Code: https://github.com/dgrtwo/data-screen... Timestamped annotations of specific tricks, tips and tools used: ht...
 
 ## Required Packages
 

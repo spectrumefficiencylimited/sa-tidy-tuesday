@@ -1,0 +1,52 @@
+{
+  "queue_position": 17,
+  "folder_name": "017_ncaa_women_s_basketball",
+  "transcript_title": "Analyzing NCAA Women's Basketball",
+  "function_name": "ncaa_women_s_basketball",
+  "ker_status": "extracted",
+  "reproduction_status": "ready_local",
+  "source_files": {
+    "transcript_file": "raw-data/inspiration/Analyzing NCAA Women's Basketball.txt",
+    "code_file": "data-screencasts/2020_10_06_ncaa_womens_basketball.Rmd"
+  },
+  "source_exists": {
+    "transcript": true,
+    "code": true
+  },
+  "data_source": "TidyTuesday 2020-10-06 dataset",
+  "analysis_intent": "Explore distributions, group differences, and notable patterns in NCAA Women's Basketball through cleaning, summarization, and visualization",
+  "analysis_type": "EDA",
+  "pattern_signature": "load_inspect_trend_compare_visualize",
+  "required_packages": [
+    "glue",
+    "scales",
+    "tidytuesdayR",
+    "tidyverse"
+  ],
+  "features": {
+    "ggplot": true,
+    "joins": false,
+    "reshape": false,
+    "text_analysis": false,
+    "modeling": false,
+    "predictive": false,
+    "scraping": false,
+    "maps": false,
+    "time": true,
+    "simulation": false,
+    "multi_table": false
+  },
+  "local_data_files": [
+    "tidytuesday/data/2020/2020-10-06/tournament.csv"
+  ],
+  "reference_files": [
+    "tidytuesday/data/2020/2020-10-06/pic1.png",
+    "tidytuesday/data/2020/2020-10-06/pic2.png",
+    "tidytuesday/data/2020/2020-10-06/readme.md",
+    "tidytuesday/data/2020/2020-10-06/tourney-fit.png"
+  ],
+  "external_dependencies": [],
+  "execution_notes": [
+    "local TidyTuesday files were matched, so you can use `load_tidyweek_data()` and avoid a GitHub PAT"
+  ]
+}

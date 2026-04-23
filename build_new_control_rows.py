@@ -481,7 +481,7 @@ ALL_DATASETS = [
 # ---------------------------------------------------------------------------
 
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
-CT_PATH = os.path.join(SCRIPT_DIR, "control_table_full.csv")
+CT_PATH = os.path.join(SCRIPT_DIR, "control_table.csv")
 
 existing_keys = set()
 existing_dates = set()

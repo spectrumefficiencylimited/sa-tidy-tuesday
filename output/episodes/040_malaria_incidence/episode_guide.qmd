@@ -1,16 +1,17 @@
 ---
 title: "Reproduction Guide: Analyzing malaria incidence in R"
 subtitle: "Ordered episode output built from the control table and KER"
+author: "Andrei Stoian"
 format:
-  html:
-    theme: flatly
-    toc: true
-    toc-depth: 2
-    code-fold: show
+ html:
+ theme: flatly
+ toc: true
+ toc-depth: 2
+ code-fold: show
 execute:
-  echo: false
-  warning: false
-  message: false
+ echo: false
+ warning: false
+ message: false
 ---
 
 ## Episode Snapshot
@@ -35,7 +36,7 @@ Explore geographic and temporal variation in malaria incidence through joins, su
 
 ## Transcript Preview
 
-analyzing malaria incidence in R David Robinson 15.9k subscribers 145 Share 5,660 views 13 Nov 2018 Tidy Tuesday R Screencasts I analyze a dataset of malaria incidence across countries as an example of exploratory data analysis in R, performed without looking at the data in advance. This is part of the #tidytuesday project: https://github.com/rfordatascience/ti... Transcript Search in video 0:00 hi I'm Dave Robinson chief data scientist at data c...
+analyzing malaria incidence in R 15.9k subscribers 145 Share 5,660 views 13 Nov 2018 Tidy Tuesday R Screencasts I analyze a dataset of malaria incidence across countries as an example of exploratory data analysis in R, performed without looking at the data in advance. This is part of the #tidytuesday project: https://github.com/rfordatascience/ti... Transcript Search in video 0:00 hi I'm Dave Robinson chief data scientist at data c...
 
 ## Required Packages
 

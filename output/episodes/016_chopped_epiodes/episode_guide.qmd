@@ -1,16 +1,17 @@
 ---
 title: "Reproduction Guide: Analyzing Chopped epiodes in R"
 subtitle: "Ordered episode output built from the control table and KER"
+author: "Andrei Stoian"
 format:
-  html:
-    theme: flatly
-    toc: true
-    toc-depth: 2
-    code-fold: show
+ html:
+ theme: flatly
+ toc: true
+ toc-depth: 2
+ code-fold: show
 execute:
-  echo: false
-  warning: false
-  message: false
+ echo: false
+ warning: false
+ message: false
 ---
 
 ## Episode Snapshot
@@ -35,7 +36,7 @@ Predict or estimate outcomes in Chopped epiodes using cleaned features, explorat
 
 ## Transcript Preview
 
-Analyzing Chopped epiodes in R David Robinson 15.9k subscribers 55 Share Save Clip 2,423 views Streamed live on 26 Aug 2020 Tidy Tuesday R Screencasts I'll analyze a dataset about the TV series Chopped, without looking at the dataset in advance. The dataset comes from the Tidy Tuesday project: https://github.com/rfordatascience/ti... Code: https://github.com/dgrtwo/data-screen... Timstamped annotations of specific tricks, tips and tools used: htt...
+Analyzing Chopped epiodes in R 15.9k subscribers 55 Share Save Clip 2,423 views Streamed live on 26 Aug 2020 Tidy Tuesday R Screencasts I'll analyze a dataset about the TV series Chopped, without looking at the dataset in advance. The dataset comes from the Tidy Tuesday project: https://github.com/rfordatascience/ti... Code: https://github.com/dgrtwo/data-screen... Timstamped annotations of specific tricks, tips and tools used: htt...
 
 ## Required Packages
 

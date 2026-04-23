@@ -1,16 +1,17 @@
 ---
 title: "Reproduction Guide: Analyzing Friends transcripts in R"
 subtitle: "Ordered episode output built from the control table and KER"
+author: "Andrei Stoian"
 format:
-  html:
-    theme: flatly
-    toc: true
-    toc-depth: 2
-    code-fold: show
+ html:
+ theme: flatly
+ toc: true
+ toc-depth: 2
+ code-fold: show
 execute:
-  echo: false
-  warning: false
-  message: false
+ echo: false
+ warning: false
+ message: false
 ---
 
 ## Episode Snapshot
@@ -35,7 +36,7 @@ Explore and compare language patterns in Friends transcripts using tokenization,
 
 ## Transcript Preview
 
-Analyzing Friends transcripts in R David Robinson 15.9k subscribers 87 Share Save Clip 3,259 views Streamed live on 9 Sept 2020 Tidy Tuesday R Screencasts I'll analyze a dataset of transcripts from the sitcom Friends, without looking at the dataset in advance. The dataset comes from the Tidy Tuesday project: https://github.com/rfordatascience/ti... Code: https://github.com/dgrtwo/data-screen... Timestamped annotations of specific tricks, tips and...
+Analyzing Friends transcripts in R 15.9k subscribers 87 Share Save Clip 3,259 views Streamed live on 9 Sept 2020 Tidy Tuesday R Screencasts I'll analyze a dataset of transcripts from the sitcom Friends, without looking at the dataset in advance. The dataset comes from the Tidy Tuesday project: https://github.com/rfordatascience/ti... Code: https://github.com/dgrtwo/data-screen... Timestamped annotations of specific tricks, tips and...
 
 ## Required Packages
 

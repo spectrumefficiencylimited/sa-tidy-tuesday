@@ -1,16 +1,17 @@
 ---
 title: "Reproduction Guide: Analyzing beach volleyball in R"
 subtitle: "Ordered episode output built from the control table and KER"
+author: "Andrei Stoian"
 format:
-  html:
-    theme: flatly
-    toc: true
-    toc-depth: 2
-    code-fold: show
+ html:
+ theme: flatly
+ toc: true
+ toc-depth: 2
+ code-fold: show
 execute:
-  echo: false
-  warning: false
-  message: false
+ echo: false
+ warning: false
+ message: false
 ---
 
 ## Episode Snapshot
@@ -35,7 +36,7 @@ Explore, explain, and model patterns in beach volleyball using engineered featur
 
 ## Transcript Preview
 
-Analyzing beach volleyball in R David Robinson 15.9k subscribers 88 Share Save Clip 3,671 views Streamed live on 20 May 2020 Tidy Tuesday R Screencasts I'll analyze a dataset on beach volleyball matches in R, without looking at the dataset in advance. The dataset comes from the Tidy Tuesday project: https://github.com/rfordatascience/ti... Introduction 0:05 hi I'm Dave Robinson and welcome to another one of my screencast where I'll 0:10 be using...
+Analyzing beach volleyball in R 15.9k subscribers 88 Share Save Clip 3,671 views Streamed live on 20 May 2020 Tidy Tuesday R Screencasts I'll analyze a dataset on beach volleyball matches in R, without looking at the dataset in advance. The dataset comes from the Tidy Tuesday project: https://github.com/rfordatascience/ti... Introduction 0:05 hi I'm Dave Robinson and welcome to another one of my screencast where I'll 0:10 be using...
 
 ## Required Packages
 

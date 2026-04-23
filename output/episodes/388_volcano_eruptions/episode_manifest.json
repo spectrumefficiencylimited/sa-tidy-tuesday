@@ -1,0 +1,61 @@
+{
+  "queue_position": 388,
+  "folder_name": "388_volcano_eruptions",
+  "transcript_title": "Analyzing volcano eruptions in R",
+  "function_name": "volcano_eruptions",
+  "ker_status": "extracted",
+  "reproduction_status": "ready_local",
+  "source_files": {
+    "transcript_file": "raw-data/inspiration/Analyzing volcano eruptions in R.txt",
+    "code_file": "data-screencasts/volcano-eruptions.Rmd"
+  },
+  "source_exists": {
+    "transcript": true,
+    "code": true
+  },
+  "data_source": "TidyTuesday 2020-05-12 dataset",
+  "analysis_intent": "Explore distributions, group differences, and notable patterns in volcano eruptions through cleaning, summarization, and visualization",
+  "analysis_type": "EDA",
+  "pattern_signature": "load_inspect_reshape_trend_compare_visualize",
+  "required_packages": [
+    "DT",
+    "gganimate",
+    "ggthemes",
+    "glue",
+    "htmlwidgets",
+    "leaflet",
+    "tidyverse"
+  ],
+  "features": {
+    "ggplot": true,
+    "joins": false,
+    "reshape": true,
+    "text_analysis": false,
+    "modeling": false,
+    "predictive": false,
+    "scraping": false,
+    "maps": false,
+    "time": true,
+    "simulation": false,
+    "multi_table": false
+  },
+  "local_data_files": [
+    "tidytuesday/data/2020/2020-05-12/eruptions.csv",
+    "tidytuesday/data/2020/2020-05-12/events.csv",
+    "tidytuesday/data/2020/2020-05-12/sulfur.csv",
+    "tidytuesday/data/2020/2020-05-12/tree_rings.csv",
+    "tidytuesday/data/2020/2020-05-12/volcano.csv"
+  ],
+  "reference_files": [
+    "tidytuesday/data/2020/2020-05-12/events.csv",
+    "tidytuesday/data/2020/2020-05-12/readme.md",
+    "tidytuesday/data/2020/2020-05-12/sulfur.csv",
+    "tidytuesday/data/2020/2020-05-12/tree_rings.csv",
+    "tidytuesday/data/2020/2020-05-12/volcano.csv",
+    "tidytuesday/data/2020/2020-05-12/eruptions.csv"
+  ],
+  "external_dependencies": [],
+  "execution_notes": [
+    "local TidyTuesday files were matched, so you can use `load_tidyweek_data()` and avoid a GitHub PAT"
+  ]
+}

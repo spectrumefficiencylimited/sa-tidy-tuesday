@@ -1,16 +1,17 @@
 ---
 title: "Reproduction Guide: Analyzing Tour de France data in R"
 subtitle: "Ordered episode output built from the control table and KER"
+author: "Andrei Stoian"
 format:
-  html:
-    theme: flatly
-    toc: true
-    toc-depth: 2
-    code-fold: show
+ html:
+ theme: flatly
+ toc: true
+ toc-depth: 2
+ code-fold: show
 execute:
-  echo: false
-  warning: false
-  message: false
+ echo: false
+ warning: false
+ message: false
 ---
 
 ## Episode Snapshot
@@ -35,7 +36,7 @@ Explore and compare language patterns in Tour de France using tokenization, grou
 
 ## Transcript Preview
 
-Analyzing Tour de France data in R David Robinson 15.9k subscribers 124 Share Save Clip 4,266 views Streamed live on 8 Apr 2020 Tidy Tuesday R Screencasts I'll analyze a dataset on the Tour de France competition in R, without looking at the data in advance. For the first time (and just as an experiment), I'll be analyzing the dataset as a live stream instead of prerecording it. The dataset comes from the Tidy Tuesday project: https://github.com/r...
+Analyzing Tour de France data in R 15.9k subscribers 124 Share Save Clip 4,266 views Streamed live on 8 Apr 2020 Tidy Tuesday R Screencasts I'll analyze a dataset on the Tour de France competition in R, without looking at the data in advance. For the first time (and just as an experiment), I'll be analyzing the dataset as a live stream instead of prerecording it. The dataset comes from the Tidy Tuesday project: https://github.com/r...
 
 ## Required Packages
 

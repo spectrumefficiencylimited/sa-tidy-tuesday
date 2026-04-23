@@ -1,6 +1,7 @@
 ---
 title: "Super QMD: Analyzing the Great American Beer Festival"
 subtitle: "Cognition-first blueprint built from the episode guide and KER"
+author: "Andrei Stoian"
 format:
   html:
     theme: flatly
@@ -34,23 +35,32 @@ The point is to preserve not only the code path, but the author's cognition:
 
 ## Episode Snapshot
 
-- `queue_position`: `64`
-- `function_name`: `great_american_beer_festival`
-- `analysis_type`: `Modeling`
-- `pattern_signature`: `load_inspect_reshape_join_tokenize_trend_model_evaluate_visualize`
-- `data_source`: TidyTuesday 2020-10-20 dataset
-- `reproduction_status`: `ready_local`
-
 ::: {.callout-note}
 ## Analysis Intent
 Explore and compare language patterns in the Great American Beer Festival using tokenization, grouped counts, and discriminative text analysis
 :::
 
+| Field | Value |
+|---|---|
+| Queue | #64 |
+| Function | `great_american_beer_festival` |
+| Analysis type | Modeling |
+| Data source | TidyTuesday 2020-10-20 dataset |
+| Status | `ready_local` |
+
+**Packages:** `broom`, `ggthemes`, `glue`, `scales`, `tidylo`, `tidytext`, `tidytuesdayR`, `tidyverse`
+
+**Features:** ggplot, joins, reshape, text_analysis, modeling, time
+
+**Execution notes:**
+- interactive `View()` calls are present and should be skipped or replaced in automated runs
+- local TidyTuesday files were matched, so you can use `load_tidyweek_data()` and avoid a GitHub PAT
+
+**Analytical pattern:** `load_inspect_reshape_join_tokenize_trend_model_evaluate_visualize`
 
 
-## Transcript Preview
 
-Analyzing the Great American Beer Festival David Robinson 15.9k subscribers 87 Share Save Clip 2,779 views Streamed live on 21 Oct 2020 Tidy Tuesday R Screencasts I'll analyze a dataset about the Great American Beer Festival, without looking at the dataset in advance. The dataset comes from the Tidy Tuesday project: https://github.com/rfordatascience/ti... Code: https://github.com/dgrtwo/data-screen... Timestamped annotations of specific tricks, tips and tools used: https://github.com/dgrtwo/data-screen... Search i...
+
 
 ## Cognitive Signature
 
@@ -110,6 +120,25 @@ names(tuesdata)
 - `T6 | Compare | Move from descriptive patterns into statistical or predictive modeling once the feature space is ready. | Modeling functions and evaluation code`
 - `T7 | Visualize | Turn the cleaned summaries into interpretable visual comparisons and iterate toward the clearest view. | ggplot workflow`
 - `T8 | Reflect | Identify reusable workflow pieces that can transfer to future datasets with a similar shape or question. | End-state of the analysis pattern`
+
+```{r}
+#| label: thought_execution_log
+#| eval: false
+
+# Fill in `finding` after completing each stage.
+thought_log <- tibble::tribble(
+  ~step,  ~move,        ~finding,
+  "T1", "Context", "",
+  "T2", "Inspect", "",
+  "T4", "Transform", "",
+  "T5", "Compare", "",
+  "T6", "Compare", "",
+  "T7", "Visualize", "",
+  "T8", "Reflect", "",
+)
+thought_log
+```
+
 
 ### Code Mapping Table
 
@@ -200,7 +229,7 @@ Trigger:
 # Source assets: tidytuesday/data/2020/2020-10-20/beer_awards.csv
 # Suggested verbs: mutate(), separate_rows(), pivot_longer(), left_join(), unnest()
 # analysis_tbl <- raw_tbl %>%
-#   ...
+# ...
 ```
 ## Stage 4: Compare
 
@@ -226,9 +255,9 @@ Additional guidance:
 
 # Summarize the comparison that best answers the question.
 # comparison_tbl <- analysis_tbl %>%
-#   group_by(...) %>%
-#   summarise(...) %>%
-#   arrange(desc(...))
+# group_by(...) %>%
+# summarise(...) %>%
+# arrange(desc(...))
 ```
 ## Stage 5: Compare
 
@@ -254,9 +283,9 @@ Additional guidance:
 
 # Summarize the comparison that best answers the question.
 # comparison_tbl <- analysis_tbl %>%
-#   group_by(...) %>%
-#   summarise(...) %>%
-#   arrange(desc(...))
+# group_by(...) %>%
+# summarise(...) %>%
+# arrange(desc(...))
 ```
 ## Stage 6: Visualize
 
@@ -281,8 +310,8 @@ Additional guidance:
 
 # Turn the comparison table into one clear communication plot.
 # ggplot(comparison_tbl, aes(...)) +
-#   geom_col() +
-#   labs(title = ..., subtitle = ...)
+# geom_col() +
+# labs(title = ..., subtitle = ...)
 ```
 ## Stage 7: Reflect
 

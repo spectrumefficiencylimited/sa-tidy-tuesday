@@ -1,6 +1,7 @@
 ---
 title: "Super QMD: Analyzing Womens Rugby in R"
 subtitle: "Cognition-first blueprint built from the episode guide and KER"
+author: "Andrei Stoian"
 format:
   html:
     theme: flatly
@@ -34,23 +35,24 @@ The point is to preserve not only the code path, but the author's cognition:
 
 ## Episode Snapshot
 
-- `queue_position`: `193`
-- `function_name`: `womens_rugby`
-- `analysis_type`: `EDA`
-- `pattern_signature`: `load_inspect_recode_summarize_trend_compare_visualize`
-- `data_source`: TidyTuesday 2022-05-24
-- `reproduction_status`: `needs_mapping`
-
 ::: {.callout-note}
 ## Analysis Intent
 Explore distributions, group differences, and notable patterns in Womens Rugby through cleaning, summarization, and visualization
 :::
 
+| Field | Value |
+|---|---|
+| Queue | #193 |
+| Function | `womens_rugby` |
+| Analysis type | EDA |
+| Data source | TidyTuesday 2022-05-24 |
+| Status | `needs_mapping` |
+
+**Analytical pattern:** `load_inspect_recode_summarize_trend_compare_visualize`
 
 
-## Transcript Preview
 
-Analyzing Womens Rugby in R David Robinson 15.9k subscribers 72 Share Save Clip 4,521 views Streamed live on 2022-05-24 Tidy Tuesday R Screencasts I'll analyze a dataset about womens rugby without looking at the dataset in advance. The dataset comes from the Tidy Tuesday project: https://github.com/...
+
 
 ## Cognitive Signature
 
@@ -94,10 +96,10 @@ source("R/screencast_helpers.R")
 tuesdata <- load_tidyweek_data("2022-05-24")
 names(tuesdata)
 
-fifteens <- tuesdata$fifteens  # or read from local path
-Scrumqueens_data_2022_05_23 (1) <- tuesdata$Scrumqueens_data_2022_05_23 (1)  # or read from local path
-Scrumqueens_data_2022_05_23 <- tuesdata$Scrumqueens_data_2022_05_23  # or read from local path
-sevens <- tuesdata$sevens  # or read from local path
+fifteens <- tuesdata$fifteens # or read from local path
+Scrumqueens_data_2022_05_23 (1) <- tuesdata$Scrumqueens_data_2022_05_23 (1) # or read from local path
+Scrumqueens_data_2022_05_23 <- tuesdata$Scrumqueens_data_2022_05_23 # or read from local path
+sevens <- tuesdata$sevens # or read from local path
 ```
 
 ## Thought -> Code -> Data Bridge
@@ -111,6 +113,25 @@ sevens <- tuesdata$sevens  # or read from local path
 - `T6 | Compare | Summarize groups in a way that reveals differences, rankings, or trends. | group_by + summarise + arrange pattern`
 - `T7 | Visualize | Turn the cleaned summaries into interpretable visual comparisons and iterate toward the clearest view. | ggplot workflow`
 - `T8 | Reflect | Identify reusable workflow pieces that can transfer to future datasets with a similar shape or question. | End-state of the analysis pattern`
+
+```{r}
+#| label: thought_execution_log
+#| eval: false
+
+# Fill in `finding` after completing each stage.
+thought_log <- tibble::tribble(
+  ~step,  ~move,        ~finding,
+  "T1", "Context", "",
+  "T2", "Inspect", "",
+  "T3", "Transform", "",
+  "T4", "Trend", "",
+  "T6", "Compare", "",
+  "T7", "Visualize", "",
+  "T8", "Reflect", "",
+)
+thought_log
+```
+
 
 ### Code Mapping Table
 
@@ -201,7 +222,7 @@ Trigger:
 # Source assets: tidytuesday/data/2022/2022-05-24/fifteens.csv, tidytuesday/data/2022/2022-05-24/Scrumqueens-data-2022-05-23 (1).csv, tidytuesday/data/2022/2022-05-24/Scrumqueens-data-2022-05-23.csv, tidytuesday/data/2022/2022-05-24/sevens.csv
 # Suggested verbs: mutate(), separate_rows(), pivot_longer(), left_join(), unnest()
 # analysis_tbl <- raw_tbl %>%
-#   ...
+# ...
 ```
 ## Stage 4: Compare
 
@@ -226,10 +247,10 @@ Additional guidance:
 
 # Summarize the comparison that best answers the question.
 # comparison_tbl <- analysis_tbl %>%
-#   count(category_col, sort = TRUE)   # or
-#   group_by(group_col) %>%
-#   summarise(metric = mean(value_col, na.rm = TRUE)) %>%
-#   arrange(desc(metric))
+# count(category_col, sort = TRUE) # or
+# group_by(group_col) %>%
+# summarise(metric = mean(value_col, na.rm = TRUE)) %>%
+# arrange(desc(metric))
 ```
 ## Stage 5: Visualize
 
@@ -254,13 +275,13 @@ Additional guidance:
 
 # Turn the comparison table into one clear communication plot.
 # ggplot(comparison_tbl, aes(x = fct_reorder(category, metric), y = metric)) +
-#   geom_col() +
-#   coord_flip() +
-#   labs(
-#     title = "...",
-#     subtitle = "Source: TidyTuesday 2022-05-24",
-#     x = NULL, y = NULL
-#   )
+# geom_col() +
+# coord_flip() +
+# labs(
+# title = "...",
+# subtitle = "Source: TidyTuesday 2022-05-24",
+# x = NULL, y = NULL
+# )
 ```
 ## Stage 6: Reflect
 
@@ -310,20 +331,20 @@ Trigger: group_by(cat1, cat2) + summarise + facet_wrap
 #| eval: false
 
 cross_tbl <- analysis_tbl |>
-  group_by(team_1, score_1) |>
-  summarise(
-    n      = n(),
-    median = median(row_id, na.rm = TRUE),
-    .groups = "drop"
-  ) |>
-  filter(n >= 3)
+ group_by(team_1, score_1) |>
+ summarise(
+ n = n(),
+ median = median(row_id, na.rm = TRUE),
+ .groups = "drop"
+ ) |>
+ filter(n >= 3)
 
 ggplot(cross_tbl, aes(x = fct_reorder(team_1, median), y = median, fill = score_1)) +
-  geom_col(position = "dodge") +
-  coord_flip() +
-  facet_wrap(~ score_1, scales = "free_x") +
-  labs(title = "Womens Rugby: row_id by team_1 and score_1",
-       x = NULL, y = "Median row_id")
+ geom_col(position = "dodge") +
+ coord_flip() +
+ facet_wrap(~ score_1, scales = "free_x") +
+ labs(title = "Womens Rugby: row_id by team_1 and score_1",
+ x = NULL, y = "Median row_id")
 ```
 
 ### Stage 8: Outlier Investigation
@@ -342,27 +363,27 @@ Trigger: group_by + mutate(residual = value - group_median) + slice_max(abs(resi
 #| eval: false
 
 residual_tbl <- analysis_tbl |>
-  group_by(team_1) |>
-  mutate(
-    group_median = median(row_id, na.rm = TRUE),
-    residual     = row_id - group_median
-  ) |>
-  ungroup() |>
-  arrange(desc(abs(residual)))
+ group_by(team_1) |>
+ mutate(
+ group_median = median(row_id, na.rm = TRUE),
+ residual = row_id - group_median
+ ) |>
+ ungroup() |>
+ arrange(desc(abs(residual)))
 
 # Label the top outliers
 library(ggrepel)
 
 ggplot(residual_tbl,
-       aes(x = group_median, y = row_id, label = team_1)) +
-  geom_point(alpha = 0.4) +
-  geom_text_repel(
-    data = slice_max(residual_tbl, abs(residual), n = 15),
-    size = 3, max.overlaps = 20
-  ) +
-  geom_abline(slope = 1, intercept = 0, linetype = "dashed") +
-  labs(title = "Who over- or underperforms their group median?",
-       x = "Group median row_id", y = "Observed row_id")
+ aes(x = group_median, y = row_id, label = team_1)) +
+ geom_point(alpha = 0.4) +
+ geom_text_repel(
+ data = slice_max(residual_tbl, abs(residual), n = 15),
+ size = 3, max.overlaps = 20
+ ) +
+ geom_abline(slope = 1, intercept = 0, linetype = "dashed") +
+ labs(title = "Who over- or underperforms their group median?",
+ x = "Group median row_id", y = "Observed row_id")
 ```
 
 ### Stage 9: Correlation Structure
@@ -381,13 +402,13 @@ Trigger: geom_point + geom_smooth(method = "lm") + color by group
 #| eval: false
 
 ggplot(analysis_tbl,
-       aes(x = date, y = row_id, colour = team_1)) +
-  geom_point(alpha = 0.5) +
-  geom_smooth(method = "lm", se = FALSE) +
-  scale_colour_viridis_d(end = 0.85) +
-  labs(title = "Relationship between row_id and date",
-       subtitle = "Coloured by team_1",
-       x = "date", y = "row_id")
+ aes(x = date, y = row_id, colour = team_1)) +
+ geom_point(alpha = 0.5) +
+ geom_smooth(method = "lm", se = FALSE) +
+ scale_colour_viridis_d(end = 0.85) +
+ labs(title = "Relationship between row_id and date",
+ subtitle = "Coloured by team_1",
+ x = "date", y = "row_id")
 ```
 
 ---
@@ -410,20 +431,20 @@ Trigger: lm() + broom::tidy() + coefficient plot
 #| eval: false
 
 model_tbl <- analysis_tbl |>
-  mutate(across(where(is.character), as.factor))
+ mutate(across(where(is.character), as.factor))
 
 model_fit <- lm(row_id ~ team_1 + score_1 + row_id + date, data = model_tbl)
 
 broom::tidy(model_fit, conf.int = TRUE) |>
-  filter(term != "(Intercept)") |>
-  mutate(term = fct_reorder(term, estimate)) |>
-  ggplot(aes(estimate, term,
-             xmin = conf.low, xmax = conf.high)) +
-  geom_pointrange() +
-  geom_vline(xintercept = 0, linetype = "dashed") +
-  labs(title = "What predicts row_id?",
-       subtitle = "Linear model coefficients (95% CI)",
-       x = "Estimate", y = NULL)
+ filter(term != "(Intercept)") |>
+ mutate(term = fct_reorder(term, estimate)) |>
+ ggplot(aes(estimate, term,
+ xmin = conf.low, xmax = conf.high)) +
+ geom_pointrange() +
+ geom_vline(xintercept = 0, linetype = "dashed") +
+ labs(title = "What predicts row_id?",
+ subtitle = "Linear model coefficients (95% CI)",
+ x = "Estimate", y = NULL)
 ```
 
 ### Stage 11: Residuals
@@ -444,15 +465,15 @@ Trigger: broom::augment() + geom_point(.resid) + geom_text_repel
 augmented_tbl <- broom::augment(model_fit, data = model_tbl)
 
 ggplot(augmented_tbl, aes(.fitted, .resid, label = team_1)) +
-  geom_point(alpha = 0.4) +
-  geom_smooth(method = "loess", se = FALSE, colour = "steelblue") +
-  geom_hline(yintercept = 0, linetype = "dashed") +
-  geom_text_repel(
-    data = filter(augmented_tbl, abs(.resid) > quantile(abs(.resid), 0.95)),
-    size = 3, max.overlaps = 15
-  ) +
-  labs(title = "Residuals: who over- or underperforms the model?",
-       x = "Fitted row_id", y = "Residual")
+ geom_point(alpha = 0.4) +
+ geom_smooth(method = "loess", se = FALSE, colour = "steelblue") +
+ geom_hline(yintercept = 0, linetype = "dashed") +
+ geom_text_repel(
+ data = filter(augmented_tbl, abs(.resid) > quantile(abs(.resid), 0.95)),
+ size = 3, max.overlaps = 15
+ ) +
+ labs(title = "Residuals: who over- or underperforms the model?",
+ x = "Fitted row_id", y = "Residual")
 ```
 
 ### Stage 12: Final Communication Chart
@@ -471,32 +492,32 @@ Trigger: After residuals and model are stable, step back and pick the clearest o
 #| eval: false
 
 final_tbl <- analysis_tbl |>
-  group_by(team_1) |>
-  summarise(
-    median_row_id = median(row_id, na.rm = TRUE),
-    n = n(),
-    .groups = "drop"
-  ) |>
-  filter(n >= 5) |>
-  mutate(team_1 = fct_reorder(team_1, median_row_id))
+ group_by(team_1) |>
+ summarise(
+ median_row_id = median(row_id, na.rm = TRUE),
+ n = n(),
+ .groups = "drop"
+ ) |>
+ filter(n >= 5) |>
+ mutate(team_1 = fct_reorder(team_1, median_row_id))
 
 ggplot(final_tbl,
-       aes(x = team_1, y = median_row_id,
-           fill = median_row_id)) +
-  geom_col(show.legend = FALSE) +
-  scale_fill_gradient2(
-    low = "tomato", mid = "gray90", high = "steelblue",
-    midpoint = median(analysis_tbl$row_id, na.rm = TRUE)
-  ) +
-  coord_flip() +
-  labs(
-    title    = "Womens Rugby: row_id by team_1",
-    subtitle = "Median per group | colour = above/below overall median",
-    caption  = "Source: TidyTuesday 2022-05-24",
-    x = NULL, y = "Median row_id"
-  ) +
-  theme_minimal(base_size = 13) +
-  theme(plot.title = element_text(face = "bold"))
+ aes(x = team_1, y = median_row_id,
+ fill = median_row_id)) +
+ geom_col(show.legend = FALSE) +
+ scale_fill_gradient2(
+ low = "tomato", mid = "gray90", high = "steelblue",
+ midpoint = median(analysis_tbl$row_id, na.rm = TRUE)
+ ) +
+ coord_flip() +
+ labs(
+ title = "Womens Rugby: row_id by team_1",
+ subtitle = "Median per group | colour = above/below overall median",
+ caption = "Source: TidyTuesday 2022-05-24",
+ x = NULL, y = "Median row_id"
+ ) +
+ theme_minimal(base_size = 13) +
+ theme(plot.title = element_text(face = "bold"))
 ```
 
 ### Stage 13: Knowledge Extraction
@@ -515,16 +536,16 @@ Trigger: End of episode — write the function stub before closing the session
 #| eval: false
 
 # Pattern: load -> inspect -> join ->
-#          multi-axis compare -> outlier detection -> model -> residuals -> final chart
+# multi-axis compare -> outlier detection -> model -> residuals -> final chart
 
 # Candidate helper:
 # compare_groups_by_outcome <- function(data, group_col, outcome_col,
-#                                        secondary_group = NULL,
-#                                        model = TRUE) {
-#   # 1. group_by + summarise
-#   # 2. residual calculation
-#   # 3. optional lm + broom::tidy
-#   # 4. ggplot output
+# secondary_group = NULL,
+# model = TRUE) {
+# # 1. group_by + summarise
+# # 2. residual calculation
+# # 3. optional lm + broom::tidy
+# # 4. ggplot output
 # }
 ```
 

@@ -1,0 +1,51 @@
+{
+  "queue_position": 37,
+  "folder_name": "037_board_games_predicting_ratings",
+  "transcript_title": "Analyzing board games and predicting ratings in R",
+  "function_name": "board_games_predicting_ratings",
+  "ker_status": "extracted",
+  "reproduction_status": "ready_local",
+  "source_files": {
+    "transcript_file": "raw-data/inspiration/Analyzing board games and predicting ratings in R.txt",
+    "code_file": "data-screencasts/board-games.Rmd"
+  },
+  "source_exists": {
+    "transcript": true,
+    "code": true
+  },
+  "data_source": "TidyTuesday 2019-03-12 source files",
+  "analysis_intent": "Predict or estimate outcomes in board games and predicting ratings using cleaned features, exploratory analysis, and model evaluation",
+  "analysis_type": "Predictive",
+  "pattern_signature": "load_inspect_reshape_join_tokenize_trend_model_evaluate_visualize",
+  "required_packages": [
+    "Matrix",
+    "broom",
+    "drlib",
+    "glmnet",
+    "tidytext",
+    "tidyverse"
+  ],
+  "features": {
+    "ggplot": true,
+    "joins": true,
+    "reshape": true,
+    "text_analysis": true,
+    "modeling": true,
+    "predictive": true,
+    "scraping": false,
+    "maps": false,
+    "time": true,
+    "simulation": false,
+    "multi_table": false
+  },
+  "local_data_files": [
+    "tidytuesday/data/2019/2019-03-12/board_games.csv"
+  ],
+  "reference_files": [
+    "tidytuesday/data/2019/2019-03-12/readme.md"
+  ],
+  "external_dependencies": [],
+  "execution_notes": [
+    "local TidyTuesday files were matched, so you can use `load_tidyweek_data()` and avoid a GitHub PAT"
+  ]
+}

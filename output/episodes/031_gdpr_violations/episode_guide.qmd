@@ -1,16 +1,17 @@
 ---
 title: "Reproduction Guide: Analyzing GDPR violations in R"
 subtitle: "Ordered episode output built from the control table and KER"
+author: "Andrei Stoian"
 format:
-  html:
-    theme: flatly
-    toc: true
-    toc-depth: 2
-    code-fold: show
+ html:
+ theme: flatly
+ toc: true
+ toc-depth: 2
+ code-fold: show
 execute:
-  echo: false
-  warning: false
-  message: false
+ echo: false
+ warning: false
+ message: false
 ---
 
 ## Episode Snapshot
@@ -35,7 +36,7 @@ Explore distributions, group differences, and notable patterns in GDPR violation
 
 ## Transcript Preview
 
-Analyzing GDPR violations in R David Robinson 15.9k subscribers 102 Share Save Clip 3,058 views Streamed live on 22 Apr 2020 Tidy Tuesday R Screencasts I'll analyze a dataset on GDPR violations in R, without looking at the data in advance. For the second time, I'll be analyzing the dataset as a live stream instead of prerecording it. The dataset comes from the Tidy Tuesday project: https://github.com/rfordatascience/ti... Transcript Search in vid...
+Analyzing GDPR violations in R 15.9k subscribers 102 Share Save Clip 3,058 views Streamed live on 22 Apr 2020 Tidy Tuesday R Screencasts I'll analyze a dataset on GDPR violations in R, without looking at the data in advance. For the second time, I'll be analyzing the dataset as a live stream instead of prerecording it. The dataset comes from the Tidy Tuesday project: https://github.com/rfordatascience/ti... Transcript Search in vid...
 
 ## Required Packages
 

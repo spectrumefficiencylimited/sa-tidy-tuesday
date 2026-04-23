@@ -1,16 +1,17 @@
 ---
 title: "Reproduction Guide: Analyzing penguins in R"
 subtitle: "Ordered episode output built from the control table and KER"
+author: "Andrei Stoian"
 format:
-  html:
-    theme: flatly
-    toc: true
-    toc-depth: 2
-    code-fold: show
+ html:
+ theme: flatly
+ toc: true
+ toc-depth: 2
+ code-fold: show
 execute:
-  echo: false
-  warning: false
-  message: false
+ echo: false
+ warning: false
+ message: false
 ---
 
 ## Episode Snapshot
@@ -35,7 +36,7 @@ Predict or estimate outcomes in penguins using cleaned features, exploratory ana
 
 ## Transcript Preview
 
-Analyzing penguins in R David Robinson 15.9k subscribers 106 Share Save Clip 3,832 views Streamed live on 29 Jul 2020 Tidy Tuesday R Screencasts I'll analyze a dataset on penguins in R, without looking at the dataset in advance. The dataset comes from the Tidy Tuesday project: https://github.com/rfordatascience/ti... Search in video 0:03 hi i'm dave robinson and welcome to another one of my screencasts where i'll be using rnr studio to analyze da...
+Analyzing penguins in R 15.9k subscribers 106 Share Save Clip 3,832 views Streamed live on 29 Jul 2020 Tidy Tuesday R Screencasts I'll analyze a dataset on penguins in R, without looking at the dataset in advance. The dataset comes from the Tidy Tuesday project: https://github.com/rfordatascience/ti... Search in video 0:03 hi i'm dave robinson and welcome to another one of my screencasts where i'll be using rnr studio to analyze da...
 
 ## Required Packages
 

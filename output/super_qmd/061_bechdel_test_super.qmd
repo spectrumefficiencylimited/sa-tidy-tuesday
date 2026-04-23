@@ -1,6 +1,7 @@
 ---
 title: "Super QMD: Analyzing the Bechdel test in R"
 subtitle: "Cognition-first blueprint built from the episode guide and KER"
+author: "Andrei Stoian"
 format:
   html:
     theme: flatly
@@ -34,23 +35,28 @@ The point is to preserve not only the code path, but the author's cognition:
 
 ## Episode Snapshot
 
-- `queue_position`: `61`
-- `function_name`: `bechdel_test`
-- `analysis_type`: `Predictive`
-- `pattern_signature`: `load_inspect_reshape_join_tokenize_trend_model_evaluate_visualize`
-- `data_source`: TidyTuesday 2021-03-09 dataset
-- `reproduction_status`: `ready_local`
-
 ::: {.callout-note}
 ## Analysis Intent
 Predict or estimate outcomes in the Bechdel test using cleaned features, exploratory analysis, and model evaluation
 :::
 
+| Field | Value |
+|---|---|
+| Queue | #61 |
+| Function | `bechdel_test` |
+| Analysis type | Predictive |
+| Data source | TidyTuesday 2021-03-09 dataset |
+| Status | `ready_local` |
 
+**Packages:** `broom`, `ggrepel`, `glmnet`, `scales`, `tidytext`, `tidytuesdayR`, `tidyverse`
 
-## Transcript Preview
+**Features:** ggplot, joins, reshape, text_analysis, modeling, predictive, time
 
-Analyzing the Bechdel test in R David Robinson 15.9k subscribers 67 Share Save Clip 2,139 views Streamed live on 10 Mar 2021 Tidy Tuesday R Screencasts I'll analyze a dataset about the Bechdel test for gender representation, without looking at the dataset in advance. The dataset comes from the Tidy Tuesday project: https://github.com/rfordatascience/ti... Code: https://github.com/dgrtwo/data-screen... Timestamped annotations of specific tricks, tips and tools used: https://github.com/dgrtwo/data-screen... Introduct...
+**Execution notes:**
+- interactive `View()` calls are present and should be skipped or replaced in automated runs
+- local TidyTuesday files were matched, so you can use `load_tidyweek_data()` and avoid a GitHub PAT
+
+**Analytical pattern:** `load_inspect_reshape_join_tokenize_trend_model_evaluate_visualize`
 
 ## Cognitive Signature
 
@@ -110,6 +116,24 @@ names(tuesdata)
 - `T6 | Compare | Move from descriptive patterns into statistical or predictive modeling once the feature space is ready. | Modeling functions and evaluation code`
 - `T7 | Visualize | Turn the cleaned summaries into interpretable visual comparisons and iterate toward the clearest view. | ggplot workflow`
 - `T8 | Reflect | Identify reusable workflow pieces that can transfer to future datasets with a similar shape or question. | End-state of the analysis pattern`
+
+```{r}
+#| label: thought_execution_log
+#| eval: false
+
+# Fill in `finding` after completing each stage.
+thought_log <- tibble::tribble(
+  ~step,  ~move,        ~finding,
+  "T1", "Context",   "",
+  "T2", "Inspect",   "",
+  "T4", "Transform", "",
+  "T5", "Compare",   "",
+  "T6", "Compare",   "",
+  "T7", "Visualize", "",
+  "T8", "Reflect",   "",
+)
+thought_log
+```
 
 ### Code Mapping Table
 
@@ -200,7 +224,7 @@ Trigger:
 # Source assets: tidytuesday/data/2021/2021-03-09/movies.csv, tidytuesday/data/2021/2021-03-09/raw_bechdel.csv
 # Suggested verbs: mutate(), separate_rows(), pivot_longer(), left_join(), unnest()
 # analysis_tbl <- raw_tbl %>%
-#   ...
+# ...
 ```
 ## Stage 4: Compare
 
@@ -226,9 +250,9 @@ Additional guidance:
 
 # Summarize the comparison that best answers the question.
 # comparison_tbl <- analysis_tbl %>%
-#   group_by(...) %>%
-#   summarise(...) %>%
-#   arrange(desc(...))
+# group_by(...) %>%
+# summarise(...) %>%
+# arrange(desc(...))
 ```
 ## Stage 5: Compare
 
@@ -254,9 +278,9 @@ Additional guidance:
 
 # Summarize the comparison that best answers the question.
 # comparison_tbl <- analysis_tbl %>%
-#   group_by(...) %>%
-#   summarise(...) %>%
-#   arrange(desc(...))
+# group_by(...) %>%
+# summarise(...) %>%
+# arrange(desc(...))
 ```
 ## Stage 6: Visualize
 
@@ -281,8 +305,8 @@ Additional guidance:
 
 # Turn the comparison table into one clear communication plot.
 # ggplot(comparison_tbl, aes(...)) +
-#   geom_col() +
-#   labs(title = ..., subtitle = ...)
+# geom_col() +
+# labs(title = ..., subtitle = ...)
 ```
 ## Stage 7: Reflect
 

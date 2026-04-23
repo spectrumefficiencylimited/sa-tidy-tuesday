@@ -1,16 +1,17 @@
 ---
 title: "Reproduction Guide: Analyzing African-American achievements in R"
 subtitle: "Ordered episode output built from the control table and KER"
+author: "Andrei Stoian"
 format:
-  html:
-    theme: flatly
-    toc: true
-    toc-depth: 2
-    code-fold: show
+ html:
+ theme: flatly
+ toc: true
+ toc-depth: 2
+ code-fold: show
 execute:
-  echo: false
-  warning: false
-  message: false
+ echo: false
+ warning: false
+ message: false
 ---
 
 ## Episode Snapshot
@@ -35,7 +36,7 @@ Explore distributions, group differences, and notable patterns in African-Americ
 
 ## Transcript Preview
 
-Analyzing African-American achievements in R David Robinson 15.9k subscribers 85 Share Save Clip 3,544 views Streamed live on 10 Jun 2020 Tidy Tuesday R Screencasts I'll analyze a dataset on African-American achievements in R, without looking at the dataset in advance. The dataset comes from the Tidy Tuesday project: https://github.com/rfordatascience/ti... Transcript 0:09 hi I'm Dave Robinson what would you another one my screencast so I'll be u...
+Analyzing African-American achievements in R 15.9k subscribers 85 Share Save Clip 3,544 views Streamed live on 10 Jun 2020 Tidy Tuesday R Screencasts I'll analyze a dataset on African-American achievements in R, without looking at the dataset in advance. The dataset comes from the Tidy Tuesday project: https://github.com/rfordatascience/ti... Transcript 0:09 hi I'm Dave Robinson what would you another one my screencast so I'll be u...
 
 ## Required Packages
 

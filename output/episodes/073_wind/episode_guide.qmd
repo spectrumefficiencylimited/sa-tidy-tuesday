@@ -1,16 +1,17 @@
 ---
 title: "Reproduction Guide: Analyzing US wind data in R"
 subtitle: "Ordered episode output built from the control table and KER"
+author: "Andrei Stoian"
 format:
-  html:
-    theme: flatly
-    toc: true
-    toc-depth: 2
-    code-fold: show
+ html:
+ theme: flatly
+ toc: true
+ toc-depth: 2
+ code-fold: show
 execute:
-  echo: false
-  warning: false
-  message: false
+ echo: false
+ warning: false
+ message: false
 ---
 
 ## Episode Snapshot
@@ -35,7 +36,7 @@ Explore distributions, group differences, and notable patterns in US wind throug
 
 ## Transcript Preview
 
-analyzing US wind data in R David Robinson 15.9k subscribers 160 Share 6,924 views 7 Nov 2018 Tidy Tuesday R Screencasts I analyze a dataset of wind turbines in the US as an example of exploratory data analysis in R, performed without looking at the data in advance. This is part of the #tidytuesday project: https://github.com/rfordatascience/ti... Introduction 0:00 hi I'm Dave Robinson chief data scientist at data camp and today I'm 0:06 gonna be...
+analyzing US wind data in R 15.9k subscribers 160 Share 6,924 views 7 Nov 2018 Tidy Tuesday R Screencasts I analyze a dataset of wind turbines in the US as an example of exploratory data analysis in R, performed without looking at the data in advance. This is part of the #tidytuesday project: https://github.com/rfordatascience/ti... Introduction 0:00 hi I'm Dave Robinson chief data scientist at data camp and today I'm 0:06 gonna be...
 
 ## Required Packages
 

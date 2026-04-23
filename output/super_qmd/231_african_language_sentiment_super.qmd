@@ -1,6 +1,7 @@
 ---
 title: "Super QMD: Analyzing African Language Sentiment in R"
 subtitle: "Cognition-first blueprint built from the episode guide and KER"
+author: "Andrei Stoian"
 format:
   html:
     theme: flatly
@@ -34,23 +35,24 @@ The point is to preserve not only the code path, but the author's cognition:
 
 ## Episode Snapshot
 
-- `queue_position`: `231`
-- `function_name`: `african_language_sentiment`
-- `analysis_type`: `Text`
-- `pattern_signature`: `load_inspect_tokenize_trend_compare_visualize`
-- `data_source`: TidyTuesday 2023-02-28
-- `reproduction_status`: `needs_mapping`
-
 ::: {.callout-note}
 ## Analysis Intent
 Explore and compare language patterns in African Language Sentiment using tokenization, grouped counts, and discriminative text analysis
 :::
 
+| Field | Value |
+|---|---|
+| Queue | #231 |
+| Function | `african_language_sentiment` |
+| Analysis type | Text |
+| Data source | TidyTuesday 2023-02-28 |
+| Status | `needs_mapping` |
+
+**Analytical pattern:** `load_inspect_tokenize_trend_compare_visualize`
 
 
-## Transcript Preview
 
-Analyzing African Language Sentiment in R David Robinson 15.9k subscribers 72 Share Save Clip 4,521 views Streamed live on 2023-02-28 Tidy Tuesday R Screencasts I'll analyze a dataset about african language sentiment without looking at the dataset in advance. The dataset comes from the Tidy Tuesday ...
+
 
 ## Cognitive Signature
 
@@ -96,10 +98,10 @@ source("R/screencast_helpers.R")
 tuesdata <- load_tidyweek_data("2023-02-28")
 names(tuesdata)
 
-afrisenti <- tuesdata$afrisenti  # or read from local path
-country_regions <- tuesdata$country_regions  # or read from local path
-language_countries <- tuesdata$language_countries  # or read from local path
-language_scripts <- tuesdata$language_scripts  # or read from local path
+afrisenti <- tuesdata$afrisenti # or read from local path
+country_regions <- tuesdata$country_regions # or read from local path
+language_countries <- tuesdata$language_countries # or read from local path
+language_scripts <- tuesdata$language_scripts # or read from local path
 ```
 
 ## Thought -> Code -> Data Bridge
@@ -114,6 +116,26 @@ language_scripts <- tuesdata$language_scripts  # or read from local path
 - `T6 | Compare | Summarize groups in a way that reveals differences, rankings, or trends. | group_by + summarise + arrange pattern`
 - `T7 | Visualize | Turn the cleaned summaries into interpretable visual comparisons and iterate toward the clearest view. | ggplot workflow`
 - `T8 | Reflect | Identify reusable workflow pieces that can transfer to future datasets with a similar shape or question. | End-state of the analysis pattern`
+
+```{r}
+#| label: thought_execution_log
+#| eval: false
+
+# Fill in `finding` after completing each stage.
+thought_log <- tibble::tribble(
+  ~step,  ~move,        ~finding,
+  "T1", "Context", "",
+  "T2", "Inspect", "",
+  "T3", "Transform", "",
+  "T4", "Trend", "",
+  "T4", "Tokenize", "",
+  "T6", "Compare", "",
+  "T7", "Visualize", "",
+  "T8", "Reflect", "",
+)
+thought_log
+```
+
 
 ### Code Mapping Table
 
@@ -205,7 +227,7 @@ Trigger:
 # Source assets: tidytuesday/data/2023/2023-02-28/afrisenti.csv, tidytuesday/data/2023/2023-02-28/country_regions.csv, tidytuesday/data/2023/2023-02-28/language_countries.csv, tidytuesday/data/2023/2023-02-28/language_scripts.csv, tidytuesday/data/2023/2023-02-28/languages.csv
 # Suggested verbs: mutate(), separate_rows(), pivot_longer(), left_join(), unnest()
 # analysis_tbl <- raw_tbl %>%
-#   ...
+# ...
 ```
 ## Stage 4: Compare
 
@@ -230,10 +252,10 @@ Additional guidance:
 
 # Summarize the comparison that best answers the question.
 # comparison_tbl <- analysis_tbl %>%
-#   count(category_col, sort = TRUE)   # or
-#   group_by(group_col) %>%
-#   summarise(metric = mean(value_col, na.rm = TRUE)) %>%
-#   arrange(desc(metric))
+# count(category_col, sort = TRUE) # or
+# group_by(group_col) %>%
+# summarise(metric = mean(value_col, na.rm = TRUE)) %>%
+# arrange(desc(metric))
 ```
 ## Stage 5: Visualize
 
@@ -258,13 +280,13 @@ Additional guidance:
 
 # Turn the comparison table into one clear communication plot.
 # ggplot(comparison_tbl, aes(x = fct_reorder(category, metric), y = metric)) +
-#   geom_col() +
-#   coord_flip() +
-#   labs(
-#     title = "...",
-#     subtitle = "Source: TidyTuesday 2023-02-28",
-#     x = NULL, y = NULL
-#   )
+# geom_col() +
+# coord_flip() +
+# labs(
+# title = "...",
+# subtitle = "Source: TidyTuesday 2023-02-28",
+# x = NULL, y = NULL
+# )
 ```
 ## Stage 6: Reflect
 
@@ -314,14 +336,14 @@ Trigger: unnest_tokens / tidytext workflow
 library(tidytext)
 
 tokens_tbl <- analysis_tbl |>
-  unnest_tokens(word, text_col) |>
-  anti_join(stop_words, by = "word") |>
-  count(language_iso_code, word, sort = TRUE)
+ unnest_tokens(word, text_col) |>
+ anti_join(stop_words, by = "word") |>
+ count(language_iso_code, word, sort = TRUE)
 
 # tf-idf
 tokens_tbl |>
-  bind_tf_idf(word, language_iso_code, n) |>
-  arrange(desc(tf_idf))
+ bind_tf_idf(word, language_iso_code, n) |>
+ arrange(desc(tf_idf))
 ```
 
 ### Stage 8: Discriminative Vocabulary
@@ -342,15 +364,15 @@ Trigger: bind_log_odds or bind_tf_idf
 library(tidylo)
 
 tokens_tbl |>
-  bind_log_odds(language_iso_code, word, n) |>
-  group_by(language_iso_code) |>
-  slice_max(log_odds_weighted, n = 10) |>
-  ggplot(aes(log_odds_weighted, fct_reorder(word, log_odds_weighted), fill = language_iso_code)) +
-  geom_col(show.legend = FALSE) +
-  facet_wrap(~ language_iso_code, scales = "free_y") +
-  labs(title = "Most characteristic words per group",
-       subtitle = "Log-odds weighted",
-       x = "Log-odds", y = NULL)
+ bind_log_odds(language_iso_code, word, n) |>
+ group_by(language_iso_code) |>
+ slice_max(log_odds_weighted, n = 10) |>
+ ggplot(aes(log_odds_weighted, fct_reorder(word, log_odds_weighted), fill = language_iso_code)) +
+ geom_col(show.legend = FALSE) +
+ facet_wrap(~ language_iso_code, scales = "free_y") +
+ labs(title = "Most characteristic words per group",
+ subtitle = "Log-odds weighted",
+ x = "Log-odds", y = NULL)
 ```
 
 ---
@@ -373,20 +395,20 @@ Trigger: lm() + broom::tidy() + coefficient plot
 #| eval: false
 
 model_tbl <- analysis_tbl |>
-  mutate(across(where(is.character), as.factor))
+ mutate(across(where(is.character), as.factor))
 
 model_fit <- lm(value ~ language_iso_code + tweet, data = model_tbl)
 
 broom::tidy(model_fit, conf.int = TRUE) |>
-  filter(term != "(Intercept)") |>
-  mutate(term = fct_reorder(term, estimate)) |>
-  ggplot(aes(estimate, term,
-             xmin = conf.low, xmax = conf.high)) +
-  geom_pointrange() +
-  geom_vline(xintercept = 0, linetype = "dashed") +
-  labs(title = "What predicts value?",
-       subtitle = "Linear model coefficients (95% CI)",
-       x = "Estimate", y = NULL)
+ filter(term != "(Intercept)") |>
+ mutate(term = fct_reorder(term, estimate)) |>
+ ggplot(aes(estimate, term,
+ xmin = conf.low, xmax = conf.high)) +
+ geom_pointrange() +
+ geom_vline(xintercept = 0, linetype = "dashed") +
+ labs(title = "What predicts value?",
+ subtitle = "Linear model coefficients (95% CI)",
+ x = "Estimate", y = NULL)
 ```
 
 ### Stage 10: Residuals
@@ -407,15 +429,15 @@ Trigger: broom::augment() + geom_point(.resid) + geom_text_repel
 augmented_tbl <- broom::augment(model_fit, data = model_tbl)
 
 ggplot(augmented_tbl, aes(.fitted, .resid, label = language_iso_code)) +
-  geom_point(alpha = 0.4) +
-  geom_smooth(method = "loess", se = FALSE, colour = "steelblue") +
-  geom_hline(yintercept = 0, linetype = "dashed") +
-  geom_text_repel(
-    data = filter(augmented_tbl, abs(.resid) > quantile(abs(.resid), 0.95)),
-    size = 3, max.overlaps = 15
-  ) +
-  labs(title = "Residuals: who over- or underperforms the model?",
-       x = "Fitted value", y = "Residual")
+ geom_point(alpha = 0.4) +
+ geom_smooth(method = "loess", se = FALSE, colour = "steelblue") +
+ geom_hline(yintercept = 0, linetype = "dashed") +
+ geom_text_repel(
+ data = filter(augmented_tbl, abs(.resid) > quantile(abs(.resid), 0.95)),
+ size = 3, max.overlaps = 15
+ ) +
+ labs(title = "Residuals: who over- or underperforms the model?",
+ x = "Fitted value", y = "Residual")
 ```
 
 ### Stage 11: Final Communication Chart
@@ -434,32 +456,32 @@ Trigger: After residuals and model are stable, step back and pick the clearest o
 #| eval: false
 
 final_tbl <- analysis_tbl |>
-  group_by(language_iso_code) |>
-  summarise(
-    median_value = median(value, na.rm = TRUE),
-    n = n(),
-    .groups = "drop"
-  ) |>
-  filter(n >= 5) |>
-  mutate(language_iso_code = fct_reorder(language_iso_code, median_value))
+ group_by(language_iso_code) |>
+ summarise(
+ median_value = median(value, na.rm = TRUE),
+ n = n(),
+ .groups = "drop"
+ ) |>
+ filter(n >= 5) |>
+ mutate(language_iso_code = fct_reorder(language_iso_code, median_value))
 
 ggplot(final_tbl,
-       aes(x = language_iso_code, y = median_value,
-           fill = median_value)) +
-  geom_col(show.legend = FALSE) +
-  scale_fill_gradient2(
-    low = "tomato", mid = "gray90", high = "steelblue",
-    midpoint = median(analysis_tbl$value, na.rm = TRUE)
-  ) +
-  coord_flip() +
-  labs(
-    title    = "African Language Sentiment: value by language_iso_code",
-    subtitle = "Median per group | colour = above/below overall median",
-    caption  = "Source: TidyTuesday 2023-02-28",
-    x = NULL, y = "Median value"
-  ) +
-  theme_minimal(base_size = 13) +
-  theme(plot.title = element_text(face = "bold"))
+ aes(x = language_iso_code, y = median_value,
+ fill = median_value)) +
+ geom_col(show.legend = FALSE) +
+ scale_fill_gradient2(
+ low = "tomato", mid = "gray90", high = "steelblue",
+ midpoint = median(analysis_tbl$value, na.rm = TRUE)
+ ) +
+ coord_flip() +
+ labs(
+ title = "African Language Sentiment: value by language_iso_code",
+ subtitle = "Median per group | colour = above/below overall median",
+ caption = "Source: TidyTuesday 2023-02-28",
+ x = NULL, y = "Median value"
+ ) +
+ theme_minimal(base_size = 13) +
+ theme(plot.title = element_text(face = "bold"))
 ```
 
 ### Stage 12: Knowledge Extraction
@@ -478,16 +500,16 @@ Trigger: End of episode — write the function stub before closing the session
 #| eval: false
 
 # Pattern: load -> inspect -> join ->
-#          multi-axis compare -> outlier detection -> model -> residuals -> final chart
+# multi-axis compare -> outlier detection -> model -> residuals -> final chart
 
 # Candidate helper:
 # compare_groups_by_outcome <- function(data, group_col, outcome_col,
-#                                        secondary_group = NULL,
-#                                        model = TRUE) {
-#   # 1. group_by + summarise
-#   # 2. residual calculation
-#   # 3. optional lm + broom::tidy
-#   # 4. ggplot output
+# secondary_group = NULL,
+# model = TRUE) {
+# # 1. group_by + summarise
+# # 2. residual calculation
+# # 3. optional lm + broom::tidy
+# # 4. ggplot output
 # }
 ```
 

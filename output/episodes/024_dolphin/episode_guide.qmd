@@ -1,16 +1,17 @@
 ---
 title: "Reproduction Guide: Analyzing dolphin data in R"
 subtitle: "Ordered episode output built from the control table and KER"
+author: "Andrei Stoian"
 format:
-  html:
-    theme: flatly
-    toc: true
-    toc-depth: 2
-    code-fold: show
+ html:
+ theme: flatly
+ toc: true
+ toc-depth: 2
+ code-fold: show
 execute:
-  echo: false
-  warning: false
-  message: false
+ echo: false
+ warning: false
+ message: false
 ---
 
 ## Episode Snapshot
@@ -35,7 +36,7 @@ Explore, explain, and model patterns in dolphin using engineered features and co
 
 ## Transcript Preview
 
-Analyzing dolphin data in R David Robinson 15.9k subscribers 68 Share Save Clip 3,042 views 19 Dec 2018 Tidy Tuesday R Screencasts I analyze a dataset about whales and dolphins as an example of exploratory data analysis in R, performed without looking at the data in advance. It includes fuzzy matching of strings with the fuzzyjoin package and a tidy approach to survival analysis. This is part of the #tidytuesday project: https://github.com/rforda...
+Analyzing dolphin data in R 15.9k subscribers 68 Share Save Clip 3,042 views 19 Dec 2018 Tidy Tuesday R Screencasts I analyze a dataset about whales and dolphins as an example of exploratory data analysis in R, performed without looking at the data in advance. It includes fuzzy matching of strings with the fuzzyjoin package and a tidy approach to survival analysis. This is part of the #tidytuesday project: https://github.com/rforda...
 
 ## Required Packages
 

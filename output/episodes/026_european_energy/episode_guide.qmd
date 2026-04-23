@@ -1,16 +1,17 @@
 ---
 title: "Reproduction Guide: Analyzing European energy in R"
 subtitle: "Ordered episode output built from the control table and KER"
+author: "Andrei Stoian"
 format:
-  html:
-    theme: flatly
-    toc: true
-    toc-depth: 2
-    code-fold: show
+ html:
+ theme: flatly
+ toc: true
+ toc-depth: 2
+ code-fold: show
 execute:
-  echo: false
-  warning: false
-  message: false
+ echo: false
+ warning: false
+ message: false
 ---
 
 ## Episode Snapshot
@@ -35,7 +36,7 @@ Explore and compare language patterns in European energy using tokenization, gro
 
 ## Transcript Preview
 
-Analyzing European energy in R David Robinson 15.9k subscribers 116 Share Save Clip 3,935 views Streamed live on 5 Aug 2020 Tidy Tuesday R Screencasts I'll analyze a dataset on European energy in R, without looking at the dataset in advance. The dataset comes from the Tidy Tuesday project: https://github.com/rfordatascience/ti... Search in video 0:04 hi i'm dave robinson and welcome to another screencast i'll be using r and r studio 0:09 to analy...
+Analyzing European energy in R 15.9k subscribers 116 Share Save Clip 3,935 views Streamed live on 5 Aug 2020 Tidy Tuesday R Screencasts I'll analyze a dataset on European energy in R, without looking at the dataset in advance. The dataset comes from the Tidy Tuesday project: https://github.com/rfordatascience/ti... Search in video 0:04 hi i'm dave robinson and welcome to another screencast i'll be using r and r studio 0:09 to analy...
 
 ## Required Packages
 

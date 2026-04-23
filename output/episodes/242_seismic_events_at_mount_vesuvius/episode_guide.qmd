@@ -1,0 +1,107 @@
+---
+title: "Reproduction Guide: Analyzing Seismic Events at Mount Vesuvius in R"
+subtitle: "Ordered episode output built from the control table and KER"
+author: "Andrei Stoian"
+format:
+ html:
+ theme: flatly
+ toc: true
+ toc-depth: 2
+ code-fold: show
+execute:
+ echo: false
+ warning: false
+ message: false
+---
+
+## Episode Snapshot
+
+- `function_name`: `seismic_events_at_mount_vesuvius`
+- `ker_status`: `needs_mapping`
+- `reproduction_status`: `blocked_needs_mapping`
+- `transcript_file`: `raw-data/inspiration/Analyzing Seismic Events at Mount Vesuvius in R.txt`
+- `code_file`: `(missing)`
+- `data_source`: TidyTuesday 2025-05-13
+- `analysis_type`: `EDA`
+- `pattern_signature`: `load_inspect_compare`
+
+::: {.callout-note}
+## Why this episode
+This output was generated in control-table order so we can reproduce the repository one episode at a time from the top of the queue.
+
+The KER classifies this episode as **EDA** and the main intent is:
+
+Explore distributions, group differences, and notable patterns in Seismic Events at Mount Vesuvius through cleaning, summarization, and visualization
+:::
+
+## Transcript Preview
+
+Analyzing Seismic Events at Mount Vesuvius in R 15.9k subscribers 72 Share Save Clip 4,521 views Streamed live on 2025-05-13 Tidy Tuesday R Screencasts I'll analyze a dataset about seismic events at mount vesuvius without looking at the dataset in advance. The dataset comes from the Tidy Tuesday project: https://github.com/rfordatascience/tidytuesday/ Code: https://github.com/dgrtwo/data-screencasts Search in video 0:03 hi i'm dave...
+
+## Required Packages
+
+- No explicit `library()` calls were detected.
+
+## Local Data Assets
+
+- No local dataset files were resolved automatically.
+
+## Nearby Reference Files
+
+- No nearby readme or asset files were captured.
+
+## External Dependencies
+
+- No external dependencies were detected from the code scan.
+
+## Execution Notes
+
+- No special interactive execution notes were detected.
+
+## Extracted Code Chunks
+
+- No executable R chunks were extracted.
+
+## Thought Process Map
+
+- `T1 | Context | Frame the episode as exploratory analysis of Seismic Events at Mount Vesuvius with limited advance knowledge of the data. | Transcript title and opening context`
+- `T2 | Inspect | Load the data, inspect table shape, and identify the main entities, measures, and comparison axes. | Initial data load and early counts or prints`
+- `T6 | Compare | Summarize group differences, rates, rankings, or trajectories to surface the main story in the data. | Grouped summaries and comparative plots`
+- `T7 | Visualize | Turn the cleaned summaries into interpretable visual comparisons and iterate toward the clearest view. | ggplot workflow`
+- `T8 | Reflect | Identify reusable workflow pieces that can transfer to future datasets with a similar shape or question. | End-state of the analysis pattern`
+
+## Data Transformation Flow
+
+- `Raw | Imported source tables or files | Load source data into tibbles or lists | Raw episode objects | Establish the starting analysis surface`
+- `Raw -> Clean | Raw source tables | Filter, rename, and derive analysis columns | Cleaned table | Make the data comparable and plot-ready`
+- `Clean -> Analytical | Cleaned table | Group, summarize, rank, or compare entities | Summary tables or rate calculations | Surface the core analytical story`
+- `Analytical -> Visual | Summary or model outputs | Reorder factors and prepare plotting fields | Plot-ready table | Turn the analytical result into an interpretable chart`
+
+## Reusable Patterns
+
+- `inspect_source_schema | Inspect source tables, field meanings, and likely comparison axes | Raw dataset or dataset list | Initial analysis plan | Y`
+- `plot_comparative_story | Reorder entities and visualize the main comparison cleanly | Summary table or model output | Communication-ready plot | Y`
+
+## Function Candidates
+
+- `plot_comparative_story(data, x_col, y_col, group_col = NULL)`
+
+## Reproduction Steps
+
+- 1. Start from the control-table metadata and confirm the transcript, code file, and function identity match this episode.
+- 2. Read the transcript first to understand the story, then inspect the source `.Rmd` to locate the main transformation and plotting chunks.
+- 3. Rebuild the source data from the code path because no local dataset files were confidently matched by the builder.
+- 4. Run the extracted episode script in chunk order and compare the resulting tables and plots to the original screencast intent.
+- 5. Use the KER thought process map and adaptation plan in this folder when rewriting the episode into a cleaner reusable analysis.
+- 6. Mark the episode as implemented or reviewed only after the reproduced workflow runs cleanly in the local environment.
+
+## Adaptation Plan
+
+- `1 | inspect_source_schema | Start by mapping entities, measures, and likely comparison axes before transforming anything`
+- `8 | plot_comparative_story | Choose the clearest visual comparison once the analytical table is ready`
+
+## Source Artifacts in This Folder
+
+- `episode_guide.qmd`: this guided reproduction document
+- `episode_source.R`: R code extracted from the original episode `.Rmd`
+- `episode_manifest.json`: machine-readable metadata for automation and checks

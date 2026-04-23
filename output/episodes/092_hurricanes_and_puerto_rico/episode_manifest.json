@@ -1,0 +1,38 @@
+{
+  "queue_position": 92,
+  "folder_name": "092_hurricanes_and_puerto_rico",
+  "transcript_title": "Analyzing Hurricanes and Puerto Rico in R",
+  "function_name": "hurricanes_and_puerto_rico",
+  "ker_status": "needs_mapping",
+  "reproduction_status": "blocked_needs_mapping",
+  "source_files": {
+    "transcript_file": "",
+    "code_file": ""
+  },
+  "source_exists": {
+    "transcript": false,
+    "code": false
+  },
+  "data_source": "TidyTuesday 2018-06-19",
+  "analysis_intent": "Explore distributions, group differences, and notable patterns in Hurricanes and Puerto Rico through cleaning, summarization, and visualization",
+  "analysis_type": "EDA",
+  "pattern_signature": "load_inspect_compare",
+  "required_packages": [],
+  "features": {
+    "ggplot": false,
+    "joins": false,
+    "reshape": false,
+    "text_analysis": false,
+    "modeling": false,
+    "predictive": false,
+    "scraping": false,
+    "maps": false,
+    "time": false,
+    "simulation": false,
+    "multi_table": false
+  },
+  "local_data_files": [],
+  "reference_files": [],
+  "external_dependencies": [],
+  "execution_notes": []
+}

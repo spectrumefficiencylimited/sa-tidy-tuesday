@@ -1,0 +1,53 @@
+{
+  "queue_position": 116,
+  "folder_name": "116_gdpr_violations",
+  "transcript_title": "Analyzing GDPR violations in R",
+  "function_name": "gdpr_violations",
+  "ker_status": "extracted",
+  "reproduction_status": "ready_local",
+  "source_files": {
+    "transcript_file": "raw-data/inspiration/Analyzing GDPR violations in R.txt",
+    "code_file": "data-screencasts/gdpr.Rmd"
+  },
+  "source_exists": {
+    "transcript": true,
+    "code": true
+  },
+  "data_source": "TidyTuesday 2020-04-21 dataset",
+  "analysis_intent": "Explore distributions, group differences, and notable patterns in GDPR violations through cleaning, summarization, and visualization",
+  "analysis_type": "EDA",
+  "pattern_signature": "load_inspect_reshape_join_trend_compare_visualize",
+  "required_packages": [
+    "lubridate",
+    "scales",
+    "shinymetrics",
+    "tidymetrics",
+    "tidyverse"
+  ],
+  "features": {
+    "ggplot": true,
+    "joins": true,
+    "reshape": true,
+    "text_analysis": false,
+    "modeling": false,
+    "predictive": false,
+    "scraping": false,
+    "maps": false,
+    "time": true,
+    "simulation": false,
+    "multi_table": false
+  },
+  "local_data_files": [
+    "tidytuesday/data/2020/2020-04-21/gdpr_text.tsv",
+    "tidytuesday/data/2020/2020-04-21/gdpr_violations.tsv"
+  ],
+  "reference_files": [
+    "tidytuesday/data/2020/2020-04-21/gdpr_violations.tsv",
+    "tidytuesday/data/2020/2020-04-21/readme.md",
+    "tidytuesday/data/2020/2020-04-21/gdpr_text.tsv"
+  ],
+  "external_dependencies": [],
+  "execution_notes": [
+    "local TidyTuesday files were matched, so you can use `load_tidyweek_data()` and avoid a GitHub PAT"
+  ]
+}

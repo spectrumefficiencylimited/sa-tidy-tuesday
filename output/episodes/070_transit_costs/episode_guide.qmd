@@ -1,16 +1,17 @@
 ---
 title: "Reproduction Guide: Analyzing transit costs in R"
 subtitle: "Ordered episode output built from the control table and KER"
+author: "Andrei Stoian"
 format:
-  html:
-    theme: flatly
-    toc: true
-    toc-depth: 2
-    code-fold: show
+ html:
+ theme: flatly
+ toc: true
+ toc-depth: 2
+ code-fold: show
 execute:
-  echo: false
-  warning: false
-  message: false
+ echo: false
+ warning: false
+ message: false
 ---
 
 ## Episode Snapshot
@@ -35,7 +36,7 @@ Explore distributions, group differences, and notable patterns in transit costs 
 
 ## Transcript Preview
 
-Analyzing transit costs in R David Robinson 15.9k subscribers 110 Share Save Clip 3,068 views Streamed live on 6 Jan 2021 Tidy Tuesday R Screencasts I'll analyze a dataset about transit costs, without looking at the dataset in advance. The dataset comes from the Tidy Tuesday project: https://github.com/rfordatascience/ti... Code: https://github.com/dgrtwo/data-screen... Timestamped annotations of specific tricks, tips and tools used: https://gith...
+Analyzing transit costs in R 15.9k subscribers 110 Share Save Clip 3,068 views Streamed live on 6 Jan 2021 Tidy Tuesday R Screencasts I'll analyze a dataset about transit costs, without looking at the dataset in advance. The dataset comes from the Tidy Tuesday project: https://github.com/rfordatascience/ti... Code: https://github.com/dgrtwo/data-screen... Timestamped annotations of specific tricks, tips and tools used: https://gith...
 
 ## Required Packages
 

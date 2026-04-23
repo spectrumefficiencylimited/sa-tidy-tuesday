@@ -1,16 +1,17 @@
 ---
 title: "Reproduction Guide: Analyzing Ninja Warrior in R"
 subtitle: "Ordered episode output built from the control table and KER"
+author: "Andrei Stoian"
 format:
-  html:
-    theme: flatly
-    toc: true
-    toc-depth: 2
-    code-fold: show
+ html:
+ theme: flatly
+ toc: true
+ toc-depth: 2
+ code-fold: show
 execute:
-  echo: false
-  warning: false
-  message: false
+ echo: false
+ warning: false
+ message: false
 ---
 
 ## Episode Snapshot
@@ -35,7 +36,7 @@ Explore and compare language patterns in Ninja Warrior using tokenization, group
 
 ## Transcript Preview
 
-Analyzing Ninja Warrior in R David Robinson 15.9k subscribers 64 Share Save Clip 2,077 views Streamed live on 16 Dec 2020 Tidy Tuesday R Screencasts I'll analyze a dataset about the Ninja Warrior obstacle course TV series, without looking at the dataset in advance. The dataset comes from the Tidy Tuesday project: https://github.com/rfordatascience/ti... Code: https://github.com/dgrtwo/data-screen... Timestamped annotations of specific tricks, tip...
+Analyzing Ninja Warrior in R 15.9k subscribers 64 Share Save Clip 2,077 views Streamed live on 16 Dec 2020 Tidy Tuesday R Screencasts I'll analyze a dataset about the Ninja Warrior obstacle course TV series, without looking at the dataset in advance. The dataset comes from the Tidy Tuesday project: https://github.com/rfordatascience/ti... Code: https://github.com/dgrtwo/data-screen... Timestamped annotations of specific tricks, tip...
 
 ## Required Packages
 

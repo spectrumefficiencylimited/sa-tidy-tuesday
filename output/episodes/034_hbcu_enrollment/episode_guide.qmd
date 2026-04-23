@@ -1,16 +1,17 @@
 ---
 title: "Reproduction Guide: Analyzing HBCU enrollment in R"
 subtitle: "Ordered episode output built from the control table and KER"
+author: "Andrei Stoian"
 format:
-  html:
-    theme: flatly
-    toc: true
-    toc-depth: 2
-    code-fold: show
+ html:
+ theme: flatly
+ toc: true
+ toc-depth: 2
+ code-fold: show
 execute:
-  echo: false
-  warning: false
-  message: false
+ echo: false
+ warning: false
+ message: false
 ---
 
 ## Episode Snapshot
@@ -35,7 +36,7 @@ Explore distributions, group differences, and notable patterns in HBCU enrollmen
 
 ## Transcript Preview
 
-Analyzing HBCU enrollment in R David Robinson 15.9k subscribers 74 Share Save Clip 2,759 views Streamed live on 3 Feb 2021 Tidy Tuesday R Screencasts I'll analyze a dataset about enrollment in historically Black colleges & universities (HCBUs), without looking at the dataset in advance. The dataset comes from the Tidy Tuesday project: https://github.com/rfordatascience/ti... Code: https://github.com/dgrtwo/data-screen... Timestamped annotations o...
+Analyzing HBCU enrollment in R 15.9k subscribers 74 Share Save Clip 2,759 views Streamed live on 3 Feb 2021 Tidy Tuesday R Screencasts I'll analyze a dataset about enrollment in historically Black colleges & universities (HCBUs), without looking at the dataset in advance. The dataset comes from the Tidy Tuesday project: https://github.com/rfordatascience/ti... Code: https://github.com/dgrtwo/data-screen... Timestamped annotations o...
 
 ## Required Packages
 

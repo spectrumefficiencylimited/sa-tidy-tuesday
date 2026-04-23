@@ -1,16 +1,17 @@
 ---
 title: "Reproduction Guide: Analyzing data on R downloads"
 subtitle: "Ordered episode output built from the control table and KER"
+author: "Andrei Stoian"
 format:
-  html:
-    theme: flatly
-    toc: true
-    toc-depth: 2
-    code-fold: show
+ html:
+ theme: flatly
+ toc: true
+ toc-depth: 2
+ code-fold: show
 execute:
-  echo: false
-  warning: false
-  message: false
+ echo: false
+ warning: false
+ message: false
 ---
 
 ## Episode Snapshot
@@ -35,7 +36,7 @@ Explore distributions, group differences, and notable patterns in data on R down
 
 ## Transcript Preview
 
-analyzing data on R downloads David Robinson 15.9k subscribers 95 Share 4,086 views 31 Oct 2018 Tidy Tuesday R Screencasts I analyze a dataset of R and R package downloads as an example of exploratory data analysis in R, performed without looking at the data in advance. This is part of the #tidytuesday project: https://github.com/rfordatascience/ti... Transcript Search in video 0:00 hi I'm Dave Robinson chief data scientist at data camp and today...
+analyzing data on R downloads 15.9k subscribers 95 Share 4,086 views 31 Oct 2018 Tidy Tuesday R Screencasts I analyze a dataset of R and R package downloads as an example of exploratory data analysis in R, performed without looking at the data in advance. This is part of the #tidytuesday project: https://github.com/rfordatascience/ti... Transcript Search in video 0:00 hi I'm Dave Robinson chief data scientist at data camp and today...
 
 ## Required Packages
 

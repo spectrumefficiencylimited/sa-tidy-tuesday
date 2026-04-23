@@ -17,7 +17,7 @@ import re
 from pathlib import Path
 
 SCRIPT_DIR = Path(__file__).parent
-CT_PATH    = SCRIPT_DIR / "control_table_full.csv"
+CT_PATH    = SCRIPT_DIR / "control_table.csv"
 OUT_DIR    = SCRIPT_DIR / "output" / "super_qmd"
 TT_DATA    = SCRIPT_DIR / "tidytuesday" / "data"
 
@@ -79,11 +79,17 @@ def infer_intent(topic: str, analysis_type: str, data_files: list[str]) -> str:
             f"in {topic} through cleaning, summarization, and visualization")
 
 
+_BOILERPLATE = re.compile(
+    r"David Robinson.*?(?=I['']ll |I will |Today |In this |Let['']s |We['']re |So |This week)",
+    re.IGNORECASE | re.DOTALL,
+)
+
 def parse_transcript_preview(transcript_file: str, length: int = 300) -> str:
     p = SCRIPT_DIR / transcript_file
     if not p.exists():
         return "[transcript not available]"
     text = p.read_text(encoding="utf-8", errors="ignore")
+    text = _BOILERPLATE.sub("", text)
     flat = " ".join(text.split())
     return flat[:length] + "..."
 
@@ -224,8 +230,6 @@ def build_super_qmd(
     pattern = row.get("pattern_signature", "").strip() or infer_pattern(analysis_type, has_time_col, is_text)
     intent  = row.get("analysis_intent", "").strip()  or infer_intent(topic, analysis_type, data_files)
 
-    transcript_preview = parse_transcript_preview(transcript_file)
-
     cog_sig  = cognitive_signature(analysis_type, has_time_col)
     tp_map   = thought_process_map(topic, analysis_type, has_time_col)
     code_map = code_mapping(analysis_type, has_time_col)
@@ -248,6 +252,10 @@ def build_super_qmd(
     source_assets = ", ".join(data_files) if data_files else "see tidytuesday readme"
 
     tp_map_str   = "\n".join(f"- `{s}`" for s in tp_map)
+    _tp_steps    = [m for s in tp_map if (m := re.match(r"T(\d+) \| (\w+) \|", s))]
+    tp_log_rows  = "\n".join(
+        f'  "T{m.group(1)}", "{m.group(2).title()}", "",' for m in _tp_steps
+    )
     code_map_str = "\n".join(f"- `{s}`" for s in code_map)
     cog_sig_str  = "\n".join(f"- {s}" for s in cog_sig)
     reuse_str    = "\n".join(f"- `{s}`" for s in reuse_p)
@@ -659,6 +667,7 @@ ggplot(analysis_tbl,
 ---
 title: "Super QMD: {topic_raw}"
 subtitle: "Cognition-first blueprint built from the episode guide and KER"
+author: "Andrei Stoian"
 format:
   html:
     theme: flatly
@@ -692,23 +701,20 @@ The point is to preserve not only the code path, but the author's cognition:
 
 ## Episode Snapshot
 
-- `queue_position`: `{pos_str}`
-- `function_name`: `{fn_name}`
-- `analysis_type`: `{analysis_type}`
-- `pattern_signature`: `{pattern}`
-- `data_source`: {data_source}
-- `reproduction_status`: `needs_mapping`
-
 ::: {{.callout-note}}
 ## Analysis Intent
 {intent}
 :::
 
+| Field | Value |
+|---|---|
+| Queue | #{pos_str} |
+| Function | `{fn_name}` |
+| Analysis type | {analysis_type} |
+| Data source | {data_source} |
+| Status | `needs_mapping` |
 
-
-## Transcript Preview
-
-{transcript_preview}
+**Analytical pattern:** `{pattern}`
 
 ## Cognitive Signature
 
@@ -753,6 +759,18 @@ names(tuesdata)
 ### Thought Process Map
 
 {tp_map_str}
+
+```{{r}}
+#| label: thought_execution_log
+#| eval: false
+
+# Fill in `finding` after completing each stage.
+thought_log <- tibble::tribble(
+  ~step,  ~move,        ~finding,
+{tp_log_rows}
+)
+thought_log
+```
 
 ### Code Mapping Table
 

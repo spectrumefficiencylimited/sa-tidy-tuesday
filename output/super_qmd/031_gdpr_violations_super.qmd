@@ -1,6 +1,7 @@
 ---
 title: "Super QMD: Analyzing GDPR violations in R"
 subtitle: "Cognition-first blueprint built from the episode guide and KER"
+author: "Andrei Stoian"
 format:
   html:
     theme: flatly
@@ -34,23 +35,31 @@ The point is to preserve not only the code path, but the author's cognition:
 
 ## Episode Snapshot
 
-- `queue_position`: `31`
-- `function_name`: `gdpr_violations`
-- `analysis_type`: `EDA`
-- `pattern_signature`: `load_inspect_reshape_join_trend_compare_visualize`
-- `data_source`: TidyTuesday 2020-04-21 dataset
-- `reproduction_status`: `ready_local`
-
 ::: {.callout-note}
 ## Analysis Intent
 Explore distributions, group differences, and notable patterns in GDPR violations through cleaning, summarization, and visualization
 :::
 
+| Field | Value |
+|---|---|
+| Queue | #31 |
+| Function | `gdpr_violations` |
+| Analysis type | EDA |
+| Data source | TidyTuesday 2020-04-21 dataset |
+| Status | `ready_local` |
+
+**Packages:** `lubridate`, `scales`, `shinymetrics`, `tidymetrics`, `tidyverse`
+
+**Features:** ggplot, joins, reshape, time
+
+**Execution notes:**
+- local TidyTuesday files were matched, so you can use `load_tidyweek_data()` and avoid a GitHub PAT
+
+**Analytical pattern:** `load_inspect_reshape_join_trend_compare_visualize`
 
 
-## Transcript Preview
 
-Analyzing GDPR violations in R David Robinson 15.9k subscribers 102 Share Save Clip 3,058 views Streamed live on 22 Apr 2020 Tidy Tuesday R Screencasts I'll analyze a dataset on GDPR violations in R, without looking at the data in advance. For the second time, I'll be analyzing the dataset as a live stream instead of prerecording it. The dataset comes from the Tidy Tuesday project: https://github.com/rfordatascience/ti... Transcript Search in video 0:05 hello hi this is Dave Robinson and welcome to another live tid...
+
 
 ## Cognitive Signature
 
@@ -105,6 +114,24 @@ gdpr_text <- tuesdata$gdpr_text
 - `T6 | Compare | Summarize group differences, rates, rankings, or trajectories to surface the main story in the data. | Grouped summaries and comparative plots`
 - `T7 | Visualize | Turn the cleaned summaries into interpretable visual comparisons and iterate toward the clearest view. | ggplot workflow`
 - `T8 | Reflect | Identify reusable workflow pieces that can transfer to future datasets with a similar shape or question. | End-state of the analysis pattern`
+
+```{r}
+#| label: thought_execution_log
+#| eval: false
+
+# Fill in `finding` after completing each stage.
+thought_log <- tibble::tribble(
+  ~step,  ~move,        ~finding,
+  "T1", "Context", "",
+  "T2", "Inspect", "",
+  "T4", "Transform", "",
+  "T6", "Compare", "",
+  "T7", "Visualize", "",
+  "T8", "Reflect", "",
+)
+thought_log
+```
+
 
 ### Code Mapping Table
 
@@ -194,7 +221,7 @@ Trigger:
 # Source assets: tidytuesday/data/2020/2020-04-21/gdpr_text.tsv, tidytuesday/data/2020/2020-04-21/gdpr_violations.tsv
 # Suggested verbs: mutate(), separate_rows(), pivot_longer(), left_join(), unnest()
 # analysis_tbl <- raw_tbl %>%
-#   ...
+# ...
 ```
 ## Stage 4: Compare
 
@@ -217,9 +244,9 @@ Trigger:
 
 # Summarize the comparison that best answers the question.
 # comparison_tbl <- analysis_tbl %>%
-#   group_by(...) %>%
-#   summarise(...) %>%
-#   arrange(desc(...))
+# group_by(...) %>%
+# summarise(...) %>%
+# arrange(desc(...))
 ```
 ## Stage 5: Visualize
 
@@ -244,8 +271,8 @@ Additional guidance:
 
 # Turn the comparison table into one clear communication plot.
 # ggplot(comparison_tbl, aes(...)) +
-#   geom_col() +
-#   labs(title = ..., subtitle = ...)
+# geom_col() +
+# labs(title = ..., subtitle = ...)
 ```
 ## Stage 6: Reflect
 

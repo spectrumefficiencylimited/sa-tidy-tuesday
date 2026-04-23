@@ -292,6 +292,7 @@ def build_qmd_text(row, features, transcript_text, local_data_files, reference_f
     return f"""---
 title: "Reproduction Guide: {title}"
 subtitle: "Ordered episode output built from the control table and KER"
+author: "Andrei Stoian"
 format:
   html:
     theme: flatly

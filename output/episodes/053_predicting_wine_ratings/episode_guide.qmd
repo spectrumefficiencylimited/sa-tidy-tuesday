@@ -1,16 +1,17 @@
 ---
 title: "Reproduction Guide: Analyzing predicting wine ratings in R"
 subtitle: "Ordered episode output built from the control table and KER"
+author: "Andrei Stoian"
 format:
-  html:
-    theme: flatly
-    toc: true
-    toc-depth: 2
-    code-fold: show
+ html:
+ theme: flatly
+ toc: true
+ toc-depth: 2
+ code-fold: show
 execute:
-  echo: false
-  warning: false
-  message: false
+ echo: false
+ warning: false
+ message: false
 ---
 
 ## Episode Snapshot
@@ -35,7 +36,7 @@ Predict or estimate outcomes in wine ratings using cleaned features, exploratory
 
 ## Transcript Preview
 
-predicting wine ratings David Robinson 15.9k subscribers 281 Share Save Clip 12,984 views 31 May 2019 Tidy Tuesday R Screencasts I analyze a dataset of WineEnthusiast ratings as an example of statistical modeling and machine learning in R, performed without looking at the data in advance. This includes fitting a linear regression to predict wine ratings based on price, country, and taster, and then using tidytext and glmnet to fit a sparse regres...
+predicting wine ratings 15.9k subscribers 281 Share Save Clip 12,984 views 31 May 2019 Tidy Tuesday R Screencasts I analyze a dataset of WineEnthusiast ratings as an example of statistical modeling and machine learning in R, performed without looking at the data in advance. This includes fitting a linear regression to predict wine ratings based on price, country, and taster, and then using tidytext and glmnet to fit a sparse regres...
 
 ## Required Packages
 

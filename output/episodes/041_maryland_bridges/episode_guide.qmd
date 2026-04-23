@@ -1,16 +1,17 @@
 ---
 title: "Reproduction Guide: Analyzing Maryland bridges with R"
 subtitle: "Ordered episode output built from the control table and KER"
+author: "Andrei Stoian"
 format:
-  html:
-    theme: flatly
-    toc: true
-    toc-depth: 2
-    code-fold: show
+ html:
+ theme: flatly
+ toc: true
+ toc-depth: 2
+ code-fold: show
 execute:
-  echo: false
-  warning: false
-  message: false
+ echo: false
+ warning: false
+ message: false
 ---
 
 ## Episode Snapshot
@@ -35,7 +36,7 @@ Explore, explain, and model patterns in Maryland bridges using engineered featur
 
 ## Transcript Preview
 
-analyzing Maryland bridges with R David Robinson 15.9k subscribers 85 Share Save Clip 3,068 views 27 Nov 2018 Tidy Tuesday R Screencasts I analyze a dataset on the quality of Maryland bridges as an example of exploratory data analysis in R, performed without looking at the data in advance. This is part of the #tidytuesday project: https://github.com/rfordatascience/ti... Introduction 0:00 hi I'm Dave Robinson chief data scientist at data camp and...
+analyzing Maryland bridges with R 15.9k subscribers 85 Share Save Clip 3,068 views 27 Nov 2018 Tidy Tuesday R Screencasts I analyze a dataset on the quality of Maryland bridges as an example of exploratory data analysis in R, performed without looking at the data in advance. This is part of the #tidytuesday project: https://github.com/rfordatascience/ti... Introduction 0:00 hi I'm Dave Robinson chief data scientist at data camp and...
 
 ## Required Packages
 

@@ -1,8 +1,14 @@
 # TidyTuesday data (large - get from original repo)
 tidytuesday/data/
 
-# Raw data
+# Screencast code (original author's work)
+data-screencasts/
+
+# Raw data / transcripts
 raw-data/
+
+# Rendered site output (lives in TheDataShrink.github.io)
+site/html/
 
 # R
 .Rhistory

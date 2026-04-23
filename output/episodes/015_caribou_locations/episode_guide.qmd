@@ -1,16 +1,17 @@
 ---
 title: "Reproduction Guide: Analyzing caribou locations in R"
 subtitle: "Ordered episode output built from the control table and KER"
+author: "Andrei Stoian"
 format:
-  html:
-    theme: flatly
-    toc: true
-    toc-depth: 2
-    code-fold: show
+ html:
+ theme: flatly
+ toc: true
+ toc-depth: 2
+ code-fold: show
 execute:
-  echo: false
-  warning: false
-  message: false
+ echo: false
+ warning: false
+ message: false
 ---
 
 ## Episode Snapshot
@@ -35,7 +36,7 @@ Explore geographic and temporal variation in caribou locations through joins, su
 
 ## Transcript Preview
 
-Analyzing caribou locations in R David Robinson 15.9k subscribers 62 Share Save Clip 2,766 views Streamed live on 24 Jun 2020 Tidy Tuesday R Screencasts I'll analyze a dataset on caribou locations in R, without looking at the dataset in advance. The dataset comes from the Tidy Tuesday project: https://github.com/rfordatascience/ti... Search in video 0:03 hi I'm Dave Robinson and welcome to another one of my screencast where I'll 0:08 be using our...
+Analyzing caribou locations in R 15.9k subscribers 62 Share Save Clip 2,766 views Streamed live on 24 Jun 2020 Tidy Tuesday R Screencasts I'll analyze a dataset on caribou locations in R, without looking at the dataset in advance. The dataset comes from the Tidy Tuesday project: https://github.com/rfordatascience/ti... Search in video 0:03 hi I'm Dave Robinson and welcome to another one of my screencast where I'll 0:08 be using our...
 
 ## Required Packages
 

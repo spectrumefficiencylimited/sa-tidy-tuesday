@@ -1,6 +1,7 @@
 ---
 title: "Super QMD: Analyzing incarceration data in R"
 subtitle: "Cognition-first blueprint built from the episode guide and KER"
+author: "Andrei Stoian"
 format:
   html:
     theme: flatly
@@ -34,17 +35,21 @@ The point is to preserve not only the code path, but the author's cognition:
 
 ## Episode Snapshot
 
-- `queue_position`: `39`
-- `function_name`: `incarceration`
-- `analysis_type`: `Not resolved yet`
-- `pattern_signature`: `Not resolved yet`
-- `data_source`: Data source not resolved yet
-- `reproduction_status`: `blocked_needs_mapping`
-
 ::: {.callout-note}
 ## Analysis Intent
 Analysis intent is not resolved yet. Use the transcript and code mapping step before filling in the narrative.
 :::
+
+| Field | Value |
+|---|---|
+| Queue | #39 |
+| Function | `incarceration` |
+| Analysis type | Not resolved yet |
+| Data source | Data source not resolved yet |
+| Status | `blocked_needs_mapping` |
+
+**Analytical pattern:** `Not resolved yet`
+
 
 ::: {.callout-warning}
 ## Status Note
@@ -52,9 +57,6 @@ This episode is still blocked at the mapping stage. The super QMD is useful as a
 :::
 
 
-## Transcript Preview
-
-Analyzing incarceration data in R David Robinson 15.9k subscribers 83 Share Save Clip 3,254 views 26 Jan 2019 Tidy Tuesday R Screencasts I analyze a dataset of incarceration by county and time as an example of exploratory data analysis in R, performed without looking at the data in advance. Includes examples of an choropleth of US counties, animated maps, and examining missing data and its effect on an analysis. This is part of the #tidytuesday project: https://github.com/rfordatascience/ti... Transcript Search in...
 
 ## Cognitive Signature
 
@@ -98,6 +100,23 @@ source("R/screencast_helpers.R")
 - `T6 | Compare | Summarize group differences, rates, rankings, or trajectories to surface the main story in the data. | Grouped summaries and comparative plots`
 - `T7 | Visualize | Turn the cleaned summaries into interpretable visual comparisons and iterate toward the clearest view. | ggplot workflow`
 - `T8 | Reflect | Identify reusable workflow pieces that can transfer to future datasets with a similar shape or question. | End-state of the analysis pattern`
+
+```{r}
+#| label: thought_execution_log
+#| eval: false
+
+# Fill in `finding` after completing each stage.
+thought_log <- tibble::tribble(
+  ~step,  ~move,        ~finding,
+  "T1", "Context", "",
+  "T2", "Inspect", "",
+  "T6", "Compare", "",
+  "T7", "Visualize", "",
+  "T8", "Reflect", "",
+)
+thought_log
+```
+
 
 ### Code Mapping Table
 
@@ -184,9 +203,9 @@ Trigger:
 
 # Summarize the comparison that best answers the question.
 # comparison_tbl <- analysis_tbl %>%
-#   group_by(...) %>%
-#   summarise(...) %>%
-#   arrange(desc(...))
+# group_by(...) %>%
+# summarise(...) %>%
+# arrange(desc(...))
 ```
 ## Stage 4: Visualize
 
@@ -209,8 +228,8 @@ Trigger:
 
 # Turn the comparison table into one clear communication plot.
 # ggplot(comparison_tbl, aes(...)) +
-#   geom_col() +
-#   labs(title = ..., subtitle = ...)
+# geom_col() +
+# labs(title = ..., subtitle = ...)
 ```
 ## Stage 5: Reflect
 

@@ -1,16 +1,17 @@
 ---
 title: "Reproduction Guide: Analyzing African-American history in R"
 subtitle: "Ordered episode output built from the control table and KER"
+author: "Andrei Stoian"
 format:
-  html:
-    theme: flatly
-    toc: true
-    toc-depth: 2
-    code-fold: show
+ html:
+ theme: flatly
+ toc: true
+ toc-depth: 2
+ code-fold: show
 execute:
-  echo: false
-  warning: false
-  message: false
+ echo: false
+ warning: false
+ message: false
 ---
 
 ## Episode Snapshot
@@ -35,7 +36,7 @@ Explore and compare language patterns in African-American history using tokeniza
 
 ## Transcript Preview
 
-Analyzing African-American history in R David Robinson 15.9k subscribers 70 Share Save Clip 2,409 views Streamed live on 17 Jun 2020 Tidy Tuesday R Screencasts I'll analyze a dataset on African-American history in R, without looking at the dataset in advance. The dataset comes from the Tidy Tuesday project: https://github.com/rfordatascience/ti... Introduction 0:04 hi I'm Dave Robinson and welcome to another one of my screencast where I'll 0:09 b...
+Analyzing African-American history in R 15.9k subscribers 70 Share Save Clip 2,409 views Streamed live on 17 Jun 2020 Tidy Tuesday R Screencasts I'll analyze a dataset on African-American history in R, without looking at the dataset in advance. The dataset comes from the Tidy Tuesday project: https://github.com/rfordatascience/ti... Introduction 0:04 hi I'm Dave Robinson and welcome to another one of my screencast where I'll 0:09 b...
 
 ## Required Packages
 

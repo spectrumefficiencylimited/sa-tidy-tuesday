@@ -1,16 +1,17 @@
 ---
 title: "Reproduction Guide: Analyzing car fuel efficiency in R"
 subtitle: "Ordered episode output built from the control table and KER"
+author: "Andrei Stoian"
 format:
-  html:
-    theme: flatly
-    toc: true
-    toc-depth: 2
-    code-fold: show
+ html:
+ theme: flatly
+ toc: true
+ toc-depth: 2
+ code-fold: show
 execute:
-  echo: false
-  warning: false
-  message: false
+ echo: false
+ warning: false
+ message: false
 ---
 
 ## Episode Snapshot
@@ -35,7 +36,7 @@ Explore, explain, and model patterns in car fuel efficiency using engineered fea
 
 ## Transcript Preview
 
-analyzing car fuel efficiency in R David Robinson 15.9k subscribers 124 Share Save Clip 5,138 views 16 Oct 2019 Tidy Tuesday R Screencasts I analyze a dataset of cars and their fuel efficiency, and see how it relates to the type of car and engine. This includes some nonlinear regression with natural cubic splines, as well as visual explorations of how fuel economy differs between city and highway driving or how efficiency has been changing over t...
+analyzing car fuel efficiency in R 15.9k subscribers 124 Share Save Clip 5,138 views 16 Oct 2019 Tidy Tuesday R Screencasts I analyze a dataset of cars and their fuel efficiency, and see how it relates to the type of car and engine. This includes some nonlinear regression with natural cubic splines, as well as visual explorations of how fuel economy differs between city and highway driving or how efficiency has been changing over t...
 
 ## Required Packages
 

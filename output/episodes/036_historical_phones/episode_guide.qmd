@@ -1,16 +1,17 @@
 ---
 title: "Reproduction Guide: Analyzing historical phones in R"
 subtitle: "Ordered episode output built from the control table and KER"
+author: "Andrei Stoian"
 format:
-  html:
-    theme: flatly
-    toc: true
-    toc-depth: 2
-    code-fold: show
+ html:
+ theme: flatly
+ toc: true
+ toc-depth: 2
+ code-fold: show
 execute:
-  echo: false
-  warning: false
-  message: false
+ echo: false
+ warning: false
+ message: false
 ---
 
 ## Episode Snapshot
@@ -35,7 +36,7 @@ Explore geographic and temporal variation in historical phones through joins, su
 
 ## Transcript Preview
 
-Analyzing historical phones in R David Robinson 15.9k subscribers 90 Share Save Clip 4,110 views Streamed live on 11 Nov 2020 Tidy Tuesday R Screencasts I'll analyze a dataset about historical phone adoption, without looking at the dataset in advance. The dataset comes from the Tidy Tuesday project: https://github.com/rfordatascience/ti... Code: https://github.com/dgrtwo/data-screen... Timestamped annotations of specific tricks, tips and tools us...
+Analyzing historical phones in R 15.9k subscribers 90 Share Save Clip 4,110 views Streamed live on 11 Nov 2020 Tidy Tuesday R Screencasts I'll analyze a dataset about historical phone adoption, without looking at the dataset in advance. The dataset comes from the Tidy Tuesday project: https://github.com/rfordatascience/ti... Code: https://github.com/dgrtwo/data-screen... Timestamped annotations of specific tricks, tips and tools us...
 
 ## Required Packages
 

@@ -1,0 +1,49 @@
+{
+  "queue_position": 384,
+  "folder_name": "384_tidytuesday_rstats_tweets",
+  "transcript_title": "Analyzing tidytuesday and rstats tweets in R",
+  "function_name": "tidytuesday_rstats_tweets",
+  "ker_status": "extracted",
+  "reproduction_status": "needs_external_sources",
+  "source_files": {
+    "transcript_file": "raw-data/inspiration/Analyzing tidytuesday and rstats tweets in R.txt",
+    "code_file": "data-screencasts/tidytuesday-tweets.Rmd"
+  },
+  "source_exists": {
+    "transcript": true,
+    "code": true
+  },
+  "data_source": "External sources used in episode: https://github.com/rfordatascience/tidytuesday/blob/master/data/2019/2019-01-01/rstats_tweets.rds?raw=true, https://github.com/rfordatascience/tidytuesday/blob/master/data/2019/2019-01-01/tidytuesday_tweets.rds?raw=true, ...",
+  "analysis_intent": "Explore and compare language patterns in tidytuesday and rstats tweets using tokenization, grouped counts, and discriminative text analysis",
+  "analysis_type": "EDA",
+  "pattern_signature": "load_inspect_scrape_join_tokenize_trend_compare_visualize",
+  "required_packages": [
+    "ggrepel",
+    "lubridate",
+    "rvest",
+    "tidytext",
+    "tidyverse"
+  ],
+  "features": {
+    "ggplot": true,
+    "joins": true,
+    "reshape": false,
+    "text_analysis": true,
+    "modeling": false,
+    "predictive": false,
+    "scraping": true,
+    "maps": false,
+    "time": true,
+    "simulation": false,
+    "multi_table": false
+  },
+  "local_data_files": [],
+  "reference_files": [],
+  "external_dependencies": [
+    "web scraping or remote API logic detected",
+    "remote file or API download detected in code"
+  ],
+  "execution_notes": [
+    "interactive `View()` calls are present and should be skipped or replaced in automated runs"
+  ]
+}

@@ -1,0 +1,57 @@
+{
+  "queue_position": 334,
+  "folder_name": "334_world_freedom_index",
+  "transcript_title": "Analyzing World Freedom Index in R",
+  "function_name": "world_freedom_index",
+  "ker_status": "needs_mapping",
+  "reproduction_status": "blocked_needs_mapping",
+  "source_files": {
+    "transcript_file": "raw-data/inspiration/Analyzing World Freedom Index in R.txt",
+    "code_file": "data-screencasts/2022_02_22_world_freedom_index.Rmd"
+  },
+  "source_exists": {
+    "transcript": true,
+    "code": true
+  },
+  "data_source": "TidyTuesday 2022-02-22",
+  "analysis_intent": "Explore geographic and temporal variation in World Freedom Index through joins, summarization, and mapping",
+  "analysis_type": "Modeling",
+  "pattern_signature": "load_inspect_reshape_join_map_trend_model_evaluate_visualize",
+  "required_packages": [
+    "WDI",
+    "broom",
+    "countrycode",
+    "fuzzyjoin",
+    "gganimate",
+    "ggrepel",
+    "scales",
+    "tidytuesdayR",
+    "tidyverse"
+  ],
+  "features": {
+    "ggplot": true,
+    "joins": true,
+    "reshape": true,
+    "text_analysis": false,
+    "modeling": true,
+    "predictive": false,
+    "scraping": false,
+    "maps": true,
+    "time": true,
+    "simulation": false,
+    "multi_table": false
+  },
+  "local_data_files": [
+    "tidytuesday/data/2022/2022-02-22/freedom.csv"
+  ],
+  "reference_files": [
+    "tidytuesday/data/2022/2022-02-22/pic1.png",
+    "tidytuesday/data/2022/2022-02-22/pic2.png",
+    "tidytuesday/data/2022/2022-02-22/readme.md"
+  ],
+  "external_dependencies": [],
+  "execution_notes": [
+    "interactive `View()` calls are present and should be skipped or replaced in automated runs",
+    "local TidyTuesday files were matched, so you can use `load_tidyweek_data()` and avoid a GitHub PAT"
+  ]
+}

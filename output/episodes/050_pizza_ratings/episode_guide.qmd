@@ -1,16 +1,17 @@
 ---
 title: "Reproduction Guide: Analyzing pizza ratings in R"
 subtitle: "Ordered episode output built from the control table and KER"
+author: "Andrei Stoian"
 format:
-  html:
-    theme: flatly
-    toc: true
-    toc-depth: 2
-    code-fold: show
+ html:
+ theme: flatly
+ toc: true
+ toc-depth: 2
+ code-fold: show
 execute:
-  echo: false
-  warning: false
-  message: false
+ echo: false
+ warning: false
+ message: false
 ---
 
 ## Episode Snapshot
@@ -35,7 +36,7 @@ Explore, explain, and model patterns in pizza ratings using engineered features 
 
 ## Transcript Preview
 
-analyzing pizza ratings David Robinson 15.9k subscribers 115 Share Save Clip 4,473 views 2 Oct 2019 Tidy Tuesday R Screencasts I analyze two datasets of pizza restaurant ratings in R, without looking at the data in advance. This includes calculating and visualizing confidence intervals for restaurants, as well as some dplyr and forcats tricks. The data comes from the #tidytuesday project: https://github.com/rfordatascience/ti... You can find the...
+analyzing pizza ratings 15.9k subscribers 115 Share Save Clip 4,473 views 2 Oct 2019 Tidy Tuesday R Screencasts I analyze two datasets of pizza restaurant ratings in R, without looking at the data in advance. This includes calculating and visualizing confidence intervals for restaurants, as well as some dplyr and forcats tricks. The data comes from the #tidytuesday project: https://github.com/rfordatascience/ti... You can find the...
 
 ## Required Packages
 

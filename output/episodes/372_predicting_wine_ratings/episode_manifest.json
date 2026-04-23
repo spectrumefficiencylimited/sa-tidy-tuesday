@@ -1,0 +1,52 @@
+{
+  "queue_position": 372,
+  "folder_name": "372_predicting_wine_ratings",
+  "transcript_title": "Analyzing predicting wine ratings in R",
+  "function_name": "predicting_wine_ratings",
+  "ker_status": "extracted",
+  "reproduction_status": "ready_local",
+  "source_files": {
+    "transcript_file": "raw-data/inspiration/Analyzing predicting wine ratings in R.txt",
+    "code_file": "data-screencasts/wine-ratings.Rmd"
+  },
+  "source_exists": {
+    "transcript": true,
+    "code": true
+  },
+  "data_source": "TidyTuesday 2019-05-28 source files",
+  "analysis_intent": "Predict or estimate outcomes in wine ratings using cleaned features, exploratory analysis, and model evaluation",
+  "analysis_type": "Predictive",
+  "pattern_signature": "load_inspect_join_tokenize_trend_model_evaluate_visualize",
+  "required_packages": [
+    "Matrix",
+    "broom",
+    "doMC",
+    "glmnet",
+    "tidytext",
+    "tidyverse",
+    "widyr"
+  ],
+  "features": {
+    "ggplot": true,
+    "joins": true,
+    "reshape": false,
+    "text_analysis": true,
+    "modeling": true,
+    "predictive": true,
+    "scraping": false,
+    "maps": false,
+    "time": true,
+    "simulation": false,
+    "multi_table": false
+  },
+  "local_data_files": [
+    "tidytuesday/data/2019/2019-05-28/winemag-data-130k-v2.csv"
+  ],
+  "reference_files": [
+    "tidytuesday/data/2019/2019-05-28/readme.md"
+  ],
+  "external_dependencies": [],
+  "execution_notes": [
+    "local TidyTuesday files were matched, so you can use `load_tidyweek_data()` and avoid a GitHub PAT"
+  ]
+}

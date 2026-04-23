@@ -1,23 +1,24 @@
 ---
 title: "Reproduction Guide: Analyzing Netflix titles in R"
 subtitle: "Ordered episode output built from the control table and KER"
+author: "Andrei Stoian"
 format:
-  html:
-    theme: flatly
-    toc: true
-    toc-depth: 2
-    code-fold: show
+ html:
+ theme: flatly
+ toc: true
+ toc-depth: 2
+ code-fold: show
 execute:
-  echo: false
-  warning: false
-  message: false
+ echo: false
+ warning: false
+ message: false
 ---
 
 ## Episode Snapshot
 
 - `function_name`: `netflix_titles`
 - `ker_status`: `extracted`
-- `reproduction_status`: `needs_external_sources`
+- `reproduction_status`: `ready_local`
 - `transcript_file`: `raw-data/inspiration/Analyzing Netflix titles in R.txt`
 - `code_file`: `data-screencasts-dgrtwo/2021_04_20_netflix_titles.Rmd`
 - `data_source`: TidyTuesday 2021-04-20 dataset
@@ -35,7 +36,7 @@ Predict or estimate outcomes in Netflix titles using cleaned features, explorato
 
 ## Transcript Preview
 
-Tidy Tuesday live screencast: Analyzing Netflix titles in R David Robinson 15.9k subscribers 169 Share Save Clip 6,810 views Streamed live on 21 Apr 2021 Tidy Tuesday R Screencasts I'll analyze a dataset about Netflix titles, without looking at the dataset in advance. The dataset comes from the Tidy Tuesday project: https://github.com/rfordatascience/ti... Code: https://github.com/dgrtwo/data-screen... Timestamped annotations of specific tricks,...
+Tidy Tuesday live screencast: Analyzing Netflix titles in R 15.9k subscribers 169 Share Save Clip 6,810 views Streamed live on 21 Apr 2021 Tidy Tuesday R Screencasts I'll analyze a dataset about Netflix titles, without looking at the dataset in advance. The dataset comes from the Tidy Tuesday project: https://github.com/rfordatascience/ti... Code: https://github.com/dgrtwo/data-screen... Timestamped annotations of specific tricks,...
 
 ## Required Packages
 
@@ -54,19 +55,21 @@ Tidy Tuesday live screencast: Analyzing Netflix titles in R David Robinson 15.9k
 
 ## Local Data Assets
 
-- No local dataset files were resolved automatically.
+- `tidytuesday/data/2021/2021-04-20/netflix_titles.csv`
 
 ## Nearby Reference Files
 
-- No nearby readme or asset files were captured.
+- `tidytuesday/data/2021/2021-04-20/pic1.png`
+- `tidytuesday/data/2021/2021-04-20/pic2.png`
+- `tidytuesday/data/2021/2021-04-20/readme.md`
 
 ## External Dependencies
 
-- tidytuesdayR::tt_load is used and no local TidyTuesday files were matched
+- No external dependencies were detected from the code scan.
 
 ## Execution Notes
 
-- this episode depends on `tidytuesdayR::tt_load()`, so set `GITHUB_PAT` if GitHub rate limits appear
+- local TidyTuesday files were matched, so you can use `load_tidyweek_data()` and avoid a GitHub PAT
 
 ## Extracted Code Chunks
 
@@ -127,8 +130,8 @@ Tidy Tuesday live screencast: Analyzing Netflix titles in R David Robinson 15.9k
 
 - 1. Start from the control-table metadata and confirm the transcript, code file, and function identity match this episode.
 - 2. Read the transcript first to understand the story, then inspect the source `.Rmd` to locate the main transformation and plotting chunks.
-- 3. This episode uses `tidytuesdayR::tt_load()` without a matched local mirror, so expect a GitHub-backed load and set `GITHUB_PAT` if you hit API rate limits.
-- 4. Handle the external dependencies called out below before expecting a fully offline reproduction.
+- 3. Prefer the local mirrored TidyTuesday files or `load_tidyweek_data()` from `R/screencast_helpers.R`; that keeps reproduction local and avoids the GitHub PAT requirement.
+- 4. Run the extracted episode script in chunk order and compare the resulting tables and plots to the original screencast intent.
 - 5. Use the KER thought process map and adaptation plan in this folder when rewriting the episode into a cleaner reusable analysis.
 - 6. Mark the episode as implemented or reviewed only after the reproduced workflow runs cleanly in the local environment.
 

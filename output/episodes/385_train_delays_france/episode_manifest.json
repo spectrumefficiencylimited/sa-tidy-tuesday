@@ -1,0 +1,52 @@
+{
+  "queue_position": 385,
+  "folder_name": "385_train_delays_france",
+  "transcript_title": "Analyzing train delays in France in R",
+  "function_name": "train_delays_france",
+  "ker_status": "extracted",
+  "reproduction_status": "ready_local",
+  "source_files": {
+    "transcript_file": "raw-data/inspiration/Analyzing train delays in France in R.txt",
+    "code_file": "data-screencasts/french-trains.Rmd"
+  },
+  "source_exists": {
+    "transcript": true,
+    "code": true
+  },
+  "data_source": "TidyTuesday 2019-02-26 source files",
+  "analysis_intent": "Explore distributions, group differences, and notable patterns in train delays in France through cleaning, summarization, and visualization",
+  "analysis_type": "EDA",
+  "pattern_signature": "load_inspect_trend_compare_visualize",
+  "required_packages": [
+    "scales",
+    "tidyverse"
+  ],
+  "features": {
+    "ggplot": true,
+    "joins": false,
+    "reshape": false,
+    "text_analysis": false,
+    "modeling": false,
+    "predictive": false,
+    "scraping": false,
+    "maps": false,
+    "time": true,
+    "simulation": false,
+    "multi_table": false
+  },
+  "local_data_files": [
+    "tidytuesday/data/2019/2019-02-26/full_trains.csv",
+    "tidytuesday/data/2019/2019-02-26/regularite-mensuelle-tgv-aqst.csv",
+    "tidytuesday/data/2019/2019-02-26/small_trains.csv"
+  ],
+  "reference_files": [
+    "tidytuesday/data/2019/2019-02-26/readme.md",
+    "tidytuesday/data/2019/2019-02-26/regularite-mensuelle-tgv-aqst.csv",
+    "tidytuesday/data/2019/2019-02-26/small_trains.csv",
+    "tidytuesday/data/2019/2019-02-26/full_trains.csv"
+  ],
+  "external_dependencies": [],
+  "execution_notes": [
+    "local TidyTuesday files were matched, so you can use `load_tidyweek_data()` and avoid a GitHub PAT"
+  ]
+}

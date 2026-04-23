@@ -1,0 +1,55 @@
+{
+  "queue_position": 39,
+  "folder_name": "039_caribou_locations",
+  "transcript_title": "Analyzing caribou locations in R",
+  "function_name": "caribou_locations",
+  "ker_status": "extracted",
+  "reproduction_status": "ready_local",
+  "source_files": {
+    "transcript_file": "raw-data/inspiration/Analyzing caribou locations in R.txt",
+    "code_file": "data-screencasts/caribou-locations.Rmd"
+  },
+  "source_exists": {
+    "transcript": true,
+    "code": true
+  },
+  "data_source": "TidyTuesday 2020-06-23 dataset",
+  "analysis_intent": "Explore geographic and temporal variation in caribou locations through joins, summarization, and mapping",
+  "analysis_type": "EDA",
+  "pattern_signature": "load_inspect_map_trend_compare_visualize",
+  "required_packages": [
+    "geosphere",
+    "lubridate",
+    "sf",
+    "tidyverse"
+  ],
+  "features": {
+    "ggplot": true,
+    "joins": false,
+    "reshape": false,
+    "text_analysis": false,
+    "modeling": false,
+    "predictive": false,
+    "scraping": false,
+    "maps": true,
+    "time": true,
+    "simulation": false,
+    "multi_table": false
+  },
+  "local_data_files": [
+    "tidytuesday/data/2020/2020-06-23/individuals.csv",
+    "tidytuesday/data/2020/2020-06-23/locations.csv"
+  ],
+  "reference_files": [
+    "tidytuesday/data/2020/2020-06-23/locations.csv",
+    "tidytuesday/data/2020/2020-06-23/pic1.png",
+    "tidytuesday/data/2020/2020-06-23/pic2.png",
+    "tidytuesday/data/2020/2020-06-23/readme.md",
+    "tidytuesday/data/2020/2020-06-23/individuals.csv"
+  ],
+  "external_dependencies": [],
+  "execution_notes": [
+    "interactive `View()` calls are present and should be skipped or replaced in automated runs",
+    "local TidyTuesday files were matched, so you can use `load_tidyweek_data()` and avoid a GitHub PAT"
+  ]
+}

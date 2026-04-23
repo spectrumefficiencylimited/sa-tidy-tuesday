@@ -1,16 +1,17 @@
 ---
 title: "Reproduction Guide: Analyzing college major & income data in R"
 subtitle: "Ordered episode output built from the control table and KER"
+author: "Andrei Stoian"
 format:
-  html:
-    theme: flatly
-    toc: true
-    toc-depth: 2
-    code-fold: show
+ html:
+ theme: flatly
+ toc: true
+ toc-depth: 2
+ code-fold: show
 execute:
-  echo: false
-  warning: false
-  message: false
+ echo: false
+ warning: false
+ message: false
 ---
 
 ## Episode Snapshot
@@ -35,7 +36,7 @@ Explore, explain, and model patterns in college major & income using engineered 
 
 ## Transcript Preview
 
-analyzing college major & income data in R David Robinson 15.9k subscribers 564 Share 30,062 views 16 Oct 2018 Tidy Tuesday R Screencasts I analyze a dataset of college majors as an example of exploratory data analysis in R, performed without looking at the data in advance. This is part of the #tidytuesday project: https://github.com/rfordatascience/ti... The data comes from 538: https://github.com/fivethirtyeight/da... You can find the code prod...
+analyzing college major & income data in R 15.9k subscribers 564 Share 30,062 views 16 Oct 2018 Tidy Tuesday R Screencasts I analyze a dataset of college majors as an example of exploratory data analysis in R, performed without looking at the data in advance. This is part of the #tidytuesday project: https://github.com/rfordatascience/ti... The data comes from 538: https://github.com/fivethirtyeight/da... You can find the code prod...
 
 ## Required Packages
 

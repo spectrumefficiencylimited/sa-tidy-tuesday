@@ -1,0 +1,51 @@
+{
+  "queue_position": 32,
+  "folder_name": "032_predicting_horror_movie_ratings",
+  "transcript_title": "Analyzing and predicting horror movie ratings in R",
+  "function_name": "predicting_horror_movie_ratings",
+  "ker_status": "extracted",
+  "reproduction_status": "ready_local",
+  "source_files": {
+    "transcript_file": "raw-data/inspiration/Analyzing and predicting horror movie ratings in R.txt",
+    "code_file": "data-screencasts/horror-movie-ratings.Rmd"
+  },
+  "source_exists": {
+    "transcript": true,
+    "code": true
+  },
+  "data_source": "TidyTuesday 2019-10-22 source files",
+  "analysis_intent": "Predict or estimate outcomes in horror movie ratings using cleaned features, exploratory analysis, and model evaluation",
+  "analysis_type": "Predictive",
+  "pattern_signature": "load_inspect_reshape_join_tokenize_trend_model_evaluate_visualize",
+  "required_packages": [
+    "Matrix",
+    "broom",
+    "glmnet",
+    "tidytext",
+    "tidyverse"
+  ],
+  "features": {
+    "ggplot": true,
+    "joins": true,
+    "reshape": true,
+    "text_analysis": true,
+    "modeling": true,
+    "predictive": true,
+    "scraping": false,
+    "maps": false,
+    "time": true,
+    "simulation": false,
+    "multi_table": false
+  },
+  "local_data_files": [
+    "tidytuesday/data/2019/2019-10-22/horror_movies.csv"
+  ],
+  "reference_files": [
+    "tidytuesday/data/2019/2019-10-22/readme.md"
+  ],
+  "external_dependencies": [],
+  "execution_notes": [
+    "interactive `View()` calls are present and should be skipped or replaced in automated runs",
+    "local TidyTuesday files were matched, so you can use `load_tidyweek_data()` and avoid a GitHub PAT"
+  ]
+}

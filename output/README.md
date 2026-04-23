@@ -9,21 +9,21 @@ This folder is generated from `control_table.csv` in queue order so the project 
 
 ## Current status counts
 
-- `ready_local`: 57
+- `ready_local`: 63
 - `ready_with_external_steps`: 5
-- `needs_external_sources`: 16
+- `needs_external_sources`: 11
 - `needs_data_review`: 1
-- `blocked_*`: 1
+- `blocked_*`: 311
 
 ## First episodes in queue
 
-- `1` `african_american_achievements` -> `ready_with_external_steps`
-- `2` `african_american_history` -> `ready_local`
-- `3` `predicting_horror_movie_ratings` -> `ready_local`
-- `4` `animal_crossing` -> `ready_local`
-- `5` `art_collections` -> `ready_local`
-- `6` `australian_animal_outcomes` -> `ready_with_external_steps`
-- `7` `beach_volleyball` -> `ready_local`
-- `8` `beyonce_taylor_swift_lyrics` -> `ready_local`
-- `9` `bike_frequencies_seattle` -> `ready_local`
-- `10` `bird_collisions_bootstrapping` -> `ready_local`
+- `1` `api_specs` -> `blocked_needs_mapping`
+- `2` `adoptable_dogs` -> `blocked_needs_mapping`
+- `3` `african_farmer_led_irrigation_survey` -> `blocked_needs_mapping`
+- `4` `african_language_sentiment` -> `blocked_needs_mapping`
+- `5` `african_american_achievements` -> `ready_with_external_steps`
+- `6` `african_american_history` -> `ready_local`
+- `7` `agencies_from_the_fbi_crime_data_api` -> `blocked_needs_mapping`
+- `8` `agricultural_production_statistics_in_new_zealand` -> `blocked_needs_mapping`
+- `9` `allrecipes` -> `blocked_needs_mapping`
+- `10` `alone_data` -> `blocked_needs_mapping`

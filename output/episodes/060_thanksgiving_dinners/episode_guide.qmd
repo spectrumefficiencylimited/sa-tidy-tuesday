@@ -1,16 +1,17 @@
 ---
 title: "Reproduction Guide: Analyzing Thanksgiving dinners in R"
 subtitle: "Ordered episode output built from the control table and KER"
+author: "Andrei Stoian"
 format:
-  html:
-    theme: flatly
-    toc: true
-    toc-depth: 2
-    code-fold: show
+ html:
+ theme: flatly
+ toc: true
+ toc-depth: 2
+ code-fold: show
 execute:
-  echo: false
-  warning: false
-  message: false
+ echo: false
+ warning: false
+ message: false
 ---
 
 ## Episode Snapshot
@@ -35,7 +36,7 @@ Explore distributions, group differences, and notable patterns in Thanksgiving d
 
 ## Transcript Preview
 
-Analyzing Thanksgiving dinners in R David Robinson 15.9k subscribers 109 Share 4,037 views 22 Nov 2018 Tidy Tuesday R Screencasts I analyze a survey dataset about Thanksgiving dinner as an example of exploratory data analysis in R, performed without looking at the data in advance. This is part of the #tidytuesday project: https://github.com/rfordatascience/ti... Transcript Search in video 0:03 hi I'm David Robinson chief data scientist at data ca...
+Analyzing Thanksgiving dinners in R 15.9k subscribers 109 Share 4,037 views 22 Nov 2018 Tidy Tuesday R Screencasts I analyze a survey dataset about Thanksgiving dinner as an example of exploratory data analysis in R, performed without looking at the data in advance. This is part of the #tidytuesday project: https://github.com/rfordatascience/ti... Transcript Search in video 0:03 hi I'm chief data scientist at data ca...
 
 ## Required Packages
 

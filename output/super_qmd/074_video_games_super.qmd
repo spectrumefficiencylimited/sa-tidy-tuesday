@@ -1,6 +1,7 @@
 ---
 title: "Super QMD: Analyzing Video Games in R"
 subtitle: "Cognition-first blueprint built from the episode guide and KER"
+author: "Andrei Stoian"
 format:
   html:
     theme: flatly
@@ -34,23 +35,32 @@ The point is to preserve not only the code path, but the author's cognition:
 
 ## Episode Snapshot
 
-- `queue_position`: `74`
-- `function_name`: `video_games`
-- `analysis_type`: `EDA`
-- `pattern_signature`: `load_inspect_reshape_join_trend_compare_visualize`
-- `data_source`: TidyTuesday 2021-03-16 dataset
-- `reproduction_status`: `ready_local`
-
 ::: {.callout-note}
 ## Analysis Intent
 Explore distributions, group differences, and notable patterns in Video Games through cleaning, summarization, and visualization
 :::
 
+| Field | Value |
+|---|---|
+| Queue | #74 |
+| Function | `video_games` |
+| Analysis type | EDA |
+| Data source | TidyTuesday 2021-03-16 dataset |
+| Status | `ready_local` |
+
+**Packages:** `lubridate`, `plotly`, `scales`, `tidytuesdayR`, `tidyverse`
+
+**Features:** ggplot, joins, reshape, time
+
+**Execution notes:**
+- htmlwidget or interactive plotting calls are present
+- local TidyTuesday files were matched, so you can use `load_tidyweek_data()` and avoid a GitHub PAT
+
+**Analytical pattern:** `load_inspect_reshape_join_trend_compare_visualize`
 
 
-## Transcript Preview
 
-Analyzing Video Games in R David Robinson 15.9k subscribers 131 Share Save Clip 3,962 views Streamed live on 17 Mar 2021 Tidy Tuesday R Screencasts I'll analyze a dataset about video games, without looking at the dataset in advance. The dataset comes from the Tidy Tuesday project: https://github.com/rfordatascience/ti... Code: https://github.com/dgrtwo/data-screen... Timestamped annotations of specific tricks, tips and tools used: https://github.com/dgrtwo/data-screen... Intro 0:03 hi i'm dave robinson and welcome...
+
 
 ## Cognitive Signature
 
@@ -105,6 +115,24 @@ names(tuesdata)
 - `T6 | Compare | Summarize group differences, rates, rankings, or trajectories to surface the main story in the data. | Grouped summaries and comparative plots`
 - `T7 | Visualize | Turn the cleaned summaries into interpretable visual comparisons and iterate toward the clearest view. | ggplot workflow`
 - `T8 | Reflect | Identify reusable workflow pieces that can transfer to future datasets with a similar shape or question. | End-state of the analysis pattern`
+
+```{r}
+#| label: thought_execution_log
+#| eval: false
+
+# Fill in `finding` after completing each stage.
+thought_log <- tibble::tribble(
+  ~step,  ~move,        ~finding,
+  "T1", "Context", "",
+  "T2", "Inspect", "",
+  "T4", "Transform", "",
+  "T6", "Compare", "",
+  "T7", "Visualize", "",
+  "T8", "Reflect", "",
+)
+thought_log
+```
+
 
 ### Code Mapping Table
 
@@ -194,7 +222,7 @@ Trigger:
 # Source assets: tidytuesday/data/2021/2021-03-16/games.csv, tidytuesday/data/2021/2021-03-16/sliced-tidytuesday.csv
 # Suggested verbs: mutate(), separate_rows(), pivot_longer(), left_join(), unnest()
 # analysis_tbl <- raw_tbl %>%
-#   ...
+# ...
 ```
 ## Stage 4: Compare
 
@@ -217,9 +245,9 @@ Trigger:
 
 # Summarize the comparison that best answers the question.
 # comparison_tbl <- analysis_tbl %>%
-#   group_by(...) %>%
-#   summarise(...) %>%
-#   arrange(desc(...))
+# group_by(...) %>%
+# summarise(...) %>%
+# arrange(desc(...))
 ```
 ## Stage 5: Visualize
 
@@ -244,8 +272,8 @@ Additional guidance:
 
 # Turn the comparison table into one clear communication plot.
 # ggplot(comparison_tbl, aes(...)) +
-#   geom_col() +
-#   labs(title = ..., subtitle = ...)
+# geom_col() +
+# labs(title = ..., subtitle = ...)
 ```
 ## Stage 6: Reflect
 

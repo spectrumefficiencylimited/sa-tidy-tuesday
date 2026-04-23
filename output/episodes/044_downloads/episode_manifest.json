@@ -1,0 +1,48 @@
+{
+  "queue_position": 44,
+  "folder_name": "044_downloads",
+  "transcript_title": "Analyzing data on R downloads",
+  "function_name": "downloads",
+  "ker_status": "extracted",
+  "reproduction_status": "needs_external_sources",
+  "source_files": {
+    "transcript_file": "raw-data/inspiration/Analyzing data on R downloads.txt",
+    "code_file": "data-screencasts/r-downloads.Rmd"
+  },
+  "source_exists": {
+    "transcript": true,
+    "code": true
+  },
+  "data_source": "Local source files read in episode: http://cran-logs.rstudio.com/2018/2018-10-27.csv.gz, https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2018-10-30/r_downloads_year.csv",
+  "analysis_intent": "Explore distributions, group differences, and notable patterns in data on R downloads through cleaning, summarization, and visualization",
+  "analysis_type": "EDA",
+  "pattern_signature": "load_inspect_reshape_trend_compare_visualize",
+  "required_packages": [
+    "countrycode",
+    "cranlogs",
+    "lubridate",
+    "scales",
+    "tidyverse"
+  ],
+  "features": {
+    "ggplot": true,
+    "joins": false,
+    "reshape": true,
+    "text_analysis": false,
+    "modeling": false,
+    "predictive": false,
+    "scraping": false,
+    "maps": false,
+    "time": true,
+    "simulation": false,
+    "multi_table": false
+  },
+  "local_data_files": [],
+  "reference_files": [],
+  "external_dependencies": [
+    "remote file or API download detected in code"
+  ],
+  "execution_notes": [
+    "interactive `View()` calls are present and should be skipped or replaced in automated runs"
+  ]
+}

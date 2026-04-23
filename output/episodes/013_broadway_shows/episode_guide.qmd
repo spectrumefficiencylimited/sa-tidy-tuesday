@@ -1,16 +1,17 @@
 ---
 title: "Reproduction Guide: Analyzing Broadway shows in R"
 subtitle: "Ordered episode output built from the control table and KER"
+author: "Andrei Stoian"
 format:
-  html:
-    theme: flatly
-    toc: true
-    toc-depth: 2
-    code-fold: show
+ html:
+ theme: flatly
+ toc: true
+ toc-depth: 2
+ code-fold: show
 execute:
-  echo: false
-  warning: false
-  message: false
+ echo: false
+ warning: false
+ message: false
 ---
 
 ## Episode Snapshot
@@ -35,7 +36,7 @@ Explore distributions, group differences, and notable patterns in Broadway shows
 
 ## Transcript Preview
 
-Analyzing Broadway shows in R David Robinson 15.9k subscribers 103 Share Save Clip 2,906 views Streamed live on 29 Apr 2020 Tidy Tuesday R Screencasts I'll analyze a dataset on Broadway shows in R, without looking at the data in advance. I'll be analyzing the dataset as a live stream instead of prerecording it. The dataset comes from the Tidy Tuesday project: https://github.com/rfordatascience/ti... Search in video Introduction 0:06 hi everyone I...
+Analyzing Broadway shows in R 15.9k subscribers 103 Share Save Clip 2,906 views Streamed live on 29 Apr 2020 Tidy Tuesday R Screencasts I'll analyze a dataset on Broadway shows in R, without looking at the data in advance. I'll be analyzing the dataset as a live stream instead of prerecording it. The dataset comes from the Tidy Tuesday project: https://github.com/rfordatascience/ti... Search in video Introduction 0:06 hi everyone I...
 
 ## Required Packages
 
