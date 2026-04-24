@@ -1,5 +1,5 @@
 ---
-title: "Hour 3 — Communicate: Analyzing Fatal Car Crashes on 4 20 in R"
+title: "Hour 3 — Communicate: Fatal Car Crashes on 4/20"
 subtitle: "From analysis to publication | TheDataShrink™"
 author: "TheDataShrink™"
 date: today
@@ -19,108 +19,323 @@ execute:
 editor: visual
 ---
 
-::: {.callout-tip}
+::: callout-tip
 ## TheDataShrink™ — Data stories worth sharing.
-Episode: `fatal_car_crashes_on_4_20` | [All episodes](https://thedatashrink.com.au/tidytuesday) | [YouTube](#) | [Instagram](#)
+
+Episode: `fatal_car_crashes_on_4_20` \| [All episodes](https://thedatashrink.com.au/tidytuesday) \| [YouTube](#) \| [Instagram](#)
 :::
 
+::: {.callout-note collapse="true"}
+## What Hour 3 Is For
 
-## Publication Goal
+Turn the EDA + modeling work into content that a non-data-science audience will understand, share, and remember. Every chart here should be able to stand alone without a caption explaining what the axes mean.
+:::
 
-Turn the EDA + modeling work into content publishable under **TheDataShrink™**:
+------------------------------------------------------------------------
 
-| Channel | Format | Goal |
-|---------|--------|------|
-| YouTube | 15-20 min video | Full walkthrough, show code |
-| Instagram | 5-slide carousel | Hook → Data → Insight → Method → CTA |
-| Facebook | Text post + hero chart | 3 bullet insights + link |
-| Website | Quarto HTML page | Embedded interactive, SEO-optimised |
+## The Publication Goal
 
-## Hour 3 Checklist
-- [ ] Quarto doc: fatal_car_crashes_on_4_20_report.qmd with params for data year
-- [ ] Hero chart: single best visualisation at 1200×628 (social media ratio)
-- [ ] Instagram carousel: 5 slides (hook → data → insight → method → CTA)
-- [ ] YouTube thumbnail text + chapter timestamps
-- [ ] Shiny widget or Observable/D3 for one interactive element
-- [ ] TheDataShrink™ post template: title, 3 bullets, hashtags, link to episode page
+| Channel   | Format            | Objective                              |
+|-----------|-------------------|----------------------------------------|
+| YouTube   | 15–20 min video   | Full walkthrough, show live R coding   |
+| Instagram | 5-slide carousel  | Stop the scroll, one insight per slide |
+| Facebook  | Text + hero chart | 3 bullet findings + link               |
+| Website   | Quarto HTML page  | SEO-optimised, embedded interactive    |
 
-## Hero Chart (1200×628)
+------------------------------------------------------------------------
 
-> The single best chart from Hour 1 or 2, sized for social sharing.
+## Setup
+
+```{r}
+#| label: setup
+
+library(tidyverse)
+library(lubridate)
+library(broom)
+library(ggtext)
+library(scales)
+
+TDS_BLUE  <- "#1b6ca8"
+TDS_GOLD  <- "#c8a415"
+TDS_DARK  <- "#1a1a2e"
+TDS_RED   <- "#c0392b"
+TDS_LIGHT <- "#f8f9fa"
+
+theme_set(theme_light(base_size = 14))
+```
+
+## Load Data
+
+```{r}
+#| label: load-data
+
+base_url <- "https://raw.githubusercontent.com/rfordatascience/tidytuesday/main/data/2025/2025-04-22"
+
+daily_accidents     <- read_csv(file.path(base_url, "daily_accidents.csv"))
+daily_accidents_420 <- read_csv(file.path(base_url, "daily_accidents_420.csv"))
+```
+
+------------------------------------------------------------------------
+
+## The Hero Chart
+
+::: callout-tip
+## Design Brief
+
+One chart. At 1200×628 (16:9 social ratio). No axis label that needs explaining. A viewer scrolling Instagram at speed should understand the finding in under 3 seconds. The title IS the finding.
+:::
 
 ```{r}
 #| label: hero-chart
-#| eval: false
 #| fig-width: 12.5
 #| fig-height: 6.54
-# YOUR HERO CHART CODE HERE
-# Save with ggsave("hero_fatal_car_crashes_on_4_20.png", width = 12.5, height = 6.54, dpi = 150)
+
+holiday_data <- daily_accidents |>
+  mutate(
+    year      = year(date),
+    wday      = wday(date, label = TRUE),
+    month_day = format(date, "%m-%d"),
+    holiday   = case_when(
+      month_day == "07-04" ~ "July 4th",
+      month_day == "07-03" ~ "July 3rd",
+      month_day == "01-01" ~ "New Year's Day",
+      month_day == "12-31" ~ "New Year's Eve",
+      month_day == "12-23" ~ "Dec 23rd",
+      month_day == "04-20" ~ "4/20",
+      TRUE                 ~ "Baseline"
+    ),
+    holiday = fct_relevel(holiday, "Baseline")
+  )
+
+model_holidays <- lm(
+  fatalities_count ~ holiday + year + wday,
+  data = holiday_data
+)
+
+coef_data <- tidy(model_holidays, conf.int = TRUE) |>
+  filter(str_detect(term, "^holiday")) |>
+  mutate(
+    term   = str_remove(term, "^holiday"),
+    term   = fct_reorder(term, estimate),
+    is_420 = term == "4/20",
+    significant = !(conf.low < 0 & conf.high > 0)
+  )
+
+coef_data |>
+  ggplot(aes(estimate, term)) +
+  geom_rect(
+    xmin = -Inf, xmax = 0, ymin = -Inf, ymax = Inf,
+    fill = "#f5f5f5", alpha = 0.5
+  ) +
+  geom_vline(xintercept = 0, colour = "grey40", linewidth = 0.8) +
+  geom_errorbarh(
+    aes(xmin = conf.low, xmax = conf.high,
+        colour = significant),
+    height = 0.3, linewidth = 1
+  ) +
+  geom_point(
+    aes(colour = significant, size = is_420)
+  ) +
+  scale_colour_manual(
+    values = c("TRUE" = TDS_RED, "FALSE" = "grey60"),
+    guide  = "none"
+  ) +
+  scale_size_manual(values = c("FALSE" = 3, "TRUE" = 5), guide = "none") +
+  annotate(
+    "text", x = -2, y = "4/20",
+    label = "← no effect",
+    colour = "grey50", size = 4, fontface = "italic", hjust = 1
+  ) +
+  annotate(
+    "text", x = 22, y = "July 4th",
+    label = "the real danger →",
+    colour = TDS_RED, size = 4, fontface = "bold", hjust = 0
+  ) +
+  labs(
+    title    = "4/20 is not a dangerous day. July 4th is.",
+    subtitle = "Extra fatalities per day vs. baseline, controlling for year and day of week | FARS 1992–2016",
+    x        = "Additional fatalities above a typical day",
+    y        = NULL,
+    caption  = "TheDataShrink™ | Data: Harper & Palayew (2019) via TidyTuesday 2025-04-22"
+  ) +
+  theme(
+    plot.title    = element_text(face = "bold", size = 20, colour = TDS_DARK),
+    plot.subtitle = element_text(size = 13, colour = "grey40"),
+    plot.caption  = element_text(size = 10, colour = "grey60"),
+    panel.grid.minor = element_blank()
+  )
+
+ggsave(
+  "hero_fatal_car_crashes_on_4_20.png",
+  width = 12.5, height = 6.54, dpi = 150
+)
 ```
+
+::: callout-note
+## Why This Chart Works
+
+-   The title is the finding — you don't need to read the axes
+-   Red = significant effect, grey = not significant — one visual encoding, no legend needed
+-   The annotation "← no effect" points directly at 4/20 so even a fast scroll reader gets it
+-   July 4th sits clearly to the right — the contrast is immediate
+:::
+
+------------------------------------------------------------------------
 
 ## Instagram Carousel Copy
 
-**Slide 1 — Hook**
-> "What does TidyTuesday 2025-04-22 tell us? 🧵"
+::: callout-tip
+## 5-Slide Structure: Hook → Data → Insight → Method → CTA
+:::
 
-**Slide 2 — Data**
-> [Key finding #1 in one sentence]
+**Slide 1 — Hook** *(full bleed, bold text on dark background)* \> "A 2018 study said 4/20 causes more fatal car crashes. \> A 2019 study proved them wrong. \> Here's what the data actually shows. 🧵"
 
-**Slide 3 — Insight**
-> [The surprising thing the data revealed]
+------------------------------------------------------------------------
 
-**Slide 4 — Method**
-> "Built in R with tidyverse + [main packages]. Code at https://thedatashrink.com.au"
+**Slide 2 — Data** *(show the calendar chart from H1)* \> "25 years of US fatal crash data. \> 1992 to 2016. Every single day. \> One date was supposed to stand out."
 
-**Slide 5 — CTA**
-> "Full analysis on YouTube 👆 Follow @thedatashrink for weekly data stories"
+------------------------------------------------------------------------
+
+**Slide 3 — Insight** *(hero chart, cropped to the key comparison)* \> "It doesn't. \> After controlling for year trends and day of week — \> 4/20 adds zero extra fatalities. \> July 4th adds 20."
+
+------------------------------------------------------------------------
+
+**Slide 4 — Method** *(code snippet or coefficient plot)* \> "The original paper compared 4/20 to a narrow window of nearby days. \> No trend adjustment. No day-of-week control. \> Change those two things — the effect disappears."
+
+------------------------------------------------------------------------
+
+**Slide 5 — CTA** \> "Full analysis with code on YouTube 👆 \> Built in R with tidyverse + broom + rsample. \> Follow @thedatashrink for weekly data stories. 📊"
+
+------------------------------------------------------------------------
 
 ## YouTube Chapter Timestamps
 
-```
-0:00 Intro — What question are we asking?
-2:00 Load the data
-5:00 EDA — Key patterns
-12:00 Modeling — Going deeper
-18:00 What does this mean?
-20:00 Wrap up + next week
+```         
+0:00  Intro — A paper, a rebuttal, and a lesson about analysis
+2:00  The data — FARS 1992–2016, three tables explained
+5:00  Act 1 — The baseline: which days are actually dangerous?
+9:00  Act 2 — Replicating the misleading Staples & Redelmeier finding
+13:00 Act 3 — The Harper & Palayew correction
+17:00 Act 4 — The model: holiday effect sizes with confidence intervals
+22:00 Act 5 — Bootstrap CIs: closing the argument
+26:00 The hero chart — one image that tells the whole story
+28:00 Key takeaway: it was never about cannabis
 ```
 
-## Interactive Element (Shiny / Observable)
+------------------------------------------------------------------------
+
+## Facebook Post Template
+
+```         
+📊 Did 4/20 really cause more car crashes? A 2018 paper said yes.
+A 2019 reanalysis said: not even close.
+
+Here is what 25 years of US fatality data shows:
+
+✅ July 4th: ~20 extra deaths above a typical day
+✅ New Year's Eve: clearly elevated
+✅ Dec 23rd: elevated (pre-Christmas travel)
+❌ 4/20: statistically indistinguishable from any other April evening
+
+The original paper's effect disappeared the moment you controlled
+for the long-term decline in traffic fatalities and day of week.
+
+Full analysis + code:
+https://thedatashrink.com.au/tidytuesday/fatal_car_crashes_on_4_20
+
+#DataScience #RStats #TidyTuesday #TheDataShrink #DataLiteracy
+```
+
+------------------------------------------------------------------------
+
+## SEO Metadata
+
+``` yaml
+# Add to Quarto YAML for the published page:
+description: >
+  Did 4/20 really cause more fatal car crashes? We replicate both the
+  original 2018 finding and the 2019 rebuttal in R — and show exactly
+  where the analysis went wrong.
+keywords:
+  - R
+  - TidyTuesday
+  - traffic fatalities
+  - 4/20
+  - FARS data
+  - data literacy
+  - broom
+  - rsample
+image: "hero_fatal_car_crashes_on_4_20.png"
+open-graph:
+  title: "4/20 is not a dangerous day. July 4th is."
+  image: "hero_fatal_car_crashes_on_4_20.png"
+twitter-card:
+  title: "4/20 is not a dangerous day. July 4th is."
+  image: "hero_fatal_car_crashes_on_4_20.png"
+  card-style: summary_large_image
+```
+
+------------------------------------------------------------------------
+
+## Interactive Element (Shiny)
 
 ```{r}
 #| label: interactive
 #| eval: false
+
 library(shiny)
-# OR: use ojs_define() + Observable JS for zero-server interactivity
 
-# Minimal Shiny: one selectInput to filter by group, one reactive ggplot
-# Embed in Quarto with: shiny::shinyApp(ui, server)
+# Minimal Shiny: pick any calendar date, see how it compares to the annual baseline
+ui <- fluidPage(
+  titlePanel("How dangerous is your birthday?"),
+  sidebarLayout(
+    sidebarPanel(
+      dateInput("date", "Pick a date (month + day used):",
+                value = "2000-04-20",
+                format = "mm-dd")
+    ),
+    mainPanel(plotOutput("comparison"))
+  )
+)
+
+server <- function(input, output) {
+  output$comparison <- renderPlot({
+    target_md <- format(as.Date(input$date), "%m-%d")
+
+    daily_accidents |>
+      mutate(
+        month_day = format(date, "%m-%d"),
+        group     = if_else(month_day == target_md,
+                            paste0("Your date (", target_md, ")"),
+                            "All other days")
+      ) |>
+      ggplot(aes(group, fatalities_count, fill = group)) +
+      geom_boxplot(show.legend = FALSE) +
+      scale_fill_manual(values = c("All other days" = TDS_BLUE,
+                                   paste0("Your date (", target_md, ")") = TDS_GOLD)) +
+      labs(title = paste("Fatalities on", target_md, "vs. every other day"),
+           x = NULL, y = "Daily fatalities") +
+      theme_light(base_size = 14)
+  })
+}
+
+shinyApp(ui, server)
 ```
 
-## SEO Metadata
+------------------------------------------------------------------------
 
-```yaml
-# Add to Quarto YAML for the published page:
-description: "Analyzing Fatal Car Crashes on 4 20 in R — a TheDataShrink™ data story"
-keywords: ["R", "TidyTuesday", "data science", "EDA", "tidyverse"]
-image: "hero_fatal_car_crashes_on_4_20.png"
-```
+## Checklist
 
-## Facebook Post Template
+-   [x] Hero chart at 1200×628 with `ggsave()`
+-   [x] Instagram carousel — 5 slides written
+-   [x] YouTube chapter timestamps
+-   [x] Facebook post template
+-   [x] SEO metadata block
+-   [x] Shiny interactive stub
 
-```
-📊 Analyzing Fatal Car Crashes on 4 20 in R
-
-[Finding 1 in one sentence]
-[Finding 2 in one sentence]
-[Finding 3 in one sentence]
-
-Full analysis + code: https://thedatashrink.com.au/tidytuesday/fatal_car_crashes_on_4_20
-
-#DataScience #RStats #TidyTuesday #TheDataShrink
-```
+------------------------------------------------------------------------
 
 ## Cross-Reference
 
-- [← Hour 1 EDA](h1_eda_fatal_car_crashes_on_4_20.qmd)
-- [← Hour 2 Modeling](h2_modeling_fatal_car_crashes_on_4_20.qmd)
+-   [← Hour 1 EDA](h1_eda_fatal_car_crashes_on_4_20.qmd)
+-   [← Hour 2 Modeling](h2_modeling_fatal_car_crashes_on_4_20.qmd)

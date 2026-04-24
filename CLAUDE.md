@@ -384,7 +384,7 @@ When you begin a session, SA Andrei will:
 
 ---
 
-## ◈ LAYER 6 — TidyTuesday / DataX Knowledge System
+## ◈ LAYER 6 — TidyTuesday / TheDataShrink™ Knowledge System
 
 This layer is SA Andrei's professional R teaching framework.
 Source: **DataShrink™ × TidyTuesday** — 64 atomic concepts extracted from 102 Rmd files
@@ -515,4 +515,4 @@ from CONCEPT_INDEX.md before writing any code.
 
 ---
 
-*Layer 6 added — TidyTuesday/DataX knowledge system — both ways, professional standard*
+*Layer 6 — TidyTuesday/TheDataShrink™ knowledge system — both ways, professional standard*

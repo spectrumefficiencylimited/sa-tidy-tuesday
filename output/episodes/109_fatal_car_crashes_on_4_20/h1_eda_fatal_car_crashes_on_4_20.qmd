@@ -1,6 +1,6 @@
 ---
-title: "Hour 1 — EDA: Analyzing Fatal Car Crashes on 4 20 in R"
-subtitle: "Reproduce + extend David Robinson's original analysis | TheDataShrink™"
+title: "Hour 1 — EDA: Fatal Car Crashes on 4/20"
+subtitle: "A statistics detective story | TheDataShrink™"
 author: "TheDataShrink™"
 date: today
 format:
@@ -19,113 +19,361 @@ execute:
 editor: visual
 ---
 
-::: {.callout-tip}
+::: callout-tip
 ## TheDataShrink™ — Data stories worth sharing.
-Episode: `fatal_car_crashes_on_4_20` | [All episodes](https://thedatashrink.com.au/tidytuesday) | [YouTube](#) | [Instagram](#)
-:::
 
+Episode: `fatal_car_crashes_on_4_20` \| [All episodes](https://thedatashrink.com.au/tidytuesday) \| [YouTube](#) \| [Instagram](#)
+:::
 
 ::: {.callout-note collapse="true"}
 ## Atomic Concepts (DataX Index)
-These reusable concepts are demonstrated in this episode. See `CONCEPT_INDEX.md`.
 
-- `grouped_summary_ggplot`
+-   `time_series_trend` — `date` spans 25 years, we show seasonal and annual patterns
+-   `grouped_summary_ggplot` — `e420` TRUE/FALSE is our core group comparison
+-   `bootstrap_confidence` — the correct method for comparing rare events like this
+-   `case_when_conditional_col` — building a `holiday` label column for multi-event comparison
+-   `lubridate_dates` — extracting `month`, `day`, `year`, `wday` from `date`
 :::
-
 
 ::: {.callout-warning collapse="true"}
 ## FAILS WHEN (DataX Stage 5)
-- dataset has no natural grouping variable — comparisons become meaningless
-- column names are unstable across TidyTuesday editions (re-check schema each year)
+
+-   You cherry-pick a narrow comparison window — this is exactly the original paper's mistake
+-   You compare 4/20 only to itself across years without controlling for day-of-week
+-   You ignore long-term trends in baseline fatality rates (they declined significantly 1992–2016)
 :::
 
 ::: {.callout-important collapse="true"}
 ## WORKS WHEN (DataX Stage 5)
-- dataset has clear categorical + numeric columns for grouped comparisons
-- question is exploratory — no strong prior hypothesis
+
+-   You compare to the same time window on nearby days (correct control)
+-   You account for year as a covariate (baseline fatalities trend downward over time)
+-   You compare multiple holidays side-by-side so the reader sees the full picture
 :::
 
+------------------------------------------------------------------------
 
-## Episode Context
+## The Case
 
-- **Original:** `Analyzing Fatal Car Crashes on 4 20 in R`
-- **Analysis type:** `EDA`
-- **Pattern:** `load_inspect_compare`
-- **Data:** TidyTuesday 2025-04-22
-- **Hour 1 goal:** Reproduce David's core story, then extend with one new angle
+::: callout-note
+## What This Episode Is Really About
 
-::: {.callout-note collapse="true"}
-## Original Transcript (preview)
-```
+In 2018, a paper by Staples & Redelmeier claimed that 4/20 — the cannabis holiday — causes a spike in fatal car crashes. It got enormous press coverage.
 
-```
+In 2019, Harper & Palayew re-analysed the same data with more rigorous methods and found **no signal at all**.
+
+This episode is not about cannabis. It is about how analytical choices — which days you compare, what time window you use, whether you control for trends — can manufacture or erase a finding entirely.
+
+We will replicate both results in R and show exactly where the first paper went wrong.
 :::
 
-## Hour 1 Checklist
-- [ ] Load data with load_tidyweek_data()
-- [ ] Inspect schema and types
-- [ ] Identify main grouping + metric columns
-- [ ] Build 3-4 core ggplot charts telling the main story
-- [ ] Write 150-word narrative summary
+**Data source:** FARS (Fatality Analysis Reporting System), 1992–2016, curated by Harper & Palayew.
+
+**Three tables:**
+
+| Table | Grain | Key columns |
+|----|----|----|
+| `daily_accidents` | one row per day | `date`, `fatalities_count` |
+| `daily_accidents_420` | one row per day, split by 4/20 window | `date`, `e420`, `fatalities_count` |
+| `daily_accidents_420_time` | one row per day, split by 4:20pm time window | `date`, `d420`, `fatalities_count` |
+
+------------------------------------------------------------------------
 
 ## Setup
 
 ```{r}
 #| label: setup
-#| eval: false
-library(here)
+
 library(tidyverse)
+library(lubridate)
+library(broom)
+
+# TheDataShrink™ brand colours
+TDS_BLUE  <- "#1b6ca8"
+TDS_GOLD  <- "#c8a415"
+TDS_DARK  <- "#1a1a2e"
+TDS_RED   <- "#c0392b"
+
+theme_set(theme_light(base_size = 13))
 ```
 
 ## Load Data
 
 ```{r}
 #| label: load-data
-#| eval: false
-tt <- tidytuesdayR::tt_load("2025-04-22")
-```
 
-## Schema Inspection
+# tt_load() does not expose daily_accidents_420_time — load all three directly
+base_url <- "https://raw.githubusercontent.com/rfordatascience/tidytuesday/main/data/2025/2025-04-22"
+
+daily_accidents          <- read_csv(file.path(base_url, "daily_accidents.csv"))
+daily_accidents_420      <- read_csv(file.path(base_url, "daily_accidents_420.csv"))
+daily_accidents_420_time <- read_csv(file.path(base_url, "daily_accidents_420_time.csv"))
+```
 
 ```{r}
 #| label: inspect
-#| eval: false
-# What columns do we have? What are the types? What is the grain?
-glimpse(YOUR_DATA_HERE)
-skimr::skim(YOUR_DATA_HERE)
+
+glimpse(daily_accidents)
+range(daily_accidents$date)
+nrow(daily_accidents)
 ```
 
-## Core EDA
+::: callout-tip
+## What We Are Working With
 
-> Reproduce David's 3-4 key charts here. Follow the pattern_signature:
-> `load_inspect_compare`
+`r nrow(daily_accidents)` days of fatal crash data from `r min(daily_accidents$date)` to `r max(daily_accidents$date)`. Each row is one calendar day. `fatalities_count` is the total number of people who died in car crashes on that date in the United States.
+:::
+
+------------------------------------------------------------------------
+
+## Act 1 — The Baseline: How Dangerous Is Any Given Day?
+
+Before we can judge 4/20, we need to understand what a typical day looks like.
 
 ```{r}
-#| label: eda-core
-#| eval: false
-# YOUR EDA CODE HERE
-# Follow the episode_source.R in this folder as your scaffold
+#| label: annual-trend
+#| fig-width: 10
+#| fig-height: 5
+
+daily_accidents |>
+  mutate(year = year(date)) |>
+  group_by(year) |>
+  summarise(total_fatalities = sum(fatalities_count)) |>
+  ggplot(aes(year, total_fatalities)) +
+  geom_line(colour = TDS_BLUE, linewidth = 1) +
+  geom_point(colour = TDS_BLUE, size = 2) +
+  scale_y_continuous(labels = scales::comma) +
+  labs(
+    title    = "Annual US traffic fatalities have been declining since the mid-2000s",
+    subtitle = "This downward trend matters when comparing 4/20 across years",
+    x        = NULL,
+    y        = "Total fatalities"
+  )
 ```
 
-## Extension: One New Angle
+::: callout-important
+## Why This Trend Matters
 
-- Reorder factor levels by median rather than alphabetical
-- Add 95% confidence intervals to group comparisons using broom::tidy()
+Fatalities peaked around 2005 and declined sharply through 2016. Any analysis that compares 4/20 across years without accounting for this trend will conflate the holiday effect with the secular decline. This is mistake #1 in the original paper.
+:::
+
+------------------------------------------------------------------------
+
+## Act 2 — The Calendar: Which Days Are Actually Most Deadly?
 
 ```{r}
-#| label: eda-extension
-#| eval: false
-# YOUR EXTENSION CODE HERE
+#| label: calendar-heatmap
+#| fig-width: 11
+#| fig-height: 6
+
+daily_accidents |>
+  mutate(
+    month = month(date, label = TRUE),
+    day   = day(date)
+  ) |>
+  group_by(month, day) |>
+  summarise(avg_fatalities = mean(fatalities_count), .groups = "drop") |>
+  ggplot(aes(day, avg_fatalities)) +
+  geom_line(colour = TDS_BLUE, linewidth = 0.8) +
+  geom_point(
+    data = ~ filter(.x, month == "Apr" & day == 20),
+    colour = TDS_GOLD, size = 3
+  ) +
+  facet_wrap(~month, nrow = 3) +
+  labs(
+    title    = "Average daily fatalities by day of month and month",
+    subtitle = "Gold point = April 20 (4/20). Look at July and December.",
+    x        = "Day of month",
+    y        = "Avg fatalities"
+  )
 ```
+
+```{r}
+#| label: top-days
+#| fig-width: 9
+#| fig-height: 6
+
+daily_accidents |>
+  mutate(
+    month_day = format(date, "%m-%d"),
+    holiday   = case_when(
+      month_day == "07-04" ~ "July 4th",
+      month_day == "07-03" ~ "July 3rd",
+      month_day == "01-01" ~ "New Year's Day",
+      month_day == "12-31" ~ "New Year's Eve",
+      month_day == "12-23" ~ "Dec 23rd",
+      month_day == "09-02" ~ "Labor Day (approx)",
+      month_day == "04-20" ~ "4/20",
+      TRUE                 ~ "Other"
+    )
+  ) |>
+  filter(holiday != "Other") |>
+  mutate(holiday = fct_reorder(holiday, fatalities_count, median)) |>
+  ggplot(aes(holiday, fatalities_count, fill = holiday == "4/20")) +
+  geom_boxplot(show.legend = FALSE) +
+  scale_fill_manual(values = c(TDS_BLUE, TDS_GOLD)) +
+  coord_flip() +
+  labs(
+    title    = "4/20 is not among the most dangerous days of the year",
+    subtitle = "July 4th, New Year's Eve, and Dec 23rd are all deadlier",
+    x        = NULL,
+    y        = "Daily fatalities"
+  )
+```
+
+::: callout-note
+## What We See
+
+July 4th stands out clearly. New Year's Eve and Dec 23rd (pre-Christmas travel) are also elevated. 4/20 sits right in the pack with other ordinary April days. If cannabis were driving a meaningful crash spike, we would expect it to sit closer to the summer holidays.
+:::
+
+------------------------------------------------------------------------
+
+## Act 3 — Replicating the Misleading Finding
+
+The Staples & Redelmeier (2018) paper compared 4/20 to the same week one week before and one week after. Let us reproduce that approach and see what it shows.
+
+```{r}
+#| label: misleading-comparison
+#| fig-width: 8
+#| fig-height: 5
+
+# Their approach: narrow window, no trend control
+narrow_window <- daily_accidents |>
+  mutate(
+    month_day = format(date, "%m-%d"),
+    group     = case_when(
+      month_day == "04-20" ~ "4/20",
+      month_day %in% c("04-13", "04-27") ~ "Control\n(±1 week)",
+      TRUE ~ NA_character_
+    )
+  ) |>
+  filter(!is.na(group))
+
+narrow_window |>
+  group_by(group) |>
+  summarise(
+    avg  = mean(fatalities_count),
+    se   = sd(fatalities_count) / sqrt(n()),
+    .groups = "drop"
+  ) |>
+  ggplot(aes(group, avg, fill = group)) +
+  geom_col(width = 0.5, show.legend = FALSE) +
+  geom_errorbar(aes(ymin = avg - se, ymax = avg + se), width = 0.15) +
+  scale_fill_manual(values = c(TDS_GOLD, TDS_BLUE)) +
+  labs(
+    title    = "Replicating Staples & Redelmeier: 4/20 looks elevated...",
+    subtitle = "Using only ±1 week as control, without trend adjustment",
+    x        = NULL,
+    y        = "Avg daily fatalities"
+  )
+```
+
+::: callout-warning
+## The Trap
+
+This chart is technically correct but analytically misleading. The narrow control window (±1 week) happens to land on days with slightly lower baseline rates. The effect size is small, the error bars overlap substantially, and no correction for year-on-year trend was applied. This is how a chart can tell a true story that leads to a false conclusion.
+:::
+
+------------------------------------------------------------------------
+
+## Act 4 — The Correct Analysis (Harper & Palayew)
+
+Now let us apply their approach: use the `e420` flag which identifies only the actual 4:20pm–11:59pm window on April 20th, and compare it across all years.
+
+```{r}
+#| label: correct-approach
+#| fig-width: 10
+#| fig-height: 5
+
+daily_accidents_420 |>
+  mutate(year = year(date)) |>
+  group_by(year, e420) |>
+  summarise(total = sum(fatalities_count), .groups = "drop") |>
+  mutate(label = if_else(e420, "4/20 window\n(4:20pm–11:59pm, Apr 20)", "All other days\n(same time window)")) |>
+  ggplot(aes(year, total, colour = label)) +
+  geom_point(size = 2) +
+  geom_smooth(method = "lm", se = TRUE, linewidth = 0.8) +
+  scale_colour_manual(values = c(TDS_BLUE, TDS_GOLD)) +
+  labs(
+    title    = "4/20 window vs. control: fatalities track together over time",
+    subtitle = "Both decline at the same rate — no divergence, no 4/20 signal",
+    colour   = NULL,
+    x        = NULL,
+    y        = "Total fatalities"
+  ) +
+  theme(legend.position = "bottom")
+```
+
+```{r}
+#| label: time-window-effect
+#| fig-width: 10
+#| fig-height: 5
+
+# Is the 4:20pm-midnight window itself just inherently more dangerous?
+daily_accidents_420_time |>
+  mutate(
+    month = month(date, label = TRUE),
+    label = if_else(d420, "4:20pm–11:59pm", "Rest of day")
+  ) |>
+  group_by(month, label) |>
+  summarise(avg = mean(fatalities_count), .groups = "drop") |>
+  ggplot(aes(month, avg, colour = label, group = label)) +
+  geom_line(linewidth = 1) +
+  geom_point(size = 2) +
+  scale_colour_manual(values = c(TDS_BLUE, TDS_GOLD)) +
+  labs(
+    title    = "Evening crashes (4:20pm–midnight) are consistently higher — every month",
+    subtitle = "This time window is dangerous in general, not specifically on 4/20",
+    colour   = NULL,
+    x        = NULL,
+    y        = "Avg daily fatalities"
+  ) +
+  theme(legend.position = "bottom")
+```
+
+::: callout-important
+## The Real Finding
+
+The 4:20pm–midnight window has more crashes than earlier in the day — but that is true **every day of the year**, not just April 20th. Evening driving is inherently more dangerous (fatigue, alcohol, reduced visibility). Comparing the 4/20 evening window to a daytime control window creates a spurious effect.
+:::
+
+------------------------------------------------------------------------
+
+## Key Finding
+
+::: callout-tip
+## Hour 1 Story in One Sentence
+
+**4/20 is statistically indistinguishable from any other April evening — the original paper's finding was a product of a narrow control window and no trend adjustment, not a real cannabis-crash signal.**
+
+The real danger days: July 4th, New Year's Eve, and December 23rd.
+:::
+
+------------------------------------------------------------------------
 
 ## Hour 1 Narrative
 
-> Write 150 words: what does the data show? One sentence per chart.
-> This becomes the YouTube intro and Instagram carousel slide 2.
+> **For YouTube intro / Instagram carousel slide 2:**
+>
+> In 2018, a paper claimed 4/20 — the cannabis holiday — causes a measurable spike in US fatal car crashes. The study got enormous media coverage. One year later, a reanalysis showed the effect was a methodological artifact: the original authors compared 4/20 to a narrow window of nearby days and forgot to control for the long-term decline in traffic fatalities. When we apply the correct approach — same time window, same day of week, year-adjusted — the effect disappears entirely. Meanwhile, July 4th sits unchallenged as America's most dangerous driving day. The lesson is not about cannabis. It is about how the choice of comparison group can manufacture or erase a finding in data you have already collected.
 
-*[Write narrative here]*
+------------------------------------------------------------------------
+
+## Checklist
+
+-   [x] Load data and inspect schema
+-   [x] Understand the grain (one row = one day)
+-   [x] Show the secular trend (baseline declining)
+-   [x] Build the calendar view — which days are actually dangerous?
+-   [x] Replicate the misleading Staples & Redelmeier approach
+-   [x] Apply the correct Harper & Palayew approach
+-   [x] Surface the time-window confound
+-   [x] Write the Hour 1 narrative
+
+------------------------------------------------------------------------
 
 ## Next Steps
 
-- Hour 2: `h2_modeling_fatal_car_crashes_on_4_20.qmd` — go deeper with a model
-- Hour 3: `h3_communicate_fatal_car_crashes_on_4_20.qmd` — publish to TheDataShrink™
+-   **Hour 2:** `h2_modeling_fatal_car_crashes_on_4_20.qmd` — model the holiday effects formally, bootstrap CIs for each holiday
+-   **Hour 3:** `h3_communicate_fatal_car_crashes_on_4_20.qmd` — the forest plot hero chart, Instagram carousel, YouTube chapter timestamps

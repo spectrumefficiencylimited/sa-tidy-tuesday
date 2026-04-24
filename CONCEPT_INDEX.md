@@ -1,6 +1,6 @@
 # Concept Index — TheDataShrink™ × TidyTuesday
 
-DataX Stage 2/3 output: atomic reusable concepts extracted across all episodes.
+TheDataShrink™ concept library: atomic reusable concepts extracted across all episodes.
 Each concept is independent of any single episode and reusable on any new dataset.
 
 **Total concepts:** 67

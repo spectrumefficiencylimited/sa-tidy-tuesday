@@ -1,11 +1,10 @@
 """
-enrich_datax.py — Add DataX Curation Methodology fields to every episode manifest.
+enrich_datax.py — Add TheDataShrink™ concept fields to every episode manifest.
 
-Incorporates lessons from DataX v1.2 (BigBrain entities ~4155977-4157106):
-  - fails_when  : conditions where this pattern BREAKS (Stage 5 FAILS_WHEN node field)
-  - works_when  : conditions where this pattern EXCELS
+Fields added:
+  - fails_when      : conditions where this pattern BREAKS
+  - works_when      : conditions where this pattern EXCELS
   - atomic_concepts : list of atomic reusable concepts this episode demonstrates
-                      (DataX Stage 2 — concept-level extraction, not just episode-level)
 
 Also adds the 3-hour architecture stub to every manifest:
   - h1_eda_status
@@ -24,7 +23,7 @@ ROOT = Path(__file__).resolve().parent
 EPISODES_ROOT = ROOT / "output" / "episodes"
 
 # --- Atomic concept catalogue ---
-# Derived by applying DataX Stage 2 logic across all observed pattern_signatures.
+# TheDataShrink™ concept library — derived from pattern_signatures across all episodes.
 # Each concept is a reusable node that transcends any single episode.
 CONCEPT_CATALOGUE = {
     # Text analysis concepts
@@ -291,7 +290,7 @@ def enrich_manifest(manifest_path: Path) -> bool:
     if "atomic_concepts" in data and "hour_architecture" in data:
         return False
 
-    # Infer and inject DataX fields
+    # Infer and inject TheDataShrink™ concept fields
     data["atomic_concepts"] = infer_atomic_concepts(data)
     data["fails_when"] = infer_fails_when(data)
     data["works_when"] = infer_works_when(data)
@@ -306,7 +305,7 @@ def enrich_manifest(manifest_path: Path) -> bool:
 
 
 def build_concept_index():
-    """Write CONCEPT_INDEX.md — DataX Stage 2/3: atomic concept nodes across all episodes."""
+    """Write CONCEPT_INDEX.md — TheDataShrink™ concept library across all episodes."""
     episodes_root = EPISODES_ROOT
     concept_to_episodes: dict[str, list[str]] = {}
 
@@ -320,7 +319,7 @@ def build_concept_index():
     lines = [
         "# Concept Index — TheDataShrink™ × TidyTuesday",
         "",
-        "DataX Stage 2/3 output: atomic reusable concepts extracted across all episodes.",
+        "TheDataShrink™ concept library: atomic reusable concepts extracted across all episodes.",
         "Each concept is independent of any single episode and reusable on any new dataset.",
         "",
         f"**Total concepts:** {len(concept_to_episodes)}",
@@ -362,7 +361,7 @@ def build_concept_index():
 
 
 def main():
-    print("=== Enriching episode manifests with DataX fields ===")
+    print("=== Enriching episode manifests with TheDataShrink™ concept fields ===")
     enriched = 0
     skipped = 0
     for manifest_path in sorted(EPISODES_ROOT.rglob("episode_manifest.json")):

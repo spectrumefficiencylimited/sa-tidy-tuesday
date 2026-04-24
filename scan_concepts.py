@@ -726,7 +726,7 @@ def main():
     lines = [
         "# Concept Index — TheDataShrink™ × TidyTuesday",
         "",
-        "DataX Stage 2/3 output: atomic reusable concepts extracted from 102 Rmd files + 410 episodes.",
+        "TheDataShrink™ concept library: atomic reusable concepts extracted from 102 Rmd files + 410 episodes.",
         "Each concept is independent of any single episode and reusable on any new dataset.",
         "",
         f"**Total concepts:** {len(concept_to_episodes)}  ",

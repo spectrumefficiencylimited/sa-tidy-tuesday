@@ -6,9 +6,9 @@ For each episode in output/episodes/, generates three Quarto documents:
   h2_modeling_<fn>.qmd     — Hour 2: Modeling (go deeper)
   h3_communicate_<fn>.qmd  — Hour 3: Communication (Quarto/Shiny/D3, publishable online)
 
-DataX incorporation:
-  - Each QMD includes FAILS_WHEN + WORKS_WHEN callout blocks (Stage 5 schema)
-  - Atomic concepts listed as cross-reference anchors (Stage 2/3)
+TheDataShrink™ concept system:
+  - Each QMD includes FAILS_WHEN + WORKS_WHEN callout blocks
+  - Atomic concepts listed as cross-reference anchors
   - Brand: TheDataShrink™
 
 Usage:
@@ -75,7 +75,7 @@ def concept_callout(concepts: list[str]) -> str:
     concept_list = "\n".join(f"- `{c}`" for c in concepts)
     return f"""
 ::: {{.callout-note collapse="true"}}
-## Atomic Concepts (DataX Index)
+## TheDataShrink™ Concept Index
 These reusable concepts are demonstrated in this episode. See `CONCEPT_INDEX.md`.
 
 {concept_list}
@@ -89,12 +89,12 @@ def fails_works_callout(fails: list[str], works: list[str]) -> str:
     works_md = "\n".join(f"- {w}" for w in works) if works else "- Generally applicable"
     return f"""
 ::: {{.callout-warning collapse="true"}}
-## FAILS WHEN (DataX Stage 5)
+## FAILS WHEN
 {fails_md}
 :::
 
 ::: {{.callout-important collapse="true"}}
-## WORKS WHEN (DataX Stage 5)
+## WORKS WHEN
 {works_md}
 :::
 
